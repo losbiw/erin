@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+body{
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Montserrat', sans-serif;
+    padding: 0 5vw 8vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    color: #7e7e7e;
+    animation: icon 3s infinite ease-in-out;
+}
+
+#logo{
+    width: 16vw;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1{
+    font-size: 3vw;
+    margin: 0;
+}
+
+p{
+    font-weight: 800;
+    margin: 0.3vw 0 0;
+    font-size: 1vw;
+}
+
+input{
+    width: 20vw;
+    background-color: #ededef;
+    padding: 1vw;
+    margin: 4vh 0 8vh;
+    font-size: 1vw;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 1vw;
+    color: #a5a5a5;
+}
+input::placeholder{
+    color: #a5a5a5;
+}
+input:focus{
+    outline: none;
+}
+
+#next{
+    border: none;
+    border-radius: 50%;
+    width: 9vh;
+    height: 9vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3e3e3;
+}
+#next:focus, select:focus{
+    outline: none;
+}
+#next img{
+    width: 70%;
+}
+
+@keyframes icon{
+    0%{
+        padding-top: 6vh;
+    }
+    50%{
+        padding-top: 16vh;
+    }
+    100%{
+        padding-top: 6vh;
+    }
+}

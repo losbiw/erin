@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+body{
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Montserrat', sans-serif;
+    padding: 3vw 5vw;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+#icons{
+    height: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon{
+    width: 22%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.icon:nth-child(1) img, .icon:nth-child(3) img{
+    padding-top: 0;
+    min-height: 40%;
+    animation: iconTop 4s infinite ease-in-out;
+}
+.icon:nth-child(2) img, .icon:nth-child(4) img{
+    padding-top: 30vh;
+    min-height: 40%;
+    animation: iconBottom 4s infinite ease-in-out;
+}
+
+#container{
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1{
+    font-size: 3vw;
+    margin: 0;
+    color: #4502de;
+}
+
+p{
+    font-weight: 800;
+    margin: 0.5vw;
+    color: #4502de;
+}
+
+select{
+    width: 20vw;
+    background-color: #ededef;
+    padding: 1vw;
+    margin-top: 1vw;
+    font-size: 1vw;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #a5a5a5;
+    border: none;
+    border-radius: 1vw;
+    overflow-y: hidden;
+    overflow: hidden;
+}
+option{
+    padding: 0.2vw;
+    font-weight: 600;
+}
+
+#next{
+    border: none;
+    border-radius: 50%;
+    width: 9vh;
+    height: 9vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3e3e3;
+}
+#next:focus, select:focus{
+    outline: none;
+}
+#next img{
+    width: 70%;
+}
+
+.hidden{
+    display: none;
+}
+
+@keyframes iconBottom{
+    0%{
+        padding-top: 30vh;
+    }
+    50%{
+        padding-top: 0;
+    }
+    100%{
+        padding-top: 30vh;
+    }
+}
+
+@keyframes iconTop{
+    0%{
+        padding-top: 0;
+    }
+    50%{
+        padding-top: 30vh;
+    }
+    100%{
+        padding-top: 0;
+    }
+}

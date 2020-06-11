@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+body{
+    width: 100vw;
+    height: 100vh;
+    padding: 3vw 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    color: #7e7e7e;
+}
+
+
+h1{
+    font-size: 4vw;
+    font-weight: 800;
+    margin: 0 0 2vw;
+}
+h2{
+    font-size: 3vw;
+    font-weight: 700;
+}
+h3{
+    font-size: 1.5vw;
+    font-weight: 700;
+    margin-right: 3vw;
+}
+
+.point{
+    min-width: 33vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+select{
+    width: 22vw;
+    background-color: #ededef;
+    padding: 1vw;
+    font-size: 1vw;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #a5a5a5;
+    border: none;
+    border-radius: 1vw;
+    overflow-y: hidden;
+    overflow: hidden;
+}
+option{
+    padding: 0.2vw;
+    font-weight: 600;
+}
+
+input::placeholder{
+    color: #a5a5a5;
+}
+input:focus, select:focus{
+    outline: none;
+}
+
+.tags{
+    display: flex;
+    align-items: center;
+}
+
+.input{
+    min-width: 20vw;
+    background-color: #ededef;
+    padding: 1vw;
+    font-size: 1vw;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 1vw;
+    color: #a5a5a5;
+}
+
+#keywords{
+    padding: 1.5vh;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+}
+#add{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    border: none;
+    z-index: 0;
+}
+.item{
+    padding: 0.8vh 0.9vw;;
+    background-color: white;
+    border-radius: 0.5vw;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-right: 0.5vw;
+    z-index: 2;
+}
+.item:last-child{
+    margin-right: 1.5vw;
+}
+.item p{
+    font-weight: 600;
+    margin: 0;
+    word-wrap: keep-all;
+}
+.item img{
+    width: 0.7vw;
+    margin-left: 0.5vw;
+}
+.invisible{
+    visibility: hidden;
+}
+.hidden{
+    display: none;
+}
+
+#settings{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#save{
+    border: none;
+    border-radius: 50%;
+    width: 9vh;
+    height: 9vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3e3e3;
+}
+#save img{
+    width: 70%;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 4vw;
+	height: 2vw;
+	background: grey;
+	display: block;
+	border-radius: 2vw;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 0.2vw;
+	left: 0.2vw;
+	width: 1.6vw;
+	height: 1.6vw;
+	background: #fff;
+	border-radius: 1.6vw;
+	transition: 0.3s;
+}
+
+input:checked + label:after {
+	left: calc(100% - 0.2vw);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 1.9vw;
+}

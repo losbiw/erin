@@ -1,0 +1,46 @@
+#switch{
+    width: 5vw;
+    height: 5vw;
+    position: absolute;
+    top: 1vw;
+    left: 1vw;
+    border: 0;
+    background-color: transparent;
+}
+#switch:focus{
+    outline: none;
+}
+#switch img{
+    width: 100%;
+    filter: invert(68%) sepia(5%) saturate(53%) hue-rotate(201deg) brightness(91%) contrast(92%);
+}
+
+#control{
+    position: absolute;
+    top: 1vw;
+    right: 1.5vw;
+    display: flex;
+}
+#control button{
+    width: 2.5vw;
+    height: 3vw;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+}
+#control img{
+    width: 80%;
+}
+
+#drag{
+    position: relative;
+    top: -1vw;
+    width: 83vw;
+    height: 5vh;
+    -webkit-app-region: drag;
+}
+
+button:focus{
+    outline: none;
+}

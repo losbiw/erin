@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erin</title>
+    <link rel="stylesheet" href="../styles/settings.css">
+    <link rel="stylesheet" href="../styles/controls.css">
+</head>
+<body>
+    <button id="switch">
+        <img src="../img/switch/sun.svg" class="svg" alt="switch">
+    </button>
+
+    <div id="control">
+        <div id="drag"></div>
+
+        <button id="min">
+            <img src="../img/controls/minimize.svg" alt="min">
+        </button>
+        <button id="max">
+            <img src="../img/controls/maximize.svg" alt="max">
+        </button>
+        <button id="close">
+            <img src="../img/controls/cross.svg" alt="close">
+        </button>
+    </div>
+
+    <div id="settings">
+        <h1 id="title">Settings</h1>
+        
+        <div class="point">
+            <h3>Theme</h3>
+            <select id="theme" name="form" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                <option value="weather" selected="selected">Weather</option>
+                <option value="keywords">Keywords</option>
+                <option value="time">Time</option>
+            </select>
+        </div>
+        <div class="point">
+            <h3>Keywords</h3>
+            <div class="tags">
+                <div id="keywords" class="input">
+                    <button id="add">
+                    </button>
+                    <div class="item invisible">
+                        <p></p>
+                        <img class="delete" src="../img/controls/crossDark.svg" alt="delete">
+                    </div>
+                </div>
+            </div>
+            
+            <input class="input hidden" type="text" id="text">
+        </div>
+        <div class="point">
+            <h3>Timer</h3>
+            <input class="input" type="text" id="minutes" placeholder="Minutes">
+        </div>
+        <div class="point">
+            <h3>Auto launch</h3>
+            <input type="checkbox" id="startup"/><label for="startup">Toggle</label>
+        </div>
+    </div>
+
+    <a id="save" alt="save">
+        <img src="../img/controls/checked.svg">
+    </a>
+
+    <script src="../scripts/settings.js"></script>
+</body>
+</html>

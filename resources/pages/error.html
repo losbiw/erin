@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erin</title>
+    <link rel="stylesheet" href="../styles/error.css">
+    <link rel="stylesheet" href="../styles/controls.css">
+</head>
+<body>
+    <button id="switch">
+        <img src="../img/switch/sun.svg" class="svg" alt="switch">
+    </button>
+
+    <div id="control">
+        <div id="drag"></div>
+
+        <button id="min">
+            <img src="../img/controls/minimize.svg" alt="min">
+        </button>
+        <button id="max">
+            <img src="../img/controls/maximize.svg" alt="max">
+        </button>
+        <button id="close">
+            <img src="../img/controls/cross.svg" alt="close">
+        </button>
+    </div>
+
+    <h1>Oops :(</h1>
+    <h2>Unfortunately, we've been unable to find you wallpapers</h2>
+    <p>Try changing your settings</p>
+
+    <div id="icons">
+        <a id="info" href="info.html">i</a>
+        
+        <a href="settings.html">
+            <img id="settings" src="../img/controls/settings.svg" class="svg" alt="settings">
+        </a>
+    </div>
+
+    <script>
+        require('../scripts/mode')();
+        require('../scripts/control')();
+    </script>
+</body>
+</html>

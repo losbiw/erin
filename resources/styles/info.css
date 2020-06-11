@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 40vh 0 20vh;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+h1{
+    font-size: 3vw;
+    margin: 0;
+}
+
+p{
+    font-size: 1vw;
+    font-weight: 700;
+    margin: 0.8vw 0 0;
+}
+h3{
+    font-size: 0.9vw;
+    font-weight: 700;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+}
+.item img{
+    width: 2vw;
+    height: 2vw;
+    margin-right: 0.7vw;
+}
+
+#text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#social{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3vw;
+}
+
+#logos{
+    position: absolute;
+    bottom: 1vw;
+    left: 1.5vw;
+    display: flex;
+    align-items: center;
+}
+#logos a{
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+#logos a h3{
+    margin: 0 0.3vw;
+}
+#logos a img{
+    height: 100%;
+}
+#logos a:nth-child(n+2){
+    margin-left: 1vw; 
+}
+
+#icons{
+    position: absolute;
+    bottom: 1vw;
+    right: 1.5vw;
+    display: flex;
+    align-items: center;
+}
+#icons a{
+    padding: 0;
+    text-decoration: none;
+    color: transparent;
+}
+#icons a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3vw;
+    height: 3vw;
+}
+#icons a:nth-child(1){
+    margin-right: 1vw;
+    transform: rotate(180deg);
+}
+#icons img{
+    width: 100%;
+}

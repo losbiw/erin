@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erin</title>
+    <link rel="stylesheet" href="../styles/themes.css">
+    <link rel="stylesheet" href="../styles/controls.css">
+</head>
+<body>
+    <button id="switch">
+        <img src="../img/switch/sun.svg" alt="switch">
+    </button>
+
+    <section id="icons">
+        <div class="icon">
+            <img src="../img/themes/cloud.svg" alt="cloud" class="svg">
+        </div>
+        <div class="icon">
+            <img src="../img/themes/gamepad.svg" alt="gamepad" class="svg">
+        </div>
+        <div class="icon">
+            <img src="../img/themes/clock.svg" alt="note" class="svg">
+        </div>
+        <div class="icon">
+            <img src="../img/themes/book.svg" alt="book" class="svg">
+        </div>
+    </section>
+
+    <section id="container">
+        <div id="text">
+            <h1>Choose the theme you want to use</h1>
+            <p>you can always change it in settings</p>
+
+            <select name="form" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                <option value="weather" selected="selected">Weather</option>
+                <option value="keywords">Keywords</option>
+                <option value="time">Time</option>
+            </select>
+        </div>
+        
+        <a id="next">
+            <img src="../img/controls/arrow.svg" alt="arrow next">
+        </a>
+    </section>
+
+    <script src="../scripts/themes.js"></script>
+</body>
+</html>
