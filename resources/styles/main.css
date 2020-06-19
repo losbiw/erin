@@ -16,6 +16,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 #wallpapers{
@@ -29,6 +30,21 @@ body{
 #wallpapers img{
     width: 100%;
     min-height: 100%;
+}
+
+#author{
+    color: black;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1vw;
+}
+span{
+    font-weight: 600;
 }
 
 .arrow{

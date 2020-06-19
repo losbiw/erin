@@ -2,6 +2,7 @@ const wallpaper = require('wallpaper');
       request = require('request');
       fs = require('fs');
       path = require('path');
+      link = require('../scripts/info');
       mode = require('../scripts/mode')();
       config = require('../scripts/config').get();
 
@@ -9,71 +10,46 @@ require('dotenv').config({path: path.join(__dirname, '../.env')});
 require('../scripts/control')();
 
 const img = document.getElementById('pic');
+      authorUrl = document.getElementById('author');
+      authorName = document.getElementById('name');
       next = document.querySelector('.arrow:nth-of-type(2)');
-      previous = document.querySelector('.arrow:nth-of-type(1)');
+      prev = document.querySelector('.arrow:nth-of-type(1)');
 
-let lat;
-let lon;
+let current = "";
 let pictures = [];
 let i = 0;
+let interval;
+let lat;
+let lon;
 
-if(config.theme == 'weather'){
-    const code = require('../scripts/code');
-    navigator.geolocation.getCurrentPosition(position=>{
-        getPosition(position, callback);
-
-        async function callback(){
-            const res = await getWeather();
-            const value = code.get(res.weather.code, sendError);
-            findWallpapers(value);
-        }
-    }, getError);
-    
-    addInterval();
-}
-
-else if(config.theme == 'keywords'){
-    for(keyword of config.keywords){
-        (async()=>{
-            const wallpaperReq = await fetch(`https://pixabay.com/api/?key=${window.process.env.WALLPAPER}&q=${keyword}&image_type=photo&editors_choice=true&safesearch=true`);
-            const wallpaperRes = await wallpaperReq.json();
-
-            await pictures.push(...wallpaperRes.hits); 
-            
-            if(pictures.length !== 0)
-                downloadWallpaper(pictures[i].largeImageURL);
-            else sendError();
-        })();
+class Picture{
+    constructor(src, author, url){
+        this.src = src;
+        this.author = author;
+        this.url = url;
     }
-    
-    addInterval();
 }
 
-else if(config.theme == 'time'){
-    const time = require('../scripts/time');
-    navigator.geolocation.getCurrentPosition(position=>{
-        getPosition(position, async()=>{
-            const weather = await getWeather();
-            const currentTime = time.get(weather, sendError);
+if(config.theme == 'keywords'){
+    const promise = new Promise(async res=>{
+        for(keyword of config.keywords){
+            const URLs = await findWallpapers(keyword);
+            pictures.push(...URLs);
+        }
 
-            findWallpapers(currentTime);
-        });
-    }, getError);
+        res();
+    });
 
-    addInterval();
+    promise.then(areWallpapers);
 }
 
-previous.addEventListener('click', ()=>{
-    i--;
-    if(i < 0) i = pictures.length - 1;
-    downloadWallpaper(pictures[i].largeImageURL);
-});
+else if(config.theme === 'weather' || config.theme === 'time'){
+    updatePosition();
+    setInterval(updatePosition, config.time);
+}
 
-next.addEventListener('click', ()=>{
-    i++;
-    if(i >= pictures.length) i = 0;
-    downloadWallpaper(pictures[i].largeImageURL);
-});
+prev.addEventListener('click', ()=>orderButtons('prev'));
+next.addEventListener('click', ()=>orderButtons('next'));
 
 function getPosition(position, callback){
     lat = position.coords.latitude;
@@ -81,53 +57,125 @@ function getPosition(position, callback){
     callback();
 }
 
+function updatePosition(){
+    navigator.geolocation.getCurrentPosition(position=>{
+        getPosition(position, callback);
+
+        async function callback(){
+            const res = await getWeather();
+            let value;
+            
+            if(config.theme === 'weather'){
+                const code = require('../scripts/code');
+                value = code.get(res.weather.code, sendError);
+            }
+            else if(config.theme === 'time'){
+                const time = require('../scripts/time');
+                value = time.get(res, sendError);
+            }
+            else{
+                throw 'Invalid value';
+            }
+
+            if(current === value){
+                return;
+            }
+            else{
+                i = 0;
+                current = value;
+                pictures = await findWallpapers(value);
+                areWallpapers();
+            }
+        }
+    }, getError);
+}
+
 async function getWeather(){
-    const weatherReq = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${window.process.env.WEATHER}`);
-    const weatherRes = await weatherReq.json();
+    const req = await fetch(`https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${window.process.env.WEATHER}`);
+    const res = await req.json();
     
-    return weatherRes.data[0]; 
+    return res.data[0]; 
 }
 
 async function findWallpapers(key){
-    const wallpaperReq = await fetch(`https://pixabay.com/api/?key=${window.process.env.WALLPAPER}&q=${key}&image_type=photo&editors_choice=true&safesearch=true`);
-    const wallpaperRes = await wallpaperReq.json();
+    const req = await fetch(`https://api.pexels.com/v1/search?query=${key}&per_page=80`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: window.process.env.WALLPAPER
+        }
+    });
+    const res = await req.json();
 
-    pictures = wallpaperRes.hits; 
+    let URLs = [];
+
+    for(pic of res.photos){
+        const { src, photographer, photographer_url } = pic;
+
+        const newPic = new Picture(
+            src[config.quality],
+            photographer,
+            photographer_url
+        );
+        URLs.push(newPic);
+    }
     
-    areWallpapers(pictures[i].largeImageURL);
+    return URLs;
 }
 
-function downloadWallpaper(url){
+function downloadWallpaper(picture){
     const folderPath = path.join(__dirname, '../../../');
     const imgPath = path.join(folderPath, 'wallpaper.jpg');
     const htmlImg = document.querySelector('img');
     const random = Math.random() * 100;
 
-    const stream = request(url).pipe(fs.createWriteStream(imgPath));
+    const stream = request(picture.src).pipe(fs.createWriteStream(imgPath));
+
     stream.on('finish', async()=>{
-        await wallpaper.set(imgPath);
         img.removeAttribute('src');
         img.setAttribute('src', `${imgPath}?path=${random}`);
+        await wallpaper.set(imgPath);
     });
+
+    authorUrl.setAttribute('src', picture.url);
+    authorName.textContent = picture.author;
+    link.set(authorUrl);
 }
 
-function areWallpapers(key){
-    if(pictures.length !== 0)
-        downloadWallpaper(key);
+function areWallpapers(){
+    if(pictures.length !== 0){
+        downloadWallpaper(pictures[0]);
+        addInterval();
+    }
     else sendError();
 }
 
 function addInterval(){
     if(config.time){
-        setInterval(()=>{
+        if(typeof interval !== 'undefined')
+            clearInterval(interval);
+        interval = setInterval(()=>{
             i++;
             if(i >= pictures.length) i = 0;
-            downloadWallpaper(pictures[i].largeImageURL);
+            downloadWallpaper(pictures[i]);
         }, config.time);
     }
     else{
         return;
     }
+}
+
+function orderButtons(button){
+    if(button === 'next'){
+        i++;
+        if(i >= pictures.length) i = 0;
+    }
+    else if(button === 'prev'){
+        i--;
+        if(i < 0) i = pictures.length - 1;
+    }
+    downloadWallpaper(pictures[i]);
+    addInterval();
 }
 
 function sendError(){

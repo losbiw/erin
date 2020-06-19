@@ -80,7 +80,6 @@ input:focus, select:focus{
 }
 
 #keywords{
-    padding: 1.5vh;
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -97,7 +96,7 @@ input:focus, select:focus{
     z-index: 0;
 }
 .item{
-    padding: 0.8vh 0.9vw;;
+    padding: 0.5vw 0.8vw;
     background-color: white;
     border-radius: 0.5vw;
     display: flex;

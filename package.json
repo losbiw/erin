@@ -33,7 +33,7 @@
     "productName": "Erin",
     "win": {
       "target": "nsis",
-      "icon": "build/icon.ico"
+      "icon": "build/ico.ico"
     },
     "linux": {
       "target": [

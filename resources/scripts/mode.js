@@ -10,7 +10,7 @@ const darkMode = {
     hover: 'invert(64%) sepia(99%) saturate(414%) hue-rotate(360deg) brightness(103%) contrast(97%)',
     basic: 'invert(100%) sepia(0%) saturate(7479%) hue-rotate(46deg) brightness(84%) contrast(85%)',
     arrow: 'invert(100%) sepia(4%) saturate(12%) hue-rotate(234deg) brightness(105%) contrast(100%);',
-    button: '#e3e3e3'
+    button: '#ededef'
 }
 const lightMode = {
     back: '#ffffff',
@@ -19,7 +19,7 @@ const lightMode = {
     hover: 'invert(21%) sepia(64%) saturate(3966%) hue-rotate(253deg) brightness(75%) contrast(146%)',
     basic: 'invert(60%) sepia(0%) saturate(0%) hue-rotate(245deg) brightness(82%) contrast(85%);',
     arrow: 'invert(100%) sepia(4%) saturate(12%) hue-rotate(234deg) brightness(105%) contrast(100%);',
-    button: '#e3e3e3'
+    button: '#ededef'
 }
 
 function setSwitch(){
@@ -93,11 +93,13 @@ function setColors(colors, src){
     if(isLocation('main')){
         const info = document.getElementById('info');
               settings = document.getElementById('settings');
+              author = document.getElementById('author');
               previousArrow = document.querySelector('.arrow:nth-of-type(2)');
               nextArrow = document.querySelector('.arrow:nth-of-type(1)');
               SVGs = document.getElementsByClassName('svg');
 
         info.setAttribute('style', `-webkit-text-stroke: 0.045em ${text}`);
+        author.setAttribute('style', `color: ${text}`);
         settings.setAttribute('style', `filter: ${basic}`);
         previousArrow.setAttribute('style', `filter: ${basic}`);
         nextArrow.setAttribute('style', `filter: ${basic}`);
@@ -133,7 +135,7 @@ function setColors(colors, src){
         saveBut.addEventListener('mouseout', ()=>hoverBut(button, saveBut));
 
         add.addEventListener('mouseover', ()=>hoverBut(main, add));
-        add.addEventListener('mouseout', ()=>hoverBut(button, add));
+        add.addEventListener('mouseout', ()=>hoverBut('transparent', add));
 
         check.addEventListener('click', ()=>{
             if(check.checked)

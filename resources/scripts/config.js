@@ -20,7 +20,8 @@ function update(data){
 function get(){
     const data = {
         mode: 'light',
-        auto: true 
+        auto: true,
+        quality: "large2x"
     };
 
     if(fs.existsSync(dirPath) && fs.existsSync(cfgPath)){

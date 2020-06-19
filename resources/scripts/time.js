@@ -25,14 +25,14 @@ function get(weather, error){
     else if(time == events.sunset)
         return 'sunset';
 
-    else if(time < events.sunrise || time > events.sunset)
+    else if(time > events.sunset || time < events.sunrise)
         return 'night';
     
     else if(time > events.sunrise && time < 12)
         return 'morning';
     
     else if(time >= 12 && time < events.sunset)
-        return 'afternoon';
+        return 'sunshine';
     else error();
 }
 

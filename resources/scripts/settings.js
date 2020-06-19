@@ -7,6 +7,7 @@ const { app } = require('electron').remote;
 require('../scripts/control')();
 
 const theme = document.getElementById('theme');
+      quality = document.getElementById('quality');
       saveBut = document.getElementById('save');
       minutes = document.getElementById('minutes');
       checkbox = document.getElementById('startup');
@@ -19,6 +20,7 @@ saveBut.addEventListener('click', save);
 
 function set(){
     theme.value = cfg.theme;
+    quality.value = cfg.quality;
     if(cfg.keywords !== undefined){
         for(key of cfg.keywords)
             keys.add(key);
@@ -31,7 +33,8 @@ function save(){
     const data = {
         theme: theme.value,
         keywords: keys.get(),
-        auto: checkbox.checked
+        auto: checkbox.checked,
+        quality: quality.value
     }
     
     const value = parseInt(minutes.value, 10);
