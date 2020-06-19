@@ -41,8 +41,6 @@ function loadFile(){
         startup.set(true);
     }
 
-    win.webContents.openDevTools();
-
     win.removeMenu();
     win.loadURL(pagePath);
 
