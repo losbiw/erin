@@ -14,9 +14,7 @@ function setControls(){
         }
     });
     min.addEventListener('click', ()=>win.minimize());
-    close.addEventListener('click', ()=>{
-        win.hide();
-    });
+    close.addEventListener('click', ()=>win.hide());
 }
 
 module.exports = setControls;

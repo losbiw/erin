@@ -1,7 +1,5 @@
 const remote = require('electron').remote;
 const links = document.getElementsByClassName('link');
-require('../scripts/mode')();
-require('../scripts/control')();
 
 for(const link of links)
     set(link);
@@ -15,8 +13,8 @@ function click(){
     const currentSize = remote.getCurrentWindow().getSize();
 
     const child = new remote.BrowserWindow({
-        width: currentSize[1],
-        height: currentSize[2],
+        width: currentSize[0],
+        height: currentSize[1],
     });
     const url = this.getAttribute('src');
     
