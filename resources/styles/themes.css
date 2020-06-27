@@ -4,7 +4,7 @@ body{
     height: 100vh;
     width: 100vw;
     font-family: 'Montserrat', sans-serif;
-    padding: 3vw 5vw;
+    padding: 12vh 5vw 3vw;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ body{
 }
 
 #icons{
-    height: 60%;
+    height: 30vh;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -24,22 +24,25 @@ body{
     width: 22%;
     display: flex;
     justify-content: center;
+}
+.icon:nth-child(1), .icon:nth-child(3){
     align-items: flex-start;
+    animation: fromTop 4s infinite ease-in-out;
 }
-
-.icon:nth-child(1) img, .icon:nth-child(3) img{
-    padding-top: 0;
-    min-height: 40%;
-    animation: iconTop 4s infinite ease-in-out;
+.icon:nth-child(2), .icon:nth-child(4){
+    align-items: flex-end;
+    animation: fromBottom 4s infinite ease-in-out;
 }
-.icon:nth-child(2) img, .icon:nth-child(4) img{
-    padding-top: 30vh;
-    min-height: 40%;
-    animation: iconBottom 4s infinite ease-in-out;
+.icon img{
+    width: 100%;
+    height: 20vh;
+}
+.icon:nth-child(3) img{
+    width: 60%;
 }
 
 #container{
-    height: 40%;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,6 +62,7 @@ h1{
 }
 
 p{
+    font-size: 1vw;
     font-weight: 800;
     margin: 0.5vw;
     color: #4502de;
@@ -83,45 +87,24 @@ option{
     font-weight: 600;
 }
 
-#next{
-    border: none;
-    border-radius: 50%;
-    width: 9vh;
-    height: 9vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e3e3e3;
-}
-#next:focus, select:focus{
-    outline: none;
-}
-#next img{
-    width: 70%;
-}
-
-.hidden{
-    display: none;
-}
-
-@keyframes iconBottom{
+@keyframes fromTop{
     0%{
-        padding-top: 30vh;
+        padding-top: 0;
     }
     50%{
-        padding-top: 0;
+        padding-top: 10vh;
     }
     100%{
-        padding-top: 30vh;
+        padding-top: 0;
     }
 }
 
-@keyframes iconTop{
+@keyframes fromBottom{
     0%{
         padding-top: 0;
     }
     50%{
-        padding-top: 30vh;
+        padding-bottom: 10vh;
     }
     100%{
         padding-top: 0;

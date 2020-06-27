@@ -1,7 +1,7 @@
-const wallpaper = require('wallpaper');
-      request = require('request');
+const request = require('request');
       fs = require('fs');
       path = require('path');
+      wallpaper = require('../scripts/wallpapers');
       link = require('../scripts/info');
       mode = require('../scripts/mode')();
       config = require('../scripts/config').get();
@@ -144,7 +144,8 @@ function downloadWallpaper(picture){
 
 function areWallpapers(){
     if(pictures.length !== 0){
-        downloadWallpaper(pictures[0]);
+        i = Math.round(Math.random() * pictures.length);
+        downloadWallpaper(pictures[i]);
         addInterval();
     }
     else sendError();

@@ -4,7 +4,7 @@ body{
     height: 100vh;
     width: 100vw;
     font-family: 'Montserrat', sans-serif;
-    padding: 0 5vw 8vh;
+    padding: 12vh 5vw 3vw;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -12,17 +12,26 @@ body{
     justify-content: space-between;
     box-sizing: border-box;
     color: #7e7e7e;
-    animation: icon 3s infinite ease-in-out;
 }
 
+#pic{
+    width: 100%;
+    height: 35vh;
+}
 #logo{
-    width: 14vw;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    height: 25vh;
+    animation: fromTop 4s infinite ease-in-out;
 }
 
 #container{
+    height: 35vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 #edit{
@@ -33,6 +42,12 @@ body{
     height: 100%;
 }
 
+#align{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1{
     font-size: 3vw;
     margin: 0;
@@ -40,31 +55,35 @@ h1{
 
 p{
     font-weight: 800;
-    margin: 0.3vw 0 0;
+    margin: 0.5vw;
     font-size: 1vw;
 }
 
 .tags{
-    margin: 4vh 0 8vh;
     display: flex;
     align-items: center;
+    margin-top: 1vw;
 }
 
 .input{
     min-width: 20vw;
     background-color: #ededef;
+    margin-top: 1vw;
+    padding: 1vw;
     font-size: 1vw;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
     border: none;
     border-radius: 1vw;
     color: #a5a5a5;
 }
 
 #keywords{
-    padding: 1.5vh;
     display: flex;
     justify-content: flex-start;
     position: relative;
     overflow: hidden;
+    margin: 0;
 }
 #add{
     width: 100%;
@@ -77,11 +96,12 @@ p{
     z-index: 0;
 }
 .item{
-    padding: 0.8vh 0.9vw;;
+    padding: 0.5vw 0.8vw;
     background-color: white;
     border-radius: 0.5vw;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     justify-content: space-between;
     margin-right: 0.5vw;
     z-index: 2;
@@ -92,33 +112,11 @@ p{
 .item p{
     font-weight: 600;
     margin: 0;
+    word-wrap: keep-all;
 }
 .item img{
     width: 0.7vw;
     margin-left: 0.5vw;
-}
-
-input{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    padding: 2.3vh 0.75vw;
-    margin: 4vh 0 8vh;
-}
-#next{
-    border: none;
-    border-radius: 50%;
-    width: 9vh;
-    height: 9vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e3e3e3;
-}
-select:focus, input:focus{
-    outline: none;
-}
-#next img{
-    width: 70%;
 }
 
 .invisible{
@@ -128,14 +126,18 @@ select:focus, input:focus{
     display: none;
 }
 
-@keyframes icon{
+input:focus{
+    outline: none;
+}
+
+@keyframes fromTop{
     0%{
-        padding-top: 8vh;
+        padding-top: 0;
     }
     50%{
-        padding-top: 20vh;
+        padding-top: 10vh;
     }
     100%{
-        padding-top: 8vh;
+        padding-top: 0;
     }
 }

@@ -4,7 +4,7 @@ body{
     height: 100vh;
     width: 100vw;
     font-family: 'Montserrat', sans-serif;
-    padding: 0 5vw 8vh;
+    padding: 12vh 5vw 3vw;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -12,18 +12,34 @@ body{
     justify-content: space-between;
     box-sizing: border-box;
     color: #7e7e7e;
-    animation: icon 3s infinite ease-in-out;
 }
 
+#pic{
+    width: 100%;
+    height: 35vh;
+}
 #logo{
-    width: 16vw;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    height: 25vh;
+    animation: fromTop 4s infinite ease-in-out;
 }
 
 #container{
+    height: 35vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#align{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 h1{
     font-size: 3vw;
@@ -32,7 +48,7 @@ h1{
 
 p{
     font-weight: 800;
-    margin: 0.3vw 0 0;
+    margin: 0.5vw;
     font-size: 1vw;
 }
 
@@ -40,7 +56,7 @@ input{
     width: 20vw;
     background-color: #ededef;
     padding: 1vw;
-    margin: 4vh 0 8vh;
+    margin-top: 1vw;
     font-size: 1vw;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
@@ -55,31 +71,14 @@ input:focus{
     outline: none;
 }
 
-#next{
-    border: none;
-    border-radius: 50%;
-    width: 9vh;
-    height: 9vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e3e3e3;
-}
-#next:focus, select:focus{
-    outline: none;
-}
-#next img{
-    width: 70%;
-}
-
-@keyframes icon{
+@keyframes fromTop{
     0%{
-        padding-top: 6vh;
+        padding-top: 0;
     }
     50%{
-        padding-top: 16vh;
+        padding-top: 10vh;
     }
     100%{
-        padding-top: 6vh;
+        padding-top: 0;
     }
 }

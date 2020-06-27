@@ -28,8 +28,8 @@ function loadFile(){
     let pagePath = join(__dirname, 'resources/pages/main.html');
     
     win = new BrowserWindow({
-        width: width * 80 / 100,
-        height: height * 80 / 100,
+        width: height * 1.4,
+        height: height * 0.8,
         webPreferences: {
             nodeIntegration: true
         },
