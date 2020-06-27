@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "wallpaper/1.0.0": {
+      "Wallpaper/1.0.0": {
         "dependencies": {
           "Microsoft.Win32.Registry": "4.7.0"
         },
         "runtime": {
-          "wallpaper.dll": {}
+          "Wallpaper.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/3.1.0": {},
@@ -31,7 +31,7 @@
     }
   },
   "libraries": {
-    "wallpaper/1.0.0": {
+    "Wallpaper/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
