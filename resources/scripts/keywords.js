@@ -12,4 +12,8 @@ nextButton.addEventListener('click', ()=>{
         config.update({keywords: values});
         nextButton.setAttribute('href', 'timer.html');
     }
+    else{
+        const error = document.getElementById('error');
+        error.setAttribute('style', 'visibility: visible');
+    }
 });

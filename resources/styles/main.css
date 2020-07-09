@@ -40,8 +40,9 @@ body{
     width: 100%;
     min-height: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #link{
@@ -104,9 +105,22 @@ span{
         height: 15vh;
     }
 }
-
-@media (max-aspect-ratio: 1/1){
+@media (max-aspect-ratio: 3/2){
+    #icons a:nth-child(1){
+        font-size: 4.5vh;
+        margin: 0 1vh;
+    }
+    #icons a:nth-child(2){
+        width: 4vh;
+        height: 4vh;
+    }
     #link{
-        font-size: 1vh;
+        font-size: 1.5vh;
     }
 }
+@media (max-aspect-ratio: 5/4){
+    .arrow{
+        width: 5vh;
+    }
+}
+

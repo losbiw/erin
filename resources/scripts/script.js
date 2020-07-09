@@ -1,19 +1,22 @@
-const request = require('request');
+const { remote, ipcRenderer } = require('electron');
+const { privateEncrypt } = require('crypto');
+      request = require('request');
       fs = require('fs');
       path = require('path');
-      wallpaper = require('../scripts/wallpapers');
-      link = require('../scripts/info');
-      mode = require('../scripts/mode')();
+      wallpaper = require('../scripts/wallpaper');
+      link = require('../scripts/link');
+      mode = require('../scripts/mode');
       config = require('../scripts/config').get();
 
 require('dotenv').config({path: path.join(__dirname, '../.env')});
 require('../scripts/control')();
+mode();
 
 const img = document.getElementById('pic');
-      authorUrl = document.getElementById('author');
-      authorName = document.getElementById('name');
       next = document.querySelector('.arrow:nth-of-type(2)');
       prev = document.querySelector('.arrow:nth-of-type(1)');
+      settings = document.getElementById('settings');
+      info = document.getElementById('info');
 
 let current = "";
 let pictures = [];
@@ -29,6 +32,8 @@ class Picture{
         this.url = url;
     }
 }
+
+link.set([settings, info], false, false);
 
 if(config.theme == 'keywords'){
     const promise = new Promise(async res=>{
@@ -58,36 +63,40 @@ function getPosition(position, callback){
 }
 
 function updatePosition(){
-    navigator.geolocation.getCurrentPosition(position=>{
-        getPosition(position, callback);
+    try{
+        navigator.geolocation.getCurrentPosition(position=>{
+            getPosition(position, callback);
 
-        async function callback(){
-            const res = await getWeather();
-            let value;
-            
-            if(config.theme === 'weather'){
-                const code = require('../scripts/code');
-                value = code.get(res.weather.code, sendError);
-            }
-            else if(config.theme === 'time'){
-                const time = require('../scripts/time');
-                value = time.get(res, sendError);
-            }
-            else{
-                throw 'Invalid value';
-            }
+            async function callback(){
+                const res = await getWeather();
+                let value;
+                
+                if(config.theme === 'weather'){
+                    const code = require('../scripts/code');
+                    value = code.get(res.weather.code, sendError);
+                }
+                else if(config.theme === 'time'){
+                    const time = require('../scripts/time');
+                    value = time.get(res, sendError);
+                }
+                else{
+                    throw 'Invalid value';
+                }
 
-            if(current === value){
-                return;
+                if(current === value){
+                    return;
+                }
+                else{
+                    i = 0;
+                    current = value;
+                    pictures = await findWallpapers(value);
+                    areWallpapers();
+                }
             }
-            else{
-                i = 0;
-                current = value;
-                pictures = await findWallpapers(value);
-                areWallpapers();
-            }
-        }
-    }, getError);
+        }, getError);
+    } catch{
+        sendError('Weather services are currently unavailable');
+    }
 }
 
 async function getWeather(){
@@ -98,48 +107,54 @@ async function getWeather(){
 }
 
 async function findWallpapers(key){
-    const req = await fetch(`https://api.pexels.com/v1/search?query=${key}&per_page=80`, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: window.process.env.WALLPAPER
+    try{
+        const req = await fetch(`https://api.pexels.com/v1/search?query=${key}&per_page=80`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: window.process.env.WALLPAPER
+            }
+        });
+        const res = await req.json();
+
+        let URLs = [];
+
+        for(pic of res.photos){
+            const { src, photographer, photographer_url } = pic;
+
+            const newPic = new Picture(
+                src[config.quality],
+                photographer,
+                photographer_url
+            );
+            URLs.push(newPic);
         }
-    });
-    const res = await req.json();
-
-    let URLs = [];
-
-    for(pic of res.photos){
-        const { src, photographer, photographer_url } = pic;
-
-        const newPic = new Picture(
-            src[config.quality],
-            photographer,
-            photographer_url
-        );
-        URLs.push(newPic);
+        
+        return URLs;
     }
-    
-    return URLs;
+    catch{
+        sendError('Check on your internet connection');
+    }
 }
 
-function downloadWallpaper(picture){
+function downloadWallpaper(data){
     const folderPath = path.join(__dirname, '../../../');
     const imgPath = path.join(folderPath, 'wallpaper.jpg');
     const htmlImg = document.querySelector('img');
     const random = Math.random() * 100;
 
-    const stream = request(picture.src).pipe(fs.createWriteStream(imgPath));
+    const stream = request(data.src).pipe(fs.createWriteStream(imgPath));
 
-    stream.on('finish', async()=>{
+    stream.on('finish', ()=>{
         img.removeAttribute('src');
         img.setAttribute('src', `${imgPath}?path=${random}`);
-        await wallpaper.set(imgPath);
-    });
+        wallpaper.set(imgPath);
 
-    authorUrl.setAttribute('src', picture.url);
-    authorName.textContent = picture.author;
-    link.set(authorUrl);
+        next.disabled = false;
+        prev.disabled = false;
+    });
+          
+    authorCredits(data);
 }
 
 function areWallpapers(){
@@ -148,7 +163,7 @@ function areWallpapers(){
         downloadWallpaper(pictures[i]);
         addInterval();
     }
-    else sendError();
+    else sendError('Try changing your settings');
 }
 
 function addInterval(){
@@ -166,6 +181,19 @@ function addInterval(){
     }
 }
 
+function authorCredits(data){
+    const authorUrl = document.getElementById('author');
+          parent = authorUrl.parentNode;
+          copy = authorUrl.cloneNode(true);
+    
+    parent.replaceChild(copy, authorUrl);
+    copy.setAttribute('src', data.url);
+    link.set([copy], true, true);
+
+    const authorName = document.getElementById('name');
+    authorName.textContent = data.author;
+}
+
 function orderButtons(button){
     if(button === 'next'){
         i++;
@@ -179,13 +207,19 @@ function orderButtons(button){
     addInterval();
 }
 
-function sendError(){
+function sendError(query){
     const dirPath = path.dirname(window.location.href);
-    const filePath = path.join(dirPath, 'error.html');
+    const filePath = path.join(dirPath, `error.html?query=${query}`);
+    const currentWindow = remote.getCurrentWindow();
 
-    window.location.href = filePath;
+    currentWindow.loadURL(filePath);
 };
 
 function getError(err){
     if(err) throw err;
 }
+
+ipcRenderer.on('reload-theme', event=>{
+    mode();
+    event.returnValue = 'The theme is reloaded';
+});

@@ -39,7 +39,7 @@
         </div>
         <div class="point">
             <h3>Keywords</h3>
-            <div class="tags">
+            <div class="tags hidden">
                 <div id="keywords" class="input">
                     <button id="add">
                     </button>
@@ -50,7 +50,12 @@
                 </div>
             </div>
             
-            <input class="input hidden" type="text" id="text">
+            <div class="container">
+                <input class="input" type="text" name="text" id="text">
+                <button id="accept">
+                    <img src="../img/controls/checked.svg">
+                </button>
+            </div>
         </div>
         <div class="point">
             <h3>Timer</h3>
@@ -60,7 +65,7 @@
             <h3>Quality</h3>
             <select id="quality" name="form" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
                 <option value="large2x" selected="selected">Optimized</option>
-                <option value="original">Best</option>
+                <option value="original">Best(might cause performance issues)</option>
                 <option value="large">High</option>
                 <option value="medium">Medium</option>
                 <option value="small">Low</option>
@@ -70,6 +75,8 @@
             <h3>Auto launch</h3>
             <input type="checkbox" id="startup"/><label for="startup">Toggle</label>
         </div>
+
+        <span id="error"><p id="error-msg">Enter the keywords</p></span>
     </div>
 
     <a id="save" alt="save">

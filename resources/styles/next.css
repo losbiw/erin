@@ -1,12 +1,12 @@
 #next{
     border: none;
     border-radius: 50%;
-    width: 5vw;
-    height: 5vw;
+    width: 10vh;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e3e3e3;
+    background-color: #c6c6ca;
 }
 #next:focus, select:focus{
     outline: none;

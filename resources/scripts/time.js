@@ -33,7 +33,7 @@ function get(weather, error){
     
     else if(time >= 12 && time < events.sunset)
         return 'sunshine';
-    else error();
+    else error("The app won't determine time in your location");
 }
 
 module.exports.get = get;

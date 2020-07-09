@@ -1,7 +1,7 @@
 function get(code, error){
     code = parseInt(code, 10);
 
-    if(isNaN(code)) error();
+    if(isNaN(code)) error("The app won't determine weather in your location");
 
     switch(code){
         case 200:

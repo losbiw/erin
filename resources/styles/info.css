@@ -19,7 +19,7 @@ h1{
 }
 
 p{
-    font-size: 1vw;
+    font-size: 1.75vw;
     font-weight: 700;
     margin: 0.8vw 0 0;
 }
@@ -64,9 +64,6 @@ h3{
     color: black;
     text-decoration: none;
 }
-#logos a h3{
-    margin: 0 0.3vw;
-}
 #logos a img{
     height: 100%;
 }
@@ -99,4 +96,34 @@ h3{
 }
 #icons img{
     width: 100%;
+}
+
+@media (max-aspect-ratio: 6/4){
+    h1{
+        font-size: 4vh;
+        text-align: center;
+    }
+    p{
+        font-size: 2.5vh;
+        text-align: center;
+    }
+    h3{
+        font-size: 1.5vh;
+        font-weight: 700;
+    }    
+    .item img{
+        width: 3vh;
+        height: 3vh;
+        margin-right: 1vh;
+    }
+    #logos a{
+        height: 3.5vh;
+    }
+    #icons a{
+        width: 4vh;
+        height: 4vh;
+    }
+    #icons a:nth-child(1){
+        margin-right: 1vh;
+    }
 }

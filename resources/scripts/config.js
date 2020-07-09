@@ -1,7 +1,7 @@
 const { basename, join } = require('path');
 const fs = require('fs');
 
-const dirPath = join(__dirname, '../../../');
+const dirPath = join(__dirname, '../../..');
 const cfgPath = join(dirPath, 'config.json');
 
 function update(data){
@@ -9,19 +9,18 @@ function update(data){
     const keys = Object.keys(data);
     
     for(key of keys){
-        config[`${key}`] = data[key];
+        config[key] = data[key];
     }
     
-    fs.writeFile(cfgPath, JSON.stringify(config), ()=>{
-        console.log('The config has been updated');
-    });
+    fs.writeFileSync(cfgPath, JSON.stringify(config));
 }
 
 function get(){
     const data = {
         mode: 'light',
         auto: true,
-        quality: "large2x"
+        quality: "large2x",
+        firstLaunch: true
     };
 
     if(fs.existsSync(dirPath) && fs.existsSync(cfgPath)){
@@ -34,6 +33,7 @@ function get(){
         fs.writeFile(cfgPath, JSON.stringify(data), ()=>{
             console.log('The config has been created');
         });
+        
         return data;
     }
     
@@ -44,13 +44,7 @@ function get(){
     return data;
 }
 
-function exists(){
-    if(fs.existsSync(cfgPath)) return true;
-    return false;
-}
-
 module.exports = {
     update: update,
-    get: get,
-    exists: exists,
+    get: get
 };

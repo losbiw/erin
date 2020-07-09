@@ -12,19 +12,23 @@
         <img src="../img/switch/sun.svg" alt="switch">
     </button>
 
-    <section class="text">
+    <div id="hint">
+        <p>Click the top button to switch between dark and light modes</p>
+        <button id="hide-hint">Got it</button>
+    </div>
+
+    <section id="text">
         <h1>Let's get started</h1>
-        <p>Press the button to start and help us<br>
-            to make your experience of working<br> 
-            with our app as good as it’s possible</p>
+        <p>press the button to make your wallpaper<br>
+           better than it's ever been</p>
     </section>
 
     <a id="next" href="themes.html">
         <img id="arrow" src="../img/controls/arrow.svg" alt="arrow next">
     </a>
 
-    <script>
-        require('../scripts/mode')();
-    </script>
+    <div id="overlay"></div>
+
+    <script src="../scripts/start.js"></script>
 </body>
 </html>

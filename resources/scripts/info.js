@@ -1,25 +1,11 @@
-const remote = require('electron').remote;
-const links = document.getElementsByClassName('link');
+const link = require('../scripts/link');
+require('../scripts/mode')();
+require('../scripts/control')();
 
-for(const link of links)
-    set(link);
+const back = document.getElementById('back');
+      settings = document.getElementById('settings-but');
+      links = document.getElementsByClassName('link');
 
-function set(link){
-    link.removeEventListener('click', click);
-    link.addEventListener('click', click);
-}
-
-function click(){
-    const currentSize = remote.getCurrentWindow().getSize();
-
-    const child = new remote.BrowserWindow({
-        width: currentSize[0],
-        height: currentSize[1],
-    });
-    const url = this.getAttribute('src');
-    
-    child.removeMenu();
-    child.loadURL(url);
-}
-
-module.exports.set = set;
+link.set(links, true, false);
+link.set([settings], false, true);
+back.addEventListener('click', link.back);

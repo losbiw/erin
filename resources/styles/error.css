@@ -22,10 +22,30 @@ h2{
     font-weight: 700;
 }
 p{
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     margin: 0.8vw;
 }
 
+/* #icons{
+    position: absolute;
+    bottom: 1vw;
+    right: 1.5vw;
+    display: flex;
+    align-items: center;
+}
+#icons a{
+    padding: 0;
+    text-decoration: none;
+    color: transparent;
+}
+
+#icons a:nth-child(2){
+    width: 3vw;
+    height: 3vw;
+}
+#icons img{
+    height: 100%;
+} */
 #icons{
     position: absolute;
     bottom: 1vw;
@@ -38,17 +58,47 @@ p{
     text-decoration: none;
     color: transparent;
 }
+#icons a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3vw;
+    height: 3vw;
+}
 #icons a:nth-child(1){
     font-size: 3.5vw;
-    margin: 0 1vw;
+    margin-right: 1vw;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     -webkit-text-stroke: 0.05em #7e7e7e;
 }
-#icons a:nth-child(2){
-    width: 3vw;
-    height: 3vw;
+#icons a:nth-child(1){
+    margin-right: 1vw;
 }
 #icons img{
-    height: 100%;
+    width: 100%;
+}
+
+@media (max-aspect-ratio: 6/4){
+    h1{
+        font-size: 6vh;
+        text-align: center;
+    }
+    h2{
+        font-size: 3vh;
+        font-weight: 700;
+        text-align: center;
+    }    
+    p{
+        font-size: 2.2vh;
+        text-align: center;
+    }
+    #icons a:nth-child(1){
+        font-size: 4.5vh;
+        margin: 0 1vh;
+    }
+    #icons a:nth-child(2){
+        width: 4vh;
+        height: 4vh;
+    }
 }

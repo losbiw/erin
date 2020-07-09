@@ -15,19 +15,15 @@ body{
 }
 
 #pic{
-    width: 100%;
-    height: 35vh;
+    height: 25vh;
 }
 #logo{
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    height: 25vh;
-    animation: fromTop 4s infinite ease-in-out;
+    height: 28vh;
+    animation: fromTop 3s infinite ease-in-out; 
 }
 
 #container{
-    height: 35vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,12 +45,12 @@ h1{
 p{
     font-weight: 800;
     margin: 0.5vw;
-    font-size: 1vw;
+    font-size: 1.75vw;
 }
 
 input{
     width: 20vw;
-    background-color: #ededef;
+    background-color: #dcdbdb;
     padding: 1vw;
     margin-top: 1vw;
     font-size: 1vw;
@@ -62,10 +58,10 @@ input{
     font-weight: 600;
     border: none;
     border-radius: 1vw;
-    color: #a5a5a5;
+    color: #898989;
 }
 input::placeholder{
-    color: #a5a5a5;
+    color: #898989;
 }
 input:focus{
     outline: none;
@@ -73,12 +69,33 @@ input:focus{
 
 @keyframes fromTop{
     0%{
-        padding-top: 0;
+        margin-top: 0;
     }
     50%{
-        padding-top: 10vh;
+        margin-top: 3vh;
     }
     100%{
-        padding-top: 0;
+        margin-top: 0;
+    }
+}
+
+@media (max-aspect-ratio: 6/4){
+    h1{
+        font-size: 4vh;
+        text-align: center;
+    }
+    
+    p{
+        font-size: 2.5vh;
+        margin: 0.5vh;
+        text-align: center;
+    }
+    
+    input{
+        width: 30vh;
+        padding: 2vh;
+        margin-top: 2vh;
+        font-size: 2vh;
+        border-radius: 2vh;
     }
 }

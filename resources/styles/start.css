@@ -22,6 +22,10 @@ p{
     line-height: 1.4em;
 }
 
+#text{
+    width: 81vw;
+}
+
 #next{
     height: 7vw;
     width: 7vw;
@@ -30,8 +34,47 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e3e3e3;
+    background-color: #c6c6ca;
 }
+
+#hint{
+    background-color: white;
+    padding: 1vw;
+    border-radius: 1.2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 7vw;
+    left: 1vw;
+    z-index: 2;
+}
+#hint p{
+    font-size: 1vw;
+    color: #7e7e7e;
+    z-index: 2;
+    margin: 0.5vw 0;
+}
+#hide-hint{
+    background-color: transparent;
+    border: none;
+    color: #4502de;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    font-weight: 700;
+}
+
+#overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.4;
+    z-index: 1;
+} 
 
 #next:focus{
     outline: none;
@@ -40,4 +83,14 @@ p{
 #arrow{
     height: 4vw;
     width: 4vw;
+}
+
+@media (max-aspect-ratio: 1/1){
+    #hint{
+        top: 8vh;
+        left: 1vh;
+    }
+    #hint p, #hide-hint{
+        font-size: 1vh;
+    }
 }

@@ -18,7 +18,7 @@
 #control{
     position: absolute;
     top: 1vw;
-    right: 1.5vw;
+    right: 1vw;
     display: flex;
     z-index: 10;
 }
@@ -44,4 +44,21 @@
 
 button:focus{
     outline: none;
+}
+
+@media (max-aspect-ratio: 6/4){
+    #switch{
+        width: 6vh;
+        height: 6vh;
+        top: 1vh;
+        left: 1vh;
+    }
+    #control{
+        top: 2vh;
+        right: 3vh;
+    }
+    #control button{
+        width: 4vh;
+        height: 5vh;
+    }
 }

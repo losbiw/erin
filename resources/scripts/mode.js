@@ -10,7 +10,7 @@ const darkMode = {
     hover: 'invert(64%) sepia(99%) saturate(414%) hue-rotate(360deg) brightness(103%) contrast(97%)',
     basic: 'invert(100%) sepia(0%) saturate(7479%) hue-rotate(46deg) brightness(84%) contrast(85%)',
     arrow: 'invert(100%) sepia(4%) saturate(12%) hue-rotate(234deg) brightness(105%) contrast(100%);',
-    button: '#ededef'
+    button: '#c6c6ca',
 }
 const lightMode = {
     back: '#ffffff',
@@ -19,7 +19,7 @@ const lightMode = {
     hover: 'invert(21%) sepia(64%) saturate(3966%) hue-rotate(253deg) brightness(75%) contrast(146%)',
     basic: 'invert(60%) sepia(0%) saturate(0%) hue-rotate(245deg) brightness(82%) contrast(85%);',
     arrow: 'invert(100%) sepia(4%) saturate(12%) hue-rotate(234deg) brightness(105%) contrast(100%);',
-    button: '#ededef'
+    button: '#c6c6ca'
 }
 
 function setSwitch(){
@@ -94,15 +94,19 @@ function setColors(colors, src){
         const info = document.getElementById('info');
               settings = document.getElementById('settings');
               author = document.getElementById('author');
-              previousArrow = document.querySelector('.arrow:nth-of-type(2)');
               nextArrow = document.querySelector('.arrow:nth-of-type(1)');
+              previousArrow = document.querySelector('.arrow:nth-of-type(2)');
               SVGs = document.getElementsByClassName('svg');
+
+        const arrows = [nextArrow, previousArrow];
 
         info.setAttribute('style', `-webkit-text-stroke: 0.045em ${text}`);
         author.setAttribute('style', `color: ${text}`);
         settings.setAttribute('style', `filter: ${basic}`);
-        previousArrow.setAttribute('style', `filter: ${basic}`);
-        nextArrow.setAttribute('style', `filter: ${basic}`);
+
+        for(arr of arrows)
+            arr.setAttribute('style', `filter: ${basic}`);
+            arr.addEventListener('click', ()=>lockButtons(arrows, basic));
 
         for(const svg of SVGs){
             svg.addEventListener('mouseover', ()=>hoverIcon(hover, svg));
@@ -118,6 +122,9 @@ function setColors(colors, src){
         const mainTitle = document.querySelector('h1');
               titles = document.getElementsByTagName('h3');
               saveBut = document.getElementById('save');
+              accept = document.getElementById('accept');
+              saveImg = saveBut.querySelector('img');
+              errorMsg = document.getElementById('error-msg');
               add = document.getElementById('add');
               check = document.getElementById('startup');
               label = document.querySelector('label');
@@ -125,8 +132,10 @@ function setColors(colors, src){
         const color = cfg.auto ? main : text;
         check.checked = cfg.auto;
         
+        saveImg.setAttribute('style', `filter: ${arrow}`);
         mainTitle.setAttribute('style', `color: ${text}`);
         label.setAttribute('style', `background: ${color}`);
+        errorMsg.setAttribute('style', `color: ${main}`);
         
         for(title of titles)
             title.setAttribute('style', `color: ${text}`);
@@ -134,8 +143,12 @@ function setColors(colors, src){
         saveBut.addEventListener('mouseover', ()=>hoverBut(main, saveBut));
         saveBut.addEventListener('mouseout', ()=>hoverBut(button, saveBut));
 
+        accept.setAttribute('style', `filter: ${arrow}`);
+        accept.addEventListener('mouseover', ()=>hoverIcon(hover, accept));
+        accept.addEventListener('mouseout', ()=>hoverIcon(arrow, accept));
+
         add.addEventListener('mouseover', ()=>hoverBut(main, add));
-        add.addEventListener('mouseout', ()=>hoverBut('transparent', add));
+        add.addEventListener('mouseout', ()=>hoverBut('#dcdbdb', add));
 
         check.addEventListener('click', ()=>{
             if(check.checked)
@@ -166,13 +179,13 @@ function setColors(colors, src){
     else if(isLocation('error')){
         const mainTitle = document.querySelector('h1');
               secondTitle = document.querySelector('h2');
-              p = document.querySelector('p');
+              error = document.querySelector('p');
               info = document.getElementById('info');
               settings = document.getElementById('settings');
 
         mainTitle.setAttribute('style', `color: ${text}`);
         secondTitle.setAttribute('style', `color: ${text}`);
-        p.setAttribute('style', `color: ${text}`);
+        error.setAttribute('style', `color: ${main}`);
         info.setAttribute('style', `-webkit-text-stroke: 0.045em ${text}`);
         settings.setAttribute('style', `filter: ${basic}`);
 
@@ -185,6 +198,8 @@ function setColors(colors, src){
     else{
         const nextBut = document.getElementById('next');
               add = document.getElementById('add');
+              accept = document.getElementById('accept');
+              errorMsg = document.getElementById('error-msg');
               logo = document.getElementById('logo');
               h1 = document.querySelector('h1');
               p = document.querySelector('p');
@@ -204,12 +219,29 @@ function setColors(colors, src){
         
         if(add !== null){
             add.addEventListener('mouseover', ()=>hoverBut(main, add));
-            add.addEventListener('mouseout', ()=>hoverBut(button, add));
+            add.addEventListener('mouseout', ()=>hoverBut('#dcdbdb', add));
         }
+
+        if(accept !== null){
+            accept.setAttribute('style', `filter: ${arrow}`);
+
+            accept.addEventListener('mouseover', ()=>hoverIcon(hover, accept));
+            accept.addEventListener('mouseout', ()=>hoverIcon(arrow, accept));
+        }
+
+        if(errorMsg !== null)
+            errorMsg.setAttribute('style', `color: ${main}`);
 
         nextBut.addEventListener('mouseover', ()=>hoverBut(main, nextBut));
         nextBut.addEventListener('mouseout', ()=>hoverBut(button, nextBut));
         colorSvg(basic);
+    }
+}
+
+function lockButtons(buttons, color){
+    for(button of buttons){
+        button.disabled = true;
+        button.setAttribute('style', `filter: ${color}`);
     }
 }
 

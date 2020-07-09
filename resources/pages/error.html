@@ -26,21 +26,18 @@
         </button>
     </div>
 
-    <h1>Oops :(</h1>
-    <h2>Unfortunately, we've been unable to find you wallpapers</h2>
-    <p>Try changing your settings</p>
+    <h1>Whoops :(</h1>
+    <h2>Unfortunately, we've been unable to find a wallpaper for you</h2>
+    <p id="error">Try changing your settings</p>
 
     <div id="icons">
-        <a id="info" href="info.html">i</a>
+        <a id="info" src="info.html" class="link">i</a>
         
-        <a href="settings.html">
+        <a id="settings" src="settings.html" class="link">
             <img id="settings" src="../img/controls/settings.svg" class="svg" alt="settings">
         </a>
     </div>
 
-    <script>
-        require('../scripts/mode')();
-        require('../scripts/control')();
-    </script>
+    <script src="../scripts/error.js"></script>
 </body>
 </html>
