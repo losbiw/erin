@@ -6,6 +6,6 @@ const back = document.getElementById('back');
       settings = document.getElementById('settings-but');
       links = document.getElementsByClassName('link');
 
-link.set(links, true, false);
+link.set(links, true, true);
 link.set([settings], false, true);
 back.addEventListener('click', link.back);
