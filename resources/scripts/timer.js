@@ -8,10 +8,7 @@ nextButton.addEventListener('click', ()=>{
     const value = parseInt(input.value, 10);
     
     let data = {};
-    
-    if(!Number.isNaN(value))
-        data.time = value * 60000;
-    else data.time = 0;
+    data.time = !Number.isNaN(value) && value >= 1 ? value * 60000 : 0;
 
     config.update(data);
 });

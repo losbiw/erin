@@ -39,7 +39,7 @@ function save(){
     }
 
     const timeValue = parseInt(minutes.value, 10);
-    data.time = !Number.isNaN(minutes.value) ? minutes.value * 60000 : 0;
+    data.time = !Number.isNaN(minutes.value) && minutes.value >= 1 ? minutes.value * 60000 : 0;
 
     let isSaveable = false;
     
