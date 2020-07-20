@@ -5,8 +5,11 @@ const hide = document.getElementById('hide-hint');
       hint = document.getElementById('hint');
       overlay = document.getElementById('overlay');
 
-if(config.get().firstLaunch)
+if(config.get().firstLaunch){
     config.update({firstLaunch: false});
+    const platform = process.platform;
+    fetch(`https://erin-wallpapers.herokuapp.com/add/${platform}`);
+}
 else hideElements({hint, overlay});
 
 hide.addEventListener('click', ()=>{

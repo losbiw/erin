@@ -25,7 +25,7 @@ function get(){
 
     if(fs.existsSync(dirPath) && fs.existsSync(cfgPath)){
         const readCfg = fs.readFileSync(cfgPath);
-        const cfg = JSON.parse(readCfg);
+        const cfg = JSON.parse(readCfg) || data;
 
         return cfg;
     }
