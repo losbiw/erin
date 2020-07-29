@@ -14,7 +14,13 @@ function set(links, isAbsolute, loadInCurrent){
 function click(button, isAbsolute, loadInCurrent){
     const currentWindow = remote.getCurrentWindow();
     const src = button.getAttribute('src');
-    const url = isAbsolute ? src : join(__dirname, `../pages/${src}`);
+
+    let url = isAbsolute ? src : join(__dirname, `../pages/${src}`);
+    
+    
+    if(process.platform === 'linux' && !isAbsolute){
+        url = join('file://', url);
+    }
 
     if(isAbsolute || (!isAbsolute && !loadInCurrent)){
         const currentSize = currentWindow.getSize();

@@ -1,7 +1,8 @@
+const electron = require('electron');
 const { basename, join } = require('path');
 const fs = require('fs');
 
-const dirPath = join(__dirname, '../../..');
+const dirPath = (electron.app || electron.remote.app).getPath('userData');
 const cfgPath = join(dirPath, 'config.json');
 
 function update(data){

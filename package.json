@@ -21,24 +21,26 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "electron": "^8.2.5",
+    "electron": "^8.4.0",
     "electron-builder": "^22.7.0"
   },
   "build": {
     "extraResources": [
-      "./build/**"
+      "**/build/**"
     ],
     "appId": "com.erin.start",
     "productName": "Erin",
     "win": {
-      "target": "nsis",
-      "icon": "build/ico.ico"
+      "icon": "build/icon.ico",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "build/icon.512x512.png",
+      "target": "dmg"
     },
     "linux": {
-      "target": [
-        "deb",
-        "tar.gz"
-      ],
+      "icon": "build/icon.512x512.png",
+      "target": "deb",
       "category": "Utility"
     }
   }

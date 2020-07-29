@@ -34,6 +34,7 @@ class Picture{
 }
 
 link.set([settings, info], false, false);
+changeWallpaperListener('add');
 
 if(config.theme == 'keywords'){
     const promise = new Promise(async res=>{
@@ -138,14 +139,14 @@ async function findWallpapers(key){
 }
 
 function downloadWallpaper(data){
-    const folderPath = path.join(__dirname, '../../../');
-    const imgPath = path.join(folderPath, 'wallpaper.jpg');
+    const dirPath = remote.app.getPath('userData');
+    const imgPath = path.join(dirPath, 'wallpaper.jpg');
     const htmlImg = document.querySelector('img');
     const random = Math.random() * 100;
 
     const stream = request(data.src).pipe(fs.createWriteStream(imgPath));
 
-    stream.on('finish', ()=>{
+    stream.on('close', async()=>{
         img.removeAttribute('src');
         img.setAttribute('src', `${imgPath}?path=${random}`);
         wallpaper.set(imgPath);
@@ -195,6 +196,7 @@ function authorCredits(data){
 }
 
 function orderButtons(button){
+    changeWallpaperListener('remove');
     if(button === 'next'){
         i++;
         if(i >= pictures.length) i = 0;
@@ -205,6 +207,7 @@ function orderButtons(button){
     }
     downloadWallpaper(pictures[i]);
     addInterval();
+    changeWallpaperListener('add');
 }
 
 function sendError(query){
@@ -217,6 +220,23 @@ function sendError(query){
 
 function getError(err){
     if(err) throw err;
+}
+
+function changeWallpaperListener(action){
+    const _listener = (event, data) => {
+        orderButtons(data);
+        event.returnValue = 'The wallpaper has been changed';
+    }
+
+    if(action === 'add'){
+        ipcRenderer.on('change-wallpaper', _listener);
+    }
+    else if(action === 'remove'){
+        ipcRenderer.removeAllListeners('change-wallpaper');
+    }
+    else{
+        throw 'unknown action';
+    }
 }
 
 ipcRenderer.on('reload-theme', event=>{

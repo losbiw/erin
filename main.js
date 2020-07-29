@@ -1,8 +1,10 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, screen, nativeImage } = require('electron');
 const { join } = require('path');
 const startup = require('./resources/scripts/startup');
 const config = require('./resources/scripts/config').get();
 const startArgs = process.argv || [];
+const iconName = "build/icons/512x512.png";
+const iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : `./${iconName}`;
 
 let win; 
 let tray;
@@ -33,7 +35,8 @@ function loadFile(){
         webPreferences: {
             nodeIntegration: true
         },
-        frame: false
+        frame: false,
+        icon: nativeImage.createFromPath(iconPath)
     });
 
     if(config.time === undefined){
@@ -41,23 +44,28 @@ function loadFile(){
         startup.set(true);
     }
 
+    win.webContents.openDevTools();
+
     win.removeMenu();
-    win.loadURL(pagePath);
+    win.loadFile(pagePath);
 
     if(startArgs.indexOf('--hidden') !== -1)
         win.hide();
 }
 
 function createTray(){
-    const iconPath = app.isPackaged ? join(process.resourcesPath, "build/icon.ico") : "./build/icon.ico";
     tray = new Tray(iconPath);
     const cntxMenu = Menu.buildFromTemplate([
         {label: 'Open', click: ()=>{
             win.show();
             win.focus();
         }},
-        {label: 'Quit', click: ()=>{
-            app.quit();
+        {label: 'Quit', role: "quit"},
+        {label: 'Next', click: ()=>{
+            win.webContents.send('change-wallpaper', 'next');
+        }},
+        {label: 'Previous', click: ()=>{
+            win.webContents.send('change-wallpaper', 'prev');
         }}
     ]);
 
@@ -80,7 +88,7 @@ ipcMain.on('load-main', event=>{
     const mainPath = join(__dirname, 'resources/pages/main.html');
     win.webContents.send('reload-theme');
     win.show();
-    win.loadURL(mainPath);
+    win.loadFile(mainPath);
     event.returnValue = "Main page is loaded";
 });
 
