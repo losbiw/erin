@@ -1,10 +1,12 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain, screen, nativeImage } = require('electron');
 const { join } = require('path');
-const startup = require('./resources/scripts/startup');
-const config = require('./resources/scripts/config').get();
+      startup = require('./resources/scripts/startup');
+      config = require('./resources/scripts/config').get();
+
 const startArgs = process.argv || [];
-const iconName = "build/icons/512x512.png";
-const iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : `./${iconName}`;
+      os = process.platform;
+      iconName = os === 'win32' ? "build/icon.ico" : "build/icons/512x512.png";
+      iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : `./${iconName}`;
 
 let win; 
 let tray;
@@ -44,7 +46,7 @@ function loadFile(){
         startup.set(true);
     }
 
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 
     win.removeMenu();
     win.loadFile(pagePath);
@@ -56,17 +58,17 @@ function loadFile(){
 function createTray(){
     tray = new Tray(iconPath);
     const cntxMenu = Menu.buildFromTemplate([
-        {label: 'Open', click: ()=>{
-            win.show();
-            win.focus();
-        }},
-        {label: 'Quit', role: "quit"},
         {label: 'Next', click: ()=>{
             win.webContents.send('change-wallpaper', 'next');
         }},
         {label: 'Previous', click: ()=>{
             win.webContents.send('change-wallpaper', 'prev');
-        }}
+        }},
+        {label: 'Open', click: ()=>{
+            win.show();
+            win.focus();
+        }},
+        {label: 'Quit', role: "quit"}
     ]);
 
     tray.setContextMenu(cntxMenu);

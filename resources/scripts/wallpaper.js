@@ -1,7 +1,6 @@
 const { promisify } = require('util');
 const { resolve, join } = require('path');
 const childProcess = require('child_process');
-const { stdout, stderr } = require('process');
 const { exec } = childProcess;
 const execFile = promisify(childProcess.execFile);
 
