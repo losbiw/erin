@@ -8,7 +8,9 @@ const hide = document.getElementById('hide-hint');
 if(config.get().firstLaunch){
     config.update({firstLaunch: false});
     const platform = process.platform;
-    fetch(`https://erin-wallpapers.herokuapp.com/add/${platform}`);
+    fetch(`https://erin-wallpapers.herokuapp.com/${platform}`, {
+        method: 'POST'
+    });
 }
 else hideElements({hint, overlay});
 

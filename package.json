@@ -5,8 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "multiplatform": "electron-builder --windows --linux"
   },
+  "repository": "https://github.com/losbiw/erin",
   "keywords": [
     "nodejs",
     "electron",
@@ -40,7 +42,7 @@
     },
     "linux": {
       "icon": "build/icon.512x512.png",
-      "target": "deb",
+      "target": ["deb", "rpm", "snap"],
       "category": "Utility"
     }
   }
