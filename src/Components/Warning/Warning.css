@@ -1,0 +1,68 @@
+#warning{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); 
+    margin-top: 1.56vw;
+    margin-left: 4.4vw;
+    border-radius: 2vw;
+    z-index: 5;
+    padding: 1vw 2vw;
+    display: flex;
+    align-items: center;
+    animation-name: warning;
+    animation-duration: 0.5s;
+}
+#warning p{
+    font-size: 1.35vw;
+    font-weight: 600;
+    margin: 0 2vw;
+    white-space: nowrap;
+}
+#warning svg{
+    height: auto;
+    width: 3.65vw;
+}
+#warning > svg .gradient{
+    opacity: 1.0;
+}
+#warning .delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 1vw;
+    height: 1vw;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+}
+#warning .delete:hover{
+    transform: scale(1.4);
+    transition: var(--hover-transition);
+}
+#warning .delete svg{
+    width: 100%;
+    height: 100%;
+}
+
+.light #warning{
+    background-color: var(--nav-light);
+    box-shadow: var(--shadow-light);
+}
+.light #warning svg{
+    filter: var(--icon-shadow-light);
+}
+
+.dark #warning{
+    background-color: var(--nav-dark);
+    box-shadow: var(--shadow-dark);
+}
+.dark #warning svg{
+    filter: var(--icon-shadow-dark);
+}
+
+@keyframes warning{
+    from{ margin-top: -5vw }
+    to{ margin-top: 1.56vw }
+}

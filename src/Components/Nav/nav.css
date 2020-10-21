@@ -1,0 +1,157 @@
+:root{
+    --nav-light: #f8f8fc;
+    --nav-dark:#161618;
+    
+    --shadow-light: 0px 0px 43px 0px rgba(82, 82, 82, 0.15);
+    --shadow-dark: 0px 0px 76px 0px rgba(0, 0, 0, 0.56);
+
+    --nav-fill-light: #4d545e;
+    --nav-fill-dark: #e7e7e9;
+}
+
+nav{
+    height: auto;
+    width: 7.3vw;
+    margin: 1.56vw;
+    margin-right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 2vw;
+    z-index: 10;
+    box-sizing: border-box;
+}
+.btns{
+    display: flex;
+    flex-direction: column;
+}
+.btns:nth-child(1) button{
+    margin-top: 2.4vw;
+}
+.btns:nth-child(2) button{
+    margin-bottom: 2.4vw;
+}
+
+.nav-btn{
+    display: inline-block;
+    width: 100%;
+    padding: 0 2vw;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    transition: var(--hover-transition);
+}
+.nav-btn::after{
+    transition: .5s;
+    opacity: 0;
+    border-radius: 20px;
+    content: '';
+    display: block;
+    height: 110%;
+    width: 0.26vw;
+    background-color: #33eb7f;
+    position: absolute;
+    right: 0;
+    top: -5%;
+}
+.nav-btn:hover,
+.btns .active{
+    transform: scale(1.09);
+}
+.nav-btn:hover::after,
+.active::after{
+    transform: scale(1);
+    right: 5px;
+}
+nav .gradient, .gradient{
+    opacity: 0.0;
+    display: inline-block;
+}
+.gradient{
+    transition: opacity .3s ease;
+}
+nav .gradient{
+    transition: opacity .5s ease;
+}
+button:hover .gradient, 
+a:hover .gradient,
+.active .gradient,
+.active::after
+{
+    opacity: 1.0;
+}
+.nav-btn svg{
+    width: 100%;
+    height: 3.125vw;
+}
+button:focus{
+    outline: none;
+}
+button > * {
+    pointer-events: none;
+}
+
+.light nav{
+    background-color: var(--nav-light);
+    box-shadow: var(--shadow-light);
+}
+.light nav svg{
+    filter: var(--icon-shadow-light);
+}
+.light rect:first-child{
+    fill: var(--fill-light);
+}
+.light nav rect:first-child{
+    fill: var(--nav-fill-light);
+}
+
+.dark nav{
+    background-color: var(--nav-dark);
+    box-shadow: var(--shadow-dark);
+}
+.dark nav svg{
+    filter: var(--icon-shadow-dark);
+}
+.dark rect:first-child{
+    fill: var(--fill-dark);
+}
+.dark nav rect:first-child{
+    fill: var(--nav-fill-dark);
+}
+
+
+@media (max-aspect-ratio: 1/1) {
+    nav{
+        margin: 1.56vw;
+        width: auto;
+        flex-direction: row;
+        border-radius: 3.5vh;
+    }
+    .btns{
+        flex-direction: row;
+    }
+    .btns:nth-child(1) button{
+        margin-top: 0;
+        margin-left: 3vh;
+    }
+    .btns:nth-child(2) button{
+        margin-bottom: 0;
+        margin-right: 3vh;
+    }
+    .nav-btn{
+        height: 100%;
+        padding: 2vh 0;
+    }
+    .nav-btn svg{
+        height: 100%;
+        width: 4vh;
+    }
+    .nav-btn::after{
+        border-radius: 3px;
+        width: 110%;
+        height: 5px;
+        top: 0;
+        right: -5%;
+    }
+}

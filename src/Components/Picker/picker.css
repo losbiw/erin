@@ -1,0 +1,106 @@
+#picker{
+    height: 100%;
+    padding: 0 1.56vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+#picker .wrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#picker .arrow{
+    position: absolute;
+    top: 40%;
+    left: 46.5%;
+    transform: translate(-50%, -50%);
+}
+#picker .arrow:hover{
+    height: 3.1vw;
+}
+#picker .wrapper:first-child .arrow{
+    transform: rotate(90deg);
+}
+#picker .wrapper:last-child .arrow{
+    transform: rotate(-90deg);
+}
+#picker #slider{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+#picker .aspect-ratio{
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 31.5%;
+    transition: var(--hover-transition);
+    padding: 0.25vw;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2.6vw;
+}
+#picker .aspect-ratio .transparent{
+    height: 100%;
+    width: 100%;
+    opacity: 1.0;
+    transition: .3s;
+    z-index: 1;
+    transition: var(--hover-transition);
+}
+#picker .aspect-ratio:nth-child(-n+3){
+    margin-bottom: 1.3vw;
+}
+
+#picker .progress-bar{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 20%;
+}
+
+#picker .active{
+    background: var(--gradient) !important;
+}
+#picker .active .transparent{
+    opacity: 0;
+}
+
+#slider .aspect-ratio:hover{
+    background: var(--gradient) !important;
+    transform: scale(1.07, 1.07);
+}
+
+#slider .aspect-ratio:hover .transparent{
+    opacity: 0;
+}
+
+.light #slider .aspect-ratio{
+    background: var(--background-light);
+    box-shadow: var(--shadow-light);
+}
+.dark #slider .aspect-ratio{
+    background: var(--background-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+@media (max-aspect-ratio: 1/1) {
+    #picker{
+        justify-content: center;
+        width: 100%;
+        padding: 0 5vw;
+    }
+    #picker #slider{
+        padding: 1vh 0;
+    }
+    #picker .aspect-ratio{
+        width: 48%;
+    }
+    #picker .aspect-ratio:nth-child(-n+4){
+        margin-bottom: 4vw;
+    }
+}

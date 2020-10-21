@@ -1,0 +1,151 @@
+#info{
+    padding: 3vw 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+#cards{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card{
+    width: 23vw;
+    height: 27.7vw;
+    padding: 3.8vw 1.5vw 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 2.6vw;
+    transition: var(--hover-transition);
+}
+.card:hover{
+    transform: scale(1.15);
+}
+.card:hover .gradient{
+    opacity: 1.0;
+}
+.card svg{
+    width: 100%;
+    height: 6.5vw;
+}
+.card:nth-child(-n+2){
+    margin-right: 3.35vw;
+}
+.card h2{
+    font-weight: 600;
+    font-size: 2.18vw;
+    margin: 0.8vw 0;
+    /* margin: 1vw 0; */
+}
+.card p{
+    font-size: 1.05vw;
+    line-height: 2.1vw;
+    text-align: center;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+.card .special{
+    margin-top: 4.375vw;
+    font-size: 0.78vw;
+    font-weight: 600;
+}
+#contact{
+    display: flex;
+    align-items: center;
+}
+#contact p{
+    margin: 0;
+    font-size: 1.5625vw;
+}
+#contact a{
+    margin-left: 1.35vw;
+}
+#contact svg{
+    height: 2.45vw;
+    width: 2.45vw;
+}
+#reference{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#reference .links{
+    width: 80%;
+    margin-top: 1.05vw;
+}
+.links{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.links a{
+    text-decoration: none;
+    font-size: 1vw;
+    transition: var(--hover-transition);
+}
+.links a:hover{
+    transform: scale(1.2);
+}
+.links a > * {
+    pointer-events: none;
+}
+.links a p{
+    font-weight: 400;
+    margin: 0;
+}
+#resources{
+    font-weight: 400;
+    margin: 0;
+    font-size: 0.73vw;
+}
+
+.light, .light a{
+    color: var(--fill-light);
+}
+.light #info svg{
+    filter: var(--icon-shadow-light);
+}
+.light .card h2{
+    text-shadow: var(--title-shadow-light);
+}
+.light a svg{
+    fill: var(--fill-light);
+}
+.light .card{
+    color: var(--nav-fill-light);
+    background-color: var(--nav-light);
+    box-shadow: var(--shadow-light);
+}
+
+.dark, .dark a{
+    color: var(--fill-dark);
+}
+.dark #info svg{
+    filter: var(--icon-shadow-dark);
+}
+.dark .card h2, 
+.dark p{
+    text-shadow: var(--title-shadow-dark);
+}
+.dark a svg{
+    fill: var(--fill-dark);
+}
+.dark .card{
+    color: var(--nav-fill-dark);
+    background-color: var(--nav-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+@media (max-aspect-ratio: 1/1) {
+    #info{
+        width: 100%;
+    }
+}

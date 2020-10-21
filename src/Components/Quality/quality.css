@@ -1,0 +1,24 @@
+select, #keywords input{
+    font-size: 1.5625vw;
+    height: 4vw;
+    width: 100%;
+    border-radius: 1.82vw;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    font-weight: 600;
+    padding: 0 1.4vw;
+}
+option{
+    font-size: 1.2vw;
+}
+
+.light select{
+    background-color: var(--fill-light);
+    color: var(--background-light);
+    box-shadow: var(--item-shadow-light);
+}
+.dark select{
+    background-color: var(--fill-dark);
+    color: var(--background-dark);
+    box-shadow: var(--item-shadow-dark);
+}

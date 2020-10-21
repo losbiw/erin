@@ -1,0 +1,21 @@
+.progress-bar, .fill{
+    border-radius: 0.5vw;
+}
+.progress-bar{
+    height: 0.6vw;
+    z-index: 2;
+    width: 60vw;
+}
+.fill{
+    background: var(--gradient);
+    height: 100%;
+}
+
+.dark .progress-bar{
+    box-shadow: var(--icon-shadow-dark);
+    background: var(--nav-fill-dark);
+}
+.light .progress-bar{
+    box-shadow: var(--icon-shadow-light);
+    background: var(--nav-fill-light);
+}

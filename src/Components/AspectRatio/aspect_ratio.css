@@ -1,0 +1,42 @@
+:root{
+    --aspect-shadow-light: 0px 0px 27px 3px rgba(58, 66, 78, 0.25);
+    --aspect-shadow-dark: 0px 0px 38px 0px rgba(0, 0, 0, 0.6);
+}
+
+.aspect-ratio .transparent{
+    width: 0;
+    height: 0;
+}
+
+.container{
+    overflow: hidden;
+    height: 0;
+    width: 100%;
+    padding-top: 56.25%;
+    background: black;
+    position: relative;
+    border-radius: 2.5vw;
+}
+.container img{
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    user-select: none;
+}
+
+.light .container{
+    box-shadow: var(--aspect-shadow-light);
+    background: var(--background-light);
+}
+.dark .container{
+    box-shadow: var(--aspect-shadow-dark);
+    background: var(--background-dark);
+}
+
+.aspect-ratio > * {
+    pointer-events: none;
+  }
