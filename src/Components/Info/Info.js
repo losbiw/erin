@@ -22,9 +22,9 @@ export default function Info(props){
                 title: "Pexels",
                 href: "https://www.pexels.com/",
             },
-            weatherbit: {
-                title: "WeatherBit",
-                href: "https://www.weatherbit.io/",
+            openweathermap: {
+                title: "OpenWeatherMap",
+                href: "https://openweathermap.org/",
             },
             flaticon: {
                 title: "FlatIcon",

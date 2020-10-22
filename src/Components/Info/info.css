@@ -78,8 +78,10 @@
     justify-content: center;
 }
 #reference .links{
-    width: 80%;
     margin-top: 1.05vw;
+}
+#reference a:nth-child(-n+2){
+    margin-right: 2vw;
 }
 .links{
     display: flex;

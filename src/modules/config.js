@@ -8,12 +8,8 @@ function get(){
     if(fs.existsSync(cfgPath)){
         const cfg = fs.readFileSync(cfgPath, 'utf8');
         
-        try{
-            return JSON.parse(cfg);
-        }
-        catch{
-            return getDefaultOptions();
-        }
+        try{ return JSON.parse(cfg) }
+        catch{ return getDefaultOptions() }
     }
     else{
         return setDefault()
@@ -35,9 +31,14 @@ function setDefault(){
     return options
 }
 
+function getAppPath(){
+    const appPath = ipcRenderer.sendSync('get-app-path');
+    return appPath
+}
+
 function getConfigPath(){
-    const userData = ipcRenderer.sendSync('get-app-path');
-    const cfgPath = join(userData, 'config.json');
+    const appPath = getAppPath(); 
+    const cfgPath = join(appPath, 'config.json');
 
     return cfgPath
 }
@@ -50,4 +51,4 @@ const getDefaultOptions = () => ({
     startup: true
 })
 
-export default { get, set }
+export default { get, set, getAppPath }

@@ -77,11 +77,11 @@ export default class Settings extends Component{
 
     componentWillUnmount(){
         const cfg = this.state;
-        const { handler, data, isLocked } = this.props;
+        const { handler, data } = this.props;
 
         if(!this.areObjectsEqual(cfg, data)){
-            config.set(cfg);
             handler({ config: cfg });
+            config.set(cfg);
         }
     }
 

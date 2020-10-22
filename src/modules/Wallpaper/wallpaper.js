@@ -10,7 +10,6 @@ function download(url, path, handlers){
 		warning: ''
 	});
 
-	const resolved = resolve(path);
 	const https = require('https');
 	
 	const callback = res => {   
@@ -36,8 +35,8 @@ function download(url, path, handlers){
 			});        
 
 			res.on('end', async() => {
-				fs.writeFile(resolved, data.read(), () => {
-					set(resolved, handlers);   
+				fs.writeFile(path, data.read(), () => {
+					set(path, handlers);   
 
 					setTimer();
 					setState({

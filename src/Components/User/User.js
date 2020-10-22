@@ -4,8 +4,9 @@ import Nav from '../Nav/Nav'
 import Page from '../Page/Page'
 import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
-import './user.css'
 import fetch from 'node-fetch'
+import time from '../../modules/time'
+import './user.css'
 
 const { join } = window.require('path');
 
@@ -22,7 +23,8 @@ export default class User extends Component{
     constructor(props){
         super();
 
-        this.savePath = `../../assets/wallpaper.jpg`;
+        const appPath = config.getAppPath();
+        this.savePath = join(appPath, 'wallpaper.jpg');
 
         this.state = {
             collection: [],
@@ -36,7 +38,7 @@ export default class User extends Component{
         }
     }
 
-    timer;
+    wallpaperTimer;
 
     async componentDidMount(){
         const cfg = await config.get();
@@ -47,10 +49,10 @@ export default class User extends Component{
     }
 
     getWallpaperCollection = async(cfg) => {
-        const { fetchPexels, sortPictures, setWallpaper } = this;
+        const { fetchPexels, sortPictures, setWallpaper, getSearchQuery } = this;
         const { keywords, quality, mode } = cfg;
         
-        const query = this.getSearchQuery(mode, keywords);
+        const query = await getSearchQuery(mode, keywords);
         const fetchRes = await fetchPexels(query);
 
         if(fetchRes.length === 0){
@@ -74,16 +76,20 @@ export default class User extends Component{
         () => setWallpaper(sorted, randomIndex));
     }
 
-    getSearchQuery(mode, keywords){
+    getSearchQuery = async(mode, keywords) => {
         if(mode === 'keywords'){
             return keywords
         }
         else if(mode === 'weather'){
-            this.fetchWeather();
-            return ['rain']
+            const req = await this.fetchWeather();
+            return [req.weather[0].main];
         }
         else if(mode === 'time'){
-            return ['night']
+            const req = await this.fetchWeather();
+            const { sunrise, sunset } = req.sys;
+            const keyword = time.convert({ sunrise, sunset });
+            
+            return [keyword]
         }
     }
 
@@ -99,13 +105,12 @@ export default class User extends Component{
     }
     
     setWallpaper = (collection, index) => {
-        clearInterval(this.timer);
+        clearInterval(this.wallpaperTimer);
 
         const { savePath, setStateByName, switchSingleWallpaper, setTimer } = this;
         const url = collection[index].srcMain;
-        const path = join(__dirname, savePath);
         
-        wallpaper.download(url, path, {
+        wallpaper.download(url, savePath, {
             setState: setStateByName,
             largeFileHandler: switchSingleWallpaper,
             setTimer
@@ -114,7 +119,7 @@ export default class User extends Component{
 
     setTimer = () => {
         if(this.state.config.timer){
-            this.timer = setTimeout(() => this.switchSingleWallpaper(true), this.state.config.timer);
+            this.wallpaperTimer = setTimeout(() => this.switchSingleWallpaper(true), this.state.config.timer);
         }
     }
 
@@ -131,12 +136,18 @@ export default class User extends Component{
         });
     }
 
-    fetchWeather = () => {
-        navigator.geolocation.getCurrentPosition(async(position) => {
-            this.setState({
-                position
-            })
-        });
+    fetchWeather = () => { 
+        return new Promise((res, rej) => {
+            navigator.geolocation.getCurrentPosition(async(position) => {
+                const key = window.process.env.WEATHER;
+                const { latitude, longitude } = position.coords;
+               
+                const json = await this.fetchAPI(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
+                );
+                res(json);
+            });
+        })
     }
 
     fetchPexels = async(keywords) =>{
