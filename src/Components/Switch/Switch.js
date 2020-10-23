@@ -6,7 +6,7 @@ export default function Switch(props){
         <label className="switch">
             <input type="checkbox" 
                    name="startup" 
-                   defaultChecked={ props.data }
+                   defaultChecked={ props.data.length === 0 ? false : true }
                    onChange={ props.handler }
                    data-value="checked"
                 />

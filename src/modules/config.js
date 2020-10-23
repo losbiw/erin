@@ -1,3 +1,5 @@
+import startup from './startup'
+
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
@@ -19,6 +21,8 @@ function get(){
 function set(options){
     const cfgPath = getConfigPath();
     const json = JSON.stringify(options);
+
+    startup.set(options.startup);
     
     fs.writeFile(cfgPath, json, (err)=>{
         if(err) throw err;
