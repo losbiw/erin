@@ -6,6 +6,7 @@ import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
 import fetch from 'node-fetch'
 import time from '../../modules/time'
+import weatherAPI from '../../modules/weather'
 import areEqual from '../../modules/areEqual'
 import './user.css'
 
@@ -104,7 +105,10 @@ export default class User extends Component{
                 weather: req
             });
 
-            if(mode === 'weather') return [req.main]
+            if(mode === 'weather'){
+                const converted = weatherAPI.convertMain(req.main)
+                return [converted];
+            }
             else if(mode === 'time'){
                 const { sunrise, sunset } = req.time;
                 const keyword = time.convert({ sunrise, sunset });
