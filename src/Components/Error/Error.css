@@ -1,0 +1,47 @@
+:root{
+    --shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
+}
+
+#error{
+    width: var(--page-width);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#err-code{
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+#error h1, h2{
+    text-shadow: var(--shadow-dark)
+}
+#err-code h1{
+    font-size: 18.2vw;
+    line-height: 17vw;
+    font-weight: 600;
+    margin: 0;
+}
+#err-code h1:nth-child(2){
+    font-size: 22.4vw;
+    background: var(--gradient);
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+}
+#error h2{
+    margin: 0;
+    font-size: 3.65vw;
+    font-weight: 700;
+    margin: 3vw;
+}
+#error p{
+    margin: 0;
+    width: 51vw;
+    color: var(--hr-dark);
+    font-weight: 500;
+    line-height: 2.6vw;
+    font-size: 1.5625vw;
+    text-align: center;
+}

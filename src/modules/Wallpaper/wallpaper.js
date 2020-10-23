@@ -4,13 +4,12 @@ const { execFileSync, exec } = window.require('child_process')
 const Stream = require('stream').Transform;
 
 function download(url, path, handlers){
+	const https = require('https');
 	const { setState, largeFileHandler, setTimer } = handlers;
-	
+
 	setState({ 
 		warning: ''
 	});
-
-	const https = require('https');
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];

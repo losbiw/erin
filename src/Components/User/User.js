@@ -4,7 +4,6 @@ import Nav from '../Nav/Nav'
 import Page from '../Page/Page'
 import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
-import fetch from 'node-fetch'
 import time from '../../modules/time'
 import weatherAPI from '../../modules/weather'
 import areEqual from '../../modules/areEqual'
@@ -48,7 +47,7 @@ export default class User extends Component{
 
     async componentDidMount(){
         const cfg = await config.get();
-       
+    
         this.setState({
             config: cfg
         });
@@ -63,9 +62,10 @@ export default class User extends Component{
         const query = await getSearchQuery(mode, keywords);
         const fetchRes = await fetchPexels(query);
 
+        if(!fetchRes) return;
         if(fetchRes.length === 0){
             this.setState({
-                error: "We couldn't find any wallpaper matching your keywords",
+                error: 404,
                 isLocked: false,
                 config: cfg
             });
@@ -164,21 +164,29 @@ export default class User extends Component{
     fetchWeather = () => { 
         return new Promise(res => {
             navigator.geolocation.getCurrentPosition(async(position) => {
-                const key = window.process.env.WEATHER;
-                const { latitude, longitude } = position.coords;
-               
-                const json = await this.fetchAPI(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
-                );
+                try{
+                    const key = window.process.env.WEATHER;
+                    const { latitude, longitude } = position.coords;
                 
-                const { weather, sys } = json;
-                const formatted = {
-                    main: weather[0].main,
-                    time: sys
+                    const json = await this.fetchAPI(
+                        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
+                    );
+                    
+                    const { weather, sys } = json;
+                    const formatted = {
+                        main: weather[0].main,
+                        time: sys
+                    }
+                    
+                    res(formatted);
                 }
-                
-                res(formatted);
-            });
+                catch{
+                    this.setState({
+                        error: 503
+                    });
+                    return
+                }
+            })
         })
     }
 
@@ -193,6 +201,8 @@ export default class User extends Component{
                     'Authorization': window.process.env.PEXELS
                 }
             );
+            if(!res) return
+
             photos.push(...res.photos);
         }
 
@@ -200,12 +210,19 @@ export default class User extends Component{
     }
     
     fetchAPI = async(url, headers) => {
-        const req = await fetch(url, {
-            method: "GET",
-            headers
-        })
-        const res = await req.json();
-        return res
+        try{
+            const req = await fetch(url, {
+                method: "GET",
+                headers
+            })
+            const res = await req.json();
+            return res
+        }
+        catch{
+            this.setState({
+                error: 502
+            })
+        }
     }
 
     sortPictures(pictures, quality){
@@ -228,7 +245,7 @@ export default class User extends Component{
                 <Nav current={ current } handler={ setStateByName }/>
                
                 { error && (current === 'home' || current === 'picker')
-                    ? <Error msg={ error }/>
+                    ? <Error code={ error }/>
                     : <Page { ...state } 
                             setUserState={ setStateByName }
                             switchSingleWallpaper = { switchSingleWallpaper }/>
