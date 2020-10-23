@@ -6,6 +6,7 @@ import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
 import fetch from 'node-fetch'
 import time from '../../modules/time'
+import areEqual from '../../modules/areEqual'
 import './user.css'
 
 const { join } = window.require('path');
@@ -34,11 +35,15 @@ export default class User extends Component{
             progress: 0,
             error: '',
             current: 'home',
-            position: {}
+            position: {},
+            weather: {}
         }
     }
 
-    wallpaperTimer;
+    timers = {
+        wallpaper: undefined,
+        weatherUpdate: undefined
+    }
 
     async componentDidMount(){
         const cfg = await config.get();
@@ -49,6 +54,8 @@ export default class User extends Component{
     }
 
     getWallpaperCollection = async(cfg) => {
+        clearInterval(this.timers.weatherUpdate);
+        
         const { fetchPexels, sortPictures, setWallpaper, getSearchQuery } = this;
         const { keywords, quality, mode } = cfg;
         
@@ -80,16 +87,30 @@ export default class User extends Component{
         if(mode === 'keywords'){
             return keywords
         }
-        else if(mode === 'weather'){
+        else{
+            const { getWallpaperCollection, state } = this;
             const req = await this.fetchWeather();
-            return [req.weather[0].main];
-        }
-        else if(mode === 'time'){
-            const req = await this.fetchWeather();
-            const { sunrise, sunset } = req.sys;
-            const keyword = time.convert({ sunrise, sunset });
             
-            return [keyword]
+            this.timers.weatherUpdate = setInterval(async() => {
+                const req = await this.fetchWeather();
+                const { weather, config } = state;
+                
+                if(!areEqual.objects(req, weather)){
+                    getWallpaperCollection(config);
+                }
+            }, 1000 * 3600);
+
+            this.setState({
+                weather: req
+            });
+
+            if(mode === 'weather') return [req.main]
+            else if(mode === 'time'){
+                const { sunrise, sunset } = req.time;
+                const keyword = time.convert({ sunrise, sunset });
+                
+                return [keyword]
+            }
         }
     }
 
@@ -105,7 +126,7 @@ export default class User extends Component{
     }
     
     setWallpaper = (collection, index) => {
-        clearInterval(this.wallpaperTimer);
+        clearTimeout(this.timers.wallpaper);
 
         const { savePath, setStateByName, switchSingleWallpaper, setTimer } = this;
         const url = collection[index].srcMain;
@@ -119,7 +140,7 @@ export default class User extends Component{
 
     setTimer = () => {
         if(this.state.config.timer){
-            this.wallpaperTimer = setTimeout(() => this.switchSingleWallpaper(true), this.state.config.timer);
+            this.timers.wallpaper = setTimeout(() => this.switchSingleWallpaper(true), this.state.config.timer);
         }
     }
 
@@ -137,7 +158,7 @@ export default class User extends Component{
     }
 
     fetchWeather = () => { 
-        return new Promise((res, rej) => {
+        return new Promise(res => {
             navigator.geolocation.getCurrentPosition(async(position) => {
                 const key = window.process.env.WEATHER;
                 const { latitude, longitude } = position.coords;
@@ -145,7 +166,14 @@ export default class User extends Component{
                 const json = await this.fetchAPI(
                     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
                 );
-                res(json);
+                
+                const { weather, sys } = json;
+                const formatted = {
+                    main: weather[0].main,
+                    time: sys
+                }
+                
+                res(formatted);
             });
         })
     }

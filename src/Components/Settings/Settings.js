@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import capitalizeFirstLetter from '../../modules/capitalizeFirstLetter'
 import config from '../../modules/config'
 import Mode from '../Mode/Mode'
 import Keywords from '../Keywords/Keywords'
@@ -7,6 +6,8 @@ import Timer from '../Timer/Timer'
 import Startup from '../Switch/Switch'
 import Quality from '../Quality/Quality'
 import { SettingsIcons } from '../Svg/Loader'
+import capitalizeFirstLetter from '../../modules/capitalizeFirstLetter'
+import areEqual from '../../modules/areEqual'
 import './settings.css'
 
 export default class Settings extends Component{
@@ -27,11 +28,6 @@ export default class Settings extends Component{
         {
             condition: (name, value) => (name === 'keywords'  && value.length === 0 && this.state.mode === 'keywords'),
             value: "You have to input keywords or change mode",
-            isImportant: true
-        },
-        {
-            condition: (name, value) => (name === 'timer' && value < 30 * 1000),
-            value: "Timer can't be set to a value less than 30 seconds",
             isImportant: true
         },
         {
@@ -79,42 +75,10 @@ export default class Settings extends Component{
         const cfg = this.state;
         const { handler, data } = this.props;
 
-        if(!this.areObjectsEqual(cfg, data)){
+        if(!areEqual.objects(cfg, data)){
             handler({ config: cfg });
             config.set(cfg);
         }
-    }
-
-    areObjectsEqual(obj1, obj2){
-        for(let key in obj1){
-            const current = obj1[key];
-
-            if(current !== obj2[key] &&
-               ((Array.isArray(current) && 
-               !this.areArraysEqual(current, obj2[key])) ||
-               !Array.isArray(current)))
-            {
-                    return false
-            }
-        }
-        
-        return true
-    }
-
-    areArraysEqual(arr1, arr2){
-        if(arr1.length !== arr2.length){
-            return false
-        }
-        else{
-            const longer = arr1.length > arr2.length ? arr1 : arr2
-            const shorter = arr1.length < arr2.length ? arr1 : arr2
-            
-            for(let value of longer){
-                const valueExists = shorter.some(el => el === value);
-                if(!valueExists) return false
-            }
-        }
-        return true
     }
 
     changeStateOnEvent = e => {

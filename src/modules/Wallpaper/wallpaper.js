@@ -1,5 +1,5 @@
-const { resolve, join } = window.require('path');
 const fs = window.require('fs');
+const { join } = window.require('path');
 const { execFileSync, exec } = window.require('child_process')
 const Stream = require('stream').Transform;
 
