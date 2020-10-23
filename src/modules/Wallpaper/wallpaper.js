@@ -23,20 +23,17 @@ function download(url, path, handlers){
 		else{
 			const data = new Stream();
 			const contentLength = Math.floor(size / 100);
-
 			let downloaded = 0; 
 
 			res.on('data', chunk => {
 				data.push(chunk);
 				downloaded += chunk.length;
-				
 				setState({ progress: downloaded / contentLength });                                   
 			});        
 
 			res.on('end', async() => {
 				fs.writeFile(path, data.read(), () => {
 					set(path, handlers);   
-
 					setTimer();
 					setState({
 						isLocked: false,
@@ -47,7 +44,13 @@ function download(url, path, handlers){
 		}
 	}
 
-	return https.get(url, callback);
+	const req = https.get(url, callback);
+	
+	req.on('error', () => {
+		setState({
+			error: 502
+		})
+	})
 }
 
 function set(imgPath){
