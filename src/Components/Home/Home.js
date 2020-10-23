@@ -46,7 +46,6 @@ export default function Home(props){
                     href: photographerURL,
                     Content: link
                 }]}/>
-                {/* <a href={ photographerURL }>{ link }</a> */}
             </div>
 
             <Button className="arrow" 
