@@ -84,7 +84,7 @@
 .light #keywords{
     box-shadow: var(--item-shadow-light);
 }
-.light #container, .light #click .transparent{
+.light #click .transparent{
     background-color: var(--fill-light);
 }
 .light #keywords input{
@@ -102,7 +102,7 @@
 .dark #keywords{
     box-shadow: var(--item-shadow-dark);
 }
-.dark #container, .dark #click .transparent{
+.dark #click .transparent{
     background-color: var(--fill-dark);
 }
 .dark #keywords input{
@@ -110,7 +110,7 @@
     color: var(--background-dark);
 }
 .dark #keywords input::placeholder{
-    color: var(--hr-dark);
+    color: var(--placeholder-dark);
 }
 .dark #container .keyword{
     background-color: var(--background-dark);
