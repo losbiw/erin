@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import User from './Components/User/User'
+import Controls from './Components/Controls/Controls'
 import './root.css'
 
 export default class App extends Component{
@@ -13,7 +14,10 @@ export default class App extends Component{
 
     render(){
         return(
-            <User />
+            <div>
+                <Controls />
+                <User />
+            </div>
         )
     }
 }

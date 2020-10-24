@@ -5,6 +5,7 @@ import { github, reddit, donation, development, smile } from '../../assets/icons
 import { arrow1, arrow2 } from '../../assets/icons/arrows'
 import { warning } from '../../assets/icons/warning'
 import { cross } from '../../assets/icons/cross'
+import { minimize, maximize, restore } from '../../assets/icons/controls'
 import { ReactComponent as Mode } from '../../assets/icons/settings/mode.svg'
 import { ReactComponent as Keywords } from '../../assets/icons/settings/keywords.svg'
 import { ReactComponent as Timer } from '../../assets/icons/settings/timer.svg'
@@ -86,6 +87,29 @@ const group = {
             }
         }
     },
+    Control: {
+        Minimize: {
+            path: minimize,
+            view: {
+                height: '1.7',
+                width: '17.8'
+            }
+        },
+        Maximize: {
+            path: maximize,
+            view: {
+                height: '28.3',
+                width: '28.3'
+            }
+        },
+        Restore: {
+            path: restore,
+            view: {
+                height: '28.3',
+                width: '28.3'
+            }
+        }
+    },
     WarningIcon: {
         Warning: {
             path: warning,
@@ -116,7 +140,7 @@ function addGradients(icons){
 }
 
 iterateIcons();
-const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon } = group;
+const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control } = group;
 const SettingsIcons = {
     Mode,
     Keywords,
@@ -125,4 +149,4 @@ const SettingsIcons = {
     Quality
 }
 
-export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon }
+export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control }
