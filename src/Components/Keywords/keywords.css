@@ -63,7 +63,7 @@
     height: 100%;
 }
 #container .delete:hover{
-    transform: scale(1.4);
+    transform: scale(1.25);
     transition: var(--hover-transition);
 }
 #container .keyword:last-child{
