@@ -191,22 +191,31 @@ export default class User extends Component{
     }
 
     fetchPexels = async(keywords) =>{
-        let photos = [];
+        let collection = [];
+        let canRequestMore = true;
+        let page = 1;
         
-        for(let key of keywords){
-            const res = await this.fetchAPI(
-                `https://api.pexels.com/v1/search?query=${key}&per_page=78`,
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': window.process.env.PEXELS
-                }
-            );
-            if(!res) return
+        while(canRequestMore && page < 3){
+            for(let key of keywords){
+                const res = await this.fetchAPI(
+                    `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': window.process.env.PEXELS
+                    }
+                );
 
-            photos.push(...res.photos);
+                const { photos } = await res;
+                
+                if(!res) return
+                if(photos.length < 78) canRequestMore = false
+    
+                page++;
+                collection.push(...photos);
+            }
         }
 
-        return photos
+        return collection
     }
     
     fetchAPI = async(url, headers) => {
