@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Crosses, Control } from '../Svg/Loader'
+import Button from '../Button/Button'
 import './Controls.css'
 
 const { ipcRenderer } = window.require('electron');
@@ -14,10 +15,10 @@ export default function Controls(props){
     }
 
     const handler = e => {
-        const { action } = e.target.dataset;
-        const res = ipcRenderer.sendSync(`${action}-window`);
+        const { name } = e.target.dataset;
+        const res = ipcRenderer.sendSync(`${name}-window`);
 
-        if(action === 'maximize'){
+        if(name === 'maximize'){
             const isMaximized = res;
             isMaximized ? setIcon(() => Control.Restore) : setIcon(() => Control.Maximize);
         }
@@ -34,9 +35,10 @@ export default function Controls(props){
                         const Icon = buttons[key]
                         
                         return(
-                            <button data-action={ key } key={ key } onClick={ handler }>
-                                <Icon />
-                            </button>
+                            <Button name={ key } 
+                                    key={ key }
+                                    handler={ handler }
+                                    Content={ Icon }/>
                         )
                     })
                 }
