@@ -13,7 +13,7 @@
     "react-dom": "^17.0.0",
     "react-scripts": "3.4.4"
   },
-  "main": "src/electron-main.js",
+  "main": "src/electron/main.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -41,5 +41,25 @@
     "electron-builder": "^22.9.1",
     "electron-debug": "^3.1.0",
     "electron-devtools-installer": "^3.1.1"
+  },
+  "build": {
+    "extraResources": [
+      "**/build/**"
+    ],
+    "appId": "com.erin.start",
+    "productName": "Erin",
+    "win": {
+      "icon": "build/icon.ico",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "build/icon.512x512.png",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "build/icon.512x512.png",
+      "target": ["deb", "rpm", "snap"],
+      "category": "Utility"
+    }
   }
 }
