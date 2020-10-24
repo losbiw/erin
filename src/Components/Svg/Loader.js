@@ -67,9 +67,23 @@ const group = {
             }
         }
     },
-    Cross: {
-        Cross: {
+    Crosses: {
+        Green: {
             path: cross
+        },
+        Yellow: {
+            path: cross,
+            gradient: {
+                from: '#fdfc47',
+                to: '#fdc830'
+            }
+        },
+        Red: {
+            path: cross,
+            gradient: {
+                from: '#D31027',
+                to: '#EA384D'
+            }
         }
     },
     WarningIcon: {
@@ -102,7 +116,7 @@ function addGradients(icons){
 }
 
 iterateIcons();
-const { NavIcons, Arrows, InfoIcons, Cross, WarningIcon } = group;
+const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon } = group;
 const SettingsIcons = {
     Mode,
     Keywords,
@@ -111,4 +125,4 @@ const SettingsIcons = {
     Quality
 }
 
-export { NavIcons, Arrows, InfoIcons, Cross, SettingsIcons, WarningIcon }
+export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon }

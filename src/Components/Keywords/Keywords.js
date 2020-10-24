@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Button from '../Button/Button'
-import { Cross } from '../Svg/Loader'
+import { Crosses } from '../Svg/Loader'
 import './keywords.css'
 
 export default class Keywords extends Component{
@@ -99,7 +99,7 @@ export default class Keywords extends Component{
                                 <Button className="delete"
                                         handler={ this.handleDelete } 
                                         name={ keyword }
-                                        Content={ Cross.Cross }/>
+                                        Content={ Crosses.Green }/>
                             </div>
                         )
                     })
