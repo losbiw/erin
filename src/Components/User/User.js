@@ -5,6 +5,7 @@ import Page from '../Page/Page'
 import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
 import time from '../../modules/time'
+import APIs from '../../modules/APIs'
 import weatherAPI from '../../modules/weather'
 import areEqual from '../../modules/areEqual'
 import './user.css'
@@ -56,11 +57,11 @@ export default class User extends Component{
     getWallpaperCollection = async(cfg) => {
         clearInterval(this.timers.weatherUpdate);
         
-        const { fetchPexels, sortPictures, setWallpaper, getSearchQuery } = this;
+        const { sortPictures, getSearchQuery, setStateByName } = this;
         const { keywords, quality, mode } = cfg;
         
         const query = await getSearchQuery(mode, keywords);
-        const fetchRes = await fetchPexels(query);
+        const fetchRes = await APIs.fetchPexels(query, setStateByName);
 
         if(!fetchRes) return;
         if(fetchRes.length === 0){
@@ -80,8 +81,7 @@ export default class User extends Component{
             pictureIndex: randomIndex,
             error: '',
             isLocked: true
-        }, 
-        () => setWallpaper(sorted, randomIndex));
+        });
     }
 
     getSearchQuery = async(mode, keywords) => {
@@ -89,11 +89,11 @@ export default class User extends Component{
             return keywords
         }
         else{
-            const { getWallpaperCollection, state } = this;
-            const req = await this.fetchWeather();
+            const { setStateByName, getWallpaperCollection, state } = this;
+            const req = await APIs.fetchWeather(setStateByName);
             
             this.timers.weatherUpdate = setInterval(async() => {
-                const req = await this.fetchWeather();
+                const req = await APIs.fetchWeather(setStateByName);
                 const { weather, config } = state;
                 
                 if(!areEqual.objects(req, weather)){
@@ -159,79 +159,6 @@ export default class User extends Component{
             pictureIndex: updated,
             isLocked: true
         });
-    }
-
-    fetchWeather = () => { 
-        return new Promise(res => {
-            navigator.geolocation.getCurrentPosition(async(position) => {
-                try{
-                    const key = window.process.env.WEATHER;
-                    const { latitude, longitude } = position.coords;
-                
-                    const json = await this.fetchAPI(
-                        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
-                    );
-                    
-                    const { weather, sys } = json;
-                    const formatted = {
-                        main: weather[0].main,
-                        time: sys
-                    }
-                    
-                    res(formatted);
-                }
-                catch{
-                    this.setState({
-                        error: 503
-                    });
-                    return
-                }
-            })
-        })
-    }
-
-    fetchPexels = async(keywords) =>{
-        let collection = [];
-        let canRequestMore = true;
-        let page = 1;
-        
-        while(canRequestMore && page < 3){
-            for(let key of keywords){
-                const res = await this.fetchAPI(
-                    `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,
-                    {
-                        'Content-Type': 'application/json',
-                        'Authorization': window.process.env.PEXELS
-                    }
-                );
-
-                const { photos } = await res;
-                
-                if(!res) return
-                if(photos.length < 78) canRequestMore = false
-    
-                page++;
-                collection.push(...photos);
-            }
-        }
-
-        return collection
-    }
-    
-    fetchAPI = async(url, headers) => {
-        try{
-            const req = await fetch(url, {
-                method: "GET",
-                headers
-            })
-            const res = await req.json();
-            return res
-        }
-        catch{
-            this.setState({
-                error: 502
-            })
-        }
     }
 
     sortPictures(pictures, quality){

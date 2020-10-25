@@ -1,10 +1,10 @@
 const { app, ipcMain } = require('electron');
 
 function setListeners(win){
-    ipcMain.on('get-app-path', (event, _args) => {
-        event.returnValue = app.getPath('userData')
+    ipcMain.on('get-app-path', event => {
+        event.returnValue = app.getPath('userData');
     })
-    
+
     ipcMain.on('close-window', event => {
         win.hide();
         event.returnValue = 'hidden'

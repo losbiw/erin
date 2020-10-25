@@ -6,10 +6,6 @@ const Stream = require('stream').Transform;
 function download(url, path, handlers){
 	const https = require('https');
 	const { setState, largeFileHandler, setTimer } = handlers;
-
-	setState({ 
-		warning: ''
-	});
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];
@@ -31,15 +27,15 @@ function download(url, path, handlers){
 				setState({ progress: downloaded / contentLength });                                   
 			});        
 
-			res.on('end', async() => {
-				fs.writeFile(path, data.read(), () => {
-					set(path, handlers);   
-					setTimer();
-					setState({
-						isLocked: false,
-						progress: 0
-					});
-				}); 
+			res.on('end', () => {
+				fs.writeFileSync(path, data.read()); 
+				
+				set(path, handlers);   
+				setTimer();
+				setState({
+					isLocked: false,
+					progress: 0
+				});
 			});    
 		}
 	}
