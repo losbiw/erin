@@ -12,7 +12,7 @@
 nav{
     height: auto;
     width: 7.3vw;
-    margin: 1.56vw;
+    margin: 1.56vmax;
     margin-right: 0;
     display: flex;
     justify-content: space-between;
@@ -52,7 +52,7 @@ nav{
     width: 0.26vw;
     background-color: #33eb7f;
     position: absolute;
-    right: 0;
+    right: 5px;
     top: -5%;
 }
 .nav-btn:hover,
@@ -62,7 +62,6 @@ nav{
 .nav-btn:hover::after,
 .active::after{
     transform: scale(1);
-    right: 5px;
 }
 nav .gradient, .gradient{
     opacity: 0.0;
@@ -150,8 +149,12 @@ button > * {
     .nav-btn::after{
         border-radius: 3px;
         width: 110%;
-        height: 5px;
-        top: 0;
+        height: 3px;
+        top: 3px;
         right: -5%;
+    }
+    .nav-btn:hover::after,
+    .active::after{
+        transform: scale(1);
     }
 }

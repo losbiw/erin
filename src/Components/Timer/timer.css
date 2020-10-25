@@ -70,3 +70,25 @@ input::-webkit-inner-spin-button {
 .dark .time label{
     color: #d1d1d1;
 }
+
+@media (max-aspect-ratio: 1/1){
+    #timer{
+        justify-content: flex-start;
+        margin-bottom: 1.3vw;
+    }
+    .time input{
+        height: 6vw;
+        border-radius: 2.3vw;
+        width: 6.3vw;
+        font-size: 3vw;
+    }
+    .time label{
+        width: 6.3vw;
+        font-size: 1.5vw;
+        top: 7vw;
+    }
+    .colon{
+        margin: 0 0.72vw;
+        font-size: 1.8vw;
+    }
+}

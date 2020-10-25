@@ -65,7 +65,6 @@ select:focus, input:focus{
     font-weight: 600;
 }
 
-
 .light hr{
     background-color: var(--hr-light);
 }
@@ -88,4 +87,38 @@ select:focus, input:focus{
 .dark #settings .title svg{
     filter: var(--icon-shadow-dark);
     fill: var(--fill-dark);
+}
+
+@media (max-aspect-ratio: 1/1) {
+    #settings .title svg{
+        width: 4.3vw;
+        margin-right: 3vw;
+    }
+    #settings .title h1{
+        font-size: 3vw;
+    }
+    .item{
+        width: 80vw;
+    }
+    .setting{
+        width: 50%;
+    }
+    hr{
+        margin: 3vw 0;
+    }
+}
+
+@media (min-aspect-ratio: 21/9){
+    #settings{
+        justify-content: flex-start;
+        overflow-y: scroll;
+        overflow-x: visible;
+    }
+
+    .item:first-child{
+        margin-top: 3vw;
+    }
+    .item:last-child{
+        margin-bottom: 3vw;
+    }
 }

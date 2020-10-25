@@ -25,6 +25,27 @@ body{
 @media (max-aspect-ratio: 1/1) {
     #user{
         padding-left: 0;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
+}
+
+::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+}
+::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb{
+    border-radius: 7px;
+}
+
+.light ::-webkit-scrollbar-track{
+    background: var(--hr-light);
+}
+.light ::-webkit-scrollbar-thumb{
+    background: var(--fill-light)
+}
+.dark ::-webkit-scrollbar-track{
+    background: var(--hr-dark);
+}
+.dark ::-webkit-scrollbar-thumb{
+    background: var(--fill-dark)
 }

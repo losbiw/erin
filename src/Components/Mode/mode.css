@@ -91,3 +91,19 @@
 .dark .transparent{
     background-color: var(--background-dark);
 }
+
+@media (max-aspect-ratio: 1/1) {
+    .radio{
+        height: 6vw;
+        border-radius: 3vw;
+    }
+    .background{
+        padding: 0.4vw;
+        border-radius: 3vw;
+    }
+    .background label{
+        padding: 0 2vw;
+        font-size: 2vw;
+        border-radius: 3vw;
+    }
+}

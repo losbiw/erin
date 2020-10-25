@@ -66,3 +66,22 @@
     from{ margin-top: -5vw }
     to{ margin-top: 1.56vw }
 }
+
+@media (max-aspect-ratio: 1/1) {
+    #warning{
+        margin-top: 5vh;
+        margin-left: 0;
+        padding: 1.5vh 3vw;
+    }
+    #warning svg{
+        width: 3.65vh;
+    }
+    #warning p{
+        font-size: 1.5vh;
+        margin: 0 3vw;
+    }
+    #warning .delete{
+        width: 1.2vh;
+        height: 1.2vh;
+    }
+}

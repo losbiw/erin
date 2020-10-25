@@ -1,17 +1,18 @@
 #controls{
     width: 100%;
     top: 0;
-    right: 1.56vw;
+    right: 1.56vmax;
     position: absolute;
     z-index: 10;
     display: flex;
 }
 #draggable{
+    margin-top: 0.1vh;
     width: 100%;
     -webkit-app-region: drag;
 }
 #control-btns{
-    margin-top: 1.56vw;
+    margin-top: 1.56vmax;
     display: flex;
 }
 #controls button{
@@ -31,4 +32,23 @@
 #controls button svg{
     height: 100%;
     width: 100%;
+}
+
+.light #controls button svg{
+    filter: var(--icon-shadow-light);
+    fill: var(--fill-light);
+}
+.dark #controls button svg{
+    filter: var(--icon-shadow-dark);
+    fill: var(--fill-dark);
+}
+
+@media (max-aspect-ratio: 1/1){
+    #controls button{
+        width: 2vh;
+        height: 2vh;
+    }
+    #controls button:nth-child(-n+2){
+        margin-right: 3vw;
+    }
 }

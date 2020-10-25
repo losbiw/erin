@@ -81,3 +81,27 @@ input:checked + .slider:before {
 .dark .slider:before{
     background: var(--background-dark);
 }
+
+@media (max-aspect-ratio: 1/1){
+    .switch {
+        width: 8vw;
+        height: 4vw;
+    } 
+    .slider {
+        border-radius: 2vw;
+    }
+    .slider:before {
+        height: 3vw;
+        width: 3vw;
+        left: 0.5vw;
+        bottom: 0.5vw;
+    }
+    .slider .gradient{
+        border-radius: 2vw;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(3.15vw);
+        -ms-transform: translateX(3.15vw);
+        transform: translateX(3.15vw);
+    }
+}

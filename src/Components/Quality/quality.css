@@ -22,3 +22,15 @@ option{
     color: var(--background-dark);
     box-shadow: var(--item-shadow-dark);
 }
+
+@media (max-aspect-ratio: 1/1){
+    select, #keywords input{
+        height: 6vw;
+        border-radius: 6vw;
+        font-size: 1.8vw;
+        box-sizing: border-box;
+    }
+    select, option, #keywords input::placeholder{
+        font-size: 1.8vw;
+    }
+}

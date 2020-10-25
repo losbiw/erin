@@ -80,7 +80,6 @@ export default class Keywords extends Component{
             isInput
             ?
             <input type="text" 
-                    id="keywords" 
                     name="keywords" 
                     placeholder="Type something and press enter"
                     maxLength="15"
