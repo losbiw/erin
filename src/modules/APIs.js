@@ -5,7 +5,7 @@ function fetchWeather(errHandler){
                 const key = window.process.env.WEATHER;
                 const { latitude, longitude } = position.coords;
             
-                const json = await this.fetchAPI(
+                const json = await fetchAPI(
                     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`,
                     errHandler
                 );
@@ -18,7 +18,7 @@ function fetchWeather(errHandler){
                 
                 res(formatted);
             }
-            catch{
+            catch(err){
                 errHandler({
                     error: 503
                 });
@@ -82,4 +82,4 @@ async function fetchAPI(url, headers, errHandler){
     }
 }
 
-export default { fetchPexels, fetchWeather }
+export { fetchPexels, fetchWeather }

@@ -5,8 +5,8 @@ import Page from '../Page/Page'
 import config from '../../modules/config'
 import wallpaper from '../../modules/Wallpaper/wallpaper'
 import time from '../../modules/time'
-import APIs from '../../modules/APIs'
-import weatherAPI from '../../modules/weather'
+import weather from '../../modules/weather'
+import { fetchPexels, fetchWeather } from '../../modules/APIs'
 import areEqual from '../../modules/areEqual'
 import './user.css'
 
@@ -61,7 +61,7 @@ export default class User extends Component{
         const { keywords, quality, mode } = cfg;
         
         const query = await getSearchQuery(mode, keywords);
-        const fetchRes = await APIs.fetchPexels(query, setStateByName);
+        const fetchRes = await fetchPexels(query, setStateByName);
 
         if(!fetchRes) return;
         if(fetchRes.length === 0){
@@ -90,10 +90,10 @@ export default class User extends Component{
         }
         else{
             const { setStateByName, getWallpaperCollection, state } = this;
-            const req = await APIs.fetchWeather(setStateByName);
+            const req = await fetchWeather(setStateByName);
             
             this.timers.weatherUpdate = setInterval(async() => {
-                const req = await APIs.fetchWeather(setStateByName);
+                const req = await fetchWeather(setStateByName);
                 const { weather, config } = state;
                 
                 if(!areEqual.objects(req, weather)){
@@ -106,7 +106,7 @@ export default class User extends Component{
             });
 
             if(mode === 'weather'){
-                const converted = weatherAPI.convertMain(req.main)
+                const converted = weather.convertMain(req.main)
                 return [converted];
             }
             else if(mode === 'time'){
@@ -173,12 +173,14 @@ export default class User extends Component{
     }
 
     render(){
-        const { state, setStateByName, switchSingleWallpaper } = this;
+        const { setStateByName, switchSingleWallpaper, state, props } = this;
         const { error, current } = state;
 
         return(
             <div id="user" className="">
-                <Nav current={ current } handler={ setStateByName }/>
+                <Nav current={ current } 
+                     setState={ setStateByName }
+                     theme={ props }/>
                
                 { error && (current === 'home' || current === 'picker')
                     ? <Error code={ error }/>
