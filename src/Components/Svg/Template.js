@@ -3,6 +3,8 @@ import React from 'react'
 export default function Template(props){
     const { path, sizes, id, view, gradient } = props;
     const { width, height } = view || sizes || {width: 512, height: 512};
+    
+    const filled = addFill(path, id);
 
     return(
         <svg viewBox={ `0 0 ${width} ${height}` } 
@@ -15,7 +17,7 @@ export default function Template(props){
                     <stop offset="100%" stopColor={ gradient?.to || "#38ef7d" }/>
                 </linearGradient>
                 <mask id={ id } maskUnits="userSpaceOnUse" x="0" y="0" width={ width } height={ height }
-                      dangerouslySetInnerHTML={{__html: path}}/>
+                      dangerouslySetInnerHTML={{__html: filled}}/>
             </defs>
             <g mask={ `url(#${id})` }>
                 <rect className="original" x="0" y="0" width={ width } height={ height } fill="white" />
@@ -23,4 +25,16 @@ export default function Template(props){
             </g>
         </svg>
     )
+}
+
+function addFill(path, id){
+    const fill = ' fill="white"/'
+    const rgx = /\//g;
+    const result = path.replaceAll(rgx, fill);
+
+    if(id === 'Restore'){
+        console.log(result);
+    }
+    
+    return result
 }
