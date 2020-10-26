@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import User from './Components/User/User'
 import Controls from './Components/Controls/Controls'
+import config from './modules/config'
 import './root.css'
 
 export default class App extends Component{
@@ -9,6 +10,21 @@ export default class App extends Component{
 
         this.state = {
             theme: 'dark'
+        }
+    }
+
+    componentDidMount(){
+        const { theme } = config.get();
+        this.setState({
+            theme: theme
+        })
+    }
+
+    componentDidUpdate(_prevProps, prevState){
+        if(prevState.theme !== this.state.theme){
+            config.set({
+                theme: this.state.theme
+            });
         }
     }
 

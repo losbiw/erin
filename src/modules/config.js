@@ -19,9 +19,14 @@ function get(){
 }
 
 function set(options){
+    const updated = get();
     const cfgPath = getConfigPath();
-    const json = JSON.stringify(options);
 
+    for(let key in options){
+        updated[key] = options[key]
+    }
+    
+    const json = JSON.stringify(updated);
     startup.set(options.startup);
     
     fs.writeFile(cfgPath, json, (err)=>{
@@ -52,7 +57,8 @@ const getDefaultOptions = () => ({
     keywords: [],
     timer: 0,
     quality: 'original',
-    startup: true
+    startup: true,
+    theme: 'dark'
 })
 
 export default { get, set, getAppPath }
