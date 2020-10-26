@@ -24,7 +24,7 @@ export default function Error(props){
             <div id="err-code">
                 {
                     codeSpread.map(char => {
-                        return <h1>{ char }</h1>
+                        return <h1 key={ char }>{ char }</h1>
                     })
                 }
             </div>
