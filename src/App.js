@@ -8,15 +8,28 @@ export default class App extends Component{
         super();
 
         this.state = {
-            isFirstLaunch: true
+            theme: 'dark'
         }
     }
 
+    handleThemeSwitch = () => {
+        const current = this.state.theme;
+        const value = current === 'dark' ? 'light' : 'dark';
+
+        this.setState({
+            theme: value
+        });
+    }
+
     render(){
+        const { state, handleThemeSwitch } = this;
+        const { theme } = state;
+
         return(
-            <div>
+            <div className={ theme }>
                 <Controls />
-                <User />
+                <User theme={ theme } 
+                      handler={ handleThemeSwitch }/>
             </div>
         )
     }

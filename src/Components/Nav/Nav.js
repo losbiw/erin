@@ -1,10 +1,16 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { NavIcons } from '../Svg/Loader'
+import { NavIcons, Themes } from '../Svg/Loader'
 import './nav.css'
 
 export default function Nav(props){
+    const { theme, handler } = props.theme;
     const { Home, Picker, Settings, Info } = NavIcons;
+    const { Moon, Sun } = Themes;
+    
+    const themeIcon = theme === 'dark' ? Sun : Moon;
+    let isFirst = true;
+    
     const buttons = [
     [{
         target: 'home',
@@ -26,7 +32,7 @@ export default function Nav(props){
 
     const handlePageChange = e => {
         const { name } = e.target.dataset;
-        props.handler({ current: name });
+        props.setState({ current: name });
     }
 
     return(
@@ -38,12 +44,20 @@ export default function Nav(props){
                             const { icon, target } = button;
                             const active = props.current === target ? ' active' : '';
 
+                            if(group === buttons[1]) isFirst = false
+
                             return <Button className={ `nav-btn${active}` }
                                            Content={ icon } 
                                            name={ target }
                                            key={ target }
                                            handler={ handlePageChange }/>
                         })
+                    }
+                    { 
+                        isFirst && 
+                        <Button className='nav-btn'
+                                handler={ handler }
+                                Content={ themeIcon }/>
                     }
                 </div>
             }) }

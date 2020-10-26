@@ -3,6 +3,7 @@ import Template from './Template'
 import { home, picker, settings, info } from '../../assets/icons/nav'
 import { github, reddit, donation, development, smile } from '../../assets/icons/info'
 import { arrow1, arrow2 } from '../../assets/icons/arrows'
+import { moon, sun } from '../../assets/icons/themes'
 import { warning } from '../../assets/icons/warning'
 import { cross } from '../../assets/icons/cross'
 import { minimize, maximize, restore } from '../../assets/icons/controls'
@@ -118,6 +119,22 @@ const group = {
                 to: '#fdc830'
             }
         }
+    },
+    Themes: {
+        Moon: {
+            path: moon,
+            sizes: {
+                width: "312",
+                height: "312"
+            }
+        },
+        Sun: {
+            path: sun,
+            sizes: {
+                width: "496",
+                height: "496"
+            }
+        }
     }
 }
 
@@ -140,7 +157,7 @@ function addGradients(icons){
 }
 
 iterateIcons();
-const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control } = group;
+const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control, Themes } = group;
 const SettingsIcons = {
     Mode,
     Keywords,
@@ -149,4 +166,4 @@ const SettingsIcons = {
     Quality
 }
 
-export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control }
+export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes }
