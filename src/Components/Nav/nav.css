@@ -11,7 +11,7 @@
 
 nav{
     height: auto;
-    width: 7.3vw;
+    width: auto;
     margin: 1.56vmax;
     margin-right: 0;
     display: flex;
@@ -32,10 +32,13 @@ nav{
 .btns:nth-child(2) button{
     margin-bottom: 2.4vw;
 }
+.btns:nth-child(2) button:first-child{
+    margin-top: 2.4vw;
+}
 
 .nav-btn{
     display: inline-block;
-    width: 100%;
+    width: 7.3vw;
     padding: 0 2vw;
     background-color: transparent;
     border: none;
@@ -122,7 +125,6 @@ button > * {
 
 @media (max-aspect-ratio: 1/1) {
     nav{
-        margin: 1.56vw;
         width: auto;
         flex-direction: row;
         border-radius: 3.5vh;
@@ -156,5 +158,44 @@ button > * {
     .nav-btn:hover::after,
     .active::after{
         transform: scale(1);
+    }
+    .btns:nth-child(2) button:first-child{
+        margin-top: 0;
+    }
+}
+
+@media (min-aspect-ratio: 3/1){
+    .btns:nth-child(1) button{
+        margin-top: 0vw;
+    }
+    .btns:nth-child(2) button{
+        margin-bottom: 0vw;
+    }
+    .btns:nth-child(2) button:first-child{
+        margin-top: 0vw;
+    }
+    .btns{
+        display: flex;
+        flex-direction: row;
+    }
+    .nav-btn{
+        width: 6.5vw;
+    }
+    .btns:nth-child(1) .nav-btn svg{
+        margin-top: 1vw;
+    }
+    .btns:nth-child(2) .nav-btn svg{
+        margin-bottom: 1vw;
+    }
+    .nav-btn::after{
+        border-radius: 3px;
+        width: 50%;
+        height: 2px;
+        right: 25%;
+        top: 4px;
+    }
+    .btns:nth-child(2) .nav-btn::after{
+        top: auto;
+        bottom: 4px;
     }
 }

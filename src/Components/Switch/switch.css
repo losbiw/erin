@@ -87,8 +87,8 @@ input:checked + .slider:before {
         width: 8vw;
         height: 4vw;
     } 
-    .slider {
-        border-radius: 2vw;
+    .slider, .slider .gradient{
+        border-radius: 4vw;
     }
     .slider:before {
         height: 3vw;
@@ -96,12 +96,7 @@ input:checked + .slider:before {
         left: 0.5vw;
         bottom: 0.5vw;
     }
-    .slider .gradient{
-        border-radius: 2vw;
-    }
     input:checked + .slider:before {
-        -webkit-transform: translateX(3.15vw);
-        -ms-transform: translateX(3.15vw);
-        transform: translateX(3.15vw);
+        transform: translateX(4.1vw);
     }
 }
