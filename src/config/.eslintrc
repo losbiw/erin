@@ -1,4 +1,5 @@
 {
+    "extends": ["react-app"],
     "rules": {
         "import/no-webpack-loader-syntax": "off"
     }
