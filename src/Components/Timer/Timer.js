@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import capitalize from '../../modules/capitalizeFirstLetter'
+import capitalize from '@modules/capitalizeFirstLetter'
 import './timer.css'
 
 export default function Timer(props){

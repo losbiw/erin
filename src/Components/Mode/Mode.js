@@ -1,5 +1,5 @@
 import React from 'react'
-import capitalize from '../../modules/capitalizeFirstLetter'
+import capitalize from '@modules/capitalizeFirstLetter'
 import './mode.css'
 
 export default function Mode(props){

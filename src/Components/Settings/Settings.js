@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import config from '../../modules/config'
 import Mode from '../Mode/Mode'
 import Keywords from '../Keywords/Keywords'
 import Timer from '../Timer/Timer'
 import Startup from '../Switch/Switch'
 import Quality from '../Quality/Quality'
 import { SettingsIcons } from '../Svg/Loader'
-import capitalizeFirstLetter from '../../modules/capitalizeFirstLetter'
-import areEqual from '../../modules/areEqual'
+import config from '@modules/config'
+import capitalizeFirstLetter from '@modules/capitalizeFirstLetter'
+import areEqual from '@modules/areEqual'
 import './settings.css'
 
 export default class Settings extends Component{
