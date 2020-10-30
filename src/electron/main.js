@@ -4,7 +4,7 @@ const tray = require('./tray');
 const ipcEvents = require('./ipcEvents');
 
 require('electron-debug')();
-require('dotenv').config({path: join(__dirname, '../.env')});
+require('dotenv').config({path: join(__dirname, '../config/.env')});
 
 let win, iconPath, winTray; 
 
