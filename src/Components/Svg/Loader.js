@@ -1,12 +1,28 @@
 import React from 'react'
 import Template from './Template'
-import { home, picker, settings, info } from '../../assets/icons/nav'
-import { github, reddit, donation, development, smile } from '../../assets/icons/info'
-import { arrow1, arrow2 } from '../../assets/icons/arrows'
-import { moon, sun } from '../../assets/icons/themes'
-import { warning } from '../../assets/icons/warning'
-import { cross } from '../../assets/icons/cross'
-import { minimize, maximize, restore } from '../../assets/icons/controls'
+
+import Home from '!raw-loader!../../assets/icons/nav/home.svg'
+import Picker from '!raw-loader!../../assets/icons/nav/picker.svg'
+import Settings from '!raw-loader!../../assets/icons/nav/settings.svg'
+import Info from '!raw-loader!../../assets/icons/nav/info.svg'
+
+import Donation from '!raw-loader!../../assets/icons/info/donation.svg'
+import Development from '!raw-loader!../../assets/icons/info/development.svg'
+import Smile from '!raw-loader!../../assets/icons/info/smile.svg'
+import Reddit from '!raw-loader!../../assets/icons/info/reddit.svg'
+import Github from '!raw-loader!../../assets/icons/info/github.svg'
+
+import Arrow from '!raw-loader!../../assets/icons/ui/arrow.svg'
+import Warning from '!raw-loader!../../assets/icons/ui/warning.svg'
+import Cross from '!raw-loader!../../assets/icons/ui/cross.svg'
+
+import Moon from '!raw-loader!../../assets/icons/themes/moon.svg'
+import Sun from '!raw-loader!../../assets/icons/themes/sun.svg'
+
+import Minimize from '!raw-loader!../../assets/icons/controls/minimize.svg'
+import Maximize from '!raw-loader!../../assets/icons/controls/maximize.svg'
+import Restore from '!raw-loader!../../assets/icons/controls/restore.svg'
+
 import { ReactComponent as Mode } from '../../assets/icons/settings/mode.svg'
 import { ReactComponent as Keywords } from '../../assets/icons/settings/keywords.svg'
 import { ReactComponent as Timer } from '../../assets/icons/settings/timer.svg'
@@ -15,73 +31,35 @@ import { ReactComponent as Quality } from '../../assets/icons/settings/quality.s
 
 const group = {
     NavIcons: {
-        Home: {
-            path: home
-        },
-        Picker: {
-            path: picker
-        },
-        Settings: {
-            path: settings
-        },
-        Info: {
-            path: info,
-            sizes: {
-                width: "330",
-                height: "330"
-            }
-        }
+        Home,
+        Picker,
+        Settings,
+        Info
     },
     Arrows: [
-        {
-            path: arrow1,
-        },
-        {
-            path: arrow2,
-        }
+        Arrow,
+        Arrow
     ],
     InfoIcons: {
-        Github: {
-            path: github,
-            sizes: {
-                width: "16",
-                height: "16"
-            }
-        },
-        Reddit: {
-            path: reddit
-        },
-        Donation: {
-            path: donation
-        },
-        Smile: {
-            path: smile,
-            view: {
-                height: "370",
-                width: "370"
-            }
-        },
-        Development: {
-            path: development,
-            view: {
-                height: "24",
-                width: "24"
-            }
-        }
+        Github,
+        Reddit,
+        Donation,
+        Smile,
+        Development
     },
     Crosses: {
         Green: {
-            path: cross
+            path: Cross
         },
         Yellow: {
-            path: cross,
+            path: Cross,
             gradient: {
                 from: '#fdfc47',
                 to: '#fdc830'
             }
         },
         Red: {
-            path: cross,
+            path: Cross,
             gradient: {
                 from: '#D31027',
                 to: '#EA384D'
@@ -89,31 +67,13 @@ const group = {
         }
     },
     Control: {
-        Minimize: {
-            path: minimize,
-            view: {
-                height: '1.7',
-                width: '17.8'
-            }
-        },
-        Maximize: {
-            path: maximize,
-            view: {
-                height: '28.3',
-                width: '28.3'
-            }
-        },
-        Restore: {
-            path: restore,
-            view: {
-                height: '28.3',
-                width: '28.3'
-            }
-        }
+        Minimize,
+        Maximize,
+        Restore
     },
     WarningIcon: {
         Warning: {
-            path: warning,
+            path: Warning,
             gradient: {
                 from: '#fdfc47',
                 to: '#fdc830'
@@ -121,20 +81,8 @@ const group = {
         }
     },
     Themes: {
-        Moon: {
-            path: moon,
-            sizes: {
-                width: "312",
-                height: "312"
-            }
-        },
-        Sun: {
-            path: sun,
-            sizes: {
-                width: "496",
-                height: "496"
-            }
-        }
+        Moon,
+        Sun
     }
 }
 
@@ -149,7 +97,7 @@ function addGradients(icons){
         const icon = icons[key];
         
         icons[key] = () => {
-            return <Template { ...icon } id={ key }/>
+            return <Template svg={ icon } id={ key }/>
         }
     }
 
