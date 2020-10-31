@@ -1,5 +1,5 @@
 import React from 'react'
-import './switch.css'
+import './Switch.css'
 
 export default function Switch(props){
     return(

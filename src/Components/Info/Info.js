@@ -2,7 +2,7 @@ import React from 'react'
 import Cards from '../Cards/Cards'
 import Links from '../Links/Links'
 import { InfoIcons } from '../Svg/Loader'
-import './info.css'
+import './Info.css'
 
 export default function Info(props){
     const { Github, Reddit } = InfoIcons;
@@ -34,7 +34,7 @@ export default function Info(props){
     }
 
     return(
-        <div id="info">
+        <div id="info" className="page">
             <div id="contact">
                 <p>Contact us:</p>
                 <Links links={ linksData.author }/>

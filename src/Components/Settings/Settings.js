@@ -8,7 +8,7 @@ import { SettingsIcons } from '../Svg/Loader'
 import config from '@modules/config'
 import capitalizeFirstLetter from '@modules/capitalizeFirstLetter'
 import areEqual from '@modules/areEqual'
-import './settings.css'
+import './Settings.css'
 
 export default class Settings extends Component{
     constructor(props){
@@ -100,7 +100,7 @@ export default class Settings extends Component{
         
         if(!!Object.keys(this.state).length){
             return( 
-                <form id="settings">
+                <form id="settings" className="page">
                 {
                     keys.map(key => {
                         const capitalized = capitalizeFirstLetter(key);

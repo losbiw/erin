@@ -1,7 +1,8 @@
 import React from 'react'
 import Button from '../Button/Button'
 import { NavIcons, Themes } from '../Svg/Loader'
-import './nav.css'
+import './Switch.css'
+import './Nav.css'
 
 export default function Nav(props){
     const { theme, handler } = props.theme;
@@ -57,7 +58,8 @@ export default function Nav(props){
                         isFirst && 
                         <Button className='nav-btn'
                                 handler={ handler }
-                                Content={ themeIcon }/>
+                                Content={ themeIcon }
+                                id="theme-switch"/>
                     }
                 </div>
             }) }

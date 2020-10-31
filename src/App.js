@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import User from './Components/User/User'
 import Controls from './Components/Controls/Controls'
 import config from './modules/config'
+import './App.css'
 import './root.css'
 
 export default class App extends Component{
@@ -42,7 +43,7 @@ export default class App extends Component{
         const { theme } = state;
 
         return(
-            <div className={ theme }>
+            <div id="theme" className={ theme }>
                 <Controls />
                 <User theme={ theme } 
                       handler={ handleThemeSwitch }/>

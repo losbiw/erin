@@ -1,5 +1,5 @@
 import React from 'react'
-import './aspect_ratio.css'
+import './Aspect_ratio.css'
 
 export default function AspectRatio(props){
     const { src, id, isActive, name, handler } = props;

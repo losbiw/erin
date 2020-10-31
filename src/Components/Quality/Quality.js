@@ -1,6 +1,6 @@
 import React from 'react'
 import capitalize from '@modules/capitalizeFirstLetter'
-import './quality.css'
+import './Quality.css'
 
 export default function Quality(props){
     const options = [

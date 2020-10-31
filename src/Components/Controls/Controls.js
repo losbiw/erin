@@ -5,7 +5,7 @@ import './Controls.css'
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Controls(props){
+export default function Controls(_props){
     const [MaximizeIcon, setIcon] = useState(() => Control.Maximize);
 
     const buttons = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import capitalize from '@modules/capitalizeFirstLetter'
-import './timer.css'
+import './Timer.css'
 
 export default function Timer(props){
     const [time, setTime] = useState(null);

@@ -1,6 +1,6 @@
 import React from 'react'
 import capitalize from '@modules/capitalizeFirstLetter'
-import './mode.css'
+import './Mode.css'
 
 export default function Mode(props){
     const labels = ['keywords', 'weather', 'time'];

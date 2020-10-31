@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button/Button'
 import { Crosses } from '../Svg/Loader'
-import './keywords.css'
+import './Keywords.css'
 
 export default class Keywords extends Component{
     constructor(props){

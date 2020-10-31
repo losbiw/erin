@@ -8,7 +8,7 @@ import time from '@modules/time'
 import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
-import './user.css'
+import './User.css'
 
 const { join } = window.require('path');
 
@@ -46,13 +46,13 @@ export default class User extends Component{
         weatherUpdate: undefined
     }
 
-    // async componentDidMount(){
-    //     const cfg = await config.get();
+    async componentDidMount(){
+        const cfg = await config.get();
     
-    //     this.setState({
-    //         config: cfg
-    //     });
-    // }
+        this.setState({
+            config: cfg
+        });
+    }
 
     getWallpaperCollection = async(cfg) => {
         clearInterval(this.timers.weatherUpdate);

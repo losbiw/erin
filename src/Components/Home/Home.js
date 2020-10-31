@@ -4,7 +4,7 @@ import AspectRatio from '../AspectRatio/AspectRatio'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import Links from '../Links/Links'
 import { Arrows } from '../Svg/Loader'
-import './home.css'
+import './Home.css'
 
 export default function Home(props){
     const { photographer, photographerURL, srcMain, progress, isLocked, handler, switchSingleWallpaper } = props;

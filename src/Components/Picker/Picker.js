@@ -3,7 +3,7 @@ import Button from '../Button/Button'
 import AspectRatio from '../AspectRatio/AspectRatio'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import { Arrows } from '../Svg/Loader'
-import './picker.css'
+import './Picker.css'
 
 export default class Picker extends Component{
     constructor(props){
@@ -92,7 +92,7 @@ export default class Picker extends Component{
         const handler = isLocked ? showWarning : switchWallpaperByIndex
 
         return(
-            <div id="picker">
+            <div id="picker" className="page">
                 <div className="wrapper">
                     <Button className="arrow" 
                         Content={ Arrows[0] } 
