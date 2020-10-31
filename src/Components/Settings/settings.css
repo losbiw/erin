@@ -13,7 +13,6 @@
 }
 
 #settings{
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +23,9 @@
     width: 47vw;
     flex-direction: column;
     align-items: center;
-    transition: var(--hover-transition);
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .item:hover{
     transform: scale(1.1);
@@ -63,6 +64,9 @@ select:focus, input:focus{
     font-size: 2vw;
     margin: 0;
     font-weight: 600;
+    transition-property: color, text-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 
 .light hr{

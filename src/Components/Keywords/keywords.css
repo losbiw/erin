@@ -44,9 +44,15 @@
     font-size: 1.3vw;
     border-radius: 1.7vw;
     z-index: 2;
+    transition-property: background-color, color;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #container .keyword p{
     margin-right: 1vw;
+    transition-property: box-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #container .delete{
     display: flex;
@@ -58,6 +64,9 @@
     background: transparent;
     border: none;
     box-sizing: border-box;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #container .delete svg{
     width: 100%;
@@ -65,7 +74,6 @@
 }
 #container .delete:hover{
     transform: scale(1.25);
-    transition: var(--hover-transition);
 }
 #container .keyword:last-child{
     margin-right: 0;

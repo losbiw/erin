@@ -23,6 +23,7 @@
     left: 0;
     z-index: 2;
     transition: .3s;
+    border-radius: 1.7vw;
 }
 .background label{
     display: flex;
@@ -35,7 +36,9 @@
     box-sizing: border-box;
     border-radius: 1.7vw;
     z-index: 3;
-    transition: .2s;
+    transition-property: background-color, color, box-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .radio input[type="radio"]{
     opacity: 0;

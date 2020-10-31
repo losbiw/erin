@@ -10,5 +10,6 @@
     
     --gradient: linear-gradient(to right, #0dc39f, #38ef7d);
     --page-width: calc(100% - 8.86vw);
-    --hover-transition: all cubic-bezier(0.2, 0.8, 0.2, 1) .8s;
+    --transition-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-duration: .8s;
 }

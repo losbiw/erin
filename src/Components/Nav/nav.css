@@ -21,6 +21,9 @@ nav{
     border-radius: 2vw;
     z-index: 10;
     box-sizing: border-box;
+    transition-property: background-color;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .btns{
     display: flex;
@@ -43,7 +46,9 @@ nav{
     background-color: transparent;
     border: none;
     position: relative;
-    transition: var(--hover-transition);
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .nav-btn::after{
     transition: .5s;

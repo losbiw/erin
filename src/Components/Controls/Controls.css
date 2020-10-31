@@ -20,7 +20,9 @@
     height: 1.2vw;
     border: none;
     background: transparent;
-    transition: var(--hover-transition);
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
     padding: 0;
 }
 #controls button:nth-child(-n+2){

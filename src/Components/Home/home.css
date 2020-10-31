@@ -17,7 +17,9 @@
     height: 2.5vw;
     width: 7%;
     overflow: hidden;
-    transition: var(--hover-transition);
+    transition-property: height;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
     z-index: 2;
 }
 .arrow:hover{
@@ -72,17 +74,11 @@
     transform: scale(1.1);
 }
 
-.light{
-    background-color: var(--background-light);
-}
 .light #home .container{
     box-shadow: var(--image-shadow-light);
 }
 .light #home a{
     color: var(--fill-light)
-}
-.dark{
-    background-color: var(--background-dark);
 }
 .dark #home .container{
     box-shadow: var(--image-shadow-dark);

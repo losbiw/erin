@@ -1,5 +1,4 @@
 #picker{
-    height: 100%;
     padding: 0 1.56vw;
     display: flex;
     flex-direction: column;
@@ -38,19 +37,22 @@
     display: inline-flex;
     flex: 0 0 auto;
     width: 31.5%;
-    transition: var(--hover-transition);
     padding: 0.25vw;
     position: relative;
     overflow: hidden;
     border-radius: 2.6vw;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #picker .aspect-ratio .transparent{
     height: 100%;
     width: 100%;
     opacity: 1.0;
-    transition: .3s;
     z-index: 1;
-    transition: var(--hover-transition);
+    transition-property: opacity;
+    transition-timing-function: var(--transition-function);
+    transition-duration: .5s;
 }
 #picker .aspect-ratio:nth-child(-n+3){
     margin-bottom: 1.3vw;

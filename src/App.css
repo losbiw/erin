@@ -1,0 +1,19 @@
+#theme{
+    transition-property: background-color;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
+
+svg,
+rect:first-child{
+    transition-property: fill;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
+
+.light{
+    background-color: var(--background-light);
+}
+.dark{
+    background-color: var(--background-dark);
+}

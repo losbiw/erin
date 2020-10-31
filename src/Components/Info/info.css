@@ -1,6 +1,5 @@
 #info{
     padding: 3vw 0;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +21,9 @@
     align-items: center;
     box-sizing: border-box;
     border-radius: 2.6vw;
-    transition: var(--hover-transition);
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .card:hover{
     transform: scale(1.15);
@@ -90,7 +91,9 @@
 .links a{
     text-decoration: none;
     font-size: 1vw;
-    transition: var(--hover-transition);
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .links a:hover{
     transform: scale(1.2);
@@ -114,7 +117,8 @@
 .light #info svg{
     filter: var(--icon-shadow-light);
 }
-.light .card h2{
+.light .card h2,
+.dark p{
     text-shadow: var(--title-shadow-light);
 }
 .light a svg{

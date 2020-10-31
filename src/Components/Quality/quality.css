@@ -7,6 +7,9 @@ select, #keywords input{
     box-sizing: border-box;
     font-weight: 600;
     padding: 0 1.4vw;
+    transition-property: background-color, color, box-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 option{
     font-size: 1.2vw;

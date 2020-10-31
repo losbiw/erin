@@ -23,6 +23,9 @@
     width: 4.3vw;
     font-size: 2.35vw;
     border: none;
+    transition-property: background-color, color, box-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 .time input:focus{
     outline: none;
@@ -37,6 +40,7 @@
     top: 4.5vw;
 }
 .colon{
+    font-weight: 500;
     margin: 0 0.72vw;
     font-size: 1.8vw;
 }
@@ -53,7 +57,6 @@ input::-webkit-inner-spin-button {
     box-shadow: var(--item-shadow-light);
 }
 .light .colon{
-    font-weight: 500;
     color: var(--fill-light);
 }
 .light .time label{

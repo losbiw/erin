@@ -36,10 +36,12 @@
     background: transparent;
     border: none;
     box-sizing: border-box;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #warning .delete:hover{
-    transform: scale(1.4);
-    transition: var(--hover-transition);
+    transform: scale(1.3);
 }
 #warning .delete svg{
     width: 100%;

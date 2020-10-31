@@ -23,7 +23,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    -webkit-transition: .4s;
     transition: .4s;
     border-radius: 1.3vw;
 }
@@ -36,7 +35,6 @@
     left: 0.3vw;
     bottom: 0.3vw;
     background: white;
-    -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
     z-index: 2;
@@ -61,9 +59,11 @@ input:checked + .slider .gradient {
 input:checked + .slider:before {
     box-shadow: var(--switch-on-shadow);
     background: white;
-    -webkit-transform: translateX(3.15vw);
-    -ms-transform: translateX(3.15vw);
     transform: translateX(3.15vw);
+}
+
+input:checked + .slider{
+    background-color: transparent;
 }
 
 .light .slider{
