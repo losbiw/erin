@@ -1,52 +1,64 @@
 import React, {Component} from 'react'
 import User from './Components/User/User'
+import Setup from './Components/Setup/Setup'
 import Controls from './Components/Controls/Controls'
-import config from './modules/config'
+import Warning from './Components/Warning/Warning'
+import config from '@modules/config'
 import './App.css'
 import './root.css'
 
 export default class App extends Component{
-    constructor(props){
+    constructor(_props){
         super();
 
         this.state = {
-            theme: 'dark'
+            theme: 'dark',
+            isCompleted: true,
+            warning: ''
         }
     }
 
     componentDidMount(){
-        const { theme } = config.get();
+        const { theme, isCompleted } = config.get();
         this.setState({
-            theme: theme
+            theme,
+            // isCompleted
         })
-    }
-
-    componentDidUpdate(_prevProps, prevState){
-        if(prevState.theme !== this.state.theme){
-            config.set({
-                theme: this.state.theme
-            });
-        }
     }
 
     handleThemeSwitch = () => {
         const current = this.state.theme;
         const value = current === 'dark' ? 'light' : 'dark';
 
-        this.setState({
+        const updated = {
             theme: value
-        });
+        }
+
+        config.set(updated);
+        this.setState(updated);
+    }
+
+    stateHandler = (upd) => {
+        this.setState(upd)
     }
 
     render(){
-        const { state, handleThemeSwitch } = this;
-        const { theme } = state;
+        const { state, handleThemeSwitch, stateHandler } = this;
+        const { theme, isCompleted, warning } = state;
 
         return(
             <div id="theme" className={ theme }>
                 <Controls />
-                <User theme={ theme } 
-                      handler={ handleThemeSwitch }/>
+                
+                { isCompleted
+                    ? <User theme={ theme } 
+                            handler={ handleThemeSwitch }
+                            state={ stateHandler }/>
+                    : <Setup />
+                }
+
+                { warning && <Warning value={ warning } 
+                                      handler={ stateHandler }/> }
             </div>
         )
     }

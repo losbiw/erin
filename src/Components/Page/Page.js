@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Home from '../Home/Home'
 import Picker from '../Picker/Picker'
 import Settings from '../Settings/Settings'
@@ -6,57 +6,48 @@ import Info from '../Info/Info'
 import Warning from '../Warning/Warning'
 import './Page.css'
 
-export default class Page extends Component{
-    constructor(props){
-        super();
+export default function Page(props){
+    const components = {
+        home: Home,
+        picker: Picker,
+        settings: Settings,
+        info: Info
+    }
 
-        this.components = {
-            home: Home,
-            picker: Picker,
-            settings: Settings,
-            info: Info
+    const { current, collection, pictureIndex, isLocked, progress, setUserState, switchWallpaper, setWarning } = props;
+    const Current = components[current];
+    let data;
+
+    if(current === 'home'){
+        data = { 
+            photo: { ...collection[pictureIndex] },
+            isLocked,
+            progress,
+            pictureIndex,
+            collection,
+            switchWallpaper
         }
-
-        this.state = {
-            warning: ''
+    }
+    else if(current === 'picker'){
+        data = {
+            pictureIndex,
+            collection,
+            isLocked,
+            progress,
+            switchWallpaper
+        }
+    }
+    else if(current === 'settings'){
+        data = {
+            data: { ...props.config },
+            setWarning,
+            isLocked
         }
     }
 
-    render(){
-        const { current, collection, config, pictureIndex, isLocked, progress, warning, setUserState, switchSingleWallpaper } = this.props;
-        const Current = this.components[current];
-        let data;
-
-        if(current === 'home'){
-            data = { 
-                ...collection[pictureIndex],
-                isLocked,
-                progress,
-                pictureIndex,
-                collection,
-                switchSingleWallpaper
-            }
-        }
-        else if(current === 'picker'){
-            data = {
-                pictureIndex,
-                collection,
-                isLocked,
-                progress
-            }
-        }
-        else if(current === 'settings'){
-            data = {
-                data: { ...config },
-                isLocked
-            }
-        }
-
-        return(
-            <div id="page">
-                { warning && <Warning value={ warning } handler={ setUserState }/> }
-                <Current { ...data } handler={ setUserState }/>
-            </div>
-        )
-    }
+    return(
+        <div id="page">
+            <Current { ...data } handler={ setUserState }/>
+        </div>
+    )
 }

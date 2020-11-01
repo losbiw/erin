@@ -7,20 +7,11 @@ import { Arrows } from '../Svg/Loader'
 import './Home.css'
 
 export default function Home(props){
-    const { photographer, photographerURL, srcMain, progress, isLocked, handler, switchSingleWallpaper } = props;
-    let handlerForward, handlerBack;
-
-    const setWarning = () => {
-        handler({ warning: 'Please wait until the previous picture is downloaded' });
-    }
-
-    if(isLocked){
-        handlerBack = handlerForward = setWarning;
-    }
-    else{
-        handlerBack = () => switchSingleWallpaper(false);
-        handlerForward = () => switchSingleWallpaper(true);
-    }
+    const { photo, progress, isLocked, handler, switchWallpaper, pictureIndex } = props;
+    const { photographer, srcMain, photographerURL } = photo;
+    
+    const handlerForward = () => switchWallpaper(pictureIndex + 1);
+    const handlerBack = () => switchWallpaper(pictureIndex - 1) ;
 
     const link = () => (
         <div id="link">

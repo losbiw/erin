@@ -3,10 +3,9 @@ import Mode from '../Mode/Mode'
 import Keywords from '../Keywords/Keywords'
 import Timer from '../Timer/Timer'
 import Startup from '../Switch/Switch'
+import Form from '../Form/Form'
 import Quality from '../Quality/Quality'
-import { SettingsIcons } from '../Svg/Loader'
 import config from '@modules/config'
-import capitalizeFirstLetter from '@modules/capitalizeFirstLetter'
 import areEqual from '@modules/areEqual'
 import './Settings.css'
 
@@ -18,24 +17,6 @@ export default class Settings extends Component{
             ...this.props.data
         }
     }
-
-    warnings = [
-        {
-            condition: (name, value) => (name === 'quality' && value === 'original'),
-            value: "Choosing the best quality might slow down the download speed",
-            isImportant: false
-        },
-        {
-            condition: (name, value) => (name === 'keywords'  && value.length === 0 && this.state.mode === 'keywords'),
-            value: "You have to input keywords or change mode",
-            isImportant: true
-        },
-        {
-            condition: (name, value) => (name === 'timer' && value > 1000 * 60 * 60 * 24 * 7),
-            value: "Timer can't be set to a value more than a week",
-            isImportant: true
-        }
-    ]
 
     componentDidMount(){
         const keys = Object.keys(this.state);
@@ -55,22 +36,6 @@ export default class Settings extends Component{
         return null
     }
 
-    changeState = (name, value) => {
-        let updated = {};
-        let warning;
-        updated[name] = value;
-        
-        for(let key in this.warnings){
-            const current = this.warnings[key];
-           
-            if(current.condition(name, value))
-                warning = current.value;
-        }
-
-        this.props.handler({ warning: warning });
-        this.setState(updated);
-    }
-
     componentWillUnmount(){
         const cfg = this.state;
         const { handler, data } = this.props;
@@ -81,11 +46,11 @@ export default class Settings extends Component{
         }
     }
 
-    changeStateOnEvent = e => {
-        const { target } = e;
-        const { value } = target.dataset;
-        
-        this.changeState(target.name, target[value]);
+    stateHandler = (name, value) => {
+        const upd = {}
+        upd[name] = value;
+
+        this.setState(upd)
     }
 
     render(){
@@ -96,41 +61,14 @@ export default class Settings extends Component{
             startup: Startup,
             quality: Quality
         }
-        const keys = Object.keys(items);
         
         if(!!Object.keys(this.state).length){
-            return( 
-                <form id="settings" className="page">
-                {
-                    keys.map(key => {
-                        const capitalized = capitalizeFirstLetter(key);
-                        const Element = items[key];
-                        const Icon = SettingsIcons[capitalized];
-                        
-                        const handler = key === 'keywords' || key === 'timer' 
-                                        ? this.changeState
-                                        : this.changeStateOnEvent;
-
-                        const lastElement = items[keys[keys.length - 1]];
-                        
-                        return(
-                            <div className="item" key={ key }>
-                                <div className="wrapper">
-                                    <div className="title">
-                                        <Icon />
-                                        <h1>{ capitalized }</h1>
-                                    </div>
-                                    <div className="setting" id={ key }>
-                                        <Element data={ this.state[key] || [] } handler={ handler } warning={ this.props.handler }/>
-                                    </div>
-                                </div>
-                                { items[key] !== lastElement && <hr /> }
-                            </div>
-                        )
-                    })
-                }
-                </form>
-            )
+            return <Form data={ items } 
+                         config={ this.state }
+                         handlers={{
+                             warningHandler: this.props.setWarning,
+                             stateHandler: this.stateHandler
+                         }} />
         }
         else{
             return <form id="settings"></form>

@@ -74,22 +74,13 @@ export default class Picker extends Component{
         const { name } = e.target.dataset;
         const index = parseInt(name, 10);
 
-        this.props.handler({ 
-            pictureIndex: index,
-            isLocked: true
-        });
-    }
-
-    showWarning = () => {
-        this.props.handler({ warning: 'Please wait until the previous picture is downloaded' });
+        this.props.switchWallpaper(index);
     }
 
     render(){
-        const { switchWallpaperBlock, showWarning, switchWallpaperByIndex, state, props } = this;
+        const { switchWallpaperBlock, state, props, switchWallpaperByIndex } = this;
         const { collection } = state;
-        const { isLocked, progress } = props;
-
-        const handler = isLocked ? showWarning : switchWallpaperByIndex
+        const { progress, isLocked } = props;
 
         return(
             <div id="picker" className="page">
@@ -110,7 +101,7 @@ export default class Picker extends Component{
                                                 key={ key } 
                                                 name={ index }
                                                 isActive={ isActive }
-                                                handler={ isActive ? undefined : handler }/>
+                                                handler={ isActive ? undefined : switchWallpaperByIndex }/>
                         })
                     }
                 </div>

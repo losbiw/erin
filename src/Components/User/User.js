@@ -132,33 +132,41 @@ export default class User extends Component{
     setWallpaper = (collection, index) => {
         clearTimeout(this.timers.wallpaper);
 
-        const { savePath, setStateByName, switchSingleWallpaper, setTimer } = this;
+        const { savePath, setStateByName, switchWallpaper, setTimer } = this;
         const url = collection[index].srcMain;
         
         wallpaper.download(url, savePath, {
             setState: setStateByName,
-            largeFileHandler: switchSingleWallpaper,
+            largeFileHandler: switchWallpaper,
             setTimer
         });
     }
 
     setTimer = () => {
         if(this.state.config.timer){
-            this.timers.wallpaper = setTimeout(() => this.switchSingleWallpaper(true), this.state.config.timer);
+            this.timers.wallpaper = setTimeout(() => this.switchWallpaper(true), this.state.config.timer);
         }
     }
 
-    switchSingleWallpaper = isNext => {
-        const { pictureIndex, collection } = this.state;
-        let updated = isNext ? pictureIndex + 1 : pictureIndex - 1;
+    switchWallpaper = (index, isUnclocked) => {
+        const { collection, isLocked, pictureIndex } = this.state;
         
-        if(updated >= collection.length) updated = 0;
-        else if(updated < 0) updated = collection.length - 1;
+        if(isLocked && !isUnclocked){
+            this.props.state({
+                warning: 'Please wait until the previous picture is downloaded'
+            })
+        }
+        else{
+            if(typeof index !== 'number') index = pictureIndex + 1;
+            
+            if(index >= collection.length) index = 0;
+            else if(index < 0) index = collection.length - 1;
 
-        this.setState({ 
-            pictureIndex: updated,
-            isLocked: true
-        });
+            this.setState({ 
+                pictureIndex: index,
+                isLocked: true
+            });
+        }
     }
 
     sortPictures(pictures, quality){
@@ -173,7 +181,7 @@ export default class User extends Component{
     }
 
     render(){
-        const { setStateByName, switchSingleWallpaper, state, props } = this;
+        const { setStateByName, switchWallpaper, state, props } = this;
         const { error, current } = state;
 
         return(
@@ -186,7 +194,8 @@ export default class User extends Component{
                     ? <Error code={ error }/>
                     : <Page { ...state } 
                             setUserState={ setStateByName }
-                            switchSingleWallpaper = { switchSingleWallpaper }/>
+                            setWarning={ props.state }
+                            switchWallpaper = { switchWallpaper }/>
                 }
             </div>
         )

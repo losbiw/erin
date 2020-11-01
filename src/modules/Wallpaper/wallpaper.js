@@ -12,9 +12,9 @@ function download(url, path, handlers){
 
 		if((size / 1024 / 1024) >= 50){
 			setState({
-				warning: 'The file is too big, we automatically switched it to the next'
+				warning: 'The file is too big, we automatically switched it to the next one'
 			})
-			largeFileHandler(true);
+			largeFileHandler(true, true);
 		}
 		else{
 			const data = new Stream();
