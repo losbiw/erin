@@ -18,7 +18,14 @@ export default function Form(props){
         }
     ]
 
-    const changeState = (name, value) => {
+    const changeStateOnEvent = e => {
+        const { target } = e;
+        const { value } = target.dataset;
+        
+        updateState(target.name, target[value])
+    }
+
+    const updateState = (name, value) => {
         const { warningHandler, stateHandler } = props.handlers;
         let warning;
         
@@ -30,14 +37,7 @@ export default function Form(props){
         }
 
         warningHandler({ warning: warning });
-        stateHandler(name, value);
-    }
-
-    const changeStateOnEvent = e => {
-        const { target } = e;
-        const { value } = target.dataset;
-        
-        props.handlers.stateHandler(target.name, target[value]);
+        stateHandler(name, value)
     }
 
     const { data, config, handlers } = props;
@@ -52,7 +52,7 @@ export default function Form(props){
                 const Icon = SettingsIcons[capitalized];
                 
                 const handler = key === 'keywords' || key === 'timer' 
-                                ? changeState
+                                ? updateState
                                 : changeStateOnEvent;
 
                 const lastElement = data[keys[keys.length - 1]];
