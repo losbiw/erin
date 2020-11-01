@@ -36,6 +36,13 @@ export default class Settings extends Component{
         return null
     }
 
+    shouldComponentUpdate(nextProps, _nextState){
+        if(!areEqual.objects(this.state, nextProps.data)){
+            return true
+        }
+        return false
+    }
+
     componentWillUnmount(){
         const cfg = this.state;
         const { handler, data } = this.props;

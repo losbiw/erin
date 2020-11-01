@@ -41,7 +41,7 @@ export default class Keywords extends Component{
             if(value !== "" && !isRepeating){
                 keywords.push(value);
             }
-            else if(value === "") warning = "Keyword's value should not be empty";
+            else if(!value) warning = "Keyword's value should not be empty";
             else if(isRepeating) warning = "Keywords should not repeat"
                 
             this.props.handler('keywords', keywords);
