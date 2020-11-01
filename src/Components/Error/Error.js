@@ -17,14 +17,16 @@ export default function Error(props){
             description: "We couldn't connect to our services"
         }
     }
-    const codeSpread = [...code.toString(10)]
+    const codeSpread = [...code.toString(10)];
+    let index = 0;
     
     return (
         <div id="error" className="page">
             <div id="err-code">
                 {
                     codeSpread.map(char => {
-                        return <h1 key={ char }>{ char }</h1>
+                        index++;
+                        return <h1 key={ `char${index}` }>{ char }</h1>
                     })
                 }
             </div>
