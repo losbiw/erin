@@ -74,6 +74,7 @@
         margin-top: 5vh;
         margin-left: 0;
         padding: 1.5vh 3vw;
+        border-radius: 2.5vh;
     }
     #warning svg{
         width: 3.65vh;
