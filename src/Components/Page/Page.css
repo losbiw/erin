@@ -1,3 +1,9 @@
+.page{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
 #page{
     height: 100%;
     width: var(--page-width);
