@@ -1,6 +1,6 @@
 import React from 'react'
 import { SettingsIcons } from '../Svg/Loader'
-import capitalizeFirstLetter from '@modules/capitalizeFirstLetter'
+import { capitalizeFirstLetter } from '@modules/convert'
 
 export default function Form(props){ 
     const warnings = [
@@ -44,11 +44,15 @@ export default function Form(props){
     const keys = Object.keys(data);
 
     return(
-        <form id="settings" className="page">
+        <form id="settings">
         {
             keys.map(key => {
+                const current = data[key];
+                const { element, title, description } = current;
+
                 const capitalized = capitalizeFirstLetter(key);
-                const Element = data[key];
+                const settingTitle = title || capitalized;
+                const Element = element || current;
                 const Icon = SettingsIcons[capitalized];
                 
                 const handler = key === 'keywords' || key === 'timer' 
@@ -56,18 +60,21 @@ export default function Form(props){
                                 : changeStateOnEvent;
 
                 const lastElement = data[keys[keys.length - 1]];
-                
+
                 return(
                     <div className="item" key={ key }>
-                        <div className="wrapper">
+                        <div className="container">
                             <div className="title">
                                 <Icon />
-                                <h1>{ capitalized }</h1>
+                                <h1>{ settingTitle }</h1>
+                                <p>{ description || undefined }</p>
                             </div>
+
                             <div className="setting" id={ key }>
                                 <Element data={ config[key] || [] } handler={ handler } warning={ handlers.warningHandler }/>
                             </div>
                         </div>
+                        
                         { data[key] !== lastElement && <hr /> }
                     </div>
                 )

@@ -1,5 +1,5 @@
 import React from 'react'
-import capitalize from '@modules/capitalizeFirstLetter'
+import { capitalizeFirstLetter } from '@modules/convert'
 import './Mode.css'
 
 export default function Mode(props){
@@ -16,7 +16,7 @@ export default function Mode(props){
                                data-value="value"/>
                         <div className="background">
                             <div className="transparent"></div>
-                            <label forhtml={ label }>{ capitalize(label) }</label>
+                            <label forhtml={ label }>{ capitalizeFirstLetter(label) }</label>
                         </div>
                     </div>
                 )

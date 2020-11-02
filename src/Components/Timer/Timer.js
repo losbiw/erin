@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import capitalize from '@modules/capitalizeFirstLetter'
+import { capitalizeFirstLetter } from '@modules/convert'
 import './Timer.css'
 
 export default function Timer(props){
@@ -74,7 +74,7 @@ export default function Timer(props){
                             }
                         </div>
                         
-                        <label>{ capitalize(unit) }</label>
+                        <label>{ capitalizeFirstLetter(unit) }</label>
                     </div>
                 )
             })

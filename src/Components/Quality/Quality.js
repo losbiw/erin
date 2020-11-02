@@ -1,5 +1,5 @@
 import React from 'react'
-import capitalize from '@modules/capitalizeFirstLetter'
+import { capitalizeFirstLetter } from '@modules/convert'
 import './Quality.css'
 
 export default function Quality(props){
@@ -26,7 +26,7 @@ export default function Quality(props){
                 options.map(option => {
                     return(
                         <option value={ option.value } key={ option.value }>
-                            { capitalize(option.label) }
+                            { capitalizeFirstLetter(option.label) }
                         </option>
                     )
                 })
