@@ -7,7 +7,7 @@ function capitalizeFirstLetter(string){
 function toLowerCase(string){
     if(typeof string === 'string')
         return string.toLowerCase();
-    else throw 'Expected a string'
+    else throw Error('Expected a string')
 }
 
 export { capitalizeFirstLetter, toLowerCase }
