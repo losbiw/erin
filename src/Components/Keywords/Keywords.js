@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button/Button'
 import { Crosses } from '../Svg/Loader'
+import { toLowerCase } from '@modules/convert'
 import './Keywords.css'
 
 export default class Keywords extends Component{
@@ -35,13 +36,14 @@ export default class Keywords extends Component{
         
         if(e.key === 'Enter' && keywords.length < 10){
             const { value } = e.target;
-            const isRepeating = keywords.indexOf(value) === -1 ? false : true;
+            const converted = toLowerCase(value);
+            const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
             let warning;
             
-            if(value !== "" && !isRepeating){
-                keywords.push(value);
+            if(converted !== "" && !isRepeating){
+                keywords.push(converted);
             }
-            else if(!value) warning = "Keyword's value should not be empty";
+            else if(!converted) warning = "Keyword's value should not be empty";
             else if(isRepeating) warning = "Keywords should not repeat"
                 
             this.props.handler('keywords', keywords);
