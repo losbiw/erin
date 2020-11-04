@@ -1,0 +1,53 @@
+#carousel{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 4vh;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#carousel button{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: none;
+    width: 0.8vmax;
+    height: 0.8vmax;
+    margin-right: 0.65vw;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
+
+#carousel button svg{
+    width: 100%;
+    height: 100%;
+}
+#carousel button:last-child{
+    margin-right: 0;
+}
+
+#carousel .non-active:hover{
+    transform: scale(1.15);
+}
+#carousel .non-active:hover svg .gradient{
+    opacity: 0;
+}
+
+#carousel .active{
+    transform: scale(1.375);
+}
+
+.light #carousel button svg{
+    fill: var(--fill-light);
+    filter: var(--icon-shadow-light);
+}
+.dark #carousel button svg{
+    fill: var(--fill-dark);
+    filter: var(--icon-shadow-dark);
+}

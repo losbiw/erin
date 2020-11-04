@@ -6,7 +6,7 @@ export default function Form(props){
     const warnings = [
         {
             condition: (name, value) => (name === 'quality' && value === 'original'),
-            value: "Choosing the best quality might slow down the download speed"
+            value: "Choosing the high quality might slow down the download speed"
         },
         {
             condition: (name, value) => (name === 'keywords'  && value.length === 0 && props.config.mode === 'keywords'),
@@ -40,7 +40,7 @@ export default function Form(props){
         stateHandler(name, value)
     }
 
-    const { data, config, handlers } = props;
+    const { data, config, handlers, active } = props;
     const keys = Object.keys(data);
 
     return(
@@ -53,7 +53,8 @@ export default function Form(props){
                 const capitalized = capitalizeFirstLetter(key);
                 const settingTitle = title || capitalized;
                 const Element = element || current;
-                const Icon = SettingsIcons[capitalized];
+                const Icon = SettingsIcons[capitalized] || (() => <div />);
+                const activeClass = key === active ? 'active' : '';
                 
                 const handler = key === 'keywords' || key === 'timer' 
                                 ? updateState
@@ -62,7 +63,7 @@ export default function Form(props){
                 const lastElement = data[keys[keys.length - 1]];
 
                 return(
-                    <div className="item" key={ key }>
+                    <div className={ `item ${ activeClass }` } key={ key }>
                         <div className="container">
                             <div className="title">
                                 <Icon />

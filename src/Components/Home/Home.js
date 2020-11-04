@@ -7,7 +7,7 @@ import { Arrows } from '../Svg/Loader'
 import './Home.css'
 
 export default function Home(props){
-    const { photo, progress, isLocked, handler, switchWallpaper, pictureIndex } = props;
+    const { photo, progress, isLocked, switchWallpaper, pictureIndex } = props;
     const { photographer, srcMain, photographerURL } = photo;
     
     const handlerForward = () => switchWallpaper(pictureIndex + 1);

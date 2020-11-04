@@ -1,0 +1,28 @@
+#setup{
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+@media (min-aspect-ratio: 18/9){
+    #setup{
+        overflow-y: scroll;
+    }
+}
+@media (min-aspect-ratio: 21/9){
+    #setup #settings{
+        justify-content: center;
+        align-items: flex-start;
+        overflow: visible;
+    }
+
+    #setup .item:first-child{
+        margin-top: 0;
+    }
+    #setup .item:last-child{
+        margin-bottom: 0;
+    }
+}

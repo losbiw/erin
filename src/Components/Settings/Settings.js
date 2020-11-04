@@ -70,12 +70,16 @@ export default class Settings extends Component{
         }
         
         if(!!Object.keys(this.state).length){
-            return <Form data={ items } 
+            return (
+                <div className="page">
+                    <Form data={ items } 
                          config={ this.state }
                          handlers={{
                              warningHandler: this.props.setWarning,
                              stateHandler: this.stateHandler
                          }} />
+                </div>
+            )
         }
         else{
             return <form id="settings"></form>

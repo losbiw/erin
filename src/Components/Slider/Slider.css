@@ -1,0 +1,70 @@
+#slider-container{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+#translate{
+    width: 100%;
+    height: 100%;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
+#setup #settings{
+    flex-direction: row;
+}
+#setup .item{
+    min-width: 70vw;
+    position: relative;
+    margin-right: 10vw;
+    border-radius: 3.125vw;
+    overflow: hidden;
+}
+#setup .item:first-child{
+    margin-left: 9.5vw;
+}
+#setup .item .container{
+    flex-direction: column;
+}
+#setup .active{
+    transform: scale(1.05);
+}
+#setup .title{
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5vw;
+}
+#setup .title svg{
+    width: 15vw;
+    margin-right: 0;
+    margin-top: 12.75vh;
+}
+#setup .title h1{
+    line-height: 2vw;
+    font-size: 2.35vw;
+    margin: 5.8vh 0 3vh;
+}
+#setup .title p{
+    font-size: 1.4vw;
+    line-height: 2.5vw;
+    margin: 0;
+    text-align: center;
+}
+#setup .item .setting{
+    margin: 4.8vh 0 8vh;
+    justify-content: space-between;
+}
+#setup hr{
+    display: none;
+}
+
+.light #setup .item{
+    box-shadow: var(--shadow-light);
+}
+.light #setup .item .container{
+    background: var(--nav-light);
+}
+.dark #setup .item .container{
+    background: var(--nav-dark);
+}
