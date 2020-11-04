@@ -28,19 +28,16 @@ export default class Slider extends Component{
         const { state, props, stateHandler } = this;
         const { items, handler, active, activeIndex, keys } = props;
 
-        // const isEven = activeIndex % 2 === 0;
         const middle = Math.round((keys.length - 1) / 2);
-        const multiplier = activeIndex === middle 
-                            ? 0
-                            : middle - activeIndex;
+        const equalizer = keys.length % 2 === 0 ? 40 : 0;
+        const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
 
         if(!!Object.keys(state).length){
             return(
                 <div id="slider-container">
                     <div id="translate" style={{ 
-                        transform: `translateX(${ multiplier * 80 }vw)` 
+                        transform: `translateX(${ multiplier * 80 - equalizer }vw)` 
                     }}>
-                    {/* <div id="translate"> */}
                         <Form data={ items } 
                               config={ state }
                               active={ active }
