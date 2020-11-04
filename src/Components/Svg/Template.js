@@ -3,6 +3,7 @@ import React from 'react'
 export default function Template(props){
     const { svg, id } = props;
     const path = svg.path || svg;
+    
     const gradient = svg.gradient || {
         from: "#0dc39f",
         to: "#38ef7d"

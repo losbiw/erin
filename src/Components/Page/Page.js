@@ -3,7 +3,6 @@ import Home from '../Home/Home'
 import Picker from '../Picker/Picker'
 import Settings from '../Settings/Settings'
 import Info from '../Info/Info'
-import Warning from '../Warning/Warning'
 import './Page.css'
 
 export default function Page(props){
