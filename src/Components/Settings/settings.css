@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 100%;
 }
 .item{
     display: flex;
@@ -30,7 +31,7 @@
 .item:hover{
     transform: scale(1.1);
 }
-.item .wrapper{
+.item .container{
     display: flex;
     width: 100%;
     justify-content: space-between;
