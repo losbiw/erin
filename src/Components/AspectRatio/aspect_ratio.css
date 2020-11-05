@@ -1,8 +1,3 @@
-:root{
-    --aspect-shadow-light: 0px 0px 27px 3px rgba(58, 66, 78, 0.25);
-    --aspect-shadow-dark: 0px 0px 38px 0px rgba(0, 0, 0, 0.6);
-}
-
 .aspect-ratio .transparent{
     width: 0;
     height: 0;
@@ -29,11 +24,9 @@
 }
 
 .light .aspect-ratio .container{
-    box-shadow: var(--aspect-shadow-light);
     background: var(--background-light);
 }
 .dark .aspect-ratio .container{
-    box-shadow: var(--aspect-shadow-dark);
     background: var(--background-dark);
 }
 
