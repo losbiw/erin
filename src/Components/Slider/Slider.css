@@ -67,7 +67,7 @@
 .light #setup .item .container{
     background: rgba(248, 248, 252, 0.8);
 }
-.light #setup .item{
+.dark #setup .item{
     box-shadow: var(--shadow-dark);
 }
 .dark #setup .item .container{

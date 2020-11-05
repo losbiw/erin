@@ -33,7 +33,7 @@ export default function Setup(props){
         timer: {
             title: 'Timer',
             description: 'Set the interval you want your wallpaper to change within',
-            background: 'https://images.pexels.com/photos/3551227/pexels-photo-3551227.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            background: 'https://images.pexels.com/photos/1428787/pexels-photo-1428787.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Timer
         },
         startup: {
@@ -45,6 +45,7 @@ export default function Setup(props){
         quality: {
             title: 'Wallpaper resolution',
             description: 'Choose what quality you want your wallpaper to be downloaded in',
+            background: 'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Quality
         }
     }
