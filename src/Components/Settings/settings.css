@@ -28,7 +28,7 @@
     transition-timing-function: var(--transition-function);
     transition-duration: var(--transition-duration);
 }
-.item:hover{
+.page .item:hover{
     transform: scale(1.1);
 }
 .item .container{

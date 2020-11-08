@@ -7,23 +7,20 @@
     box-sizing: border-box;
 }
 #picker .wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
     width: 100%;
     position: relative;
 }
-#picker .arrow{
-    position: absolute;
-    top: 40%;
-    left: 46.5%;
-    transform: translate(-50%, -50%);
-}
 #picker .arrow:hover{
-    height: 3.1vw;
+    transform: scale(1.24);
 }
-#picker .wrapper:first-child .arrow{
+#picker .wrapper:first-child .arrow svg{
     transform: rotate(90deg);
 }
-#picker .wrapper:last-child .arrow{
+#picker .wrapper:last-child .arrow svg{
     transform: rotate(-90deg);
 }
 #picker #slider{
