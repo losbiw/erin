@@ -1,6 +1,6 @@
 import startup from './startup'
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer, systemPreferences } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
 
@@ -58,7 +58,7 @@ const getDefaultOptions = () => ({
     timer: 0,
     quality: 'original',
     startup: true,
-    theme: 'dark'
+    theme: systemPreferences.isDarkMode() ? 'dark' : 'light'
 })
 
 export default { get, set, getAppPath }
