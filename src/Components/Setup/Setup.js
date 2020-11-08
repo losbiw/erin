@@ -8,7 +8,8 @@ import Quality from '../Quality/Quality'
 import Carousel from '../Carousel/Carousel'
 import Arrows from '../Arrows/Arrows'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
-import Links from '../Links/Links'
+import Privacy from '../Privacy/Privacy'
+
 import './Setup.css'
 
 export default function Setup(props){
@@ -19,12 +20,7 @@ export default function Setup(props){
             title: 'Privacy Policy',
             description: 'Please, read our privacy policy before using the app',
             background: 'https://images.pexels.com/photos/2706653/pexels-photo-2706653.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            element: () => <Links links={{ 
-                privacy: {
-                    href: 'https://losbiw.github.io/erin-website/',
-                    title: 'Open here'
-                } 
-            }}/>
+            element: Privacy
         },
         mode: {
             title: 'Wallpaper change mode',
@@ -74,7 +70,7 @@ export default function Setup(props){
             <ThemeToggle { ...props }/>
             <Arrows handlers={[() => handleScroll(false), () => handleScroll(true)]}/>
 
-            <Slider handler={ props.handler }
+            <Slider handler={ props.stateHandler }
                     items={ items }
                     activeIndex={ slide }
                     active={ keys[slide] }

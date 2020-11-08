@@ -95,7 +95,8 @@
     transition-timing-function: var(--transition-function);
     transition-duration: var(--transition-duration);
 }
-.links a:hover{
+#home .links a:hover,
+#info .links a:hover{
     transform: scale(1.2);
 }
 .links a > * {

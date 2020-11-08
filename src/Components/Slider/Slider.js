@@ -26,6 +26,7 @@ export default class Slider extends Component{
 
     render(){ 
         const { state, props, stateHandler } = this;
+        console.log(state);
         const { items, handler, active, activeIndex, keys } = props;
 
         const middle = Math.round((keys.length - 1) / 2);

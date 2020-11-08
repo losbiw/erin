@@ -2,12 +2,13 @@ import React from 'react'
 import './Switch.css'
 
 export default function Switch(props){
+    const { data, handler, name } = props;
     return(
         <label className="switch">
             <input type="checkbox" 
-                   name="startup" 
-                   defaultChecked={ props.data.length === 0 ? false : true }
-                   onChange={ props.handler }
+                   name={ name || "startup" }
+                   defaultChecked={ data.length === 0 ? false : true }
+                   onChange={ handler }
                    data-value="checked"
                 />
             <span className="slider round">
