@@ -152,7 +152,7 @@ export default class User extends Component{
         const { collection, isLocked, pictureIndex } = this.state;
         
         if(isLocked && !isUnclocked){
-            this.props.state({
+            this.props.stateHandler({
                 warning: 'Please wait until the previous picture is downloaded'
             })
         }
@@ -194,7 +194,7 @@ export default class User extends Component{
                     ? <Error code={ error }/>
                     : <Page { ...state } 
                             setUserState={ setStateByName }
-                            setWarning={ props.state }
+                            setWarning={ props.stateHandler }
                             switchWallpaper = { switchWallpaper }/>
                 }
             </div>

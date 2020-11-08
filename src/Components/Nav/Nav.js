@@ -1,15 +1,12 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { NavIcons, Themes } from '../Svg/Loader'
-import './Switch.css'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import { NavIcons } from '../Svg/Loader'
 import './Nav.css'
 
 export default function Nav(props){
-    const { theme, handler } = props.theme;
     const { Home, Picker, Settings, Info } = NavIcons;
-    const { Moon, Sun } = Themes;
     
-    const themeIcon = theme === 'dark' ? Sun : Moon;
     let isFirst = true;
     
     const buttons = [
@@ -55,11 +52,7 @@ export default function Nav(props){
                         })
                     }
                     { 
-                        isFirst && 
-                        <Button className='nav-btn'
-                                handler={ handler }
-                                Content={ themeIcon }
-                                id="theme-switch"/>
+                        isFirst && <ThemeToggle { ...props.theme }/>
                     }
                 </div>
             }) }
