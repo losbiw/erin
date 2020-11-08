@@ -25,15 +25,15 @@
 }
 
 #carousel button svg{
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
 }
 #carousel button:last-child{
     margin-right: 0;
 }
 
 #carousel .non-active:hover{
-    transform: scale(1.15);
+    transform: scale(1.3);
 }
 #carousel .non-active:hover svg .gradient{
     opacity: 0;
@@ -50,4 +50,10 @@
 .dark #carousel button svg{
     fill: var(--fill-dark);
     filter: var(--icon-shadow-dark);
+}
+
+@media (min-aspect-ratio: 18/9){
+    #carousel{
+        display: none;
+    }
 }

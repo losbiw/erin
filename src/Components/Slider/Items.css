@@ -1,4 +1,10 @@
 #setup #startup,
-#setup #timer{
+#setup #timer,
+#setup #privacy{
     justify-content: center;
+}
+
+#setup #privacy p{
+    text-decoration: underline;
+    text-underline-position: under;
 }

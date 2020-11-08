@@ -26,6 +26,7 @@ import Restore from '!raw-loader!@controls/restore.svg'
 
 import { ReactComponent as Mode } from '@settings/mode.svg'
 import { ReactComponent as Keywords } from '@settings/keywords.svg'
+import { ReactComponent as Privacy } from '@settings/privacy.svg'
 import { ReactComponent as Timer } from '@settings/timer.svg'
 import { ReactComponent as Startup } from '@settings/startup.svg'
 import { ReactComponent as Quality } from '@settings/quality.svg'
@@ -115,7 +116,8 @@ const SettingsIcons = {
     Keywords,
     Timer,
     Startup,
-    Quality
+    Quality,
+    Privacy
 }
 
 export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes, CircleIcon }

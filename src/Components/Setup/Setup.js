@@ -6,6 +6,9 @@ import Timer from '../Timer/Timer'
 import Startup from '../Switch/Switch'
 import Quality from '../Quality/Quality'
 import Carousel from '../Carousel/Carousel'
+import Arrows from '../Arrows/Arrows'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import Links from '../Links/Links'
 import './Setup.css'
 
 export default function Setup(props){
@@ -15,8 +18,13 @@ export default function Setup(props){
         privacy: {
             title: 'Privacy Policy',
             description: 'Please, read our privacy policy before using the app',
-            background: 'https://images.pexels.com/photos/951408/pexels-photo-951408.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            element: () => <a/>
+            background: 'https://images.pexels.com/photos/2706653/pexels-photo-2706653.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            element: () => <Links links={{ 
+                privacy: {
+                    href: 'https://losbiw.github.io/erin-website/',
+                    title: 'Open here'
+                } 
+            }}/>
         },
         mode: {
             title: 'Wallpaper change mode',
@@ -52,8 +60,20 @@ export default function Setup(props){
 
     const keys = Object.keys(items);
 
+    const handleScroll = (isForward) => {
+        let index = isForward ? slide + 1 : slide - 1;
+
+        if(index >= keys.length) index = 0;
+        else if(index < 0) index = keys.length - 1;
+
+        changeSlide(index);
+    } 
+
     return(
         <div id="setup">
+            <ThemeToggle { ...props }/>
+            <Arrows handlers={[() => handleScroll(false), () => handleScroll(true)]}/>
+
             <Slider handler={ props.handler }
                     items={ items }
                     activeIndex={ slide }
