@@ -30,6 +30,7 @@ import { ReactComponent as Privacy } from '@settings/privacy.svg'
 import { ReactComponent as Timer } from '@settings/timer.svg'
 import { ReactComponent as Startup } from '@settings/startup.svg'
 import { ReactComponent as Quality } from '@settings/quality.svg'
+import { ReactComponent as Save } from '@settings/save.svg'
 
 const group = {
     NavIcons: {
@@ -117,7 +118,8 @@ const SettingsIcons = {
     Timer,
     Startup,
     Quality,
-    Privacy
+    Privacy,
+    Save
 }
 
 export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes, CircleIcon }

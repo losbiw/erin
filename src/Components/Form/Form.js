@@ -40,7 +40,7 @@ export default function Form(props){
         stateHandler(name, value)
     }
 
-    const { data, config, handlers, active } = props;
+    const { data, config, handlers, active, theme } = props;
     const keys = Object.keys(data);
 
     return(
@@ -48,7 +48,7 @@ export default function Form(props){
         {
             keys.map(key => {
                 const current = data[key];
-                const { element, title, description, background } = current;
+                const { element, title, description } = current;
 
                 const capitalized = capitalizeFirstLetter(key);
                 const settingTitle = title || capitalized;
@@ -63,7 +63,7 @@ export default function Form(props){
                 const lastElement = data[keys[keys.length - 1]];
 
                 return(
-                    <div className={ `item ${ activeClass }` } key={ key } style={{ backgroundImage: `url(${background})` }}>
+                    <div className={ `item ${ activeClass }` } key={ key } style={{ backgroundImage: `url(${current[theme]})` }}>
                         <div className="container">
                             <div className="title">
                                 <Icon />
@@ -72,7 +72,10 @@ export default function Form(props){
                             </div>
 
                             <div className="setting" id={ key }>
-                                <Element data={ config[key] || [] } handler={ handler } warning={ handlers.warningHandler }/>
+                                <Element data={ config[key] || [] } 
+                                         handler={ handler } 
+                                         warning={ handlers.warningHandler }
+                                         config={ key === 'save' && config }/>
                             </div>
                         </div>
                         
