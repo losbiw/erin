@@ -1,6 +1,6 @@
 import startup from './startup'
 
-const { ipcRenderer, systemPreferences } = window.require('electron');
+const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
 
@@ -14,11 +14,12 @@ function get(){
         catch{ return getDefaultOptions() }
     }
     else{
-        return setDefault()
+        return getDefaultOptions()
     }
 }
 
 function set(options){
+    console.log(options);
     const updated = get();
     const cfgPath = getConfigPath();
 
@@ -29,15 +30,9 @@ function set(options){
     const json = JSON.stringify(updated);
     startup.set(options.startup);
     
-    fs.writeFile(cfgPath, json, (err)=>{
+    fs.writeFileSync(cfgPath, json, (err)=>{
         if(err) throw err;
     });
-}
-
-function setDefault(){
-    const options = getDefaultOptions();
-    set(options);
-    return options
 }
 
 function getAppPath(){
@@ -53,12 +48,12 @@ function getConfigPath(){
 }
 
 const getDefaultOptions = () => ({
-    mode: "keywords",
+    mode: 'keywords',
     keywords: [],
     timer: 0,
     quality: 'original',
     startup: true,
-    theme: systemPreferences.isDarkMode() ? 'dark' : 'light'
+    theme: 'dark'
 })
 
 export default { get, set, getAppPath }
