@@ -5,7 +5,7 @@ import { toLowerCase } from '@modules/convert'
 import './Keywords.css'
 
 export default class Keywords extends Component{
-    constructor(props){
+    constructor(_props){
         super();
         
         this.state = {
@@ -85,7 +85,6 @@ export default class Keywords extends Component{
                     name="keywords" 
                     placeholder="Type something and press enter"
                     maxLength="15"
-                    autoFocus
                     onKeyDown={ this.enterDownListener } /> 
             :
             <div id="container">

@@ -31,8 +31,8 @@ export default function Error(props){
                 }
             </div>
             
-            <h2>{ codes[code].fix }</h2>
-            <p>{ `Oopsie Woopsie! ${ codes[code].description }. 
+            <h2>{ codes[code]?.fix }</h2>
+            <p>{ `Oopsie Woopsie! ${ codes[code]?.description }. 
                   The code monkeys at our office are sorry for this.` }</p>
         </div>
     )
