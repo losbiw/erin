@@ -1,0 +1,80 @@
+#save #continue{
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 1.82vw;
+}
+#save .transparent{
+    opacity: 1.0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    transition: .3s;
+    border-radius: 1.7vw;
+}
+#save button{
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    visibility: visible;
+    padding: 0.9vw 1.4vw;
+    font-size: 1.2vw;
+    font-weight: 600;
+    box-sizing: border-box;
+    border-radius: 1.7vw;
+    border: none;
+    transition-property: background-color, box-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+    background: var(--gradient);
+    font-weight: 600;
+}
+#save button p{
+    z-index: 3;
+    text-shadow: none;
+    transition-property: color;
+    margin: 0;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+    text-shadow: var(--title-shadow-light);
+}
+#save .background{
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background: transparent;
+}
+#save .background:hover .transparent{
+    opacity: 0;
+}
+
+#save .background:hover ~ button p{
+    color: var(--background-light);
+}
+
+.light #continue{
+    box-shadow: var(--item-shadow-light);
+}
+.light #continue p{
+    color: var(--background-light);
+}
+.light #continue .transparent{
+    background-color: var(--fill-light);
+}
+
+
+.dark #continue{
+    box-shadow: var(--item-shadow-dark);
+}
+.darak #continue p{
+    color: var(--background-dark);
+}
+.dark #continue .transparent{
+    background-color: var(--fill-dark);
+}
