@@ -118,6 +118,7 @@ select:focus, input:focus{
         justify-content: flex-start;
         overflow-y: scroll;
         overflow-x: visible;
+        padding: 5vh 0 0;
     }
 
     .item:first-child{

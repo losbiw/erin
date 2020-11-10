@@ -1,7 +1,7 @@
 #slider-container{
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
 }
 #translate{
@@ -19,7 +19,6 @@
     position: relative;
     margin-right: 10vw;
     border-radius: 3.125vw;
-    overflow: hidden;
     background-size: cover;
     background-position: center;
 }
@@ -28,6 +27,7 @@
 }
 #setup .item .container{
     flex-direction: column;
+    border-radius: 3.125vw;
 }
 #setup .active-item{
     transform: scale(1.05);
@@ -57,16 +57,23 @@
 #setup .item .setting{
     margin: 4.8vh 0 8vh;
     justify-content: space-between;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
 }
 #setup hr{
     display: none;
+}
+
+#setup .item .setting:hover{
+    transform: scale(1.1);
 }
 
 .light #setup .item{
     box-shadow: var(--shadow-light);
 }
 .light #setup .item .container{
-    background: rgba(248, 248, 252, 0.75);
+    background: rgba(248, 248, 252, 0.85);
 }
 .dark #setup .item{
     box-shadow: var(--shadow-dark);

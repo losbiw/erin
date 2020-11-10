@@ -8,13 +8,7 @@ export default class Slider extends Component{
     constructor(props){
         super();
 
-        this.state = {
-        }
-    }
-
-    componentDidMount(){
-        const cfg = config.get();
-        this.setState({ ...cfg })
+        this.state = config.get();
     }
 
     stateHandler = (name, value) => {
@@ -26,18 +20,21 @@ export default class Slider extends Component{
 
     render(){ 
         const { state, props, stateHandler } = this;
-        console.log(state);
-        const { items, handler, active, activeIndex, keys } = props;
+        const { items, handler, active, activeIndex, keys, theme } = props;
 
         const middle = Math.round((keys.length - 1) / 2);
         const equalizer = keys.length % 2 === 0 ? 40 : 0;
         const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
 
+        const transform = multiplier * 80 - equalizer;
+
+        console.log(state, items, transform);
+
         if(!!Object.keys(state).length){
             return(
                 <div id="slider-container">
                     <div id="translate" style={{ 
-                        transform: `translateX(${ multiplier * 80 - equalizer }vw)` 
+                        transform: `translateX(${ transform }vw)` 
                     }}>
                         <Form data={ items } 
                               config={ state }
@@ -45,7 +42,8 @@ export default class Slider extends Component{
                               handlers={{
                                   warningHandler: handler,
                                   stateHandler: stateHandler
-                              }}/>
+                              }}
+                              theme={ theme }/>
                     </div>
                 </div>
             )
