@@ -73,7 +73,7 @@
     box-shadow: var(--shadow-light);
 }
 .light #setup .item .container{
-    background: rgba(248, 248, 252, 0.85);
+    background: rgba(248, 248, 252, 0.7);
 }
 .dark #setup .item{
     box-shadow: var(--shadow-dark);
