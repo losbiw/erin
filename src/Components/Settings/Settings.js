@@ -36,8 +36,9 @@ export default class Settings extends Component{
         return null
     }
 
-    shouldComponentUpdate(nextProps, _nextState){
-        if(!areEqual.objects(this.state, nextProps.data)){
+    shouldComponentUpdate(nextProps, nextState){
+        if(!areEqual.objects(this.state, nextProps.data) ||
+           !areEqual.objects(this.state, nextState)){
             return true
         }
         return false
@@ -56,6 +57,8 @@ export default class Settings extends Component{
     stateHandler = (name, value) => {
         const upd = {}
         upd[name] = value;
+
+        console.log(upd);
 
         this.setState(upd)
     }

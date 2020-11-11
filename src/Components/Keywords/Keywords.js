@@ -7,6 +7,8 @@ import './Keywords.css'
 export default class Keywords extends Component{
     constructor(_props){
         super();
+
+        this.inputRef = React.createRef();
         
         this.state = {
             isInput: false
@@ -38,6 +40,7 @@ export default class Keywords extends Component{
             const { value } = e.target;
             const converted = toLowerCase(value);
             const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
+
             let warning;
             
             if(converted !== "" && !isRepeating){
@@ -67,6 +70,10 @@ export default class Keywords extends Component{
     componentDidUpdate(){
         const { isInput } = this.state;
         const keywords = this.props.data;
+
+        if(isInput){
+            this.inputRef.current.focus({ preventScroll: true });
+        }
         
         if(keywords.length === 0 && !isInput){
             this.setState({
@@ -83,6 +90,7 @@ export default class Keywords extends Component{
             ?
             <input type="text" 
                     name="keywords" 
+                    ref={ this.inputRef }
                     placeholder="Type something and press enter"
                     maxLength="15"
                     onKeyDown={ this.enterDownListener } /> 
