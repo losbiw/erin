@@ -21,7 +21,7 @@ export default function Setup(props){
             title: 'Privacy Policy',
             description: 'Please, read our privacy policy before using the app',
             dark: 'https://images.pexels.com/photos/1557547/pexels-photo-1557547.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            light: 'https://images.pexels.com/photos/131723/pexels-photo-131723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            light: 'https://images.pexels.com/photos/1791684/pexels-photo-1791684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Privacy
         },
         mode: {
@@ -56,13 +56,13 @@ export default function Setup(props){
             title: 'Wallpaper resolution',
             description: 'Choose what quality you want your wallpaper to be downloaded in',
             light: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            dark: 'https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            dark: 'https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Quality
         },
         save: {
             title: 'Save changes and continue',
             description: 'Click the button below to save your preferences and go to home page',
-            dark: 'https://images.pexels.com/photos/3380920/pexels-photo-3380920.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+            dark: 'https://images.pexels.com/photos/590478/pexels-photo-590478.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             light: 'https://images.pexels.com/photos/1680140/pexels-photo-1680140.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Save
         }
