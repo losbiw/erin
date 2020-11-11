@@ -28,8 +28,6 @@ export default class Slider extends Component{
 
         const transform = multiplier * 80 - equalizer;
 
-        console.log(state, items, transform);
-
         if(!!Object.keys(state).length){
             return(
                 <div id="slider-container">

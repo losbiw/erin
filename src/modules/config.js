@@ -19,7 +19,6 @@ function get(){
 }
 
 function set(options){
-    console.log(options);
     const updated = get();
     const cfgPath = getConfigPath();
 
