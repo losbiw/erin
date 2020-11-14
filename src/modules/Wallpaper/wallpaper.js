@@ -30,7 +30,7 @@ function download(url, path, handlers){
 			res.on('end', () => {
 				fs.writeFileSync(path, data.read()); 
 				
-				set(path, handlers);   
+				set(path, handlers);
 				setTimer();
 				setState({
 					isLocked: false,
