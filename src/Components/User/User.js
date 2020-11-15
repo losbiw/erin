@@ -8,7 +8,6 @@ import time from '@modules/time'
 import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
-import warning from '@modules/warning'
 import './User.css'
 
 const { join } = window.require('path');

@@ -31,7 +31,7 @@ function arrays(arr1, arr2){
     else{
         const longer = arr1.length > arr2.length ? arr1 : arr2
         const shorter = arr1.length < arr2.length ? arr1 : arr2
-        
+
         for(let value of longer){
             const valueExists = shorter.some(el => el === value);
             if(!valueExists) return false

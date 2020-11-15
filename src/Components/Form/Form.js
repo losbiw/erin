@@ -26,7 +26,7 @@ export default function Form(props){
         handleStateChange(name, value)
     }
 
-    const { data, config, handlers, active, theme } = props;
+    const { data, config, handlers, active, theme, isSetup } = props;
 
     return(
         <form id="settings">
@@ -60,6 +60,7 @@ export default function Form(props){
                                 <Element data={ config[key] || [] } 
                                          handleChange={ handleChange } 
                                          handleWarningChange={ handlers.handleWarningChange }
+                                         isSetup={ isSetup }
                                          config={ key === 'save' && config }/>
                             </div>
                         </div>

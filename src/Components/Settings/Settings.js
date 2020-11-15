@@ -53,6 +53,8 @@ export default class Settings extends Component{
         const settingsWarning = warning.match(cfg, true);
         const areConfigsEqual = areEqual.objects(cfg, data);
 
+        handleAppStateChange({ warning: undefined });
+
         if((!areConfigsEqual && !!settingsWarning) || !!settingsWarning){
             handleUserStateChange({ 
                 config: cfg,

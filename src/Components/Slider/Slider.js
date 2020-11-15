@@ -65,6 +65,7 @@ export default class Slider extends Component{
                         <Form data={ items } 
                               config={ state }
                               active={ active }
+                              isSetup={ true }
                               handlers={{
                                 handleWarningChange: handleAppStateChange,
                                 handleStateChange: handleStateChange

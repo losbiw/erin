@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react'
 import Button from '../Button/Button'
 import { Crosses } from '../Svg/Loader'
 import { toLowerCase } from '@modules/convert'
+import areEqual from '@modules/areEqual'
 import './Keywords.css'
 
 export default class Keywords extends Component{
@@ -13,14 +14,11 @@ export default class Keywords extends Component{
         this.state = {
             isInput: this.props.data.length === 0
         }
-
-        // this.inputRef.current.focus({ preventScroll: true });
     }
 
     handleDelete = e =>{
         e.preventDefault();
-        
-        const { isInput } = this.state;
+
         const { name } = e.target.dataset;
         const keywords = [...this.props.data];
 
@@ -29,10 +27,6 @@ export default class Keywords extends Component{
             keywords.splice(index, 1);
             this.props.handleChange('keywords', keywords);
         }
-
-        // if(keywords.length === 0 && !isInput){
-        //     this.inputRef.current.focus({ preventScroll: true });
-        // }
     }
 
     handleClick = e =>{
@@ -70,6 +64,20 @@ export default class Keywords extends Component{
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState){
+        if(!areEqual.arrays(this.props.data, nextProps.data) || 
+           !areEqual.objects(this.state, nextState) ||
+           nextProps.isSetup)
+        {
+            return true
+        }
+        return false
+    }
+
+    componentDidMount(){
+        this.componentDidUpdate();
+    }
+
     componentDidUpdate(){
         const { isInput } = this.state;
         const keywords = this.props.data;
@@ -78,6 +86,10 @@ export default class Keywords extends Component{
             this.setState({
                 isInput: true
             });
+        }
+
+        if(isInput){
+            this.inputRef.current.focus({ preventScroll: true });
         }
     }
 
