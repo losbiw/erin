@@ -13,7 +13,8 @@ export default class App extends Component{
 
         this.state = {
             theme: 'dark',
-            isCompleted: true,
+            isCompleted: false,
+            isRequiredFilled: false,
             warning: ''
         }
     }
@@ -22,7 +23,8 @@ export default class App extends Component{
         const { theme, isCompleted } = config.get();
         this.setState({
             theme,
-            // isCompleted
+            isCompleted,
+            isRequiredFilled: isCompleted
         })
     }
 
@@ -38,27 +40,32 @@ export default class App extends Component{
         this.setState(updated);
     }
 
-    stateHandler = (upd) => {
+    handleAppStateChange = (upd) => {
         this.setState(upd)
     }
 
     render(){
-        const { state, handleThemeSwitch, stateHandler } = this;
-        const { theme, isCompleted, warning } = state;
+        const { state, handleThemeSwitch, handleAppStateChange } = this;
+        const { theme, isCompleted, warning, isRequiredFilled } = state;
+
+        const childProps = {
+            theme,
+            isCompleted,
+            handleAppStateChange,
+            handleThemeSwitch
+        }
 
         return(
             <div id="theme" className={ theme }>
                 <Controls />
                 
-                { isCompleted
-                    ? <User theme={ theme } 
-                            handler={ handleThemeSwitch }
-                            state={ stateHandler }/>
-                    : <Setup />
+                { isCompleted && isRequiredFilled
+                    ? <User { ...childProps }/>
+                    : <Setup { ...childProps }/>
                 }
 
                 { warning && <Warning value={ warning } 
-                                      handler={ stateHandler }/> }
+                                      handleDelete={ handleAppStateChange }/> }
             </div>
         )
     }

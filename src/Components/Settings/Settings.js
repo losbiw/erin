@@ -7,6 +7,7 @@ import Form from '../Form/Form'
 import Quality from '../Quality/Quality'
 import config from '@modules/config'
 import areEqual from '@modules/areEqual'
+import warning from '@modules/warning'
 import './Settings.css'
 
 export default class Settings extends Component{
@@ -20,10 +21,11 @@ export default class Settings extends Component{
 
     componentDidMount(){
         const keys = Object.keys(this.state);
+        // this.props.handleUserStateChange({ isRequiredFilled: false });
         
         if(keys.length === 0){
             const cfg = config.get();
-            this.setState(cfg)
+            this.setState(cfg);
         }
     }
 
@@ -46,31 +48,57 @@ export default class Settings extends Component{
 
     componentWillUnmount(){
         const cfg = this.state;
-        const { handler, data } = this.props;
+        const { handleUserStateChange, data, handleAppStateChange } = this.props;
 
-        if(!areEqual.objects(cfg, data)){
-            handler({ config: cfg });
-            config.set(cfg);
+        const settingsWarning = warning.match(cfg, true);
+        const areConfigsEqual = areEqual.objects(cfg, data);
+
+        if((!areConfigsEqual && !!settingsWarning) || !!settingsWarning){
+            handleUserStateChange({ 
+                config: cfg,
+                isRequiredFilled: false
+            });
+            handleAppStateChange({ warning: settingsWarning.value });
         }
+        else if(!areConfigsEqual){
+            handleUserStateChange({ 
+                config: cfg,
+                isRequiredFilled: true
+            });
+        }
+        config.set(cfg);
     }
 
-    stateHandler = (name, value) => {
+    handleStateChange = (name, value) => {
         const upd = {}
         upd[name] = value;
-
-        console.log(upd);
 
         this.setState(upd)
     }
 
     render(){
-        const items = {
-            mode: Mode,
-            keywords: Keywords,
-            timer: Timer,
-            startup: Startup,
-            quality: Quality
-        }
+        const items = [
+            {
+                name: 'mode',
+                element: Mode
+            },
+            {
+                name: 'keywords',
+                element: Keywords
+            },
+            {
+                name: 'timer',
+                element: Timer
+            },
+            {
+                name: 'startup',
+                element: Startup
+            },
+            {
+                name: 'quality',
+                element: Quality
+            }
+        ]
         
         if(!!Object.keys(this.state).length){
             return (
@@ -78,8 +106,8 @@ export default class Settings extends Component{
                     <Form data={ items } 
                          config={ this.state }
                          handlers={{
-                             warningHandler: this.props.setWarning,
-                             stateHandler: this.stateHandler
+                             handleWarningChange: this.props.handleAppStateChange,
+                             handleStateChange: this.handleStateChange
                          }} />
                 </div>
             )

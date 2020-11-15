@@ -47,12 +47,13 @@ function getConfigPath(){
 }
 
 const getDefaultOptions = () => ({
-    mode: 'keywords',
+    mode: 'weather',
     keywords: [],
     timer: 0,
     quality: 'original',
     startup: true,
-    theme: 'dark'
+    theme: 'dark',
+    privacy: false
 })
 
 export default { get, set, getAppPath }

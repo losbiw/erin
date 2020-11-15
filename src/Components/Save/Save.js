@@ -4,20 +4,21 @@ import config from "@modules/config"
 import './Save.css'
 
 export default function Save(props){
-    const handler = e => {
+    const handleClick = e => {
         e.preventDefault();
-        const { config: data, warning: appHandler } = props;
+        const { config: data, handleWarningChange } = props;
 
         data.isCompleted = true;
         
         config.set(data);
-        appHandler({
+        
+        handleWarningChange({
             isCompleted: true
         });
     }
     
     return(
-        <div id="continue" onClick={ handler }>
+        <div id="continue" onClick={ handleClick }>
             <div className="background">
                 <div className="transparent" />
             </div>

@@ -1,23 +1,9 @@
 import React from 'react'
 import { SettingsIcons } from '../Svg/Loader'
 import { capitalizeFirstLetter } from '@modules/convert'
+import warning from '@modules/warning'
 
 export default function Form(props){ 
-    const warnings = [
-        {
-            condition: (name, value) => (name === 'quality' && value === 'original'),
-            value: "Choosing the high quality might slow down the download speed"
-        },
-        {
-            condition: (name, value) => (name === 'keywords'  && value.length === 0 && props.config.mode === 'keywords'),
-            value: "You have to input keywords or change mode"
-        },
-        {
-            condition: (name, value) => (name === 'timer' && value > 1000 * 60 * 60 * 24 * 7),
-            value: "Timer can't be set to a value more than a week"
-        }
-    ]
-
     const changeStateOnEvent = e => {
         const { target } = e;
         const { value } = target.dataset;
@@ -26,44 +12,43 @@ export default function Form(props){
     }
 
     const updateState = (name, value) => {
-        const { warningHandler, stateHandler } = props.handlers;
-        let warning;
-        
-        for(let key in warnings){
-            const current = warnings[key];
-           
-            if(current.condition(name, value))
-                warning = current.value;
-        }
+        const { handleWarningChange, handleStateChange } = props.handlers
 
-        warningHandler({ warning: warning });
-        stateHandler(name, value)
+        const matchWarning = {
+            mode: props.config.mode
+        };
+        
+        matchWarning[name] = value;
+
+        const settingsWarning = warning.match(matchWarning);
+
+        handleWarningChange({ warning: settingsWarning?.value });
+        handleStateChange(name, value)
     }
 
     const { data, config, handlers, active, theme } = props;
-    const keys = Object.keys(data);
 
     return(
         <form id="settings">
         {
-            keys.map(key => {
-                const current = data[key];
-                const { element, title, description } = current;
+            data.map(setting => {
+                const key = setting.name;
+                const { element, title, description } = setting;
 
                 const capitalized = capitalizeFirstLetter(key);
                 const settingTitle = title || capitalized;
-                const Element = element || current;
+                const Element = element || setting;
                 const Icon = SettingsIcons[capitalized] || (() => <div />);
                 const activeClass = key === active ? 'active-item' : '';
                 
-                const handler = key === 'keywords' || key === 'timer' 
+                const handleChange = key === 'keywords' || key === 'timer' 
                                 ? updateState
                                 : changeStateOnEvent;
 
-                const lastElement = data[keys[keys.length - 1]];
+                const lastElement = data[data.length - 1];
 
                 return(
-                    <div className={ `item ${ activeClass }` } key={ key } style={{ backgroundImage: `url(${current[theme]})` }}>
+                    <div className={ `item ${ activeClass }` } key={ key } style={{ backgroundImage: `url(${setting[theme]})` }}>
                         <div className="container">
                             <div className="title">
                                 <Icon />
@@ -73,13 +58,13 @@ export default function Form(props){
 
                             <div className="setting" id={ key }>
                                 <Element data={ config[key] || [] } 
-                                         handler={ handler } 
-                                         warning={ handlers.warningHandler }
+                                         handleChange={ handleChange } 
+                                         handleWarningChange={ handlers.handleWarningChange }
                                          config={ key === 'save' && config }/>
                             </div>
                         </div>
                         
-                        { data[key] !== lastElement && <hr /> }
+                        { setting !== lastElement && <hr /> }
                     </div>
                 )
             })

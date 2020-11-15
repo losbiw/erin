@@ -13,7 +13,7 @@ export default function Page(props){
         info: Info
     }
 
-    const { current, collection, pictureIndex, isLocked, progress, setUserState, switchWallpaper, setWarning } = props;
+    const { current, collection, pictureIndex, isLocked, progress, handleUserStateChange, switchWallpaper, handleAppStateChange, isRequiredFilled } = props;
     const Current = components[current];
     let data;
 
@@ -39,14 +39,15 @@ export default function Page(props){
     else if(current === 'settings'){
         data = {
             data: { ...props.config },
-            setWarning,
-            isLocked
+            handleAppStateChange,
+            isLocked,
+            isRequiredFilled
         }
     }
 
     return(
         <div id="page">
-            <Current { ...data } handler={ setUserState }/>
+            <Current { ...data } handleUserStateChange={ handleUserStateChange }/>
         </div>
     )
 }

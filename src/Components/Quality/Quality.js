@@ -19,7 +19,7 @@ export default function Quality(props){
 
     return(
         <select name="quality" 
-                onChange={ props.handler } 
+                onChange={ props.handleChange } 
                 data-value="value"
                 defaultValue={ props.data }>
             {

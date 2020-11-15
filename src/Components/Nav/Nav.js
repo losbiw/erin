@@ -30,7 +30,7 @@ export default function Nav(props){
 
     const handlePageChange = e => {
         const { name } = e.target.dataset;
-        props.setState({ current: name });
+        props.handleUserStateChange({ current: name });
     }
 
     return(
@@ -48,7 +48,7 @@ export default function Nav(props){
                                            Content={ icon } 
                                            name={ target }
                                            key={ target }
-                                           handler={ handlePageChange }/>
+                                           handleClick={ handlePageChange }/>
                         })
                     }
                     { 

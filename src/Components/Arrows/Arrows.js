@@ -12,7 +12,7 @@ export default function Arrows(props){
                         <Button className="arrow" 
                                 Content={ Icon } 
                                 name='arrow'
-                                handler={ props.handlers[index] }
+                                handleClick={ props.handleChange[index] }
                                 key={ `arrow-${index}` }/>
                     )
                 })

@@ -14,7 +14,7 @@ export default function Controls(_props){
         close: Crosses.Red
     }
 
-    const handler = e => {
+    const handleClick = e => {
         const { name } = e.target.dataset;
         const res = ipcRenderer.sendSync(`${name}-window`);
 
@@ -37,7 +37,7 @@ export default function Controls(_props){
                         return(
                             <Button name={ key } 
                                     key={ key }
-                                    handler={ handler }
+                                    handleClick={ handleClick }
                                     Content={ Icon }/>
                         )
                     })

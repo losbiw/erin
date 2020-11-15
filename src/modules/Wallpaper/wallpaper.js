@@ -5,7 +5,7 @@ const Stream = require('stream').Transform;
 
 function download(url, path, handlers){
 	const https = require('https');
-	const { setState, largeFileHandler, setTimer } = handlers;
+	const { setState, handleLargeFiles, setTimer } = handlers;
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];
@@ -14,7 +14,7 @@ function download(url, path, handlers){
 			setState({
 				warning: 'The file is too big, we automatically switched it to the next one'
 			})
-			largeFileHandler(true, true);
+			handleLargeFiles(true, true);
 		}
 		else{
 			const data = new Stream();

@@ -8,6 +8,7 @@ import time from '@modules/time'
 import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
+import warning from '@modules/warning'
 import './User.css'
 
 const { join } = window.require('path');
@@ -37,7 +38,8 @@ export default class User extends Component{
             error: '',
             current: 'home',
             position: {},
-            weather: {}
+            weather: {},
+            isRequiredFilled: true
         }
     }
 
@@ -119,10 +121,15 @@ export default class User extends Component{
     }
 
     componentDidUpdate(_prevProps, prevState){
-        const { config, pictureIndex, collection } = this.state;
+        const { config, pictureIndex, collection, isRequiredFilled } = this.state;
         
-        if(config !== prevState.config){
+        if(config !== prevState.config && isRequiredFilled){
             this.getWallpaperCollection(config);
+        }
+        else if(config !== prevState.config){
+            this.setState({
+                current: 'settings'
+            });
         }
         else if(pictureIndex !== prevState.pictureIndex){
             this.setWallpaper(collection, pictureIndex);
@@ -137,7 +144,7 @@ export default class User extends Component{
         
         wallpaper.download(url, savePath, {
             setState: setStateByName,
-            largeFileHandler: switchWallpaper,
+            handleLargeFiles: switchWallpaper,
             setTimer
         });
     }
@@ -152,7 +159,7 @@ export default class User extends Component{
         const { collection, isLocked, pictureIndex } = this.state;
         
         if(isLocked && !isUnclocked){
-            this.props.stateHandler({
+            this.props.handleAppStateChange({
                 warning: 'Please wait until the previous picture is downloaded'
             })
         }
@@ -182,19 +189,20 @@ export default class User extends Component{
 
     render(){
         const { setStateByName, switchWallpaper, state, props } = this;
-        const { error, current } = state;
+        const { error, current, isRequiredFilled } = state;
 
         return(
-            <div id="user" className="">
+            <div id="user">
                 <Nav current={ current } 
-                     setState={ setStateByName }
-                     theme={ props }/>
+                     handleUserStateChange={ setStateByName }
+                     theme={ props }
+                     isLocked={ !isRequiredFilled }/>
                
                 { error && (current === 'home' || current === 'picker')
                     ? <Error code={ error }/>
                     : <Page { ...state } 
-                            setUserState={ setStateByName }
-                            setWarning={ props.stateHandler }
+                            handleUserStateChange={ setStateByName }
+                            handleAppStateChange={ props.handleAppStateChange }
                             switchWallpaper = { switchWallpaper }/>
                 }
             </div>

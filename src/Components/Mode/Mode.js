@@ -12,7 +12,7 @@ export default function Mode(props){
                         name="mode" 
                         value={ label } 
                         checked={ label === props.data }
-                        onChange={ props.handler }
+                        onChange={ props.handleChange }
                         data-value="value"/>
                 <div className="background">
                     <div className="transparent"></div>

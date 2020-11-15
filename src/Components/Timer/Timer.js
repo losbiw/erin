@@ -46,15 +46,21 @@ export default function Timer(props){
 
     const updateCfgTime = (e) => {
         const { name, value } = e.target;
-        let milliseconds = value * convertation[name] || 0;
-        
-        for(const unit in time){
-            if(unit !== name){
-                milliseconds += time[unit] * convertation[unit]
-            }
-        }
 
-        props.handler('timer', milliseconds);
+        if(value.length < 3){
+            let milliseconds = value * convertation[name] || 0;
+
+            for(const unit in time){
+                if(unit !== name){
+                    milliseconds += time[unit] * convertation[unit]
+                }
+            }
+            
+            props.handleChange('timer', milliseconds);
+        }
+        else{
+            e.target.value = value.slice(0, 2);
+        }
     }
 
     const keys = time ? Object.keys(time) : [];
@@ -63,7 +69,7 @@ export default function Timer(props){
                 return(
                     <div className="time" key={ unit }>
                         <div className="wrapper">
-                            <input type="number" 
+                            <input type="number"
                                    defaultValue={ time[unit] }
                                    name={ unit } 
                                    id={ unit }

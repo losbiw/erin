@@ -88,7 +88,7 @@ export default class Picker extends Component{
                     <Button className="arrow" 
                         Content={ Arrows[0] } 
                         name='arrow'
-                        handler={() => switchWallpaperBlock(false)}/>
+                        handleClick={() => switchWallpaperBlock(false)}/>
                 </div>
 
                 <div id="slider">
@@ -101,7 +101,7 @@ export default class Picker extends Component{
                                                 key={ key } 
                                                 name={ index }
                                                 isActive={ isActive }
-                                                handler={ isActive ? undefined : switchWallpaperByIndex }/>
+                                                handleClick={ isActive ? undefined : switchWallpaperByIndex }/>
                         })
                     }
                 </div>
@@ -112,7 +112,7 @@ export default class Picker extends Component{
                     <Button className="arrow" 
                         Content={ Arrows[1] } 
                         name='arrow'
-                        handler={() => switchWallpaperBlock(true)}/>
+                        handleClick={() => switchWallpaperBlock(true)}/>
                 </div>
             </div>
         )

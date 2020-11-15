@@ -1,17 +1,45 @@
 import React, { Component } from 'react'
 import Form from '../Form/Form'
 import config from '@modules/config'
+import warning from '@modules/warning'
 import './Slider.css'
 import './Items.css'
 
 export default class Slider extends Component{
-    constructor(props){
+    constructor(_props){
         super();
 
         this.state = config.get();
     }
 
-    stateHandler = (name, value) => {
+    componentDidUpdate(prevProps){
+        const { isCompleted, handleAppStateChange, handleSlide } = this.props;
+
+        if(isCompleted === true){
+            const settingsWarning = warning.match(this.state, true);
+            let data;
+
+            if(settingsWarning?.value){
+                const { value, name } = settingsWarning;
+                data = { 
+                    isCompleted: false,
+                    warning: value
+                }
+
+                handleSlide(name);
+            } 
+            else{
+                data = { 
+                    isRequiredFilled: true, 
+                    isCompleted: true
+                }
+            }
+
+            handleAppStateChange(data);
+        }
+    }
+
+    handleStateChange = (name, value) => {
         const upd = {}
         upd[name] = value;
 
@@ -19,8 +47,8 @@ export default class Slider extends Component{
     }
 
     render(){ 
-        const { state, props, stateHandler } = this;
-        const { items, handler, active, activeIndex, keys, theme } = props;
+        const { state, props, handleStateChange } = this;
+        const { items, handleAppStateChange, active, activeIndex, keys, theme } = props;
 
         const middle = Math.round((keys.length - 1) / 2);
         const equalizer = keys.length % 2 === 0 ? 40 : 0;
@@ -38,8 +66,8 @@ export default class Slider extends Component{
                               config={ state }
                               active={ active }
                               handlers={{
-                                  warningHandler: handler,
-                                  stateHandler: stateHandler
+                                handleWarningChange: handleAppStateChange,
+                                handleStateChange: handleStateChange
                               }}
                               theme={ theme }/>
                     </div>

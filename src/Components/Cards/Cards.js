@@ -1,7 +1,7 @@
 import React from 'react'
 import { InfoIcons } from '../Svg/Loader'
 
-export default function Card(props){
+export default function Card(_props){
     const { Donation, Development, Smile } = InfoIcons;
 
     const cards = [

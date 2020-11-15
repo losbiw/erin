@@ -9,8 +9,8 @@ export default function Home(props){
     const { photo, progress, isLocked, switchWallpaper, pictureIndex } = props;
     const { photographer, srcMain, photographerURL } = photo;
     
-    const handlerForward = () => switchWallpaper(pictureIndex + 1);
-    const handlerBack = () => switchWallpaper(pictureIndex - 1) ;
+    const handleSlideForward = () => switchWallpaper(pictureIndex + 1);
+    const handleSlideBack = () => switchWallpaper(pictureIndex - 1) ;
 
     const link = () => (
         <div id="link">
@@ -23,7 +23,7 @@ export default function Home(props){
 
     return(
         <div id="home" className="page">
-            <Arrows handlers={[ handlerBack, handlerForward ]}/>
+            <Arrows handleChange={[ handleSlideBack, handleSlideForward ]}/>
             <AspectRatio id="pic" src={ srcMain }/>
             
             <div className="wrapper">

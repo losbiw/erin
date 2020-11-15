@@ -11,7 +11,7 @@ export default function Warning(props){
 
             <Button className="delete" 
                     Content={ Crosses.Yellow }
-                    handler={ () => props.handler({ warning: undefined }) }/>
+                    handleClick={ () => props.handleDelete({ warning: undefined }) }/>
         </div>
     )
 }

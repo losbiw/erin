@@ -4,7 +4,7 @@ import Switch from '../Switch/Switch'
 import './Privacy.css'
 
 export default function Privacy(props){
-    const { data, handler } = props;
+    const { data, handleChange } = props;
 
     return(
         <div id="text">
@@ -16,7 +16,7 @@ export default function Privacy(props){
                 } 
             }}/>
             <p>: </p>
-            <Switch data={ data } handler={ handler } name='privacy'/>
+            <Switch data={ data } handleChange={ handleChange } name='privacy'/>
         </div>
     )
 }
