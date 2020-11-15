@@ -118,7 +118,7 @@
     filter: var(--icon-shadow-light);
 }
 .light .card h2,
-.dark p{
+.light p{
     text-shadow: var(--title-shadow-light);
 }
 .light a svg{

@@ -9,13 +9,15 @@
     justify-content: center;
     align-items: center;
 }
+#error h1, #error h2{
+    transition-property: color, text-shadow;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
 #err-code{
     height: auto;
     display: flex;
     align-items: center;
-}
-#error h1, h2{
-    text-shadow: var(--shadow-dark)
 }
 #err-code h1{
     font-size: 18.2vw;
@@ -29,6 +31,8 @@
     background-clip: text;
     color: transparent;
     font-weight: 700;
+    text-shadow: none !important;
+    filter: drop-shadow(0px 6px 18px rgba(58, 66, 78, 0.12));
 }
 #error h2{
     margin: 0;
@@ -45,3 +49,13 @@
     font-size: 1.5625vw;
     text-align: center;
 }
+
+.light #error h1,
+.light #error h2{
+    text-shadow: 0px 0px 43px rgba(82, 82, 82, 0.15);
+}  
+
+.dark #error h1,
+.dark #error h2{
+    text-shadow: 0px 0px 76px rgba(0, 0, 0, 0.56);
+}  
