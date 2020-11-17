@@ -7,10 +7,10 @@ function create(win, icon){
     
     const cntxMenu = Menu.buildFromTemplate([
         {label: 'Next', click: ()=>{
-            win.webContents.send('change-wallpaper', 'next');
+            win.webContents.send('switch-wallpaper', true);
         }},
         {label: 'Previous', click: ()=>{
-            win.webContents.send('change-wallpaper', 'prev');
+            win.webContents.send('switch-wallpaper', false);
         }},
         {label: 'Open', click: ()=>{
             win.show();

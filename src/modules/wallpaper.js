@@ -1,4 +1,5 @@
 const fs = window.require('fs');
+const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const { execFileSync, exec } = window.require('child_process')
 const Stream = require('stream').Transform;
@@ -54,7 +55,11 @@ function set(imgPath){
 	const os = window.process.platform;
 
 	if(os === 'win32'){
-		const execPath = join(__dirname, './windows/Wallpapers.exe');
+		const isPackaged = ipcRenderer.sendSync('is-app-packaged');
+
+		const resourcePath = isPackaged ? window.process.resourcesPath : join(__dirname, '../../');
+		const execPath = join(resourcePath, 'electron/Wallpaper/Wallpapers.exe');
+
 		execFileSync(execPath, [imgPath]);
 	}
 	

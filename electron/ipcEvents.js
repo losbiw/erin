@@ -5,6 +5,10 @@ function setListeners(win){
         event.returnValue = app.getPath('userData');
     })
 
+    ipcMain.on('is-app-packaged', event => {
+        event.returnValue = app.isPackaged;
+    })
+
     ipcMain.on('close-window', event => {
         win.hide();
         event.returnValue = 'hidden'

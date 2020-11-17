@@ -1,10 +1,10 @@
+const { autoUpdater } = require('electron-updater');
 const { app, BrowserWindow, screen, nativeImage } = require('electron');
 const { join } = require('path');
 const tray = require('./tray');
 const ipcEvents = require('./ipcEvents');
 
-require('electron-debug')();
-require('dotenv').config({path: join(__dirname, '../config/.env')});
+require('dotenv').config({path: join(__dirname, './.env')});
 
 let win, iconPath, winTray; 
 
@@ -13,6 +13,7 @@ findIconPath();
 
 function loadFile(){
     const { height, width } = screen.getPrimaryDisplay().size;
+    let url;
     
     win = new BrowserWindow({
         width: width * 0.8,
@@ -24,10 +25,18 @@ function loadFile(){
         icon: nativeImage.createFromPath(iconPath)
     });
 
-    win.webContents.openDevTools();
+    if(app.isPackaged){
+        url = `file://${__dirname}/../build/index.html`
+    }
+    else{
+        require('electron-debug')();
+
+        win.webContents.openDevTools();
+        url = 'http://localhost:3000/';
+    }
 
     win.removeMenu();
-    win.loadURL('http://localhost:3000/');
+    win.loadURL(url);
     
     hideWindow();
     ipcEvents(win);
@@ -56,11 +65,13 @@ function requestLock(){
 
 function findIconPath(){
     const os = process.platform;
-    const iconName = os === 'win32' ? 'build/icon.ico' : 'build/icons/512x512.png';
-    iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : `../${iconName}`;
+    const iconName = os === 'win32' ? '../assets/icon.ico' : '../assets/icons/512x512.png';
+    
+    iconPath = app.isPackaged ? join('../', iconName) : iconName;
 }
 
 app.on('ready', () => {
+    // autoUpdater.checkForUpdatesAndNotify();
     loadFile();
     winTray = tray.create(win, iconPath);
 });

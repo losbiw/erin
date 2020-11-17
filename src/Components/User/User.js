@@ -3,7 +3,7 @@ import Error from '../Error/Error'
 import Nav from '../Nav/Nav'
 import Page from '../Page/Page'
 import config from '@modules/config'
-import wallpaper from '@modules/Wallpaper/wallpaper'
+import wallpaper from '@modules/wallpaper'
 import time from '@modules/time'
 import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
@@ -11,6 +11,7 @@ import areEqual from '@modules/areEqual'
 import './User.css'
 
 const { join } = window.require('path');
+const { ipcRenderer } = window.require('electron');
 
 class Picture{
     constructor(srcMain, srcPicker, photographer, photographerURL){
@@ -49,6 +50,8 @@ export default class User extends Component{
 
     async componentDidMount(){
         const cfg = await config.get();
+
+        ipcRenderer.on('switch-wallpaper', (_event, args) => this.switchWallpaper(args));
     
         this.setState({
             config: cfg
@@ -163,7 +166,8 @@ export default class User extends Component{
             })
         }
         else{
-            if(typeof index !== 'number') index = pictureIndex + 1;
+            if(typeof index !== 'number' && typeof index === 'boolean')
+                index = index ? pictureIndex + 1 : pictureIndex - 1;
             
             if(index >= collection.length) index = 0;
             else if(index < 0) index = collection.length - 1;
