@@ -21,6 +21,7 @@ export default class App extends Component{
 
     componentDidMount(){
         const { theme, isCompleted } = config.get();
+
         this.setState({
             theme,
             isCompleted,

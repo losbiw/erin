@@ -21,7 +21,6 @@ export default class Settings extends Component{
 
     componentDidMount(){
         const keys = Object.keys(this.state);
-        // this.props.handleUserStateChange({ isRequiredFilled: false });
         
         if(keys.length === 0){
             const cfg = config.get();

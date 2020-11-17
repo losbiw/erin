@@ -12,7 +12,7 @@ export default class Slider extends Component{
         this.state = config.get();
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(){
         const { isCompleted, handleAppStateChange, handleSlide } = this.props;
 
         if(isCompleted === true){
@@ -25,6 +25,8 @@ export default class Slider extends Component{
                     isCompleted: false,
                     warning: value
                 }
+
+                config.set({ isCompleted: false });
 
                 handleSlide(name);
             } 

@@ -6,13 +6,13 @@ import './Save.css'
 export default function Save(props){
     const handleClick = e => {
         e.preventDefault();
-        const { config: data, handleWarningChange } = props;
+        const { config: data, handleWarningChange: handleAppStateChange } = props;
 
         data.isCompleted = true;
         
         config.set(data);
         
-        handleWarningChange({
+        handleAppStateChange({
             isCompleted: true
         });
     }

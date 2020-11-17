@@ -48,7 +48,9 @@ export default function Form(props){
                 const lastElement = data[data.length - 1];
 
                 return(
-                    <div className={ `item ${ activeClass }` } key={ key } style={{ backgroundImage: `url(${setting[theme]})` }}>
+                    <div className={ `item ${ activeClass }` } key={ key } style={{ 
+                        backgroundImage: setting[theme] ? `url(${setting[theme]})` : 'none'
+                    }}>
                         <div className="container">
                             <div className="title">
                                 <Icon />
