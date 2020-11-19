@@ -35,7 +35,7 @@ async function fetchPexels(keywords, errHandler){
     for(let key of keywords){
         let page = 1;
         
-        while(canRequestMore && page < 2){
+        while(canRequestMore && page < 3){
             try{
                 const res = await fetchAPI(
                     `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,
