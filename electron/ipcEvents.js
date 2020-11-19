@@ -1,4 +1,4 @@
-const { app, ipcMain } = require('electron');
+const { app, ipcMain, Notification } = require('electron');
 const { autoUpdater } = require('electron-updater')
 
 function setListeners(win){

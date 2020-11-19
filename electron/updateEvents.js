@@ -4,6 +4,7 @@ const { ipcMain } = require('electron');
 function setListeners(){
     ipcMain.on('component-did-mount', () => {
         try{
+            autoUpdater.autoDownload = false;
             autoUpdater.checkForUpdates();
         }
         catch(err){
