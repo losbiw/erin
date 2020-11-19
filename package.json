@@ -2,7 +2,7 @@
   "name": "erin",
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -28,7 +28,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "electron": "electron .",
-    "electron-build": "electron-builder"
+    "electron-build": "electron-builder",
+    "release": "electron-builder -p always"
   },
   "eslintConfig": {
     "extends": "react-app"
