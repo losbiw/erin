@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import Button from '../Button/Button'
 import AspectRatio from '../AspectRatio/AspectRatio'
 import ProgressBar from '../ProgressBar/ProgressBar'
-import { Arrows } from '../Svg/Loader'
+import { Arrow } from '../Arrows/Arrows'
 import './Picker.css'
 
 export default class Picker extends Component{
@@ -85,10 +84,7 @@ export default class Picker extends Component{
         return(
             <div id="picker" className="page">
                 <div className="wrapper">
-                    <Button className="arrow" 
-                        Content={ Arrows[0] } 
-                        name='arrow'
-                        handleClick={() => switchWallpaperBlock(false)}/>
+                    <Arrow index="0" handleClick={() => switchWallpaperBlock(false)}/>
                 </div>
 
                 <div id="slider">
@@ -109,10 +105,7 @@ export default class Picker extends Component{
                 <div className="wrapper">
                     { isLocked && <ProgressBar width={ progress }/> }
 
-                    <Button className="arrow" 
-                        Content={ Arrows[1] } 
-                        name='arrow'
-                        handleClick={() => switchWallpaperBlock(true)}/>
+                    <Arrow index="0" handleClick={() => switchWallpaperBlock(true)}/>
                 </div>
             </div>
         )

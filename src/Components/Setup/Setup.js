@@ -8,7 +8,7 @@ import Startup from '../Switch/Switch'
 import Quality from '../Quality/Quality'
 import Save from '../Save/Save'
 import Carousel from '../Carousel/Carousel'
-import Arrows from '../Arrows/Arrows'
+import { Arrows } from '../Arrows/Arrows'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 import './Setup.css'

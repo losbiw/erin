@@ -1,7 +1,7 @@
 import React from 'react'
 import AspectRatio from '../AspectRatio/AspectRatio'
 import ProgressBar from '../ProgressBar/ProgressBar'
-import Arrows from '../Arrows/Arrows'
+import { Arrows } from '../Arrows/Arrows'
 import Links from '../Links/Links'
 import './Home.css'
 
