@@ -3,9 +3,12 @@ import User from './Components/User/User'
 import Setup from './Components/Setup/Setup'
 import Controls from './Components/Controls/Controls'
 import Warning from './Components/Warning/Warning'
+import Update from './Components/Update/Update'
 import config from '@modules/config'
 import './App.css'
 import './root.css'
+
+const { ipcRenderer } = window.require('electron');
 
 export default class App extends Component{
     constructor(_props){
@@ -15,12 +18,19 @@ export default class App extends Component{
             theme: 'dark',
             isCompleted: false,
             isRequiredFilled: false,
-            warning: ''
+            warning: '',
+            isUpdateAvailable: true
         }
     }
 
     componentDidMount(){
         const { theme, isCompleted } = config.get();
+
+        ipcRenderer.on('update-is-available', () => {
+            this.setState({
+                isUpdateAvailable: true
+            });
+        })
 
         this.setState({
             theme,
@@ -47,7 +57,7 @@ export default class App extends Component{
 
     render(){
         const { state, handleThemeSwitch, handleAppStateChange } = this;
-        const { theme, isCompleted, warning, isRequiredFilled } = state;
+        const { theme, isCompleted, warning, isRequiredFilled, isUpdateAvailable } = state;
 
         const childProps = {
             theme,
@@ -59,6 +69,8 @@ export default class App extends Component{
         return(
             <div id="theme" className={ theme }>
                 <Controls />
+
+                { isUpdateAvailable && <Update handleReject={ handleAppStateChange }/> }
                 
                 { isCompleted && isRequiredFilled
                     ? <User { ...childProps }/>

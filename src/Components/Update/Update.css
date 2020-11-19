@@ -1,0 +1,70 @@
+#update{
+    position: absolute;
+    z-index: 8;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#update, #update .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+#update #content, #update #title{
+    flex-direction: column;
+}
+#update #content{
+    padding: 3vmax 5vmax;
+    border-radius: 3vmax;
+}
+
+#update #title h1{
+    font-size: 2.5vmax;
+    margin: 0;
+    margin-bottom: 1.5vmax;
+}
+#update #title p{
+    text-align: center;
+    line-height: 2vmax;
+    font-size: 1.2vmax;
+    margin: 0;
+}
+
+#update button{
+    width: 3vmax;
+    background-color: transparent;
+    border: none;
+    margin-top: 2.5vmax;
+    transition-property: transform;
+    transition-timing-function: var(--transition-function);
+    transition-duration: var(--transition-duration);
+}
+#update button:hover{
+    transform: scale(1.2);
+}
+#update button svg{
+    height: 100%;
+    width: 100%;
+}
+#update button:nth-child(1){
+    margin-right: 4vmax;
+}
+
+.dark #update{
+    background-color: rgba(18, 18, 20, 0.9);
+}
+.dark #update #content{
+    background-color: var(--nav-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+.light #update{
+    background-color: rgba(244, 244, 248, 0.9);
+}
+.light #update #content{
+    background-color: var(--nav-light);
+    box-shadow: var(--shadow-light);
+}

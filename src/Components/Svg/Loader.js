@@ -16,6 +16,7 @@ import Arrow from '!raw-loader!@ui/arrow.svg'
 import Warning from '!raw-loader!@ui/warning.svg'
 import Cross from '!raw-loader!@ui/cross.svg'
 import Circle from '!raw-loader!@ui/circle.svg'
+import Accept from '!raw-loader!@ui/accept.svg'
 
 import Moon from '!raw-loader!@themes/moon.svg'
 import Sun from '!raw-loader!@themes/sun.svg'
@@ -72,6 +73,9 @@ const group = {
     CircleIcon: {
         Circle
     },
+    AcceptIcon: {
+        Accept
+    },
     Control: {
         Minimize,
         Maximize,
@@ -111,7 +115,7 @@ function addGradients(icons){
 }
 
 iterateIcons();
-const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control, Themes, CircleIcon } = group;
+const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control, Themes, CircleIcon, AcceptIcon } = group;
 const SettingsIcons = {
     Mode,
     Keywords,
@@ -122,4 +126,4 @@ const SettingsIcons = {
     Save
 }
 
-export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes, CircleIcon }
+export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes, CircleIcon, AcceptIcon }

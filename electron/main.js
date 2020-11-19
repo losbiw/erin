@@ -71,7 +71,12 @@ function findIconPath(){
 }
 
 app.on('ready', () => {
-    // autoUpdater.checkForUpdatesAndNotify();
+    try{
+        autoUpdater.checkForUpdates();
+    }
+    catch(err){
+        throw err
+    }
     loadFile();
     winTray = tray.create(win, iconPath);
 });

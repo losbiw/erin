@@ -1,4 +1,5 @@
 const { app, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater')
 
 function setListeners(win){
     ipcMain.on('get-app-path', event => {
@@ -26,6 +27,25 @@ function setListeners(win){
         else win.maximize()
         
         event.returnValue = !isMaximized
+    });
+
+    ipcMain.on('should-update', event => {
+        autoUpdater.downloadUpdate();
+
+        event.returnValue = 'update is being downloaded'
+    })
+
+    autoUpdater.on('update-available', () => {
+        const updateNotification = new Notification('Update available', {
+            body: 'Click here to look for more details'
+        })
+
+        updateNotification.onclick = () => {
+            win.show();
+            win.focus();
+        }
+
+        win.webContents.send('update-is-available');
     });
 }
 
