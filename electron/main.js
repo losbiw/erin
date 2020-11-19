@@ -1,10 +1,10 @@
-const { autoUpdater } = require('electron-updater');
 const { app, BrowserWindow, screen, nativeImage } = require('electron');
 const { join } = require('path');
 const tray = require('./tray');
-const ipcEvents = require('./ipcEvents');
+const initializeIPCEvents = require('./ipcEvents');
 
 require('dotenv').config({path: join(__dirname, './.env')});
+require('./updateEvents')();
 
 let win, iconPath, winTray; 
 
@@ -39,7 +39,7 @@ function loadFile(){
     win.loadURL(url);
     
     hideWindow();
-    ipcEvents(win);
+    initializeIPCEvents(win);
 }
 
 function hideWindow(){
@@ -71,12 +71,6 @@ function findIconPath(){
 }
 
 app.on('ready', () => {
-    try{
-        autoUpdater.checkForUpdates();
-    }
-    catch(err){
-        throw err
-    }
     loadFile();
     winTray = tray.create(win, iconPath);
 });

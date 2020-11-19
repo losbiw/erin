@@ -19,12 +19,14 @@ export default class App extends Component{
             isCompleted: false,
             isRequiredFilled: false,
             warning: '',
-            isUpdateAvailable: true
+            isUpdateAvailable: false
         }
     }
 
     componentDidMount(){
         const { theme, isCompleted } = config.get();
+
+        ipcRenderer.send('component-did-mount');
 
         ipcRenderer.on('update-is-available', () => {
             this.setState({

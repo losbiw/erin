@@ -29,12 +29,6 @@ function setListeners(win){
         event.returnValue = !isMaximized
     });
 
-    ipcMain.on('should-update', event => {
-        autoUpdater.downloadUpdate();
-
-        event.returnValue = 'update is being downloaded'
-    })
-
     autoUpdater.on('update-available', () => {
         const updateNotification = new Notification('Update available', {
             body: 'Click here to look for more details'
