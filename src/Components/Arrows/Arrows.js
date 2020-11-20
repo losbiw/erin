@@ -9,7 +9,8 @@ function Arrows(props){
             { Icons.map((Icon, index) => 
                 <Arrow Icon={ Icon } 
                        index={ index } 
-                       handleClick={ props.handleChange[index] }/>) 
+                       handleClick={ props.handleChange[index] }
+                       key={ index }/>)
             }  
         </div>
     )
