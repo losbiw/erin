@@ -10,7 +10,7 @@ Download an installation file corresponding to your OS from [GitHub releases](ht
 
 **Build**
 
-Copy respository with following command:
+Copy repository with following command:
 ```
 git clone https://github.com/losbiw/erin
 ```
