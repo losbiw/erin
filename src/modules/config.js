@@ -10,7 +10,10 @@ function get(){
     if(fs.existsSync(cfgPath)){
         const cfg = fs.readFileSync(cfgPath, 'utf8');
         
-        try{ return JSON.parse(cfg) }
+        try{ 
+            const json = JSON.parse(cfg);
+            return isMatchingSchema(json) ? json : getDefaultOptions()
+        }
         catch{ return getDefaultOptions() }
     }
     else{
@@ -44,6 +47,16 @@ function getConfigPath(){
     const cfgPath = join(appPath, 'config.json');
 
     return cfgPath
+}
+
+function isMatchingSchema(cfg){
+    const defaultCfg = getDefaultOptions();
+    
+    for(let prop in defaultCfg){
+        if(!cfg.hasOwnProperty(prop)) return false
+    }
+
+    return true
 }
 
 const getDefaultOptions = () => ({
