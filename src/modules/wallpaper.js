@@ -1,7 +1,9 @@
+import OS from './OS'
+
 const fs = window.require('fs');
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
-const { execFileSync, exec } = window.require('child_process')
+const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
 function download(url, path, handlers){
@@ -64,13 +66,35 @@ function set(imgPath){
 	}
 	
 	else if(os === 'linux'){
+		const desktopEnv = OS.defineDesktopEnvironment();
+
 		const options = {
-			align: "gsettings set org.gnome.desktop.background picture-options 'zoom'",
-			set: `gsettings set org.cinnamon.desktop.background picture-uri  "file://${imgPath}"`
+			other: (name) => ({
+				align: `gsettings set org.${name}.desktop.background picture-options "zoom"`,
+				set: `gsettings set org.${name}.desktop.background picture-uri  "file://${imgPath}"`
+			}),
+			xfce: {
+				align: 'xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace1/image-style -s 5',
+				set: `xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace1/last-image -s ${imgPath}`
+			},
+			kde: {
+				set: `dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
+						var Desktops = desktops();                                                                                                                       
+						for (i=0;i<Desktops.length;i++) {
+								d = Desktops[i];
+								d.wallpaperPlugin = "org.kde.image";
+								d.currentConfigGroup = Array("Wallpaper",
+															"org.kde.image",
+															"General");
+								d.writeConfig("Image", "file:///PATH/TO/IMAGE.png");
+						}'`
+			}
 		};
+
+		const commands = options[desktopEnv] || options.other(desktopEnv);
 		
-		for(let command in options){
-			exec(options[command]);
+		for(let command in commands){
+			execSync(commands[command]);
 		}
 		return;
 	}
