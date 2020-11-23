@@ -14,7 +14,7 @@ Copy repository with following command:
 ```
 git clone https://github.com/losbiw/erin
 ```
-Include your own .env file into /electron/ directory which must include following variables:
+Include your own .env file (or use [the existing one](https://github.com/losbiw/erin/blob/master/electron/.env-example)) into /electron/ directory which must include following variables:
 - PEXELS_API_KEY
 - WEATHER_API_KEY(OpenWeatherMap API is preferable, otherwise you should change hard-coded values in [weather.js](https://github.com/losbiw/erin/blob/master/src/modules/weather.js))
 - GOOGLE_API_KEY
