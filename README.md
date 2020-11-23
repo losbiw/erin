@@ -15,10 +15,10 @@ Copy repository with following command:
 git clone https://github.com/losbiw/erin
 ```
 Include your own .env file into /electron/ directory which must include following variables:
-- Pexels API key
-- OpenWeatherMap API key
-- Google API key
-- GitHub token(optional, but auto-updater won't work without it)
+- PEXELS_API_KEY
+- WEATHER_API_KEY(OpenWeatherMap API is preferable, otherwise you should change hard-coded values in [weather.js](https://github.com/losbiw/erin/blob/master/src/modules/weather.js))
+- GOOGLE_API_KEY
+- GH_TOKEN(optional, but auto-updater won't work without it)
 
 Run following command to install all dependencies and build the app:
 ```
