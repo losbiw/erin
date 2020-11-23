@@ -2,7 +2,7 @@ function fetchWeather(errHandler){
     return new Promise(res => {
         navigator.geolocation.getCurrentPosition(async(position) => {
             try{
-                const key = window.process.env.WEATHER;
+                const key = window.process.env.WEATHER_API_KEY;
                 const { latitude, longitude } = position.coords;
             
                 const json = await fetchAPI(
@@ -41,7 +41,7 @@ async function fetchPexels(keywords, errHandler){
                     `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,
                     {
                         'Content-Type': 'application/json',
-                        'Authorization': window.process.env.PEXELS
+                        'Authorization': window.process.env.PEXELS_API_KEY
                     },
                     errHandler
                 );
