@@ -74,8 +74,16 @@ function set(imgPath){
 				set: `gsettings set org.${name}.desktop.background picture-uri  "file://${imgPath}"`
 			}),
 			xfce: {
-				align: 'xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace1/image-style -s 5',
-				set: `xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace1/last-image -s ${imgPath}`
+				set: `
+				  workspace_count=$(xfconf-query -v -c xfwm4 -p /general/workspace_count)
+				  connected_monitor=$(xrandr -q | awk '/ connected/{print $1}')
+				  xfce_desktop_prop_prefix=/backdrop/screen0/monitor$connected_monitor
+				  for ((i=1; i <= $workspace_count; i++))
+				  do
+					 xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace$i/last-image -s ${imgPath}
+					 xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace$i/image-style -s 5
+				  done
+				`
 			},
 			kde: {
 				set: `dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
@@ -86,7 +94,7 @@ function set(imgPath){
 								d.currentConfigGroup = Array("Wallpaper",
 															"org.kde.image",
 															"General");
-								d.writeConfig("Image", "file:///PATH/TO/IMAGE.png");
+								d.writeConfig("Image", "file://${imgPath}");
 						}'`
 			}
 		};
