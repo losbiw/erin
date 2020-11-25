@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { AcceptIcon, Crosses } from '../Svg/Loader'
+import { UI, Crosses } from '../Svg/Loader'
 import './Update.css'
 
 const { ipcRenderer } = window.require('electron');
@@ -14,7 +14,12 @@ export default function Update(props){
             const handleWarningChange = handleReject;
             
             ipcRenderer.send('should-update');
-            handleWarningChange({ warning: 'The app will restart once the update is downloaded' })
+            handleWarningChange({ 
+                warning: {
+                    message: 'The app will restart once the update is downloaded',
+                    Icon: UI.Download
+                }
+            })
         }
         
         handleReject({ isUpdateAvailable: false })
@@ -23,7 +28,7 @@ export default function Update(props){
     const buttons = [
         {
             id: 'accept',
-            content: AcceptIcon.Accept,
+            content: UI.Accept,
             value: true,
             handleClick: handleIPCevent
         },

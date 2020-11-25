@@ -17,6 +17,8 @@ import Warning from '!raw-loader!@ui/warning.svg'
 import Cross from '!raw-loader!@ui/cross.svg'
 import Circle from '!raw-loader!@ui/circle.svg'
 import Accept from '!raw-loader!@ui/accept.svg'
+import Download from '!raw-loader!@ui/download.svg'
+import Clipboard from '!raw-loader!@ui/clipboard.svg'
 
 import Moon from '!raw-loader!@themes/moon.svg'
 import Sun from '!raw-loader!@themes/sun.svg'
@@ -70,25 +72,29 @@ const group = {
             }
         }
     },
-    CircleIcon: {
-        Circle
-    },
-    AcceptIcon: {
-        Accept
-    },
-    Control: {
-        Minimize,
-        Maximize,
-        Restore
-    },
-    WarningIcon: {
+    UI: {
+        Circle,
+        Accept,
+        Clipboard,
         Warning: {
             path: Warning,
             gradient: {
                 from: '#fdfc47',
                 to: '#fdc830'
             }
+        },
+        Download: {
+            path: Download,
+            gradient: {
+                from: '#fdfc47',
+                to: '#fdc830'
+            }
         }
+    },
+    Control: {
+        Minimize,
+        Maximize,
+        Restore
     },
     Themes: {
         Moon,
@@ -115,7 +121,7 @@ function addGradients(icons){
 }
 
 iterateIcons();
-const { NavIcons, Arrows, InfoIcons, Crosses, WarningIcon, Control, Themes, CircleIcon, AcceptIcon } = group;
+const { NavIcons, Arrows, InfoIcons, Crosses, Control, Themes, UI } = group;
 const SettingsIcons = {
     Mode,
     Keywords,
@@ -126,4 +132,4 @@ const SettingsIcons = {
     Save
 }
 
-export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, WarningIcon, Control, Themes, CircleIcon, AcceptIcon }
+export { NavIcons, Arrows, InfoIcons, Crosses, SettingsIcons, Control, Themes, UI }

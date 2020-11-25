@@ -44,6 +44,11 @@ export default function Page(props){
             isRequiredFilled
         }
     }
+    else if(current === 'info'){
+        data = {
+            handleAppStateChange
+        }
+    }
 
     return(
         <div id="page">

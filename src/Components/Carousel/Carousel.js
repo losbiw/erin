@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { CircleIcon } from '../Svg/Loader'
+import { UI } from '../Svg/Loader'
 import './Carousel.css'
 
 export default function Carousel(props){
@@ -23,7 +23,7 @@ export default function Carousel(props){
                                     handleClick={ changeSlide }
                                     name={ index }
                                     key={ `carousel-${index}` }
-                                    Content={ CircleIcon.Circle }/>
+                                    Content={ UI.Circle }/>
                 })
             }
         </div>
