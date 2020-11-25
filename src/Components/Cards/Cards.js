@@ -1,14 +1,27 @@
 import React from 'react'
-import { InfoIcons } from '../Svg/Loader'
+import { InfoIcons, UI } from '../Svg/Loader'
 
-export default function Card(_props){
+export default function Card(props){
+    const { clipboard } = window.require('electron');
     const { Donation, Development, Smile } = InfoIcons;
+
+    const wallet = '19zfpPUYbbNbUyLGqKGU7HBuV5x4bQTWh9';
 
     const cards = [
         {
             title: 'Donation',
-            description: 'You can support the project by donating to the bitcoin wallet below',
-            special: '19zfpPUYbbNbUyLGqKGU7HBuV5x4bQTWh9',
+            description: 'Click to copy the bitcoin wallet below if you want to support our project',
+            special: wallet,
+            handleClick: () => {
+                clipboard.writeText(wallet);
+
+                props.handleAppStateChange({
+                    warning: {
+                        message: 'The wallet is copied to the clipboard',
+                        Icon: UI.Clipboard
+                    }
+                })
+            },
             Icon: Donation
         },
         {
@@ -27,12 +40,14 @@ export default function Card(_props){
         <div id="cards">
             {
                 cards.map(card => {
-                    const { title, description, Icon, special } = card;
+                    const { title, description, Icon, special, handleClick } = card;
                     return(
-                        <div className="card" key={ title }>
+                        <div className="card" key={ title } onClick={ handleClick }>
                             <Icon />
+
                             <h2>{ title }</h2>
                             <p>{ description }</p>
+
                             <p className="special">
                                 { special || '' }
                             </p>

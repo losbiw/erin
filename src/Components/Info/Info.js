@@ -40,7 +40,7 @@ export default function Info(props){
                 <Links links={ linksData.author }/>
             </div>
             
-            <Cards />
+            <Cards handleAppStateChange={ props.handleAppStateChange }/>
 
             <div id="reference">
                 <p id="resources">The app is using APIs and icons from the following resources:</p>
