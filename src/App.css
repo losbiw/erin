@@ -5,6 +5,7 @@ body{
     padding: 0;
     overflow: hidden;
     font-family: 'Montserrat', sans-serif;
+    -webkit-user-select: none;
 }
 
 #theme{
