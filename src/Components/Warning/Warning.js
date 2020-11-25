@@ -1,13 +1,15 @@
 import React from 'react'
-import { WarningIcon, Crosses } from '../Svg/Loader'
+import { UI, Crosses } from '../Svg/Loader'
 import Button from '../Button/Button'
 import './Warning.css'
 
 export default function Warning(props){
+    const { message, Icon } = props.value;
+
     return(
         <div id="warning">
-            <WarningIcon.Warning/>
-            <p>{ props.value }</p>
+            { <Icon /> || <UI.Warning/>}
+            <p>{ message || props.value }</p>
 
             <Button className="delete" 
                     Content={ Crosses.Yellow }
