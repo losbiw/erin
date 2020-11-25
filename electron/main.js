@@ -65,9 +65,9 @@ function requestLock(){
 
 function findIconPath(){
     const os = process.platform;
-    const iconName = os === 'win32' ? '../assets/icon.ico' : '../assets/icons/512x512.png';
+    const iconName = os === 'win32' ? 'assets/icon.ico' : 'assets/icons/512x512.png';
     
-    iconPath = app.isPackaged ? join('../', iconName) : iconName;
+    iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : join(__dirname, '../', iconName);
 }
 
 app.on('ready', () => {

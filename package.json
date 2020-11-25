@@ -2,7 +2,7 @@
   "name": "erin",
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -24,12 +24,11 @@
   "homepage": "./",
   "main": "electron/main.js",
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "electron": "electron .",
-    "electron-build": "electron-builder",
-    "release": "electron-builder -p always"
+    "react-start": "react-app-rewired start",
+    "react-build": "react-app-rewired build",
+    "electron-start": "electron .",
+    "electron-build": "electron-builder -l",
+    "electron-release": "electron-builder -p always"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,14 +56,17 @@
   "build": {
     "extends": null,
     "extraResources": [
-      "**/assets/**",
-      "**/electron/Wallpaper/**"
+      "**/electron/Wallpaper/**",
+      "**/assets/**"
     ],
     "files": [
       "electron/**/*",
       "build/**/*",
       "node_modules/**/*"
     ],
+    "directories": {
+      "buildResources": "assets"
+    },
     "appId": "com.erin.start",
     "productName": "Erin",
     "win": {
@@ -72,11 +74,11 @@
       "target": "nsis"
     },
     "mac": {
-      "icon": "assets/icon.512x512.png",
+      "icon": "assets/icons/icon.512x512.png",
       "target": "dmg"
     },
     "linux": {
-      "icon": "assets/icon.512x512.png",
+      "icon": "assets/icons/icon.512x512.png",
       "target": [
         "deb",
         "rpm",
