@@ -8,7 +8,7 @@ export default function Warning(props){
 
     return(
         <div id="warning">
-            { <Icon /> || <UI.Warning/>}
+            { Icon ? <Icon /> : <UI.Warning /> }
             <p>{ message || props.value }</p>
 
             <Button className="delete" 
