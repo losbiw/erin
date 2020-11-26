@@ -6,10 +6,9 @@ const initializeIPCEvents = require('./ipcEvents');
 require('dotenv').config({path: join(__dirname, './.env')});
 require('./updateEvents')();
 
-let win, iconPath, winTray; 
+let win, winTray; 
 
 requestLock();
-findIconPath();
 
 function loadFile(){
     const { height, width } = screen.getPrimaryDisplay().size;
@@ -22,7 +21,7 @@ function loadFile(){
             nodeIntegration: true
         },
         frame: false,
-        icon: nativeImage.createFromPath(iconPath)
+        icon: findIconPath(1024)
     });
 
     if(app.isPackaged){
@@ -63,14 +62,14 @@ function requestLock(){
     }
 }
 
-function findIconPath(){
+function findIconPath(size){
     const os = process.platform;
-    const iconName = os === 'win32' ? 'assets/icon.ico' : 'assets/icons/512x512.png';
+    const iconName = os === 'win32' ? 'assets/icon.ico' : `assets/icons/${size}x${size}.png`;
     
-    iconPath = app.isPackaged ? join(process.resourcesPath, iconName) : join(__dirname, '../', iconName);
+    return app.isPackaged ? join(process.resourcesPath, iconName) : join(__dirname, '../', iconName);
 }
 
 app.on('ready', () => {
     loadFile();
-    winTray = tray.create(win, iconPath);
+    winTray = tray.create(win, findIconPath(24));
 });

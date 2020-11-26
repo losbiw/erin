@@ -74,11 +74,10 @@
       "target": "nsis"
     },
     "mac": {
-      "icon": "assets/icons/icon.512x512.png",
+      "icon": "assets/icon.icns",
       "target": "dmg"
     },
     "linux": {
-      "icon": "assets/icons/icon.512x512.png",
       "target": [
         "deb",
         "rpm",
