@@ -21,7 +21,7 @@ function loadFile(){
             nodeIntegration: true
         },
         frame: false,
-        icon: findIconPath(1024)
+        icon: nativeImage.createFromPath(findIconPath(1024))
     });
 
     if(app.isPackaged){

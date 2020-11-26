@@ -27,9 +27,8 @@
     "react-start": "react-app-rewired start",
     "react-build": "react-app-rewired build",
     "electron-start": "electron .",
-    "electron-build": "electron-builder -w -l",
-    "electron-linux-release": "electron-builder -l -p always",
-    "electron-win-release": "electron-builder -w -p always"
+    "electron-build": "electron-builder",
+    "electron-release": "electron-builder -p always"  
   },
   "eslintConfig": {
     "extends": "react-app"
