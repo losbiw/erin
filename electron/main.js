@@ -4,7 +4,7 @@ const tray = require('./tray');
 const initializeIPCEvents = require('./ipcEvents');
 
 require('dotenv').config({path: join(__dirname, './.env')});
-require('./updateEvents')();
+if(getOSName() === 'win32' || getOSName() === 'darwin') require('./updateEvents')();
 
 let win, winTray; 
 
@@ -63,10 +63,14 @@ function requestLock(){
 }
 
 function findIconPath(size){
-    const os = process.platform;
+    const os = getOSName();
     const iconName = os === 'win32' ? 'assets/icon.ico' : `assets/icons/${size}x${size}.png`;
     
     return app.isPackaged ? join(process.resourcesPath, iconName) : join(__dirname, '../', iconName);
+}
+
+function getOSName(){
+    return process.platform
 }
 
 app.on('ready', () => {
