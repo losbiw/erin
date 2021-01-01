@@ -2,7 +2,7 @@ import OS from './OS'
 
 const fs = window.require('fs');
 const { ipcRenderer } = window.require('electron');
-const { join } = window.require('path');
+const { join, resolve } = window.require('path');
 const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
@@ -52,7 +52,8 @@ function download(url, path, handlers){
 	})
 }
 
-function set(imgPath){
+function set(img){
+	const imgPath = resolve(img);
 	if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
 	const os = window.process.platform;
 
@@ -70,8 +71,8 @@ function set(imgPath){
 
 		const options = {
 			other: (name) => ({
-				align: `gsettings set org.${name}.desktop.background picture-options "zoom"`,
-				set: `gsettings set org.${name}.desktop.background picture-uri  "file://${imgPath}"`
+				set: `gsettings set org.${name}.desktop.background picture-uri 'file://${imgPath}'`,
+				align: `gsettings set org.${name}.desktop.background picture-options 'zoom'`,
 			}),
 			xfce: {
 				set: `
