@@ -70,10 +70,10 @@ function set(img){
 		const desktopEnv = OS.defineDesktopEnvironment();
 
 		const options = {
-			other: (name) => ({
+			other: {
 				set: `gsettings set org.gnome.desktop.background picture-uri 'file://${imgPath}'`,
 				align: `gsettings set org.gnome.desktop.background picture-options 'zoom'`,
-			}),
+			},
 			xfce: {
 				set: `
 				  workspace_count=$(xfconf-query -v -c xfwm4 -p /general/workspace_count)
@@ -100,7 +100,7 @@ function set(img){
 			}
 		};
 
-		const commands = options[desktopEnv] || options.other(desktopEnv);
+		const commands = options[desktopEnv] || options.other;
 		
 		for(let command in commands){
 			execSync(commands[command]);
