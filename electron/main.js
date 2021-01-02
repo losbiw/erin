@@ -25,7 +25,7 @@ function loadFile(){
     });
 
     if(app.isPackaged){
-        url = `file://${__dirname}/../build/index.html`
+        url = `file://${__dirname}/../build/index.html`;
     }
     else{
         require('electron-debug')();

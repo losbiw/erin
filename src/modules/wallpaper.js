@@ -71,8 +71,8 @@ function set(img){
 
 		const options = {
 			other: (name) => ({
-				set: `gsettings set org.${name}.desktop.background picture-uri 'file://${imgPath}'`,
-				align: `gsettings set org.${name}.desktop.background picture-options 'zoom'`,
+				set: `gsettings set org.gnome.desktop.background picture-uri 'file://${imgPath}'`,
+				align: `gsettings set org.gnome.desktop.background picture-options 'zoom'`,
 			}),
 			xfce: {
 				set: `
