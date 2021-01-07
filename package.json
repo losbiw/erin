@@ -54,6 +54,9 @@
     "electron-log": "^4.3.0"
   },
   "build": {
+    "appId": "com.erin.start",
+    "artifactName": "Erin.${ext}",
+    "productName": "Erin",
     "extends": null,
     "extraResources": [
       "**/electron/Wallpaper/**",
@@ -67,8 +70,6 @@
     "directories": {
       "buildResources": "assets"
     },
-    "appId": "com.erin.start",
-    "productName": "Erin",
     "win": {
       "icon": "assets/icon.ico",
       "target": "nsis"
