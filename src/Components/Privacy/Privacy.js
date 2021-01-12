@@ -11,7 +11,7 @@ export default function Privacy(props){
             <p>I agree to the </p>
             <Links links={{ 
                 privacy: {
-                    href: 'https://losbiw.github.io/erin-website/',
+                    href: 'https://erin-web.herokuapp.com/privacy',
                     title: 'privacy policy'
                 } 
             }}/>
