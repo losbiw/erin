@@ -1,7 +1,7 @@
 function capitalizeFirstLetter(string){
     if(string)
         return string.charAt(0).toUpperCase() + string.substr(1);
-    else return null
+    else return Error('Expected a string')
 }
 
 function toLowerCase(string){

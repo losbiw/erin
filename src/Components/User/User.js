@@ -23,7 +23,7 @@ class Picture{
 }
 
 export default class User extends Component{
-    constructor(props){
+    constructor(_props){
         super();
 
         const appPath = config.getAppPath();
