@@ -5,6 +5,9 @@ import Controls from './Components/Controls/Controls'
 import Warning from './Components/Warning/Warning'
 import Update from './Components/Update/Update'
 import config from '@modules/config'
+import OS from '@modules/OS'
+import { fetchGeocoding } from '@modules/APIs'
+import { toLowerCase } from '@modules/convert'
 import './App.css'
 import './root.css'
 
@@ -23,8 +26,24 @@ export default class App extends Component{
         }
     }
 
-    componentDidMount(){
-        const { theme, isCompleted } = config.get();
+    async componentDidMount(){
+        const { theme, isCompleted, isFirstTime } = config.get();
+        const location = await fetchGeocoding(() => {});
+
+        if(isFirstTime || typeof isFirstTime === 'undefined'){
+            await fetch('https://erin-downloads.herokuapp.com/api/increase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: OS.define(),
+                    location: toLowerCase(location)
+                })
+            });
+            
+            config.set({ isFirstTime: false });
+        }
 
         ipcRenderer.send('component-did-mount');
 

@@ -1,30 +1,60 @@
 function fetchWeather(errHandler){ 
-    return new Promise(res => {
-        navigator.geolocation.getCurrentPosition(async(position) => {
-            try{
-                const key = window.process.env.WEATHER_API_KEY;
-                const { latitude, longitude } = position.coords;
+    const callback = async(res, position) => {
+        try{
+            const key = window.process.env.WEATHER_API_KEY;
+            const { latitude: lat, longitude: lng } = position.coords;
+        
+            const json = await fetchAPI(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${key}`,
+                errHandler
+            );
             
-                const json = await fetchAPI(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`,
-                    errHandler
-                );
-                
-                const { weather, sys } = json;
-                const formatted = {
-                    main: weather[0].main,
-                    time: sys
-                }
-                
-                res(formatted);
+            const { weather, sys } = json;
+            const formatted = {
+                main: weather[0].main,
+                time: sys
             }
-            catch(err){
-                errHandler({
-                    error: 503
-                });
-                return
-            }
-        })
+            
+            res(formatted);
+        }
+        catch(err){
+            errHandler({
+                error: 503
+            });
+            return
+        }
+    }
+
+    return fetchGeolocation(callback)
+}
+
+function fetchGeocoding(errHandler){
+    const callback = async(res, position) => {
+        try{
+            const key = window.process.env.GOOGLE_API_KEY;
+            const { latitude: lat, longitude: lng } = position.coords;
+
+            const geocoding = await fetchAPI(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}&result_type=country`,
+                errHandler
+            );
+
+            res(geocoding.results[0].formatted_address);
+        }
+        catch(err){
+            errHandler({
+                error: 503
+            });
+            return
+        }
+    }
+
+    return fetchGeolocation(callback)
+}
+
+function fetchGeolocation(callback){
+    return new Promise(res => {
+        navigator.geolocation.getCurrentPosition(position => callback(res, position))
     })
 }
 
@@ -82,4 +112,4 @@ async function fetchAPI(url, headers, errHandler){
     }
 }
 
-export { fetchPexels, fetchWeather }
+export { fetchPexels, fetchWeather, fetchGeolocation, fetchGeocoding }
