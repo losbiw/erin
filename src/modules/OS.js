@@ -2,12 +2,12 @@ import { toLowerCase } from './convert'
 
 const { execSync } = window.require('child_process')
 
-function defineOS(){
+function define(){
     return window.process.platform
 }
 
 function defineDesktopEnvironment(){
-    if(defineOS() === 'linux'){
+    if(define() === 'linux'){
         const environment = execSync('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
         return convertEnvName(environment)
     }
@@ -23,4 +23,4 @@ function convertEnvName(name){
     return parsed
 }
 
-export default { defineOS, defineDesktopEnvironment }
+export default { define, defineDesktopEnvironment }
