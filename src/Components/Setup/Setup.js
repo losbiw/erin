@@ -36,7 +36,7 @@ export default function Setup(props){
         {
             name: 'keywords',
             title: 'Keywords to search',
-            description: 'Is only needed if you choose "Keywords" as your mode',
+            description: 'It\'s only required if you choose "keywords" as wallpaper mode',
             dark: 'https://images.pexels.com/photos/2422588/pexels-photo-2422588.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             light: 'https://images.pexels.com/photos/1770812/pexels-photo-1770812.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
             element: Keywords
