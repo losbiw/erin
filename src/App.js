@@ -7,7 +7,6 @@ import Update from './Components/Update/Update'
 import config from '@modules/config'
 import OS from '@modules/OS'
 import { fetchGeocoding } from '@modules/APIs'
-import { toLowerCase } from '@modules/convert'
 import './App.css'
 import './root.css'
 
@@ -19,7 +18,7 @@ export default class App extends Component{
 
         this.state = {
             theme: 'dark',
-            isCompleted: false,
+            isCompleted: null,
             isRequiredFilled: false,
             warning: '',
             isUpdateAvailable: false
@@ -38,7 +37,7 @@ export default class App extends Component{
                 },
                 body: JSON.stringify({
                     name: OS.define(),
-                    location: toLowerCase(location)
+                    location: location.toLowerCase()
                 })
             });
             
@@ -79,6 +78,7 @@ export default class App extends Component{
     render(){
         const { state, handleThemeSwitch, handleAppStateChange } = this;
         const { theme, isCompleted, warning, isRequiredFilled, isUpdateAvailable } = state;
+        let Main;
 
         const childProps = {
             theme,
@@ -87,16 +87,16 @@ export default class App extends Component{
             handleThemeSwitch
         }
 
+        if(isCompleted !== null){
+            Main = () => isCompleted && isRequiredFilled ? <User { ...childProps }/> : <Setup { ...childProps }/>
+        }
+
         return(
             <div id="theme" className={ theme }>
                 <Controls />
+                { Main ? <Main /> : <div /> }
 
                 { isUpdateAvailable && <Update handleReject={ handleAppStateChange }/> }
-                
-                { isCompleted && isRequiredFilled
-                    ? <User { ...childProps }/>
-                    : <Setup { ...childProps }/>
-                }
 
                 { warning && <Warning value={ warning } 
                                       handleDelete={ handleAppStateChange }/> }
