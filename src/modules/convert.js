@@ -4,10 +4,4 @@ function capitalizeFirstLetter(string){
     else return Error('Expected a string')
 }
 
-function toLowerCase(string){
-    if(typeof string === 'string')
-        return string.toLowerCase();
-    else throw Error('Expected a string')
-}
-
-export { capitalizeFirstLetter, toLowerCase }
+export { capitalizeFirstLetter }

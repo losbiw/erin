@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react'
 import Button from '../Button/Button'
 import { Crosses } from '../Svg/Loader'
-import { toLowerCase } from '@modules/convert'
 import areEqual from '@modules/areEqual'
 import './Keywords.css'
 
@@ -40,7 +39,7 @@ export default class Keywords extends Component{
         
         if(e.key === 'Enter' && keywords.length < 10){
             const { value } = e.target;
-            const converted = toLowerCase(value);
+            const converted = value.toLowerCase();
             const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
 
             let warning;

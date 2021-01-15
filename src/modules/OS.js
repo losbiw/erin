@@ -1,5 +1,3 @@
-import { toLowerCase } from './convert'
-
 const { execSync } = window.require('child_process')
 
 function define(){
@@ -17,7 +15,7 @@ function convertEnvName(name){
     const regex = /cinnamon|gnome|unity|xfce|kde/gi;
 
     const match = name.match(regex)[0];
-    const parsed = toLowerCase(match);
+    const parsed = match.toLowerCase();
 
     if(!parsed || parsed === 'unity') return 'gnome'
     return parsed
