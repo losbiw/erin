@@ -35,7 +35,7 @@ function fetchGeocoding(errHandler){
             const { latitude: lat, longitude: lng } = position.coords;
 
             const geocoding = await fetchAPI(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}&result_type=country`,
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}&result_type=country&language=en`,
                 errHandler
             );
 
