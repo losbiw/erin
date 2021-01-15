@@ -1,10 +1,11 @@
 const { app, BrowserWindow, screen, nativeImage } = require('electron');
 const { join } = require('path');
+const { readFileSync } = require('fs');
 const tray = require('./tray');
 const initializeIPCEvents = require('./ipcEvents');
 
 require('dotenv').config({path: join(__dirname, './.env')});
-if(getOSName() === 'win32' || getOSName() === 'darwin') require('./updateEvents')();
+if(defineOS() === 'win32' || defineOS() === 'darwin') require('./updateEvents')();
 
 let win, winTray; 
 
@@ -13,7 +14,10 @@ requestLock();
 function loadFile(){
     const { height, width } = screen.getPrimaryDisplay().size;
     let url;
-    
+
+    const cfgPath = join(app.getPath('userData'), 'config.json');
+    const config = JSON.parse(readFileSync(cfgPath, 'utf8'));
+
     win = new BrowserWindow({
         width: width * 0.8,
         height: height * 0.8,
@@ -21,7 +25,8 @@ function loadFile(){
             nodeIntegration: true
         },
         frame: false,
-        icon: nativeImage.createFromPath(findIconPath(1024))
+        icon: nativeImage.createFromPath(findIconPath(1024)),
+        backgroundColor: config.theme === 'dark' ? '#121214' : '#f4f4f8'
     });
 
     if(app.isPackaged){
@@ -63,13 +68,13 @@ function requestLock(){
 }
 
 function findIconPath(size){
-    const os = getOSName();
+    const os = defineOS();
     const iconName = os === 'win32' ? 'assets/icon.ico' : `assets/icons/${size}x${size}.png`;
     
     return app.isPackaged ? join(process.resourcesPath, iconName) : join(__dirname, '../', iconName);
 }
 
-function getOSName(){
+function defineOS(){
     return process.platform
 }
 
