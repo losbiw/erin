@@ -38,8 +38,7 @@ function set(options){
 }
 
 function getAppPath(){
-    const appPath = ipcRenderer.sendSync('get-app-path');
-    return appPath
+    return ipcRenderer.sendSync('get-app-path');
 }
 
 function getConfigPath(){
@@ -62,7 +61,7 @@ function isMatchingSchema(cfg){
 const getDefaultOptions = () => ({
     mode: 'weather',
     keywords: [],
-    timer: 0,
+    timer: 60000,
     quality: 'original',
     startup: true,
     theme: 'dark',

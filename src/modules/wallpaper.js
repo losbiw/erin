@@ -55,7 +55,7 @@ function download(url, path, handlers){
 function set(img){
 	const imgPath = resolve(img);
 	if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
-	const os = window.process.platform;
+	const os = OS.define();
 
 	if(os === 'win32'){
 		const isPackaged = ipcRenderer.sendSync('is-app-packaged');
