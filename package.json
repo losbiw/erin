@@ -2,7 +2,7 @@
   "name": "erin",
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
