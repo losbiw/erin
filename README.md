@@ -1,6 +1,6 @@
 # Erin
 
-A simple way to automatically change wallpaper
+A simple way to change wallpaper automatically
 
 ## Installation
 
