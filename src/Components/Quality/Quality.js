@@ -17,11 +17,13 @@ export default function Quality(props){
         value: 'large'
     }];
 
+    const defaultValue = options.find(obj => obj.value === props.data);
+
     return(
         <select name="quality" 
                 onChange={ props.handleChange } 
                 data-value="value"
-                defaultValue={ props.data }>
+                defaultValue={ defaultValue }>
             {
                 options.map(option => {
                     return(

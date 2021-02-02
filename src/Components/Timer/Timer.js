@@ -65,23 +65,24 @@ export default function Timer(props){
 
     const keys = time ? Object.keys(time) : [];
     
-    return keys.map(unit => {
-                return(
-                    <div className="time" key={ unit }>
-                        <div className="wrapper">
-                            <input type="number"
-                                   defaultValue={ time[unit] }
-                                   name={ unit } 
-                                   id={ unit }
-                                   onChange={ updateCfgTime }/>
-                            { 
-                                unit !== 'seconds' && 
-                                <span className="colon">:</span> 
-                            }
-                        </div>
-                        
-                        <label>{ capitalizeFirstLetter(unit) }</label>
-                    </div>
-                )
-            })
+    return keys.map((unit, index) => {
+        return(
+            <div className="time" key={ unit }>
+                <div className="wrapper">
+                    <input type="number"
+                           key={ unit + index }
+                           defaultValue={ time[unit] }
+                           name={ unit } 
+                           id={ unit }
+                           onChange={ updateCfgTime }/>
+                    { 
+                        unit !== 'seconds' && 
+                        <span className="colon">:</span> 
+                    }
+                </div>
+                
+                <label>{ capitalizeFirstLetter(unit) }</label>
+            </div>
+        )
+    })
 }

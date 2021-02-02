@@ -15,7 +15,7 @@ export default class Slider extends Component{
     componentDidUpdate(){
         const { isCompleted, handleAppStateChange, handleSlide } = this.props;
 
-        if(isCompleted === true){
+        if(isCompleted){
             const settingsWarning = warning.match(this.state, true);
             let data;
 
@@ -45,7 +45,7 @@ export default class Slider extends Component{
         const upd = {}
         upd[name] = value;
 
-        this.setState(upd)
+        this.setState(upd);
     }
 
     render(){ 
@@ -70,7 +70,7 @@ export default class Slider extends Component{
                               isSetup={ true }
                               handlers={{
                                 handleWarningChange: handleAppStateChange,
-                                handleStateChange: handleStateChange
+                                handleStateChange
                               }}
                               theme={ theme }/>
                     </div>

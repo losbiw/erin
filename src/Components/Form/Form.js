@@ -12,18 +12,17 @@ export default function Form(props){
     }
 
     const updateState = (name, value) => {
-        const { handleWarningChange, handleStateChange } = props.handlers
+        const { handleWarningChange, handleStateChange } = props.handlers;
 
         const matchWarning = {
             mode: props.config.mode
-        };
+        }
         
         matchWarning[name] = value;
-
         const settingsWarning = warning.match(matchWarning);
 
         handleWarningChange({ warning: settingsWarning?.value });
-        handleStateChange(name, value)
+        handleStateChange(name, value);
     }
 
     const { data, config, handlers, active, theme, isSetup } = props;

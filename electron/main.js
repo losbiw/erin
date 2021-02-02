@@ -1,6 +1,6 @@
 const { app, BrowserWindow, screen, nativeImage } = require('electron');
 const { join } = require('path');
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 const tray = require('./tray');
 const initializeIPCEvents = require('./ipcEvents');
 
@@ -13,10 +13,15 @@ requestLock();
 
 function loadFile(){
     const { height, width } = screen.getPrimaryDisplay().size;
-    let url;
+    let url, theme;
 
     const cfgPath = join(app.getPath('userData'), 'config.json');
-    const config = JSON.parse(readFileSync(cfgPath, 'utf8'));
+
+    if(existsSync(cfgPath)){
+        const config = JSON.parse(readFileSync(cfgPath, 'utf8'));
+        theme = config.theme;
+    }
+    else theme = 'dark';
 
     win = new BrowserWindow({
         width: width * 0.8,
@@ -26,7 +31,7 @@ function loadFile(){
         },
         frame: false,
         icon: nativeImage.createFromPath(findIconPath(1024)),
-        backgroundColor: config.theme === 'dark' ? '#121214' : '#f4f4f8'
+        backgroundColor: theme === 'dark' ? '#121214' : '#f4f4f8'
     });
 
     if(app.isPackaged){

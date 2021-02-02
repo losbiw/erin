@@ -72,13 +72,12 @@ export default class App extends Component{
     }
 
     handleAppStateChange = (upd) => {
-        this.setState(upd)
+        this.setState(upd);
     }
 
     render(){
         const { state, handleThemeSwitch, handleAppStateChange } = this;
         const { theme, isCompleted, warning, isRequiredFilled, isUpdateAvailable } = state;
-        let Main;
 
         const childProps = {
             theme,
@@ -87,14 +86,13 @@ export default class App extends Component{
             handleThemeSwitch
         }
 
-        if(isCompleted !== null){
-            Main = () => isCompleted && isRequiredFilled ? <User { ...childProps }/> : <Setup { ...childProps }/>
-        }
-
         return(
             <div id="theme" className={ theme }>
                 <Controls />
-                { Main ? <Main /> : <div /> }
+                { isCompleted && isRequiredFilled 
+                    ? <User { ...childProps }/> 
+                    : <Setup { ...childProps }/> 
+                }
 
                 { isUpdateAvailable && <Update handleReject={ handleAppStateChange }/> }
 
