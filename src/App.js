@@ -89,9 +89,11 @@ export default class App extends Component{
         return(
             <div id="theme" className={ theme }>
                 <Controls />
-                { isCompleted && isRequiredFilled 
+                { isCompleted !== null
+                    ? isCompleted && isRequiredFilled
                     ? <User { ...childProps }/> 
-                    : <Setup { ...childProps }/> 
+                    : <Setup { ...childProps }/>
+                    : <div />  
                 }
 
                 { isUpdateAvailable && <Update handleReject={ handleAppStateChange }/> }
