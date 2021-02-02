@@ -25,12 +25,12 @@ export default function Form(props){
         handleStateChange(name, value);
     }
 
-    const { data, config, handlers, active, theme, isSetup } = props;
+    const { data, config, handlers, active, theme, isSetup, activeIndex } = props;
 
     return(
         <form id="settings">
         {
-            data.map(setting => {
+            data.map((setting, index) => {
                 const key = setting.name;
                 const { element, title, description } = setting;
 
@@ -62,6 +62,7 @@ export default function Form(props){
                                          handleChange={ handleChange } 
                                          handleWarningChange={ handlers.handleWarningChange }
                                          isSetup={ isSetup }
+                                         isActive={ activeIndex === index }
                                          config={ key === 'save' && config }/>
                             </div>
                         </div>

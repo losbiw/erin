@@ -4,6 +4,7 @@ import './Timer.css'
 
 export default function Timer(props){
     const [time, setTime] = useState(null);
+    const [focusIndex, setFocus] = useState(0);
 
     const convertation = {
         hours: 1000 * 3600,
@@ -71,6 +72,12 @@ export default function Timer(props){
                 <div className="wrapper">
                     <input type="number"
                            key={ unit + index }
+                           ref={ ref => {
+                               if(props.isActive && index === focusIndex){
+                                   ref.focus();
+                               }
+                           } }
+                           onFocus={ () => setFocus(index) }
                            defaultValue={ time[unit] }
                            name={ unit } 
                            id={ unit }

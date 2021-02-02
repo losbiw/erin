@@ -79,15 +79,15 @@ export default class Keywords extends Component{
 
     componentDidUpdate(){
         const { isInput } = this.state;
-        const keywords = this.props.data;
+        const { data, isActive } = this.props;
         
-        if(keywords.length === 0 && !isInput){
+        if(data.length === 0 && !isInput){
             this.setState({
                 isInput: true
             });
         }
 
-        if(isInput){
+        if(isInput && isActive){
             this.inputRef.current.focus({ preventScroll: true });
         }
     }

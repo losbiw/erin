@@ -68,6 +68,7 @@ export default class Slider extends Component{
                               config={ state }
                               active={ active }
                               isSetup={ true }
+                              activeIndex={ activeIndex }
                               handlers={{
                                 handleWarningChange: handleAppStateChange,
                                 handleStateChange
