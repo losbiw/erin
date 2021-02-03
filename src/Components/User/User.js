@@ -146,6 +146,7 @@ export default class User extends Component{
         
         wallpaper.download(url, savePath, {
             setState: setStateByName,
+            setWarning: this.props.handleAppStateChange,
             handleLargeFiles: switchWallpaper,
             setTimer
         });

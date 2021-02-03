@@ -7,15 +7,24 @@ const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
 function download(url, path, handlers){
+	const os = OS.define();
 	const https = require('https');
-	const { setState, handleLargeFiles, setTimer } = handlers;
+	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
+
+	if(os === 'win32' && url === 'https://images.pexels.com/photos/2129796/pexels-photo-2129796.png'){
+		setWarning({
+			warning: "The image might crash your desktop. It's been switched to the next one automatically"
+		})
+		handleLargeFiles(true, true);
+		return;
+	}
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];
 
 		if((size / 1024 / 1024) >= 50){
-			setState({
-				warning: 'The file is too big, we automatically switched it to the next one'
+			setWarning({
+				warning: "The file is too big. It's been switched to the next one automatically"
 			})
 			handleLargeFiles(true, true);
 		}
@@ -61,9 +70,9 @@ function set(img){
 		const isPackaged = ipcRenderer.sendSync('is-app-packaged');
 
 		const resourcePath = isPackaged ? window.process.resourcesPath : join(__dirname, '../../');
-		const execPath = join(resourcePath, 'electron/Wallpaper/Wallpapers.exe');
+		const execPath = join(resourcePath, 'electron/Wallpaper/Wallpaper.exe');
 
-		execFileSync(execPath, [imgPath]);
+		execFileSync(execPath, [imgPath, "True"]);
 	}
 	
 	else if(os === 'linux'){
