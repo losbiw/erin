@@ -21,8 +21,9 @@ function download(url, path, handlers){
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];
+		console.log(size / 1024 / 1024);
 
-		if((size / 1024 / 1024) >= 50){
+		if((size / 1024 / 1024) >= 27){
 			setWarning({
 				warning: "The file is too big. It's been switched to the next one automatically"
 			})
