@@ -1,12 +1,12 @@
 import OS from './OS'
 
 const fs = window.require('fs');
+const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
-const { join, resolve } = window.require('path');
 const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
-function download(url, path, handlers){
+function download(url, initial, handlers){
 	const os = OS.define();
 	const https = require('https');
 	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
@@ -21,7 +21,6 @@ function download(url, path, handlers){
 	
 	const callback = res => {   
 		const size = res.headers["content-length"];
-		console.log(size / 1024 / 1024);
 
 		if((size / 1024 / 1024) >= 27){
 			setWarning({
@@ -41,9 +40,16 @@ function download(url, path, handlers){
 			});        
 
 			res.on('end', () => {
-				fs.writeFileSync(path, data.read()); 
+				const pic = data.read();
+				const fallbackPath = getFallbackPath(initial, pic);
+
+				fs.writeFileSync(initial, pic); 
 				
-				set(path, handlers);
+				if(os === 'darwin'){
+					fs.writeFileSync(fallbackPath, pic);
+				}
+				
+				set(initial, fallbackPath);
 				setTimer();
 				setState({
 					isLocked: false,
@@ -62,20 +68,28 @@ function download(url, path, handlers){
 	})
 }
 
-function set(img){
-	const imgPath = resolve(img);
+function getFallbackPath(initial){
+	const { dir, name, ext } = path.parse(initial);
+	const random = Math.round(Math.random() * 1000);
+
+	const result = path.join(dir, name + random + ext);
+	return result;
+}
+
+function set(img, macPath){
+	const imgPath = path.resolve(img);
+	
 	if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
 	const os = OS.define();
 
 	if(os === 'win32'){
 		const isPackaged = ipcRenderer.sendSync('is-app-packaged');
 
-		const resourcePath = isPackaged ? window.process.resourcesPath : join(__dirname, '../../');
-		const execPath = join(resourcePath, 'electron/Wallpaper/Wallpaper.exe');
+		const resourcePath = isPackaged ? window.process.resourcesPath : path.join(__dirname, '../../');
+		const execPath = path.join(resourcePath, 'electron/Wallpaper/Wallpaper.exe');
 
 		execFileSync(execPath, [imgPath, "True"]);
 	}
-	
 	else if(os === 'linux'){
 		const desktopEnv = OS.defineDesktopEnvironment();
 
@@ -108,7 +122,7 @@ function set(img){
 								d.writeConfig("Image", "file://${imgPath}");
 						}'`
 			}
-		};
+		} 
 
 		const commands = options[desktopEnv] || options.other;
 		
@@ -116,6 +130,10 @@ function set(img){
 			execSync(commands[command]);
 		}
 		return;
+	}
+	else if(os === 'darwin'){
+		const script = `osascript -e 'tell application "System Events" to tell every desktop to set picture to "${macPath}"'`;
+		execSync(script);
 	}
 }
 

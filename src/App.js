@@ -50,13 +50,13 @@ export default class App extends Component{
             this.setState({
                 isUpdateAvailable: true
             });
-        })
+        });
 
         this.setState({
             theme,
             isCompleted,
             isRequiredFilled: isCompleted
-        })
+        });
     }
 
     handleThemeSwitch = () => {
@@ -89,6 +89,7 @@ export default class App extends Component{
         return(
             <div id="theme" className={ theme }>
                 <Controls />
+
                 { isCompleted !== null
                     ? isCompleted && isRequiredFilled
                     ? <User { ...childProps }/> 

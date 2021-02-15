@@ -73,8 +73,8 @@ export default function Timer(props){
                     <input type="number"
                            key={ unit + index }
                            ref={ ref => {
-                               if(props.isActive && index === focusIndex){
-                                   ref.focus();
+                               if(ref && props.isActive && index === focusIndex){
+                                   ref.focus({ preventScroll: true });
                                }
                            } }
                            onFocus={ () => setFocus(index) }

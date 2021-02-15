@@ -66,7 +66,8 @@ const getDefaultOptions = () => ({
     startup: true,
     theme: 'dark',
     privacy: false,
-    isFirstTime: true
+    isFirstTime: true,
+    isCompleted: false
 })
 
 export default { get, set, getAppPath }
