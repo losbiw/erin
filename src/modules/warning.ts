@@ -1,5 +1,7 @@
+import { ConfigInterface } from '../types/ConfigInterface'
+
 interface Warning{
-    condition: (config, name: string) => boolean,
+    condition: (config: ConfigInterface, name: string) => boolean,
     value: string,
     isRequired?: boolean
 }
@@ -33,7 +35,7 @@ const warnings: WarningOptions = {
     }
 }
 
-function match(config, requiredOnly: boolean){
+function match(config: ConfigInterface, requiredOnly: boolean){
     for(const setting in config){
         const current = warnings[setting as keyof WarningOptions];
         const required = requiredOnly ? current?.isRequired : true;

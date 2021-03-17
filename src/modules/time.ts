@@ -1,9 +1,11 @@
-function convert(time){
+import { TimeInterface } from '../types/TimeInterface'
+
+function convert(time: TimeInterface){
     const current = new Date().getHours();
     
     for(let point in time){
-        const date = new Date(time[point] * 1000);
-        time[point] = date.getHours();
+        const date = new Date(time[point as keyof TimeInterface] * 1000);
+        time[point as keyof TimeInterface] = date.getHours();
     }
 
     if(current >= 0 && current < time['sunrise']) return 'night'

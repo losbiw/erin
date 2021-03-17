@@ -13,6 +13,17 @@ interface Handlers{
 	setWarning: Function
 }
 
+interface LinuxCommands{
+	set: string,
+	align?: string
+}
+
+interface LinuxDistros{
+	other: LinuxCommands,
+	kde: LinuxCommands,
+	xfce: LinuxCommands
+}
+
 function download(url: string, initialPath: string, handlers: Handlers){
 	const os = OS.define();
 	const https = require('https');
@@ -100,7 +111,7 @@ function set(img: string, macPath: string){
 	else if(os === 'linux'){
 		const desktopEnv = OS.defineDesktopEnvironment() as string;
 
-		const options = {
+		const options: LinuxDistros = {
 			other: {
 				set: `gsettings set org.gnome.desktop.background picture-uri 'file://${imgPath}'`,
 				align: `gsettings set org.gnome.desktop.background picture-options 'zoom'`,
@@ -131,10 +142,10 @@ function set(img: string, macPath: string){
 			}
 		} 
 
-		const commands = options[desktopEnv] || options.other;
+		const commands = options[desktopEnv as keyof LinuxDistros] || options.other;
 		
 		for(let command in commands){
-			execSync(commands[command]);
+			execSync(commands[command as keyof LinuxCommands]);
 		}
 		return;
 	}

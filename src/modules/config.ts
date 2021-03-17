@@ -1,20 +1,9 @@
 import startup from './startup'
+import { ConfigInterface } from '../types/ConfigInterface'
 
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
-
-interface Config{
-    mode: string,
-    keywords: Array<string>,
-    timer: number,
-    quality: string,
-    startup: boolean,
-    theme: string,
-    privacy: boolean,
-    isFirstTime: boolean,
-    isCompleted: boolean
-}
 
 function get(){
     const cfgPath = getConfigPath();
@@ -33,12 +22,12 @@ function get(){
     }
 }
 
-function set(options: Config){
+function set(options: ConfigInterface){
     const updated = get();
     const cfgPath = getConfigPath();
 
     for(const key in options){
-        updated[key] = options[key];
+        updated[key] = options[key as keyof ConfigInterface];
     }
     
     const json = JSON.stringify(updated);
@@ -60,7 +49,7 @@ function getConfigPath(){
     return cfgPath
 }
 
-function isMatchingSchema(cfg: Config){
+function isMatchingSchema(cfg: ConfigInterface){
     const defaultCfg = getDefaultOptions();
     
     for(let prop in defaultCfg){

@@ -15,7 +15,7 @@ async function fetchAPI(url: string, errHandler: Function, headers?: HeadersInit
 }
 
 function fetchWeather(errHandler: Function){ 
-    const callback = async(res: void, position) => {
+    const callback = async(res: Function, position: any) => {
         try{
             const key = window.process.env.WEATHER_API_KEY;
             const { latitude: lat, longitude: lng } = position.coords;
@@ -45,7 +45,7 @@ function fetchWeather(errHandler: Function){
 }
 
 function fetchGeocoding(errHandler: Function){
-    const callback = async(res, position) => {
+    const callback = async(res: Function, position: any) => {
         try{
             const key = window.process.env.GOOGLE_API_KEY;
             const { latitude: lat, longitude: lng } = position.coords;

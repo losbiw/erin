@@ -1,4 +1,4 @@
-function objects(obj1: Object, obj2: Object){
+function objects(obj1: any, obj2: any){
     const firstKeys = Object.keys(obj1);
     const secondKeys = Object.keys(obj2);
 
