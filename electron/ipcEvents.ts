@@ -1,7 +1,8 @@
-const { app, ipcMain, Notification } = require('electron');
+import { app, ipcMain, BrowserWindow } from 'electron';
+const { Notification } = require('electron');
 const { autoUpdater } = require('electron-updater')
 
-function setListeners(win){
+function setListeners(win: BrowserWindow){
     ipcMain.on('get-app-path', event => {
         event.returnValue = app.getPath('userData');
     })
@@ -31,7 +32,7 @@ function setListeners(win){
 
     autoUpdater.on('update-available', () => {
         const updateNotification = new Notification('Update available', {
-            body: 'Click here to look for more details'
+            body: 'Click here for more details'
         })
 
         updateNotification.onclick = () => {

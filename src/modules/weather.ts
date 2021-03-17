@@ -1,4 +1,4 @@
-function convertMain(value){
+function convertMain(value: string){
     switch(value){
         case 'Drizzle': return 'rain';
         case 'Smoke': return 'fog';

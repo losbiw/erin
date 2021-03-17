@@ -1,5 +1,6 @@
 function convert(time){
     const current = new Date().getHours();
+    
     for(let point in time){
         const date = new Date(time[point] * 1000);
         time[point] = date.getHours();

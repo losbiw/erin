@@ -11,14 +11,17 @@ function defineDesktopEnvironment(){
     }
 }
 
-function convertEnvName(name){
+function convertEnvName(name: string){
     const regex = /cinnamon|gnome|unity|xfce|kde/gi;
 
-    const match = name.match(regex)[0];
-    const parsed = match.toLowerCase();
+    const match = name.match(regex);
 
-    if(!parsed || parsed === 'unity') return 'gnome'
-    return parsed
+    if(match){
+        const parsed = match[0].toLowerCase();
+
+        if(!parsed || parsed === 'unity') return 'gnome'
+        return parsed
+    }
 }
 
 export default { define, defineDesktopEnvironment }

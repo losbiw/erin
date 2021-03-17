@@ -6,7 +6,14 @@ const { ipcRenderer } = window.require('electron');
 const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
-function download(url, initial, handlers){
+interface Handlers{
+	setState: Function,
+	handleLargeFiles: Function,
+	setTimer: Function,
+	setWarning: Function
+}
+
+function download(url: string, initialPath: string, handlers: Handlers){
 	const os = OS.define();
 	const https = require('https');
 	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
@@ -19,7 +26,7 @@ function download(url, initial, handlers){
 		return;
 	}
 	
-	const callback = res => {   
+	const callback = (res: any) => {   
 		const size = res.headers["content-length"];
 
 		if((size / 1024 / 1024) >= 27){
@@ -33,7 +40,7 @@ function download(url, initial, handlers){
 			const contentLength = Math.floor(size / 100);
 			let downloaded = 0; 
 
-			res.on('data', chunk => {
+			res.on('data', (chunk: any) => {
 				data.push(chunk);
 				downloaded += chunk.length;
 				setState({ progress: downloaded / contentLength });                                   
@@ -41,15 +48,15 @@ function download(url, initial, handlers){
 
 			res.on('end', () => {
 				const pic = data.read();
-				const fallbackPath = getFallbackPath(initial, pic);
+				const fallbackPath = getFallbackPath(initialPath);
 
-				fs.writeFileSync(initial, pic); 
+				fs.writeFileSync(initialPath, pic); 
 				
 				if(os === 'darwin'){
 					fs.writeFileSync(fallbackPath, pic);
 				}
 				
-				set(initial, fallbackPath);
+				set(initialPath, fallbackPath);
 				setTimer();
 				setState({
 					isLocked: false,
@@ -68,15 +75,15 @@ function download(url, initial, handlers){
 	})
 }
 
-function getFallbackPath(initial){
-	const { dir, name, ext } = path.parse(initial);
+function getFallbackPath(initialPath: string){
+	const { dir, name, ext } = path.parse(initialPath);
 	const random = Math.round(Math.random() * 1000);
 
 	const result = path.join(dir, name + random + ext);
 	return result;
 }
 
-function set(img, macPath){
+function set(img: string, macPath: string){
 	const imgPath = path.resolve(img);
 	
 	if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
@@ -91,7 +98,7 @@ function set(img, macPath){
 		execFileSync(execPath, [imgPath, "True"]);
 	}
 	else if(os === 'linux'){
-		const desktopEnv = OS.defineDesktopEnvironment();
+		const desktopEnv = OS.defineDesktopEnvironment() as string;
 
 		const options = {
 			other: {

@@ -1,5 +1,21 @@
-function fetchWeather(errHandler){ 
-    const callback = async(res, position) => {
+async function fetchAPI(url: string, errHandler: Function, headers?: HeadersInit){
+    try{
+        const req = await fetch(url, {
+            method: "GET",
+            headers
+        })
+        const res = await req.json();
+        return res
+    }
+    catch{
+        errHandler({
+            error: 502
+        })
+    }
+}
+
+function fetchWeather(errHandler: Function){ 
+    const callback = async(res: void, position) => {
         try{
             const key = window.process.env.WEATHER_API_KEY;
             const { latitude: lat, longitude: lng } = position.coords;
@@ -28,7 +44,7 @@ function fetchWeather(errHandler){
     return fetchGeolocation(callback)
 }
 
-function fetchGeocoding(errHandler){
+function fetchGeocoding(errHandler: Function){
     const callback = async(res, position) => {
         try{
             const key = window.process.env.GOOGLE_API_KEY;
@@ -52,28 +68,28 @@ function fetchGeocoding(errHandler){
     return fetchGeolocation(callback)
 }
 
-function fetchGeolocation(callback){
+function fetchGeolocation(callback: Function){
     return new Promise(res => {
         navigator.geolocation.getCurrentPosition(position => callback(res, position))
     })
 }
 
-async function fetchPexels(keywords, errHandler){
+async function fetchPexels(keywords: Array<string>, errHandler: Function){
     let collection = [];
     let canRequestMore = true;
     
     for(let key of keywords){
         let page = 1;
+        const headers: HeadersInit = new Headers();
+        headers.set('Content-type', 'application/json');
+        headers.set('Authorization', window.process.env.PEXELS_API_KEY || '');
         
         while(canRequestMore && page < 3){
             try{
                 const res = await fetchAPI(
-                    `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,
-                    {
-                        'Content-Type': 'application/json',
-                        'Authorization': window.process.env.PEXELS_API_KEY
-                    },
-                    errHandler
+                    `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,  
+                    errHandler,
+                    headers,
                 );
 
                 const { photos } = await res;
@@ -94,22 +110,6 @@ async function fetchPexels(keywords, errHandler){
     }
 
     return collection
-}
-
-async function fetchAPI(url, headers, errHandler){
-    try{
-        const req = await fetch(url, {
-            method: "GET",
-            headers
-        })
-        const res = await req.json();
-        return res
-    }
-    catch{
-        errHandler({
-            error: 502
-        })
-    }
 }
 
 export { fetchPexels, fetchWeather, fetchGeolocation, fetchGeocoding }

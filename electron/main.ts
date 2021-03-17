@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen, nativeImage } = require('electron');
+import { app, BrowserWindow, screen, nativeImage, Tray } from 'electron';
 const { join } = require('path');
 const { readFileSync, existsSync } = require('fs');
 const tray = require('./tray');
@@ -7,7 +7,7 @@ const initializeIPCEvents = require('./ipcEvents');
 require('dotenv').config({path: join(__dirname, './.env')});
 if(defineOS() === 'win32' || defineOS() === 'darwin') require('./updateEvents')();
 
-let win, winTray; 
+let win: BrowserWindow, winTray: Tray; 
 
 requestLock();
 
@@ -72,7 +72,7 @@ function requestLock(){
     }
 }
 
-function findIconPath(size){
+function findIconPath(size: number){
     const os = defineOS();
     const iconName = os === 'win32' ? 'assets/icon.ico' : `assets/icons/${size}x${size}.png`;
     

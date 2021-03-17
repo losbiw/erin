@@ -1,4 +1,4 @@
-function objects(obj1, obj2){
+function objects(obj1: Object, obj2: Object){
     const firstKeys = Object.keys(obj1);
     const secondKeys = Object.keys(obj2);
 
@@ -24,7 +24,7 @@ function objects(obj1, obj2){
     }
 }
 
-function arrays(arr1, arr2){
+function arrays(arr1: Array<any>, arr2: Array<any>){
     if(arr1.length !== arr2.length){
         return false
     }

@@ -1,3 +1,5 @@
+import { IpcMainEvent } from "electron/main";
+
 const { autoUpdater } = require('electron-updater');
 const { ipcMain } = require('electron');
 
@@ -12,7 +14,7 @@ function setListeners(){
         }
     });
 
-    ipcMain.on('should-update', event => {
+    ipcMain.on('should-update', (event: IpcMainEvent) => {
         autoUpdater.downloadUpdate();
     
         event.returnValue = 'update is being downloaded'

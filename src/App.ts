@@ -12,9 +12,19 @@ import './root.css'
 
 const { ipcRenderer } = window.require('electron');
 
+interface IState{
+    theme: Theme,
+
+}
+
+interface Theme{
+    light: 'light',
+    dark: 'dark'
+}
+
 export default class App extends Component{
-    constructor(_props){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
             theme: 'dark',

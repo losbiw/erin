@@ -4,6 +4,18 @@ const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
 
+interface Config{
+    mode: string,
+    keywords: Array<string>,
+    timer: number,
+    quality: string,
+    startup: boolean,
+    theme: string,
+    privacy: boolean,
+    isFirstTime: boolean,
+    isCompleted: boolean
+}
+
 function get(){
     const cfgPath = getConfigPath();
     
@@ -21,18 +33,18 @@ function get(){
     }
 }
 
-function set(options){
+function set(options: Config){
     const updated = get();
     const cfgPath = getConfigPath();
 
-    for(let key in options){
-        updated[key] = options[key]
+    for(const key in options){
+        updated[key] = options[key];
     }
     
     const json = JSON.stringify(updated);
     startup.set(options.startup);
     
-    fs.writeFileSync(cfgPath, json, (err)=>{
+    fs.writeFileSync(cfgPath, json, (err: Error)=>{
         if(err) throw err;
     });
 }
@@ -48,7 +60,7 @@ function getConfigPath(){
     return cfgPath
 }
 
-function isMatchingSchema(cfg){
+function isMatchingSchema(cfg: Config){
     const defaultCfg = getDefaultOptions();
     
     for(let prop in defaultCfg){

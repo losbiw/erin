@@ -1,7 +1,6 @@
-const { join } = require('path');
-const { Tray, Menu } = require('electron');
+import { Tray, BrowserWindow, Menu } from 'electron';
 
-function create(win, iconPath){
+function create(win: BrowserWindow, iconPath: string){
     const tray = new Tray(iconPath);
     
     const cntxMenu = Menu.buildFromTemplate([
