@@ -35,7 +35,17 @@ import { ReactComponent as Startup } from '@settings/startup.svg'
 import { ReactComponent as Quality } from '@settings/quality.svg'
 import { ReactComponent as Save } from '@settings/save.svg'
 
-const group = {
+import { Svg } from '../../types/Icon'
+
+interface Icons {
+    [name: string]: Svg | string 
+}
+
+interface Group {
+    [name: string]: Icons | Array<Svg>
+}
+
+const group: Group = {
     NavIcons: {
         Home,
         Picker,
@@ -102,26 +112,33 @@ const group = {
     }
 }
 
-function iterateIcons(){
-    for(let icons in group){
-        group[icons] = addGradients(group[icons]);
+function iterateIcons(groups: Group){
+    for(const icons in groups){
+        groups[icons] = addGradients(groups[icons]);
     }
 }
 
-function addGradients(icons){ 
-    for(let key in icons){
+function addGradients(icons: Icons | Array<Svg>){ 
+    for(const key in icons){
         const icon = icons[key];
         
         icons[key] = () => {
-            return <Template svg={ icon } id={ key }/>
+            if(typeof icon === 'string'){
+                return <Template raw={ icon } id={ key }/>
+            }
+            else{
+                return <Template svg={ icon } id={ key }/>
+            }
         }
     }
 
     return icons
 }
 
-iterateIcons();
+iterateIcons(group);
+
 const { NavIcons, Arrows, InfoIcons, Crosses, Control, Themes, UI } = group;
+
 const SettingsIcons = {
     Mode,
     Keywords,

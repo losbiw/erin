@@ -1,15 +1,28 @@
 import React from 'react'
+import { Svg, Gradient } from '../../types/Icon'
 
-export default function Template(props){
-    const { svg, id } = props;
-    const path = svg.path || svg;
+interface Size{
+    width: number,
+    height: number
+}
+
+interface Props{
+    id: string,
+    svg?: Svg,
+    raw?: string
+}
+
+export default (props: Props) => {
+    const { id, raw } = props;
+    const svg = props.svg as Svg;
+    const path = svg.path || raw as string;
     
-    const gradient = svg.gradient || {
+    const gradient: Gradient = svg.gradient || {
         from: "#0dc39f",
         to: "#38ef7d"
     }
     
-    const { width, height } = extractSize(path);
+    const { width, height }: Size = extractSize(path);
     const view = extractViewBox(path);
     const filled = addFill(extractPath(path))
 
@@ -34,11 +47,11 @@ export default function Template(props){
     )
 }
 
-function extractPath(path){
+function extractPath(path: string): string{
     const regex = /<(path|circle)\b([\s\S]*?)\/>/g;
-    const matches = path.match(regex);
+    const matches = path.match(regex) || [];
     
-    if(regex.length !== 0){
+    if(matches.length !== 0){
         path = '';
         path += matches.map(match => match)
     }
@@ -46,34 +59,34 @@ function extractPath(path){
     return path
 }
 
-function extractSize(svg){
-    try{
-        const width = svg.match(/width="([^"]+)"/)[1]; // eslint-disable-line no-useless-escape
-        const height = svg.match(/height="([^"]+)"/)[1]; // eslint-disable-line no-useless-escape
+function extractSize(svg: string): Size{
+    const width = svg.match(/width="([^"]+)"/);
+    const height = svg.match(/height="([^"]+)"/);
 
-        return {
-            height,
-            width
+    if(width?.[1] && height?.[1]){
+        const size: Size = {
+            width: parseInt(width[1]),
+            height: parseInt(height[1])
         }
+
+        return size
     }
-    catch{
+    else{
         return {
             width: 512,
             height: 512
-        }
+        } as Size
     }
 }
 
-function extractViewBox(svg){
-    try{
-        return svg.match(/viewBox="([^"]+)"/)[1];
-    }
-    catch{
-        return undefined
-    }
+function extractViewBox(svg: string): string | undefined{
+    const viewBox = svg.match(/viewBox="([^"]+)"/);
+
+    if(viewBox?.[1]) return viewBox[1];
+    else return undefined
 }
 
-function addFill(path){
+function addFill(path: string): string{
     const fill = ' fill="white"/'
     const rgx = /\//g;
     const result = path.replaceAll(rgx, fill);

@@ -12,9 +12,12 @@ import './root.css'
 
 const { ipcRenderer } = window.require('electron');
 
-interface IState{
-    theme: Theme,
-
+interface State{
+    theme: keyof Theme,
+    isUpdateAvailable: boolean,
+    isRequiredFilled: boolean,
+    isCompleted: boolean | null,
+    warning: string
 }
 
 interface Theme{
@@ -22,18 +25,14 @@ interface Theme{
     dark: 'dark'
 }
 
-export default class App extends Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            theme: 'dark',
-            isCompleted: null,
-            isRequiredFilled: false,
-            warning: '',
-            isUpdateAvailable: false
-        }
-    }
+export default class App extends Component<{}, State>{
+    state: State = {
+        theme: 'dark',
+        isUpdateAvailable: false,
+        isRequiredFilled: false,
+        isCompleted: null,
+        warning: ''
+    };
 
     async componentDidMount(){
         const { theme, isCompleted, isFirstTime } = config.get();
@@ -78,10 +77,10 @@ export default class App extends Component{
         }
 
         config.set(updated);
-        this.setState(updated);
+        this.setState(updated as State);
     }
 
-    handleAppStateChange = (upd) => {
+    handleAppStateChange = (upd: State) => {
         this.setState(upd);
     }
 

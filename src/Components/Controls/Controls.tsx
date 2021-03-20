@@ -5,10 +5,16 @@ import './Controls.css'
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Controls(_props){
+interface ButtonsIcons{ //remove this later potomu chto eto pizdec
+    minimize: any,
+    maximize: any,
+    close: any
+}
+
+export default function Controls(_props: {}){
     const [MaximizeIcon, setIcon] = useState(() => Control.Maximize);
 
-    const buttons = {
+    const buttons: ButtonsIcons = {
         minimize: Control.Minimize,
         maximize: MaximizeIcon,
         close: Crosses.Red
@@ -32,7 +38,7 @@ export default function Controls(_props){
             <div id="control-btns">
                 {
                     keys.map(key => {
-                        const Icon = buttons[key]
+                        const Icon = buttons[key as keyof ButtonsIcons];
                         
                         return(
                             <Button name={ key } 
