@@ -1,6 +1,12 @@
 import React from 'react'
 
-export default function Button(props){
+interface Props{
+    className?: string,
+    name?: string,
+    handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export default function Button(props: Props){
     const { className, Content, name, handleClick, id } = props;
     const ContentElement = typeof Content === 'string' ? Content :
                             Content ? <Content /> : ''

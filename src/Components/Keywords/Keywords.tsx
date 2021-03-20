@@ -1,44 +1,59 @@
-import React, { Component, createRef } from 'react'
+import React, { Component, createRef, MouseEventHandler } from 'react'
 import Button from '../Button/Button'
 import { Crosses } from '../Svg/Loader'
 import areEqual from '@modules/areEqual'
 import './Keywords.css'
 
-export default class Keywords extends Component{
-    constructor(props){
+interface Props{
+    dataKeywords: Array<string>,
+    isActive: boolean,
+    isSetup: boolean,
+    handleChange: any //change,
+    handleWarningChange: any //change
+}
+
+interface State{
+    isInput: boolean
+}
+
+export default class Keywords extends Component<Props, State>{
+    private inputRef: React.RefObject<HTMLInputElement>;
+    
+    constructor(props: Props){
         super(props);
 
         this.inputRef = createRef();
         
         this.state = {
-            isInput: this.props.data.length === 0
+            isInput: this.props.dataKeywords.length === 0
         }
     }
 
-    handleDelete = e =>{
+    handleDelete = (e: React.MouseEvent<HTMLButtonElement>) =>{
         e.preventDefault();
 
-        const { name } = e.target.dataset;
-        const keywords = [...this.props.data];
+        const { dataset } = e.target as HTMLButtonElement;
+        const { name } = dataset;
+        const keywords = [...this.props.dataKeywords];
 
-        const index = keywords.indexOf(name);
+        const index = keywords.indexOf(name as string);
         if(index > -1){
             keywords.splice(index, 1);
             this.props.handleChange('keywords', keywords);
         }
     }
 
-    handleClick = e =>{
+    handleClick = (_e: React.MouseEvent<HTMLDivElement>) => {
         this.setState({
             isInput: true
         });
     }
 
-    enterDownListener = e =>{
-        const keywords = [...this.props.data];
+    enterDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const keywords = [...this.props.dataKeywords];
         
         if(e.key === 'Enter' && keywords.length < 10){
-            const { value } = e.target;
+            const { value } = e.target as HTMLInputElement;
             const converted = value.toLowerCase();
             const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
 
@@ -63,8 +78,8 @@ export default class Keywords extends Component{
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(!areEqual.arrays(this.props.data, nextProps.data) || 
+    shouldComponentUpdate(nextProps: Props, nextState: State){
+        if(!areEqual.arrays(this.props.dataKeywords, nextProps.dataKeywords) || 
            !areEqual.objects(this.state, nextState) ||
            nextProps.isSetup)
         {
@@ -79,15 +94,15 @@ export default class Keywords extends Component{
 
     componentDidUpdate(){
         const { isInput } = this.state;
-        const { data, isActive } = this.props;
+        const { dataKeywords, isActive } = this.props;
         
-        if(data.length === 0 && !isInput){
+        if(dataKeywords.length === 0 && !isInput){
             this.setState({
                 isInput: true
             });
         }
 
-        if(isInput && isActive){
+        if(isInput && isActive && this.inputRef.current){
             this.inputRef.current.focus({ preventScroll: true });
         }
     }
@@ -102,7 +117,7 @@ export default class Keywords extends Component{
                     name="keywords" 
                     ref={ this.inputRef }
                     placeholder="Type something and press enter"
-                    maxLength="15"
+                    maxLength={15}
                     onKeyDown={ this.enterDownListener } /> 
             :
             <div id="container">
@@ -110,7 +125,7 @@ export default class Keywords extends Component{
                     <div className="transparent" />
                 </div>
                 {
-                    this.props.data.map(keyword => {
+                    this.props.dataKeywords.map(keyword => {
                         return(
                             <div className="keyword" key={ keyword }>
                                 <p>{ keyword }</p>
