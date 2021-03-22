@@ -1,39 +1,39 @@
 import React from 'react'
 import Template from './Template'
 
-import Home from '@nav/home.svg'
-import Picker from '@nav/picker.svg'
-import Settings from '@nav/settings.svg'
-import Info from '@nav/info.svg'
+import Home from 'raw-loader!@nav/home.svg'
+import Picker from 'raw-loader!@nav/picker.svg'
+import Settings from 'raw-loader!@nav/settings.svg'
+import Info from 'raw-loader!@nav/info.svg'
 
-import Donation from '@info/donation.svg'
-import Development from '@info/development.svg'
-import Smile from '@info/smile.svg'
-import Reddit from '@info/reddit.svg'
-import Github from '@info/github.svg'
+import Donation from 'raw-loader!@info/donation.svg'
+import Development from 'raw-loader!@info/development.svg'
+import Smile from 'raw-loader!@info/smile.svg'
+import Reddit from 'raw-loader!@info/reddit.svg'
+import Github from 'raw-loader!@info/github.svg'
 
-import Arrow from '@ui/arrow.svg'
-import Warning from '@ui/warning.svg'
-import Cross from '@ui/cross.svg'
-import Circle from '@ui/circle.svg'
-import Accept from '@ui/accept.svg'
-import Download from '@ui/download.svg'
-import Clipboard from '@ui/clipboard.svg'
+import Arrow from 'raw-loader!@ui/arrow.svg'
+import Warning from 'raw-loader!@ui/warning.svg'
+import Cross from 'raw-loader!@ui/cross.svg'
+import Circle from 'raw-loader!@ui/circle.svg'
+import Accept from 'raw-loader!@ui/accept.svg'
+import Download from 'raw-loader!@ui/download.svg'
+import Clipboard from 'raw-loader!@ui/clipboard.svg'
 
-import Moon from '@themes/moon.svg'
-import Sun from '@themes/sun.svg'
+import Moon from 'raw-loader!@themes/moon.svg'
+import Sun from 'raw-loader!@themes/sun.svg'
 
-import Minimize from '@controls/minimize.svg'
-import Maximize from '@controls/maximize.svg'
-import Restore from '@controls/restore.svg'
+import Minimize from 'raw-loader!@controls/minimize.svg'
+import Maximize from 'raw-loader!@controls/maximize.svg'
+import Restore from 'raw-loader!@controls/restore.svg'
 
-import { ReactComponent as Mode } from '@settings/mode.svg'
-import { ReactComponent as Keywords } from '@settings/keywords.svg'
-import { ReactComponent as Privacy } from '@settings/privacy.svg'
-import { ReactComponent as Timer } from '@settings/timer.svg'
-import { ReactComponent as Startup } from '@settings/startup.svg'
-import { ReactComponent as Quality } from '@settings/quality.svg'
-import { ReactComponent as Save } from '@settings/save.svg'
+import Mode from 'raw-loader!@settings/mode.svg'
+import Keywords from 'raw-loader!@settings/keywords.svg'
+import Privacy from 'raw-loader!@settings/privacy.svg'
+import Timer from '@settings/timer.svg'
+import Startup from '@settings/startup.svg'
+import Quality from '@settings/quality.svg'
+import Save from '@settings/save.svg'
 
 import { Svg } from '../../types/Icon'
 
@@ -42,7 +42,7 @@ interface Icons {
 }
 
 interface Group {
-    [name: string]: Icons | Array<Svg>
+    [name: string]: Icons | string[]
 }
 
 const group: Group = {
@@ -118,7 +118,7 @@ function iterateIcons(groups: Group){
     }
 }
 
-function addGradients(icons: Icons | Array<Svg>){ 
+function addGradients(icons: Icons | string[]){ 
     for(const key in icons){
         const icon = icons[key];
         

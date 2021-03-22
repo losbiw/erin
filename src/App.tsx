@@ -2,11 +2,16 @@ import React, {Component} from 'react'
 import User from './Components/User/User'
 import Setup from './Components/Setup/Setup'
 import Controls from './Components/Controls/Controls'
-import Warning from './Components/Warning/Warning'
+import { Warning, CustomWarning } from './Components/Warning/Warning'
 import Update from './Components/Update/Update'
+
 import config from '@modules/config'
 import OS from '@modules/OS'
 import { fetchGeocoding } from '@modules/APIs'
+
+import { Theme } from './types/ConfigInterface'
+import { Warning as WarningInterface } from './types/WarningInterface'
+
 import './App.css'
 import './root.css'
 
@@ -17,12 +22,7 @@ interface State{
     isUpdateAvailable: boolean,
     isRequiredFilled: boolean,
     isCompleted: boolean | null,
-    warning: string
-}
-
-interface Theme{
-    light: 'light',
-    dark: 'dark'
+    warning: string | WarningInterface
 }
 
 export default class App extends Component<{}, State>{
@@ -68,9 +68,9 @@ export default class App extends Component<{}, State>{
         });
     }
 
-    handleThemeSwitch = () => {
+    handleThemeSwitch = (): void => {
         const current = this.state.theme;
-        const value = current === 'dark' ? 'light' : 'dark';
+        const value: keyof Theme = current === 'dark' ? 'light' : 'dark';
 
         const updated = {
             theme: value
@@ -80,12 +80,18 @@ export default class App extends Component<{}, State>{
         this.setState(updated as State);
     }
 
-    handleAppStateChange = (upd: State) => {
+    updateWarning = (warning: string): void => {
+        this.setState({
+            warning
+        });
+    }
+
+    handleAppStateChange = (upd: StateUpdate): void => {
         this.setState(upd);
     }
 
     render(){
-        const { state, handleThemeSwitch, handleAppStateChange } = this;
+        const { state, handleThemeSwitch, handleAppStateChange, updateWarning } = this;
         const { theme, isCompleted, warning, isRequiredFilled, isUpdateAvailable } = state;
 
         const childProps = {
@@ -108,8 +114,10 @@ export default class App extends Component<{}, State>{
 
                 { isUpdateAvailable && <Update handleReject={ handleAppStateChange }/> }
 
-                { warning && <Warning value={ warning } 
-                                      handleDelete={ handleAppStateChange }/> }
+                { (warning && typeof warning === 'string')
+                    ? <Warning warning={ warning } removeWarning={ updateWarning }/>
+                    : warning && <CustomWarning warning={ warning as WarningInterface } removeWarning={ updateWarning } />
+                }
             </div>
         )
     }

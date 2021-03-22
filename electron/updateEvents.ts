@@ -1,7 +1,6 @@
-import { IpcMainEvent } from "electron/main";
-
-const { autoUpdater } = require('electron-updater');
-const { ipcMain } = require('electron');
+import { IpcMainEvent } from 'electron/main';
+import { ipcMain } from 'electron';
+import { autoUpdater } from 'electron-updater';
 
 function setListeners(){
     ipcMain.on('component-did-mount', () => {

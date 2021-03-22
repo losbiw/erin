@@ -1,4 +1,14 @@
-async function fetchAPI(url: string, errHandler: Function, headers?: HeadersInit){
+//change all error handlers
+
+import { TimeInterface } from "@/types/TimeInterface";
+
+//add types to fetchAPI, fetchPexels
+interface Weather{
+    main: string,
+    time: TimeInterface
+}
+
+const fetchAPI = async(url: string, errHandler: Function, headers?: HeadersInit) => {
     try{
         const req = await fetch(url, {
             method: "GET",
@@ -14,8 +24,8 @@ async function fetchAPI(url: string, errHandler: Function, headers?: HeadersInit
     }
 }
 
-function fetchWeather(errHandler: Function){ 
-    const callback = async(res: Function, position: any) => {
+const fetchWeather = (errHandler: Function): Promise<Weather | undefined> => { 
+    const callback = async(res: Function, position: any): Promise<Weather | undefined> => { //change mb pridumat chto-to
         try{
             const key = window.process.env.WEATHER_API_KEY;
             const { latitude: lat, longitude: lng } = position.coords;
@@ -37,6 +47,7 @@ function fetchWeather(errHandler: Function){
             errHandler({
                 error: 503
             });
+
             return
         }
     }
@@ -44,8 +55,8 @@ function fetchWeather(errHandler: Function){
     return fetchGeolocation(callback)
 }
 
-function fetchGeocoding(errHandler: Function){
-    const callback = async(res: Function, position: any) => {
+const fetchGeocoding = (errHandler: Function): Promise<string> => {
+    const callback = async(res: Function, position: any): Promise<string> => { //change mb pridumat chto-to
         try{
             const key = window.process.env.GOOGLE_API_KEY;
             const { latitude: lat, longitude: lng } = position.coords;
@@ -55,27 +66,28 @@ function fetchGeocoding(errHandler: Function){
                 errHandler
             );
 
-            res(geocoding.results[0].formatted_address);
+            return res(geocoding.results[0].formatted_address);
         }
         catch(err){
             errHandler({
                 error: 503
             });
-            return
+
+            return res('')
         }
     }
 
     return fetchGeolocation(callback)
 }
 
-function fetchGeolocation(callback: Function){
+const fetchGeolocation = (callback: Function): Promise<any> => {
     return new Promise(res => {
         navigator.geolocation.getCurrentPosition(position => callback(res, position))
     })
 }
 
-async function fetchPexels(keywords: Array<string>, errHandler: Function){
-    let collection = [];
+const fetchPexels = async(keywords: string[], errHandler: Function) => {
+    let collection: any[] = []; //change mb pridumat chto-to
     let canRequestMore = true;
     
     for(let key of keywords){

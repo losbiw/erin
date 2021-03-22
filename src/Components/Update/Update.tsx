@@ -5,7 +5,16 @@ import './Update.css'
 
 const { ipcRenderer } = window.require('electron');
 
-export default function Update(props){
+interface Props{
+    handleReject: ({ warning: Warning }) => void
+}
+
+interface Warning{
+    message: string,
+    Icon: any //change
+}
+
+export default function Update(props: Props){
     const handleIPCevent = e => {
         const { name: shouldUpdate } = e.target.dataset;
         const { handleReject } = props;

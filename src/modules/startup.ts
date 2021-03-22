@@ -5,7 +5,7 @@ const launch = new autoLaunch({
     isHidden: true
 })
 
-function set(isEnabled: boolean){
+const set = (isEnabled: boolean): void => {
     if(isEnabled) launch.enable();
     else launch.disable();
 }

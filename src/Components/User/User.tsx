@@ -9,33 +9,56 @@ import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
 import './User.css'
+import { Config, Mode } from '@/types/ConfigInterface'
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
-class Picture{
-    constructor(srcMain, srcPicker, photographer, photographerURL){
-        this.srcPicker = srcPicker;
-        this.srcMain = srcMain;
-        this.photographer = photographer;
-        this.photographerURL = photographerURL;
-    }
+interface Props{
+    handleAppStateChange: (data: { warning: string }) => void
 }
 
-export default class User extends Component{
-    constructor(_props){
-        super();
+interface State{
+    collection: Picture[],
+    pictureIndex: number,
+    config: any, //change
+    isLocked: boolean,
+    progress: number,
+    error: number | undefined,
+    current: string,
+    position: any, //change
+    weather: any, //change
+    isRequiredFilled: boolean
+}
+
+interface Timers{
+    wallpaper: NodeJS.Timeout
+    weatherUpdate: NodeJS.Timeout
+}
+
+interface Picture{
+    srcPicker: string,
+    srcMain: string,
+    photographer: string,
+    photographerUrl: string
+}
+
+export default class User extends Component<Props, State>{
+    private savePath: string;
+
+    constructor(props: Props){
+        super(props);
 
         const appPath = config.getAppPath();
         this.savePath = join(appPath, 'wallpaper.jpg');
 
         this.state = {
             collection: [],
-            pictureIndex: undefined,
+            pictureIndex: 0,
             config: {},
             isLocked: true,
             progress: 0,
-            error: '',
+            error: undefined,
             current: 'home',
             position: {},
             weather: {},
@@ -43,22 +66,38 @@ export default class User extends Component{
         }
     }
 
-    timers = {
-        wallpaper: undefined,
-        weatherUpdate: undefined
+    timers: Timers = {
+        wallpaper: setInterval(() => {}),
+        weatherUpdate: setInterval(() => {})
     }
 
     async componentDidMount(){
-        const cfg = await config.get();
+        const cfg = config.get();
 
-        ipcRenderer.on('switch-wallpaper', (_event, args) => this.switchWallpaper(args));
+        ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => this.switchWallpaper(args, false));
     
         this.setState({
             config: cfg
         });
     }
 
-    getWallpaperCollection = async(cfg) => {
+    componentDidUpdate(_prevProps: Props, prevState: State){
+        const { config, pictureIndex, collection, isRequiredFilled } = this.state;
+        
+        if(config !== prevState.config && isRequiredFilled){
+            this.getWallpaperCollection(config);
+        }
+        else if(config !== prevState.config){
+            this.setState({
+                current: 'settings'
+            });
+        }
+        else if(pictureIndex !== prevState.pictureIndex){
+            this.setWallpaper(collection, pictureIndex);
+        }
+    }
+
+    getWallpaperCollection = async(cfg: Config) => { //change to config type
         clearInterval(this.timers.weatherUpdate);
         
         const { sortPictures, getSearchQuery, setStateByName } = this;
@@ -83,12 +122,12 @@ export default class User extends Component{
         this.setState({
             collection: sorted,
             pictureIndex: randomIndex,
-            error: '',
+            error: undefined,
             isLocked: true
         });
     }
 
-    getSearchQuery = async(mode, keywords) => {
+    getSearchQuery = async(mode: keyof Mode, keywords: string[]): Promise<string[]> => { //change type string to possible modes
         if(mode === 'keywords'){
             return keywords
         }
@@ -109,36 +148,21 @@ export default class User extends Component{
                 weather: req
             });
 
-            if(mode === 'weather'){
+            if(mode === 'weather' && req){
                 const converted = weather.convertMain(req.main)
                 return [converted];
             }
-            else if(mode === 'time'){
+            else if(mode === 'time' && req){
                 const { sunrise, sunset } = req.time;
                 const keyword = time.convert({ sunrise, sunset });
                 
                 return [keyword]
             }
-        }
-    }
-
-    componentDidUpdate(_prevProps, prevState){
-        const { config, pictureIndex, collection, isRequiredFilled } = this.state;
-        
-        if(config !== prevState.config && isRequiredFilled){
-            this.getWallpaperCollection(config);
-        }
-        else if(config !== prevState.config){
-            this.setState({
-                current: 'settings'
-            });
-        }
-        else if(pictureIndex !== prevState.pictureIndex){
-            this.setWallpaper(collection, pictureIndex);
+            else return []
         }
     }
     
-    setWallpaper = (collection, index) => {
+    setWallpaper = (collection: Picture[], index: number) => {
         clearTimeout(this.timers.wallpaper);
 
         const { savePath, setStateByName, switchWallpaper, setTimer } = this;
@@ -154,11 +178,11 @@ export default class User extends Component{
 
     setTimer = () => {
         if(this.state.config.timer){
-            this.timers.wallpaper = setTimeout(() => this.switchWallpaper(true), this.state.config.timer);
+            this.timers.wallpaper = setTimeout(() => this.switchWallpaper(true, false), this.state.config.timer);
         }
     }
 
-    switchWallpaper = (index, isUnclocked) => {
+    switchWallpaper = (index: number | boolean, isUnclocked: boolean) => {
         const { collection, isLocked, pictureIndex } = this.state;
         
         if(isLocked && !isUnclocked){
@@ -167,38 +191,54 @@ export default class User extends Component{
             })
         }
         else{
-            if(typeof index !== 'number' && typeof index === 'boolean')
-                index = index ? pictureIndex + 1 : pictureIndex - 1;
+            let updatedIndex = index as number;
+
+            if(typeof index !== 'number' && typeof index === 'boolean' && pictureIndex)
+                updatedIndex = index ? pictureIndex + 1 : pictureIndex - 1;
             
-            if(index >= collection.length) index = 0;
-            else if(index < 0) index = collection.length - 1;
+            if(updatedIndex >= collection.length) updatedIndex = 0;
+            else if(updatedIndex < 0) updatedIndex = collection.length - 1;
 
             this.setState({ 
-                pictureIndex: index,
+                pictureIndex: updatedIndex,
                 isLocked: true
             });
         }
     }
 
-    sortPictures(pictures, quality){
+    sortPictures = (pictures: any[], quality: string): Picture[] => { //probably change
         return pictures.map(picture => {
             const { src, photographer, photographer_url } = picture;
-            return new Picture(src[quality], src.large, photographer, photographer_url);
+            
+            const result: Picture = {
+                srcMain: src[quality],
+                srcPicker: src.large,
+                photographer,
+                photographerUrl: photographer_url
+            }
+
+            return result
         });
     }
 
-    setStateByName = (updated) => {
+    changePage = (name: string) => {
+        this.setState({
+            current: name
+        });
+    }
+
+    setStateByName = (updated) => { //change to pridumat' something
         this.setState(updated)
     }
 
     render(){
-        const { setStateByName, switchWallpaper, state, props } = this;
+        const { setStateByName, changePage, switchWallpaper, state, props } = this;
         const { error, current, isRequiredFilled } = state;
 
         return(
             <div id="user">
                 <Nav current={ current } 
-                     handleUserStateChange={ setStateByName }
+                     changePage={ changePage }
                      theme={ props }
                      isLocked={ !isRequiredFilled }/>
                

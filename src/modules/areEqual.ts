@@ -1,4 +1,4 @@
-function objects(obj1: any, obj2: any){
+const objects = (obj1: any, obj2: any): boolean => { //change types
     const firstKeys = Object.keys(obj1);
     const secondKeys = Object.keys(obj2);
 
@@ -24,7 +24,7 @@ function objects(obj1: any, obj2: any){
     }
 }
 
-function arrays(arr1: Array<any>, arr2: Array<any>){
+const arrays = (arr1: any[], arr2: any[]): boolean => { //change types
     if(arr1.length !== arr2.length){
         return false
     }

@@ -8,7 +8,7 @@
     "sourceMap": true,                           
     "outDir": "./build/",                              
     "removeComments": true,                      
-    "strict": true,                                 
+    "strict": true,          
     "esModuleInterop": true,                        
     "skipLibCheck": true,                           
     "forceConsistentCasingInFileNames": true,

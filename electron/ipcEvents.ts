@@ -1,6 +1,6 @@
 import { app, ipcMain, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
 const { Notification } = require('electron');
-const { autoUpdater } = require('electron-updater')
 
 function setListeners(win: BrowserWindow){
     ipcMain.on('get-app-path', event => {

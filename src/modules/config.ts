@@ -1,11 +1,11 @@
 import startup from './startup'
-import { ConfigInterface } from '../types/ConfigInterface'
+import { Config, ConfigUpdate } from '../types/ConfigInterface'
 
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const fs = window.require('fs');
 
-function get(){
+const get = (): Config => {
     const cfgPath = getConfigPath();
     
     if(fs.existsSync(cfgPath)){
@@ -22,34 +22,32 @@ function get(){
     }
 }
 
-function set(options: ConfigInterface){
+const set = (options: ConfigUpdate): void => {
     const updated = get();
     const cfgPath = getConfigPath();
 
     for(const key in options){
-        updated[key] = options[key as keyof ConfigInterface];
+        updated[key] = options[key as keyof Config];
     }
     
     const json = JSON.stringify(updated);
-    startup.set(options.startup);
+    startup.set(options.startup as boolean);
     
     fs.writeFileSync(cfgPath, json, (err: Error)=>{
         if(err) throw err;
     });
 }
 
-function getAppPath(){
-    return ipcRenderer.sendSync('get-app-path');
-}
+const getAppPath = (): string => ipcRenderer.sendSync('get-app-path') as string;
 
-function getConfigPath(){
+const getConfigPath = (): string => {
     const appPath = getAppPath(); 
-    const cfgPath = join(appPath, 'config.json');
+    const cfgPath: string = join(appPath, 'config.json');
 
     return cfgPath
 }
 
-function isMatchingSchema(cfg: ConfigInterface){
+const isMatchingSchema = (cfg: Config): boolean => {
     const defaultCfg = getDefaultOptions();
     
     for(let prop in defaultCfg){
@@ -59,7 +57,7 @@ function isMatchingSchema(cfg: ConfigInterface){
     return true
 }
 
-const getDefaultOptions = () => ({
+const getDefaultOptions = (): Config => ({
     mode: 'weather',
     keywords: [],
     timer: 60000,

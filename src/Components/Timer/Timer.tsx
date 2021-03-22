@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { capitalizeFirstLetter } from '@modules/convert'
 import './Timer.css'
 
+interface Props{
+    
+}
+
 export default function Timer(props){
     const [time, setTime] = useState(null);
     const [focusIndex, setFocus] = useState(0);

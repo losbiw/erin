@@ -1,7 +1,7 @@
-import { ConfigInterface } from '../types/ConfigInterface'
+import { Config } from '../types/ConfigInterface'
 
 interface Warning{
-    condition: (config: ConfigInterface, name: string) => boolean,
+    condition: (config: Config, name: string) => boolean,
     value: string,
     isRequired?: boolean
 }
@@ -13,7 +13,23 @@ interface WarningOptions{
     privacy: Warning
 }
 
-const warnings: WarningOptions = {
+const match = (config: Config, requiredOnly: boolean) => { //add return type
+    for(const setting in config){
+        const warnings = getWarnings();
+        const current = warnings[setting as keyof WarningOptions];
+        const required = requiredOnly ? current?.isRequired : true;
+
+        if(current && current.condition(config, setting) && required){
+            return {
+                value: current.value,
+                name: setting
+            }
+        }
+        else return undefined
+    }
+}
+
+const getWarnings = (): WarningOptions => ({
     quality: {
         condition: (config, name) => (name === 'quality' && config[name] === 'original'),
         value: "Choosing the high quality might slow down the download speed"
@@ -33,20 +49,6 @@ const warnings: WarningOptions = {
         value: "You have to agree to our privacy policy",
         isRequired: true
     }
-}
-
-function match(config: ConfigInterface, requiredOnly: boolean){
-    for(const setting in config){
-        const current = warnings[setting as keyof WarningOptions];
-        const required = requiredOnly ? current?.isRequired : true;
-
-        if(current && current.condition(config, setting) && required){
-            return {
-                value: current.value,
-                name: setting
-            }
-        }
-    }
-}
+})
 
 export default { match }

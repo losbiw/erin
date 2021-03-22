@@ -24,7 +24,7 @@ interface LinuxDistros{
 	xfce: LinuxCommands
 }
 
-function download(url: string, initialPath: string, handlers: Handlers){
+const download = (url: string, initialPath: string, handlers: Handlers): void => {
 	const os = OS.define();
 	const https = require('https');
 	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
@@ -37,7 +37,7 @@ function download(url: string, initialPath: string, handlers: Handlers){
 		return;
 	}
 	
-	const callback = (res: any) => {   
+	const callback = (res: any) => {   //change
 		const size = res.headers["content-length"];
 
 		if((size / 1024 / 1024) >= 27){
@@ -51,7 +51,7 @@ function download(url: string, initialPath: string, handlers: Handlers){
 			const contentLength = Math.floor(size / 100);
 			let downloaded = 0; 
 
-			res.on('data', (chunk: any) => {
+			res.on('data', (chunk: any) => { //change
 				data.push(chunk);
 				downloaded += chunk.length;
 				setState({ progress: downloaded / contentLength });                                   
@@ -86,7 +86,7 @@ function download(url: string, initialPath: string, handlers: Handlers){
 	})
 }
 
-function getFallbackPath(initialPath: string){
+const getFallbackPath = (initialPath: string): string => {
 	const { dir, name, ext } = path.parse(initialPath);
 	const random = Math.round(Math.random() * 1000);
 
@@ -94,7 +94,7 @@ function getFallbackPath(initialPath: string){
 	return result;
 }
 
-function set(img: string, macPath: string){
+const set = (img: string, macPath: string): void => {
 	const imgPath = path.resolve(img);
 	
 	if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
@@ -107,9 +107,11 @@ function set(img: string, macPath: string){
 		const execPath = path.join(resourcePath, 'electron/Wallpaper/Wallpaper.exe');
 
 		execFileSync(execPath, [imgPath, "True"]);
+
+		return;
 	}
 	else if(os === 'linux'){
-		const desktopEnv = OS.defineDesktopEnvironment() as string;
+		const desktopEnv = OS.defineDesktopEnvironment(os);
 
 		const options: LinuxDistros = {
 			other: {
@@ -147,11 +149,14 @@ function set(img: string, macPath: string){
 		for(let command in commands){
 			execSync(commands[command as keyof LinuxCommands]);
 		}
+
 		return;
 	}
 	else if(os === 'darwin'){
 		const script = `osascript -e 'tell application "System Events" to tell every desktop to set picture to "${macPath}"'`;
 		execSync(script);
+
+		return;
 	}
 }
 

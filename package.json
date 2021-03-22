@@ -37,7 +37,7 @@
   "homepage": "./",
   "main": "electron/main.js",
   "scripts": {
-    "react-start": "webpack-dev-server",
+    "react-start": "webpack serve",
     "react-build": "webpack -p",
     "electron-start": "electron .",
     "electron-build": "electron-builder",

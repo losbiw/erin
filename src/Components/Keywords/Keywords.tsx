@@ -5,7 +5,7 @@ import areEqual from '@modules/areEqual'
 import './Keywords.css'
 
 interface Props{
-    dataKeywords: Array<string>,
+    dataKeywords: string[],
     isActive: boolean,
     isSetup: boolean,
     handleChange: any //change,

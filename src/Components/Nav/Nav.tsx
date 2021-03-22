@@ -4,7 +4,12 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import { NavIcons } from '../Svg/Loader'
 import './Nav.css'
 
-export default function Nav(props){
+interface Props{
+    changePage: (name: string) => void,
+    current: string
+}
+
+export default function Nav(props: Props){
     const { Home, Picker, Settings, Info } = NavIcons;
     
     let isFirst = true;
@@ -28,9 +33,10 @@ export default function Nav(props){
     }]
     ]
 
-    const handlePageChange = e => {
-        const { name } = e.target.dataset;
-        props.handleUserStateChange({ current: name });
+    const handlePageChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const { dataset } = e.target as HTMLButtonElement;
+        const { name } = dataset;
+        props.changePage(name as string);
     }
 
     return(

@@ -1,19 +1,20 @@
 const { execSync } = window.require('child_process')
 
-function define(){
+const define = (): NodeJS.Platform => {
     return window.process.platform
 }
 
-function defineDesktopEnvironment(){
-    if(define() === 'linux'){
+const defineDesktopEnvironment = (OS: NodeJS.Platform): string => {
+    if(OS === 'linux'){
         const environment = execSync('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
         return convertEnvName(environment)
     }
+
+    return ''
 }
 
-function convertEnvName(name: string){
+const convertEnvName = (name: string): string => {
     const regex = /cinnamon|gnome|unity|xfce|kde/gi;
-
     const match = name.match(regex);
 
     if(match){
@@ -21,6 +22,9 @@ function convertEnvName(name: string){
 
         if(!parsed || parsed === 'unity') return 'gnome'
         return parsed
+    }
+    else{
+        return 'gnome'
     }
 }
 

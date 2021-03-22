@@ -8,7 +8,7 @@ interface ArrowsProps{
 }
 
 interface ArrowProps{
-    Icon: any,
+    Icon: any, //change
     index: number,
     handleClick: () => void
 }

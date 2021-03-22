@@ -1,4 +1,4 @@
-function convertMain(value: string){
+const convertMain = (value: string): string => {
     switch(value){
         case 'Drizzle': return 'rain';
         case 'Smoke': return 'fog';
