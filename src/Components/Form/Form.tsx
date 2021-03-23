@@ -1,5 +1,5 @@
 import React from 'react'
-import { SettingsIcons } from '../Svg/Loader'
+import Icons from '../Icons/Settings'
 import { capitalizeFirstLetter } from '@modules/convert'
 import warning from '@modules/warning'
 
@@ -37,7 +37,7 @@ export default function Form(props){
                 const capitalized = capitalizeFirstLetter(key);
                 const settingTitle = title || capitalized;
                 const Element = element || setting;
-                const Icon = SettingsIcons[capitalized] || (() => <div />);
+                const Icon = Icons[capitalized] || (() => <div />);
                 const activeClass = key === active ? 'active-item' : '';
                 
                 const handleChange = key === 'keywords' || key === 'timer' 

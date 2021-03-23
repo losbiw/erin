@@ -1,13 +1,22 @@
 import React from 'react'
-import { InfoIcons, UI } from '../Svg/Loader'
+import Info from '../Icons/Info'
+import { General } from '../Icons/UI'
+
+interface CardInterface {
+    title: string,
+    description: string,
+    Icon: () => JSX.Element,
+    special?: string,
+    handleClick?: () => void,
+}
 
 export default function Card(props){
     const { clipboard } = window.require('electron');
-    const { Donation, Development, Smile } = InfoIcons;
+    const { Donation, Development, Smile } = Info;
 
     const wallet = '19zfpPUYbbNbUyLGqKGU7HBuV5x4bQTWh9';
 
-    const cards = [
+    const cards: CardInterface[] = [
         {
             title: 'Donation',
             description: 'Click to copy the bitcoin wallet below if you want to support our project',
@@ -18,7 +27,7 @@ export default function Card(props){
                 props.handleAppStateChange({
                     warning: {
                         message: 'The wallet is copied to the clipboard',
-                        Icon: UI.Clipboard
+                        Icon: General.Clipboard
                     }
                 })
             },
@@ -41,6 +50,7 @@ export default function Card(props){
             {
                 cards.map(card => {
                     const { title, description, Icon, special, handleClick } = card;
+
                     return(
                         <div className="card" key={ title } onClick={ handleClick }>
                             <Icon />

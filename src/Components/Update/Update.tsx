@@ -1,43 +1,38 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { UI, Crosses } from '../Svg/Loader'
+import { General, Crosses } from '../Icons/UI'
 import './Update.css'
+
+import { Warning } from '../../types/Warning.d'
 
 const { ipcRenderer } = window.require('electron');
 
 interface Props{
-    handleReject: ({ warning: Warning }) => void
-}
-
-interface Warning{
-    message: string,
-    Icon: any //change
+    rejectUpdate: () => void,
+    setWarning: (warning: string | Warning) => void
 }
 
 export default function Update(props: Props){
     const handleIPCevent = e => {
         const { name: shouldUpdate } = e.target.dataset;
-        const { handleReject } = props;
+        const { rejectUpdate, setWarning } = props;
 
         if(shouldUpdate === 'true'){
-            const handleWarningChange = handleReject;
-            
             ipcRenderer.send('should-update');
-            handleWarningChange({ 
-                warning: {
-                    message: 'The app will restart once the update is downloaded',
-                    Icon: UI.Download
-                }
+
+            setWarning({
+                message: 'The app will restart once the update is downloaded',
+                Icon: General.Download
             })
         }
         
-        handleReject({ isUpdateAvailable: false })
+        rejectUpdate();
     }
 
     const buttons = [
         {
             id: 'accept',
-            content: UI.Accept,
+            content: General.Accept,
             value: true,
             handleClick: handleIPCevent
         },

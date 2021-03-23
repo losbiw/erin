@@ -1,6 +1,6 @@
 //change all error handlers
 
-import { TimeInterface } from "@/types/TimeInterface";
+import { TimeInterface } from "@/types/Time";
 
 //add types to fetchAPI, fetchPexels
 interface Weather{

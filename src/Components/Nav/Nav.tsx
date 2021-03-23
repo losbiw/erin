@@ -1,15 +1,19 @@
 import React from 'react'
 import Button from '../Button/Button'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
-import { NavIcons } from '../Svg/Loader'
+import NavIcons from '../Icons/Nav'
 import './Nav.css'
+import { Theme } from '../../types/Config'
 
 interface Props{
     changePage: (name: string) => void,
-    current: string
+    current: string,
+    theme: Theme,
+    switchTheme: () => void
 }
 
 export default function Nav(props: Props){
+    const { theme, switchTheme } = props;
     const { Home, Picker, Settings, Info } = NavIcons;
     
     let isFirst = true;
@@ -58,7 +62,8 @@ export default function Nav(props: Props){
                         })
                     }
                     { 
-                        isFirst && <ThemeToggle { ...props.theme }/>
+                        isFirst && <ThemeToggle theme={ theme }
+                                                switchTheme={ switchTheme }/>
                     }
                 </div>
             }) }

@@ -1,11 +1,11 @@
 import React from 'react'
 import Cards from '../Cards/Cards'
 import Links from '../Links/Links'
-import { InfoIcons } from '../Svg/Loader'
+import Icons from '../Icons/Info'
 import './Info.css'
 
 export default function Info(props){
-    const { Github, Reddit } = InfoIcons;
+    const { Github, Reddit } = Icons;
     const linksData = {
         author: {
             github: {

@@ -1,19 +1,19 @@
 import React from 'react'
-import { UI, Crosses } from '../Svg/Loader'
+import { General, Crosses } from '../Icons/UI'
 import Button from '../Button/Button'
 
-import { Warning as WarningInterface } from '../../types/WarningInterface'
+import { Warning as WarningInterface } from '../../types/Warning.d'
 
 import './Warning.css'
 
 interface Props{
     warning: string,
-    removeWarning: (value: string) => void
+    removeWarning: (value: string | WarningInterface) => void
 }
 
 interface CustomProps{
     warning: WarningInterface,
-    removeWarning: (value: string) => void
+    removeWarning: (value: string | WarningInterface) => void
 }
 
 interface Warning{
@@ -38,7 +38,7 @@ export const CustomWarning = (props: CustomProps) => {
 export const Warning = (props: Props) => {
     return(
         <div id="warning">
-            <UI.Warning />
+            <General.Warning />
             <p>{ props.warning }</p>
 
             <Button className="delete" 

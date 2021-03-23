@@ -8,7 +8,7 @@ interface Size{
 
 interface Props{
     id: string,
-    svg?: Svg,
+    svg?: Svg | (() => JSX.Element),
     raw?: string
 }
 

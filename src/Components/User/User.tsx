@@ -9,13 +9,15 @@ import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
 import './User.css'
-import { Config, Mode } from '@/types/ConfigInterface'
+import { Config, Mode, Theme } from '../../types/Config.d'
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 interface Props{
-    handleAppStateChange: (data: { warning: string }) => void
+    theme: Theme,
+    setWarning: (warning: string) => void,
+    switchTheme: () => void
 }
 
 interface State{
@@ -32,8 +34,8 @@ interface State{
 }
 
 interface Timers{
-    wallpaper: NodeJS.Timeout
-    weatherUpdate: NodeJS.Timeout
+    wallpaper: NodeJS.Timeout | undefined
+    weatherUpdate: NodeJS.Timeout | undefined
 }
 
 interface Picture{
@@ -67,8 +69,8 @@ export default class User extends Component<Props, State>{
     }
 
     timers: Timers = {
-        wallpaper: setInterval(() => {}),
-        weatherUpdate: setInterval(() => {})
+        wallpaper: undefined,
+        weatherUpdate: undefined
     }
 
     async componentDidMount(){
@@ -98,7 +100,9 @@ export default class User extends Component<Props, State>{
     }
 
     getWallpaperCollection = async(cfg: Config) => { //change to config type
-        clearInterval(this.timers.weatherUpdate);
+        if(this.timers.weatherUpdate){
+            clearInterval(this.timers.weatherUpdate);
+        }
         
         const { sortPictures, getSearchQuery, setStateByName } = this;
         const { keywords, quality, mode } = cfg;
@@ -127,15 +131,15 @@ export default class User extends Component<Props, State>{
         });
     }
 
-    getSearchQuery = async(mode: keyof Mode, keywords: string[]): Promise<string[]> => { //change type string to possible modes
-        if(mode === 'keywords'){
+    getSearchQuery = async(mode: Mode, keywords: string[]): Promise<string[]> => { //change type string to possible modes
+        if(mode === Mode.Keywords){
             return keywords
         }
         else{
             const { setStateByName, getWallpaperCollection, state } = this;
             const req = await fetchWeather(setStateByName);
             
-            this.timers.weatherUpdate = setInterval(async() => {
+            this.timers.weatherUpdate = global.setInterval(async() => {
                 const req = await fetchWeather(setStateByName);
                 const { weather, config } = state;
                 
@@ -148,11 +152,11 @@ export default class User extends Component<Props, State>{
                 weather: req
             });
 
-            if(mode === 'weather' && req){
+            if(mode === Mode.Weather && req){
                 const converted = weather.convertMain(req.main)
                 return [converted];
             }
-            else if(mode === 'time' && req){
+            else if(mode === Mode.Time && req){
                 const { sunrise, sunset } = req.time;
                 const keyword = time.convert({ sunrise, sunset });
                 
@@ -163,14 +167,16 @@ export default class User extends Component<Props, State>{
     }
     
     setWallpaper = (collection: Picture[], index: number) => {
-        clearTimeout(this.timers.wallpaper);
+        if(this.timers.wallpaper){
+            clearTimeout(this.timers.wallpaper);
+        }
 
         const { savePath, setStateByName, switchWallpaper, setTimer } = this;
         const url = collection[index].srcMain;
         
         wallpaper.download(url, savePath, {
             setState: setStateByName,
-            setWarning: this.props.handleAppStateChange,
+            setWarning: this.props.setWarning,
             handleLargeFiles: switchWallpaper,
             setTimer
         });
@@ -178,17 +184,15 @@ export default class User extends Component<Props, State>{
 
     setTimer = () => {
         if(this.state.config.timer){
-            this.timers.wallpaper = setTimeout(() => this.switchWallpaper(true, false), this.state.config.timer);
+            this.timers.wallpaper = global.setTimeout(() => this.switchWallpaper(true, false), this.state.config.timer);
         }
     }
 
-    switchWallpaper = (index: number | boolean, isUnclocked: boolean) => {
+    switchWallpaper = (index: number | boolean, isUnlocked: boolean) => {
         const { collection, isLocked, pictureIndex } = this.state;
         
-        if(isLocked && !isUnclocked){
-            this.props.handleAppStateChange({
-                warning: 'Please wait until the previous picture is downloaded'
-            })
+        if(isLocked && !isUnlocked){
+            this.props.setWarning('Please wait until the previous picture is downloaded');
         }
         else{
             let updatedIndex = index as number;
@@ -233,14 +237,14 @@ export default class User extends Component<Props, State>{
 
     render(){
         const { setStateByName, changePage, switchWallpaper, state, props } = this;
-        const { error, current, isRequiredFilled } = state;
+        const { error, current } = state;
 
         return(
             <div id="user">
                 <Nav current={ current } 
                      changePage={ changePage }
-                     theme={ props }
-                     isLocked={ !isRequiredFilled }/>
+                     theme={ props.theme }
+                     switchTheme={ props.switchTheme }/>
                
                 { error && (current === 'home' || current === 'picker')
                     ? <Error code={ error }/>

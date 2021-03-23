@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Crosses, Control } from '../Svg/Loader'
+import Control from '../Icons/Control'
+import { Crosses } from '../Icons/UI'
 import Button from '../Button/Button'
 import './Controls.css'
 

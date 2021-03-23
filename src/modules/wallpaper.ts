@@ -10,7 +10,7 @@ interface Handlers{
 	setState: Function,
 	handleLargeFiles: Function,
 	setTimer: Function,
-	setWarning: Function
+	setWarning: (warning: string) => void
 }
 
 interface LinuxCommands{
@@ -30,9 +30,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
 
 	if(os === 'win32' && url === 'https://images.pexels.com/photos/2129796/pexels-photo-2129796.png'){
-		setWarning({
-			warning: "The image might crash your desktop. It's been switched to the next one automatically"
-		})
+		setWarning("The image might crash your desktop. It's been switched to the next one automatically");
 		handleLargeFiles(true, true);
 		return;
 	}
@@ -41,9 +39,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 		const size = res.headers["content-length"];
 
 		if((size / 1024 / 1024) >= 27){
-			setWarning({
-				warning: "The file is too big. It's been switched to the next one automatically"
-			})
+			setWarning("The file is too big. It's been switched to the next one automatically")
 			handleLargeFiles(true, true);
 		}
 		else{
