@@ -1,4 +1,4 @@
-import { Config } from '../types/Config'
+import { Config } from '@interfaces/Config'
 
 interface Warning{
     condition: (config: Config, name: string) => boolean,

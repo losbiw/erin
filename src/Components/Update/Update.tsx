@@ -3,7 +3,7 @@ import Button from '../Button/Button'
 import { General, Crosses } from '../Icons/UI'
 import './Update.css'
 
-import { Warning } from '../../types/Warning.d'
+import { Warning } from '@interfaces/Warning.d'
 
 const { ipcRenderer } = window.require('electron');
 

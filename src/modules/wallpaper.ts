@@ -7,10 +7,11 @@ const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
 interface Handlers{
-	setState: Function,
-	handleLargeFiles: Function,
-	setTimer: Function,
-	setWarning: (warning: string) => void
+	handleLargeFiles: Function, //change
+	setTimer: Function, //change
+	setWarning: (warning: string) => void,
+	setError: (error: number) => void,
+	updateProgress: (progress: number) => void
 }
 
 interface LinuxCommands{
@@ -27,7 +28,7 @@ interface LinuxDistros{
 const download = (url: string, initialPath: string, handlers: Handlers): void => {
 	const os = OS.define();
 	const https = require('https');
-	const { setState, handleLargeFiles, setTimer, setWarning } = handlers;
+	const { handleLargeFiles, setTimer, setWarning, setError, updateProgress } = handlers;
 
 	if(os === 'win32' && url === 'https://images.pexels.com/photos/2129796/pexels-photo-2129796.png'){
 		setWarning("The image might crash your desktop. It's been switched to the next one automatically");
@@ -50,7 +51,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 			res.on('data', (chunk: any) => { //change
 				data.push(chunk);
 				downloaded += chunk.length;
-				setState({ progress: downloaded / contentLength });                                   
+				updateProgress(downloaded / contentLength);                                   
 			});        
 
 			res.on('end', () => {
@@ -65,10 +66,8 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 				
 				set(initialPath, fallbackPath);
 				setTimer();
-				setState({
-					isLocked: false,
-					progress: 0
-				});
+
+				updateProgress(0);
 			});    
 		}
 	}
@@ -76,9 +75,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 	const req = https.get(url, callback);
 	
 	req.on('error', () => {
-		setState({
-			error: 502
-		})
+		setError(502);
 	})
 }
 

@@ -1,4 +1,4 @@
-import { JsxGroup } from '@/types/Icon';
+import { JsxGroup } from '@interfaces/Icon';
 import Icons from '../Svg/Loader'
 
 import Minimize from 'raw-loader!@controls/minimize.svg';

@@ -9,8 +9,8 @@ import config from '@modules/config'
 import OS from '@modules/OS'
 import { fetchGeocoding } from '@modules/APIs'
 
-import { Theme } from './types/Config.d'
-import { Warning as WarningInterface } from './types/Warning.d'
+import { Theme } from '@interfaces/Config.d'
+import { Warning as WarningInterface } from '@interfaces/Warning.d'
 
 import './App.css'
 import './root.css'

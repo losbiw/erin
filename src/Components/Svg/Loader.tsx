@@ -1,7 +1,7 @@
 import React from 'react'
 import Template from './Template'
 
-import { Group, JsxGroup } from '../../types/Icon'
+import { Group, JsxGroup } from '@interfaces/Icon'
 
 const load = (icons: Group): JsxGroup => { 
     let result: JsxGroup = {};

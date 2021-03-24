@@ -2,7 +2,7 @@ import React from 'react'
 import { General, Crosses } from '../Icons/UI'
 import Button from '../Button/Button'
 
-import { Warning as WarningInterface } from '../../types/Warning.d'
+import { Warning as WarningInterface } from '@interfaces/Warning.d'
 
 import './Warning.css'
 

@@ -1,4 +1,4 @@
-import { JsxGroup } from '@/types/Icon';
+import { JsxGroup } from '@interfaces/Icon';
 import Mode from 'raw-loader!@settings/mode.svg'
 import Keywords from 'raw-loader!@settings/keywords.svg'
 import Privacy from 'raw-loader!@settings/privacy.svg'
@@ -8,4 +8,4 @@ import Quality from '@settings/quality.svg'
 import Save from '@settings/save.svg'
 
 // const icons: JsxGroup = { Mode, Keywords, Privacy, Timer, Startup, Quality, Save }
-// export = icons
+// export = ico

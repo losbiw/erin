@@ -1,4 +1,4 @@
-import { JsxGroup } from '@/types/Icon';
+import { JsxGroup } from '@interfaces/Icon';
 import Icons from '../Svg/Loader'
 
 import Moon from 'raw-loader!@themes/moon.svg';

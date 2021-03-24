@@ -1,6 +1,6 @@
 //change all error handlers
 
-import { TimeInterface } from "@/types/Time";
+import { TimeInterface } from "@interfaces/Time";
 
 //add types to fetchAPI, fetchPexels
 interface Weather{
@@ -8,7 +8,7 @@ interface Weather{
     time: TimeInterface
 }
 
-const fetchAPI = async(url: string, errHandler: Function, headers?: HeadersInit) => {
+const fetchAPI = async(url: string, handleError: (error: number) => void, headers?: HeadersInit) => {
     try{
         const req = await fetch(url, {
             method: "GET",
@@ -18,13 +18,11 @@ const fetchAPI = async(url: string, errHandler: Function, headers?: HeadersInit)
         return res
     }
     catch{
-        errHandler({
-            error: 502
-        })
+        handleError(502);
     }
 }
 
-const fetchWeather = (errHandler: Function): Promise<Weather | undefined> => { 
+const fetchWeather = (handleError: (error: number) => void): Promise<Weather | undefined> => { 
     const callback = async(res: Function, position: any): Promise<Weather | undefined> => { //change mb pridumat chto-to
         try{
             const key = window.process.env.WEATHER_API_KEY;
@@ -32,7 +30,7 @@ const fetchWeather = (errHandler: Function): Promise<Weather | undefined> => {
         
             const json = await fetchAPI(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${key}`,
-                errHandler
+                handleError
             );
             
             const { weather, sys } = json;
@@ -44,9 +42,7 @@ const fetchWeather = (errHandler: Function): Promise<Weather | undefined> => {
             res(formatted);
         }
         catch(err){
-            errHandler({
-                error: 503
-            });
+            handleError(503);
 
             return
         }
@@ -55,7 +51,7 @@ const fetchWeather = (errHandler: Function): Promise<Weather | undefined> => {
     return fetchGeolocation(callback)
 }
 
-const fetchGeocoding = (errHandler: Function): Promise<string> => {
+const fetchGeocoding = (handleError: (error: number) => void): Promise<string> => {
     const callback = async(res: Function, position: any): Promise<string> => { //change mb pridumat chto-to
         try{
             const key = window.process.env.GOOGLE_API_KEY;
@@ -63,15 +59,13 @@ const fetchGeocoding = (errHandler: Function): Promise<string> => {
 
             const geocoding = await fetchAPI(
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}&result_type=country&language=en`,
-                errHandler
+                handleError
             );
 
             return res(geocoding.results[0].formatted_address);
         }
         catch(err){
-            errHandler({
-                error: 503
-            });
+            handleError(503);
 
             return res('')
         }
@@ -86,7 +80,7 @@ const fetchGeolocation = (callback: Function): Promise<any> => {
     })
 }
 
-const fetchPexels = async(keywords: string[], errHandler: Function) => {
+const fetchPexels = async(keywords: string[], handleError: (error: number) => void) => {
     let collection: any[] = []; //change mb pridumat chto-to
     let canRequestMore = true;
     
@@ -100,7 +94,7 @@ const fetchPexels = async(keywords: string[], errHandler: Function) => {
             try{
                 const res = await fetchAPI(
                     `https://api.pexels.com/v1/search?query=${key}&per_page=78&page=${page}`,  
-                    errHandler,
+                    handleError,
                     headers,
                 );
 
@@ -113,9 +107,7 @@ const fetchPexels = async(keywords: string[], errHandler: Function) => {
                 collection.push(...photos);
             }
             catch{
-                errHandler({
-                    error: 429
-                })
+                handleError(429);
                 return false
             }
         }

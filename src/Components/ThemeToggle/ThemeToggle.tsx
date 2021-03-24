@@ -1,4 +1,4 @@
-import { Theme } from '../../types/Config';
+import { Theme } from '@interfaces/Config';
 import React from 'react'
 import Button from '../Button/Button'
 import Themes from '../Icons/Themes'

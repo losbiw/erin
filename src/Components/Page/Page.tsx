@@ -5,7 +5,13 @@ import Settings from '../Settings/Settings'
 import Info from '../Info/Info'
 import './Page.css'
 
-export default function Page(props){
+import { Pages, State as UserState } from '@interfaces/UserState.d'
+
+interface Props extends UserState{
+    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void, //maybe replace the whole thing with destructured props
+}
+
+export default function Page(props: Props){
     const components = {
         home: Home,
         picker: Picker,
@@ -17,9 +23,9 @@ export default function Page(props){
     const Current = components[current];
     let data;
 
-    if(current === 'home'){
+    if(current === Pages.Home){
         data = { 
-            photo: { ...collection[pictureIndex] },
+            picture: { ...collection[pictureIndex] },
             isLocked,
             progress,
             pictureIndex,
@@ -27,7 +33,7 @@ export default function Page(props){
             switchWallpaper
         }
     }
-    else if(current === 'picker'){
+    else if(current === Pages.Picker){
         data = {
             pictureIndex,
             collection,
@@ -36,7 +42,7 @@ export default function Page(props){
             switchWallpaper
         }
     }
-    else if(current === 'settings'){
+    else if(current === Pages.Settings){
         data = {
             data: { ...props.config },
             handleAppStateChange,
@@ -44,7 +50,7 @@ export default function Page(props){
             isRequiredFilled
         }
     }
-    else if(current === 'info'){
+    else if(current === Pages.Info){
         data = {
             handleAppStateChange
         }

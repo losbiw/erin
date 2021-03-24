@@ -1,9 +1,23 @@
 import React from 'react'
 import './Error.css'
 
-export default function Error(props){
+interface Error{
+    fix: string,
+    description: string
+}
+
+interface Codes{
+    [name: string]: Error
+}
+
+interface Props{
+    code: number
+}
+
+export default function Error(props: Props){
     const { code } = props;
-    const codes = {
+
+    const codes: Codes = {
         404: {
             fix: 'Change keywords in settings',
             description: 'We couldn’t find any wallpaper according to your request'
@@ -17,6 +31,7 @@ export default function Error(props){
             description: "We couldn't connect to our services"
         }
     }
+
     const codeSpread = [...code.toString(10)];
     let index = 0;
     

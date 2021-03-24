@@ -14,9 +14,11 @@ interface ArrowProps{
 }
 
 const Arrows = (props: ArrowsProps) => {
+    const keys = Object.keys(Icons);
+
     return(
         <div id='arrows'>
-            {/* { Icons.map((Icon, index: number) => 
+            {/* { keys.map((Icon, index: number) => 
                 <Arrow Icon={ Icon } 
                        index={ index } 
                        handleClick={ props.handleChange[index] }
@@ -30,11 +32,12 @@ const Arrow = (props: ArrowProps) => {
     const { Icon, index, handleClick } = props;
 
     return(
-        <Button className='arrow' 
-                Content={ Icon || Icons[index] } 
+        <button className='arrow' 
                 name='arrow'
-                handleClick={ handleClick }
-                key={ `arrow-${index}` }/>
+                onClick={ handleClick }
+                key={ `arrow-${index}` }>
+            <Icon />
+        </button>
     )
 }
 

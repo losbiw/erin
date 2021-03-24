@@ -1,5 +1,5 @@
 import startup from './startup'
-import { Config, ConfigUpdate, Mode, Theme } from '../types/Config.d'
+import { Config, ConfigUpdate, Mode, Theme } from '@interfaces/Config.d'
 
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');

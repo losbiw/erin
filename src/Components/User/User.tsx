@@ -9,7 +9,8 @@ import weather from '@modules/weather'
 import { fetchPexels, fetchWeather } from '@modules/APIs'
 import areEqual from '@modules/areEqual'
 import './User.css'
-import { Config, Mode, Theme } from '../../types/Config.d'
+import { Config, Mode, Theme, ConfigUpdate } from '@interfaces/Config.d'
+import { State, Picture, Pages } from '@interfaces/UserState.d'
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -20,29 +21,9 @@ interface Props{
     switchTheme: () => void
 }
 
-interface State{
-    collection: Picture[],
-    pictureIndex: number,
-    config: any, //change
-    isLocked: boolean,
-    progress: number,
-    error: number | undefined,
-    current: string,
-    position: any, //change
-    weather: any, //change
-    isRequiredFilled: boolean
-}
-
 interface Timers{
     wallpaper: NodeJS.Timeout | undefined
     weatherUpdate: NodeJS.Timeout | undefined
-}
-
-interface Picture{
-    srcPicker: string,
-    srcMain: string,
-    photographer: string,
-    photographerUrl: string
 }
 
 export default class User extends Component<Props, State>{
@@ -57,11 +38,11 @@ export default class User extends Component<Props, State>{
         this.state = {
             collection: [],
             pictureIndex: 0,
-            config: {},
+            config: config.get(),
             isLocked: true,
             progress: 0,
             error: undefined,
-            current: 'home',
+            current: Pages.Home,
             position: {},
             weather: {},
             isRequiredFilled: true
@@ -74,13 +55,7 @@ export default class User extends Component<Props, State>{
     }
 
     async componentDidMount(){
-        const cfg = config.get();
-
         ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => this.switchWallpaper(args, false));
-    
-        this.setState({
-            config: cfg
-        });
     }
 
     componentDidUpdate(_prevProps: Props, prevState: State){
@@ -91,7 +66,7 @@ export default class User extends Component<Props, State>{
         }
         else if(config !== prevState.config){
             this.setState({
-                current: 'settings'
+                current: Pages.Settings
             });
         }
         else if(pictureIndex !== prevState.pictureIndex){
@@ -104,11 +79,11 @@ export default class User extends Component<Props, State>{
             clearInterval(this.timers.weatherUpdate);
         }
         
-        const { sortPictures, getSearchQuery, setStateByName } = this;
+        const { sortPictures, getSearchQuery, setError } = this;
         const { keywords, quality, mode } = cfg;
         
         const query = await getSearchQuery(mode, keywords);
-        const fetchRes = await fetchPexels(query, setStateByName);
+        const fetchRes = await fetchPexels(query, setError);
 
         if(!fetchRes) return;
         if(fetchRes.length === 0){
@@ -136,11 +111,11 @@ export default class User extends Component<Props, State>{
             return keywords
         }
         else{
-            const { setStateByName, getWallpaperCollection, state } = this;
-            const req = await fetchWeather(setStateByName);
+            const { getWallpaperCollection, setError, state } = this;
+            const req = await fetchWeather(setError);
             
             this.timers.weatherUpdate = global.setInterval(async() => {
-                const req = await fetchWeather(setStateByName);
+                const req = await fetchWeather(setError);
                 const { weather, config } = state;
                 
                 if(!areEqual.objects(req, weather)){
@@ -171,14 +146,15 @@ export default class User extends Component<Props, State>{
             clearTimeout(this.timers.wallpaper);
         }
 
-        const { savePath, setStateByName, switchWallpaper, setTimer } = this;
+        const { savePath, switchWallpaper, setTimer, setError, updateProgress } = this;
         const url = collection[index].srcMain;
         
         wallpaper.download(url, savePath, {
-            setState: setStateByName,
             setWarning: this.props.setWarning,
             handleLargeFiles: switchWallpaper,
-            setTimer
+            setTimer,
+            setError,
+            updateProgress
         });
     }
 
@@ -225,18 +201,29 @@ export default class User extends Component<Props, State>{
         });
     }
 
-    changePage = (name: string) => {
+    changePage = (name: Pages) => {
         this.setState({
             current: name
         });
     }
 
-    setStateByName = (updated) => { //change to pridumat' something
-        this.setState(updated)
+    updateProgress = (progress: number) => {
+        const { isLocked } = this.state;
+
+        this.setState({
+            progress,
+            isLocked: progress === 0 ? false : isLocked
+        });
+    }
+
+    setError = (error: number) => {
+        this.setState({
+            error
+        })
     }
 
     render(){
-        const { setStateByName, changePage, switchWallpaper, state, props } = this;
+        const { changePage, switchWallpaper, state, props } = this;
         const { error, current } = state;
 
         return(
@@ -249,8 +236,8 @@ export default class User extends Component<Props, State>{
                 { error && (current === 'home' || current === 'picker')
                     ? <Error code={ error }/>
                     : <Page { ...state } 
-                            handleUserStateChange={ setStateByName }
-                            handleAppStateChange={ props.handleAppStateChange }
+                            // handleUserStateChange={ setStateByName }
+                            // handleAppStateChange={ props.handleAppStateChange }
                             switchWallpaper = { switchWallpaper }/>
                 }
             </div>

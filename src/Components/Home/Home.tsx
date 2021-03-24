@@ -5,9 +5,15 @@ import { Arrows } from '../Arrows/Arrows'
 import Links from '../Links/Links'
 import './Home.css'
 
-export default function Home(props){
-    const { photo, progress, isLocked, switchWallpaper, pictureIndex } = props;
-    const { photographer, srcMain, photographerURL } = photo;
+import { State as UserState } from '@interfaces/UserState' 
+
+interface Props extends UserState{
+    
+}
+
+export default function Home(props: Props){
+    const { picture, progress, isLocked, switchWallpaper, pictureIndex } = props;
+    const { photographer, srcMain, photographerURL } = picture;
     
     const handleSlideForward = () => switchWallpaper(pictureIndex + 1);
     const handleSlideBack = () => switchWallpaper(pictureIndex - 1) ;

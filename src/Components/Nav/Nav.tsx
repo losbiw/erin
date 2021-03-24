@@ -3,13 +3,19 @@ import Button from '../Button/Button'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import NavIcons from '../Icons/Nav'
 import './Nav.css'
-import { Theme } from '../../types/Config'
+import { Theme } from '@interfaces/Config'
+import { Pages } from '@/interfaces/UserState'
 
 interface Props{
-    changePage: (name: string) => void,
+    changePage: (name: Pages) => void,
     current: string,
     theme: Theme,
     switchTheme: () => void
+}
+
+interface NavButton{
+    target: Pages,
+    Icon: (() => JSX.Element)
 }
 
 export default function Nav(props: Props){
@@ -18,30 +24,24 @@ export default function Nav(props: Props){
     
     let isFirst = true;
     
-    const buttons = [
+    const buttons: Array<Array<NavButton>> = [
     [{
-        target: 'home',
-        icon: Home
+        target: Pages.Home,
+        Icon: Home
     }, 
     {
-        target: 'picker',
-        icon: Picker
+        target: Pages.Home,
+        Icon: Picker
     }],
     [{
-        target: 'settings',
-        icon: Settings
+        target: Pages.Settings,
+        Icon: Settings
     },
     {
-        target: 'info',
-        icon: Info
+        target: Pages.Info,
+        Icon: Info
     }]
     ]
-
-    const handlePageChange = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const { dataset } = e.target as HTMLButtonElement;
-        const { name } = dataset;
-        props.changePage(name as string);
-    }
 
     return(
         <nav>
@@ -49,16 +49,19 @@ export default function Nav(props: Props){
                 return <div className="btns" key={ group[0].target + group[1].target }>
                     {
                         group.map(button => {
-                            const { icon, target } = button;
+                            const { Icon, target } = button;
                             const active = props.current === target ? ' active' : '';
 
                             if(group === buttons[1]) isFirst = false
 
-                            return <Button className={ `nav-btn${active}` }
-                                           Content={ icon } 
-                                           name={ target }
-                                           key={ target }
-                                           handleClick={ handlePageChange }/>
+                            return(
+                                <button className={ `nav-btn${active}` }
+                                        name={ target }
+                                        key={ target }
+                                        onClick={ () => props.changePage(target) }>
+                                    <Icon />
+                                </button>
+                            )
                         })
                     }
                     { 

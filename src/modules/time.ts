@@ -1,4 +1,4 @@
-import { TimeInterface } from '../types/Time'
+import { TimeInterface } from '@interfaces/Time'
 
 const convert = (time: TimeInterface): string => {
     const current = new Date().getHours();

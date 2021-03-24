@@ -1,5 +1,5 @@
 import React from 'react'
-import { Svg, Gradient } from '../../types/Icon'
+import { Svg, Gradient } from '@interfaces/Icon'
 
 interface Size{
     width: number,
