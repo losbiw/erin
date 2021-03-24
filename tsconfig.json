@@ -20,7 +20,8 @@
       "@themes/*": ["src/assets/icons/themes/*"],
       "@controls/*": ["src/assets/icons/controls/*"],
       "@settings/*": ["src/assets/icons/settings/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@interfaces/*": ["src/interfaces/*"]
    }       
   }
 }

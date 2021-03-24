@@ -50,7 +50,8 @@ module.exports = {
             '@themes': path.resolve(__dirname, 'src/assets/icons/themes'),
             '@controls': path.resolve(__dirname, 'src/assets/icons/controls'),
             '@settings': path.resolve(__dirname, 'src/assets/icons/settings'),
-            '@modules': path.resolve(__dirname, 'src/modules')
+            '@modules': path.resolve(__dirname, 'src/modules'),
+            '@interfaces': path.resolve(__dirname, 'src/interfaces')
         },
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     }
