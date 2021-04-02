@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     entry: './src/index.tsx',
     output: {
         path: path.join(__dirname, '/build'),
@@ -17,8 +18,8 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.svg(\?raw)$/,
-                loader: 'raw-loader'
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
             },
             {
                 test: /.s?css$/,
