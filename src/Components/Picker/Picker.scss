@@ -1,0 +1,151 @@
+.picker{
+    padding: 0 1.56vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.picker .wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.picker .arrow:hover{
+    transform: scale(1.24);
+}
+.picker .wrapper:first-child .arrow svg{
+    transform: rotate(90deg);
+}
+.picker .wrapper:last-child .arrow svg{
+    transform: rotate(-90deg);
+}
+.picker .slider{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.picker .aspect-ratio{
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 31.5%;
+    padding: 0.25vw;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2.6vw;
+    transition-property: transform;
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
+}
+.picker .aspect-ratio .transparent{
+    height: 100%;
+    width: 100%;
+    opacity: 1.0;
+    z-index: 1;
+    transition-property: opacity;
+    transition-timing-function: $transition-function;
+    transition-duration: .5s;
+}
+.picker .aspect-ratio:nth-child(-n+3){
+    margin-bottom: 1.3vw;
+}
+
+.picker .progress-bar{
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    top: 20%;
+}
+
+.picker .active{
+    background: $gradient !important;
+}
+.picker .active .transparent{
+    opacity: 0;
+}
+
+.slider .aspect-ratio:hover{
+    background: $gradient !important;
+    transform: scale(1.07, 1.07);
+}
+
+.slider .aspect-ratio:hover .transparent{
+    opacity: 0;
+}
+
+.light .slider .aspect-ratio{
+    background: $background-light;
+    box-shadow: $shadow-light;
+}
+
+.dark .slider .aspect-ratio{
+    background: $background-dark;
+    box-shadow: $shadow-dark;
+}
+
+@media (min-aspect-ratio: 20/9){
+    .picker .slider{
+        height: 60vh;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-y: visible;
+        overflow-x: scroll;
+        padding: 1.4vw 0;
+    }
+    .picker .aspect-ratio:nth-child(-n+3){
+        margin-bottom: 0;
+    }
+    .picker .aspect-ratio{
+        max-height: 95%;
+        margin: 0 1vw;
+    }
+    .picker .aspect-ratio .container{
+        height: 35vh;
+        padding-top: 0;
+    }
+    .picker .wrapper{
+        height: 30vh;
+    }
+    .picker .arrow{
+        width: 2%;
+        height: 8vh;
+    }
+}
+
+@media (max-aspect-ratio: 1/1){
+    .picker .arrow{
+        width: 4%;
+        height: 8vh;
+    }
+    .picker .aspect-ratio{
+        padding: 0.4vw;
+    }
+}
+
+@media (max-aspect-ratio: 10/12) {
+    .picker{
+        justify-content: center;
+        padding: 0 5vw;
+    }
+    .picker .slider{
+        padding: 1vh 0;
+    }
+    .picker .aspect-ratio{
+        width: 48%;
+    }
+    .picker .aspect-ratio:nth-child(-n+4){
+        margin-bottom: 4vw;
+    }
+    .picker .arrow{
+        width: 7%;
+        height: 5vw;
+    }
+    .picker .arrow:hover{
+        height: 7vw;
+    }
+}
