@@ -4,7 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: process.env.NODE_ENV || 'development',
+    target: 'electron-renderer',
     entry: './src/index.tsx',
     output: {
         path: path.join(__dirname, '/build'),
@@ -19,10 +20,24 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                use: ['@svgr/webpack'],
+                use: 'raw-loader'
             },
             {
-                test: /.s?css$/,
+                test: /\.scss$/,
+                use: [
+                  {
+                    loader: 'style-loader'
+                  },
+                  {
+                    loader: 'css-loader'
+                  },
+                  {
+                    loader: 'sass-loader'
+                  }
+                ]
+            },
+            {
+                test: /\.css$/, //change remove css
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             }
         ]
@@ -45,12 +60,12 @@ module.exports = {
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src/'),
-            '@nav': path.resolve(__dirname, 'src/assets/icons/nav'),
-            '@info': path.resolve(__dirname, 'src/assets/icons/info'),
-            '@ui': path.resolve(__dirname, 'src/assets/icons/ui'),
-            '@themes': path.resolve(__dirname, 'src/assets/icons/themes'),
-            '@controls': path.resolve(__dirname, 'src/assets/icons/controls'),
-            '@settings': path.resolve(__dirname, 'src/assets/icons/settings'),
+            '@nav': path.resolve(__dirname, 'src/assets/nav'),
+            '@info': path.resolve(__dirname, 'src/assets/info'),
+            '@ui': path.resolve(__dirname, 'src/assets/ui'),
+            '@themes': path.resolve(__dirname, 'src/assets/themes'),
+            '@controls': path.resolve(__dirname, 'src/assets/controls'),
+            '@settings': path.resolve(__dirname, 'src/assets/settings'),
             '@modules': path.resolve(__dirname, 'src/modules'),
             '@interfaces': path.resolve(__dirname, 'src/interfaces')
         },

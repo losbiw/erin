@@ -6,6 +6,7 @@
     "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "react",
     "sourceMap": true,
+    "noImplicitAny": false, //change
     "outDir": "./build/",
     "removeComments": true,
     "strict": true,
@@ -14,12 +15,12 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["src/*"],
-      "@nav/*": ["src/assets/icons/nav/*"],
-      "@info/*": ["src/assets/icons/info/*"],
-      "@ui/*": ["src/assets/icons/ui/*"],
-      "@themes/*": ["src/assets/icons/themes/*"],
-      "@controls/*": ["src/assets/icons/controls/*"],
-      "@settings/*": ["src/assets/icons/settings/*"],
+      "@nav/*": ["src/assets/nav/*"],
+      "@info/*": ["src/assets/info/*"],
+      "@ui/*": ["src/assets/ui/*"],
+      "@themes/*": ["src/assets/themes/*"],
+      "@controls/*": ["src/assets/controls/*"],
+      "@settings/*": ["src/assets/settings/*"],
       "@modules/*": ["src/modules/*"],
       "@interfaces/*": ["src/interfaces/*"]
    }       
