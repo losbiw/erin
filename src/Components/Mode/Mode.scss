@@ -1,3 +1,6 @@
+@import '../../style/main.scss';
+@import '../../style/settings.scss';
+
 .radio{
     height: 4vw;
     box-sizing: border-box;
@@ -37,8 +40,8 @@
     border-radius: 1.7vw;
     z-index: 3;
     transition-property: background-color, color, box-shadow;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
 }
 .radio input[type="radio"]{
     opacity: 0;
@@ -48,14 +51,14 @@
     z-index: 4;
 }
 .radio input[type="radio"]:checked .background{
-    box-shadow: var(--item-shadow-light);
+    box-shadow: $item-shadow-light;
 }
 .radio input[type="radio"]:checked + .background .transparent{
     opacity: 0;
 }
 .radio:hover .background,
 .radio input[type="radio"]:checked + .background{
-    background: var(--gradient);
+    background: $gradient;
 }
 .radio:hover .background label, 
 .radio input[type="radio"]:checked + .background label{
@@ -66,33 +69,33 @@
 }
 
 .light .background{
-    background: var(--background-light);
+    background: $background-light;
 }
 .light .radio input[type="radio"]:checked + .background{
-    box-shadow: var(--item-shadow-light);
+    box-shadow: $item-shadow-light;
 }
 .light .radio label{
-    color: var(--background-light);
-    background-color: var(--fill-light);
-    box-shadow: var(--item-shadow-light);
+    color: $background-light;
+    background-color: $fill-light;
+    box-shadow: $item-shadow-light;
 }
 .light .transparent{
-    background-color: var(--background-light);
+    background-color: $background-light;
 }
 
 .dark .background{
-    background: var(--background-dark);
+    background: $background-dark;
 }
 .dark .radio input[type="radio"]:checked + .background{
-    box-shadow: var(--item-shadow-dark);
+    box-shadow: $item-shadow-dark;
 }
 .dark .radio label{
-    color: var(--background-dark);
-    background-color: var(--fill-dark);
-    box-shadow: var(--item-shadow-dark);
+    color: $background-dark;
+    background-color: $fill-dark;
+    box-shadow: $item-shadow-dark;
 }
 .dark .transparent{
-    background-color: var(--background-dark);
+    background-color: $background-dark;
 }
 
 @media (max-aspect-ratio: 1/1) {

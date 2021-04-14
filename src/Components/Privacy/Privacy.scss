@@ -1,14 +1,14 @@
-#setup #privacy{
+.setup .privacy{
     justify-content: center;
 }
-#privacy a p{
+.privacy a p{
     text-decoration: underline;
     text-underline-position: under;
 }
-#privacy .switch{
+.privacy .switch{
     transform: scale(0.75);
 }
-#privacy #text{
+.privacy .text{
     display: flex;
     align-items: center;
     font-size: 1vw;

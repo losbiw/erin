@@ -1,15 +1,7 @@
-:root{
-    --nav-light: #f8f8fc;
-    --nav-dark:#161618;
-    
-    --shadow-light: 0px 0px 43px 0px rgba(82, 82, 82, 0.15);
-    --shadow-dark: 0px 0px 76px 0px rgba(0, 0, 0, 0.56);
+@import '../../style/nav.scss';
+@import '../../style/main.scss';
 
-    --nav-fill-light: #4d545e;
-    --nav-fill-dark: #e7e7e9;
-}
-
-nav{
+.nav{
     height: auto;
     width: auto;
     margin: 1.56vmax;
@@ -22,46 +14,51 @@ nav{
     z-index: 5;
     box-sizing: border-box;
     transition-property: background-color;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
-}
-.btns{
-    display: flex;
-    flex-direction: column;
-}
-.btns:nth-child(1) button{
-    margin-top: 2.4vw;
-}
-.btns:nth-child(2) button{
-    margin-bottom: 2.4vw;
-}
-.btns:nth-child(2) button:first-child{
-    margin-top: 2.4vw;
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
+
+    .btns{
+        display: flex;
+        flex-direction: column;
+
+        .nav-btn{
+            display: inline-block;
+            background-color: transparent;
+            border: none;
+            position: relative;
+            transition-property: transform;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+            padding: 0 2.08vw;
+
+            &::after{
+                transition: .5s;
+                opacity: 0;
+                border-radius: 20px;
+                content: '';
+                display: block;
+                height: 110%;
+                width: 0.26vw;
+                background-color: #33eb7f;
+                position: absolute;
+                right: 5px;
+                top: -5%;
+            }
+        }
+
+        &:nth-child(1) button{
+            margin-top: 2.4vw;
+        }
+        &:nth-child(2) button{
+            margin-bottom: 2.4vw;
+
+            &:first-child{
+                margin-top: 2.4vw;
+            }
+        }
+    }
 }
 
-.nav-btn{
-    display: inline-block;
-    background-color: transparent;
-    border: none;
-    position: relative;
-    transition-property: transform;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
-    padding: 0 2.08vw;
-}
-.nav-btn::after{
-    transition: .5s;
-    opacity: 0;
-    border-radius: 20px;
-    content: '';
-    display: block;
-    height: 110%;
-    width: 0.26vw;
-    background-color: #33eb7f;
-    position: absolute;
-    right: 5px;
-    top: -5%;
-}
 .nav-btn:hover,
 .btns .active{
     transform: scale(1.09);
@@ -99,31 +96,31 @@ button > * {
 }
 
 .light nav{
-    background-color: var(--nav-light);
-    box-shadow: var(--shadow-light);
+    background-color: $nav-light;
+    box-shadow: $shadow-light;
 }
 .light nav svg{
-    filter: var(--icon-shadow-light);
+    filter: $icon-shadow-light;
 }
-.light rect:first-child{
-    fill: var(--fill-light);
+.light g rect:first-child{
+    fill: $fill-light;
 }
-.light nav rect:first-child{
-    fill: var(--nav-fill-light);
+.light nav g rect:first-child{
+    fill: $nav-fill-light;
 }
 
 .dark nav{
-    background-color: var(--nav-dark);
-    box-shadow: var(--shadow-dark);
+    background-color: $nav-dark;
+    box-shadow: $shadow-dark;
 }
 .dark nav svg{
-    filter: var(--icon-shadow-dark);
+    filter: $icon-shadow-dark;
 }
-.dark rect:first-child{
-    fill: var(--fill-dark);
+.dark g rect:first-child{
+    fill: $fill-dark;
 }
-.dark nav rect:first-child{
-    fill: var(--nav-fill-dark);
+.dark nav g rect:first-child{
+    fill: $nav-fill-dark;
 }
 
 

@@ -1,4 +1,4 @@
-@import '../../root.scss';
+@import '../../style/main.scss';
 
 .arrows{
     position: absolute;
@@ -36,8 +36,6 @@
 }
 
 
-#home .arrow:last-child svg,
-#setup .arrow:last-child svg{
+#home .arrow:last-child svg{ //change
     transform: scaleX(-1);
-} 
-//change
+}

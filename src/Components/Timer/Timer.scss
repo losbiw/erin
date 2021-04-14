@@ -1,8 +1,11 @@
-#timer{
+@import '../../style/main.scss';
+@import '../../style/settings.scss';
+
+.timer{
     justify-content: flex-start;
     margin-bottom: 1.3vw;
 }
-#timer .wrapper{
+.timer .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,8 +27,8 @@
     font-size: 2.35vw;
     border: none;
     transition-property: background-color, color, box-shadow;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
 }
 .time input:focus{
     outline: none;
@@ -52,30 +55,30 @@ input::-webkit-inner-spin-button {
 }
 
 .light .time input{
-    background-color: var(--fill-light);
-    color: var(--background-light);
-    box-shadow: var(--item-shadow-light);
+    background-color: $fill-light;
+    color: $background-light;
+    box-shadow: $item-shadow-light;
 }
 .light .colon{
-    color: var(--fill-light);
+    color: $fill-light;
 }
 .light .time label{
     color: #626262;
 }
 .dark .time input{
-    background-color: var(--fill-dark);
-    color: var(--background-dark);
-    box-shadow: var(--item-shadow-dark);
+    background-color: $fill-dark;
+    color: $background-dark;
+    box-shadow: $item-shadow-dark;
 }
 .dark .colon{
-    color: var(--fill-dark);
+    color: $fill-dark;
 }
 .dark .time label{
     color: #d1d1d1;
 }
 
 @media (max-aspect-ratio: 1/1){
-    #timer{
+    .timer{
         justify-content: flex-start;
         margin-bottom: 1.3vw;
     }

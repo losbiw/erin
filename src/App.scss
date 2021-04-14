@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-@import 'root.scss';
+@import './style/main.scss';
 
 body{
     margin: 0;
@@ -23,7 +23,7 @@ body{
     }
 
     svg,
-    rect:first-child{
+    g rect:first-child{
         transition-property: fill;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;

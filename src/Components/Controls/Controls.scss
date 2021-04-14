@@ -1,4 +1,4 @@
-@import '../../root.scss';
+@import '../../style/main.scss';
 
 .control{
     width: 100%;
@@ -14,7 +14,7 @@
         -webkit-app-region: drag;
     }
 
-    .container{
+    .control-container{
         margin-top: 1.56vmax;
         display: flex;
 

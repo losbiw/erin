@@ -1,32 +1,19 @@
-:root{
-    --settings-icon-shadow-light: drop-shadow(-2px 2px 8.55px rgba(0, 0, 0, 0.29));
-    --settings-icon-shadow-dark: drop-shadow(-6px 7px 7px rgba(0, 0, 0, 0.6));
-    
-    --title-shadow-light: 0px 3px 7px rgba(58, 66, 78, 0.15);
-    --title-shadow-dark: -6px 7px 7px rgba(0, 0, 0, 0.52);
-    
-    --item-shadow-light: 0px 6px 18px 0px rgba(58, 66, 78, 0.12);
-    --item-shadow-dark: 0px 0px 25px 0px rgba(0, 0, 0, 0.7);
-
-    --hr-light: #b2b1b1;
-    --hr-dark: #535353;
-}
-
-#settings{
+.settings{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100%;
 }
+
 .item{
     display: flex;
     width: 47vw;
     flex-direction: column;
     align-items: center;
     transition-property: transform;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
 }
 .page .item:hover{
     transform: scale(1.1);
@@ -52,54 +39,54 @@ hr{
 select:focus, input:focus{
     outline: none;
 }
-#settings .title{
+.settings .title{
     display: flex;
     align-items: center;
 }
-#settings .title svg{
+.settings .title svg{
     height: auto;
     width: 3.35vw;
     margin-right: 1.72vw;
 }
-#settings .title h1{
+.settings .title h1{
     font-size: 2vw;
     margin: 0;
     font-weight: 600;
     transition-property: color, text-shadow;
-    transition-timing-function: var(--transition-function);
-    transition-duration: var(--transition-duration);
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
 }
 
 .light hr{
-    background-color: var(--hr-light);
+    background-color: $hr-light;
 }
 .light .title h1{
-    color: var(--fill-light);
-    text-shadow: var(--title-shadow-light);
+    color: $fill-light;
+    text-shadow: $title-shadow-light;
 }
-.light #settings .title svg{
-    filter: var(--icon-shadow-light);
-    fill: var(--fill-light);
+.light .settings .title svg{
+    filter: $icon-shadow-light;
+    fill: $fill-light;
 }
 
 .dark hr{
-    background-color: var(--hr-dark);
+    background-color: $hr-dark;
 }
 .dark .title h1{
-    color: var(--fill-dark);
-    text-shadow: var(--title-shadow-dark);
+    color: $fill-dark;
+    text-shadow: $title-shadow-dark;
 }
-.dark #settings .title svg{
-    filter: var(--icon-shadow-dark);
-    fill: var(--fill-dark);
+.dark .settings .title svg{
+    filter: $icon-shadow-dark;
+    fill: $fill-dark;
 }
 
 @media (max-aspect-ratio: 1/1) {
-    #settings .title svg{
+    .settings .title svg{
         width: 4.3vw;
         margin-right: 3vw;
     }
-    #settings .title h1{
+    .settings .title h1{
         font-size: 3vw;
     }
     .item{
@@ -114,7 +101,7 @@ select:focus, input:focus{
 }
 
 @media (min-aspect-ratio: 21/9){
-    #settings{
+    .settings{
         justify-content: flex-start;
         overflow-y: scroll;
         overflow-x: visible;

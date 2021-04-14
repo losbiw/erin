@@ -1,0 +1,66 @@
+@import '../../style/nav.scss';
+@import '../../style/main.scss';
+
+.setup{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+
+    .arrow{
+        width: 18.5%;
+
+        &:last-child svg{
+            transform: scaleX(-1);
+        }
+    }
+
+    .theme-switch{
+        height: auto;
+        border-radius: 2vmax;
+        padding: 1.3vmax;
+        position: absolute;
+        top: 1.56vmax;
+        left: 1.56vmax;
+        z-index: 11;
+        transition-property: background-color, transform;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
+        border: none;
+    }
+}
+
+.light .setup .theme-switch{
+    background-color: $nav-light;
+    box-shadow: $shadow-light;
+}
+.dark .setup .theme-switch{
+    background-color: $nav-dark;
+    box-shadow: $shadow-dark;
+}
+
+@media (min-aspect-ratio: 18/9){
+    .setup{
+        overflow-y: scroll;
+    }
+}
+@media (min-aspect-ratio: 21/9){
+    .setup{
+        .settings{ //change
+            justify-content: center;
+            align-items: flex-start;
+            overflow: visible;
+        }
+
+        .item:first-child{
+            margin-top: 0;
+        }
+
+        .item:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
