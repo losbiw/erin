@@ -1,0 +1,33 @@
+@import 'main.scss';
+
+button{
+    &:hover{
+        cursor: pointer;
+
+        .gradient{
+            opacity: 1.0;
+        }
+    }
+
+    &:focus{ //change
+        outline: none;
+    }
+
+    & > * {
+        pointer-events: none;
+    }
+}
+
+.gradient{
+    opacity: 0.0;
+    transition: opacity .3s ease;
+    display: inline-block;
+}
+
+.light svg rect:first-child{
+    fill: $fill-light;
+}
+
+.dark svg rect:first-child{
+    fill: $fill-dark;
+}

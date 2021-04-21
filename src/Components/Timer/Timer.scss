@@ -2,14 +2,21 @@
 @import '../../style/settings.scss';
 
 .timer{
-    justify-content: flex-start;
+    justify-content: center;
     margin-bottom: 1.3vw;
+
+    .time-container{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
 }
 .timer .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .time{
     display: flex;
     flex-direction: column;
