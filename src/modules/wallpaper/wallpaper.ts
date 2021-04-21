@@ -1,4 +1,6 @@
-import OS from './OS'
+import OS from '../OS';
+import isBlacklisted from './blacklist';
+import * as scripts from './scripts';
 
 const fs = window.require('fs');
 const path = window.require('path');
@@ -7,22 +9,11 @@ const { execFileSync, execSync } = window.require('child_process');
 const Stream = require('stream').Transform;
 
 interface Handlers{
-	handleLargeFiles: Function, //change
-	setTimer: Function, //change
+	handleLargeFiles: (index: number | boolean, isUnlocked: boolean) => void,
+	setTimer: () => void,
 	setWarning: (warning: string) => void,
 	setError: (error: number) => void,
 	updateProgress: (progress: number) => void
-}
-
-interface LinuxCommands{
-	set: string,
-	align?: string
-}
-
-interface LinuxDistros{
-	other: LinuxCommands,
-	kde: LinuxCommands,
-	xfce: LinuxCommands
 }
 
 const download = (url: string, initialPath: string, handlers: Handlers): void => {
@@ -30,7 +21,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 	const https = require('https');
 	const { handleLargeFiles, setTimer, setWarning, setError, updateProgress } = handlers;
 
-	if(os === 'win32' && url === 'https://images.pexels.com/photos/2129796/pexels-photo-2129796.png'){
+	if(isBlacklisted(url, os)){
 		setWarning("The image might crash your desktop. It's been switched to the next one automatically");
 		handleLargeFiles(true, true);
 		return;
@@ -39,7 +30,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 	const callback = (res: any) => {   //change
 		const size = res.headers["content-length"];
 
-		if((size / 1024 / 1024) >= 27){
+		if(os === 'win32' && (size / 1024 / 1024) >= 27){
 			setWarning("The file is too big. It's been switched to the next one automatically")
 			handleLargeFiles(true, true);
 		}
@@ -48,13 +39,17 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 			const contentLength = Math.floor(size / 100);
 			let downloaded = 0; 
 
+			const progressInterval = setInterval(() => {
+				updateProgress(downloaded / contentLength);          
+			}, 100);
+
 			res.on('data', (chunk: any) => { //change
 				data.push(chunk);
 				downloaded += chunk.length;
-				updateProgress(downloaded / contentLength);                                   
 			});        
 
 			res.on('end', () => {
+				clearInterval(progressInterval);
 				const pic = data.read();
 				const fallbackPath = getFallbackPath(initialPath);
 
@@ -105,49 +100,18 @@ const set = (img: string, macPath: string): void => {
 	}
 	else if(os === 'linux'){
 		const desktopEnv = OS.defineDesktopEnvironment(os);
-
-		const options: LinuxDistros = {
-			other: {
-				set: `gsettings set org.gnome.desktop.background picture-uri 'file://${imgPath}'`,
-				align: `gsettings set org.gnome.desktop.background picture-options 'zoom'`,
-			},
-			xfce: {
-				set: `
-				  workspace_count=$(xfconf-query -v -c xfwm4 -p /general/workspace_count)
-				  connected_monitor=$(xrandr -q | awk '/ connected/{print $1}')
-				  xfce_desktop_prop_prefix=/backdrop/screen0/monitor$connected_monitor
-				  for ((i=1; i <= $workspace_count; i++))
-				  do
-					 xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace$i/last-image -s ${imgPath}
-					 xfconf-query -c xfce4-desktop -p $xfce_desktop_prop_prefix/workspace$i/image-style -s 5
-				  done
-				`
-			},
-			kde: {
-				set: `dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
-						var Desktops = desktops();                                                                                                                       
-						for (i=0;i<Desktops.length;i++) {
-								d = Desktops[i];
-								d.wallpaperPlugin = "org.kde.image";
-								d.currentConfigGroup = Array("Wallpaper",
-															"org.kde.image",
-															"General");
-								d.writeConfig("Image", "file://${imgPath}");
-						}'`
-			}
-		} 
-
-		const commands = options[desktopEnv as keyof LinuxDistros] || options.other;
+		const options = scripts.linux(imgPath);
+		const commands = options[desktopEnv] || options.other;
 		
 		for(let command in commands){
-			execSync(commands[command as keyof LinuxCommands]);
+			execSync(commands[command]);
 		}
 
 		return;
 	}
 	else if(os === 'darwin'){
-		const script = `osascript -e 'tell application "System Events" to tell every desktop to set picture to "${macPath}"'`;
-		execSync(script);
+		const macos = scripts.macos(macPath);
+		execSync(macos);
 
 		return;
 	}
