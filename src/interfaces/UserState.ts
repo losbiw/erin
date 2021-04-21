@@ -1,4 +1,4 @@
-import { Config } from './Config.d'
+type Config = import('./Config').Config;
 
 export interface State{
     collection: Picture[],
@@ -6,7 +6,7 @@ export interface State{
     config: Config, //change
     isLocked: boolean,
     progress: number,
-    error: number | undefined,
+    error: number | null,
     current: Pages,
     position: any, //change
     weather: any, //change
