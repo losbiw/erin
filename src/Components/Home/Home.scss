@@ -10,6 +10,10 @@ $image-shadow-dark: 0px 0px 89.91px 21.09px rgba(0, 0, 0, 0.58);
 
     .arrow{
         width: 6%;
+
+        &:last-child svg{
+            transform: scaleX(-1);
+        }
     }
 
     .aspect-ratio{
@@ -47,6 +51,7 @@ $image-shadow-dark: 0px 0px 89.91px 21.09px rgba(0, 0, 0, 0.58);
         .link{
             text-decoration: none;
             font-size: .7vw;
+            transition: transform 300ms;
 
             &:hover{
                 transform: scale(1.1);

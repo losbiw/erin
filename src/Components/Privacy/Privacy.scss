@@ -1,16 +1,19 @@
-.setup .privacy{
+.privacy{
     justify-content: center;
-}
-.privacy a p{
-    text-decoration: underline;
-    text-underline-position: under;
-}
-.privacy .switch{
-    transform: scale(0.75);
-}
-.privacy .text{
-    display: flex;
-    align-items: center;
-    font-size: 1vw;
-    white-space: pre;
+
+    .text{
+        display: flex;
+        align-items: center;
+        font-size: 1vw;
+        white-space: pre;
+    }
+
+    .switch{
+        transform: scale(0.75);
+    }
+
+    .link .title{
+        text-decoration: underline;
+        text-underline-position: under;
+    }
 }

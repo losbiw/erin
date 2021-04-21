@@ -9,95 +9,96 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
     display: inline-block;
     width: 5.72vw;
     height: 2.6vw;
-}
-  
-.switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-  
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: .4s;
-    border-radius: 1.3vw;
-}
-  
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 2vw;
-    width: 2vw;
-    left: 0.3vw;
-    bottom: 0.3vw;
-    background: white;
-    transition: .4s;
-    border-radius: 50%;
-    z-index: 2;
-    box-shadow: $switch-off-shadow;
-}
-.slider .gradient{
-    background: $gradient;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
-    z-index: 1;
-    border-radius: 1.3vw;
-    transition: .4s;
-}
-  
-input:checked + .slider .gradient {
-    opacity: 1;
-}
-  
-input:checked + .slider:before {
-    box-shadow: $switch-on-shadow;
-    background: white;
-    transform: translateX(3.15vw);
+
+    input{ 
+        width: 0;
+        height: 0;
+        
+        &:checked + .switch-slider{
+            background-color: transparent;
+
+            &:before{
+                box-shadow: $switch-on-shadow;
+                background: white;
+                transform: translateX(3.15vw);
+            }
+
+            .gradient {
+                opacity: 1;
+            }
+        }
+    }
+
+    .switch-slider{
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 1.3vw;
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 2vw;
+            width: 2vw;
+            left: 0.3vw;
+            bottom: 0.3vw;
+            background: white;
+            transition: 600ms;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: $switch-off-shadow;
+        }
+
+        .gradient{
+            background: $gradient;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            z-index: 1;
+            border-radius: 1.3vw;
+            transition: opacity 400ms;
+        }
+    }
 }
 
-input:checked + .slider{
-    background-color: transparent;
-}
-
-.light .slider{
+.light .switch-slider{
     background-color: $fill-light;
     box-shadow: $item-shadow-light;
-}
-.light .slider:before{
-    background: $background-light;
+
+    &:before{
+        background: $background-light;
+    }
 }
 
-.dark .slider{
+.dark .switch-slider{
     background-color: $fill-dark;
     box-shadow: $item-shadow-dark;
-}
-.dark .slider:before{
-    background: $background-dark;
+
+    &:before{
+        background: $background-dark;
+    }
 }
 
-@media (max-aspect-ratio: 1/1){
-    .switch {
-        width: 8vw;
-        height: 4vw;
-    } 
-    .slider, .slider .gradient{
-        border-radius: 4vw;
-    }
-    .slider:before {
-        height: 3vw;
-        width: 3vw;
-        left: 0.5vw;
-        bottom: 0.5vw;
-    }
-    input:checked + .slider:before {
-        transform: translateX(4.1vw);
-    }
-}
+// @media (max-aspect-ratio: 1/1){
+//     .switch {
+//         width: 8vw;
+//         height: 4vw;
+//     } 
+//     .switch-slider, .switch-slider .gradient{
+//         border-radius: 4vw;
+//     }
+//     .switch-slider:before {
+//         height: 3vw;
+//         width: 3vw;
+//         left: 0.5vw;
+//         bottom: 0.5vw;
+//     }
+//     input:checked + .switch-slider:before {
+//         transform: translateX(4.1vw);
+//     }
+// }

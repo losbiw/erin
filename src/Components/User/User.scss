@@ -1,4 +1,7 @@
-#user{
+@import "../../style/settings.scss";
+@import "../../style/main.scss";
+
+.user{
     padding: 0;
     margin: 0;
     height: 100vh;
@@ -7,12 +10,8 @@
     display: flex;
 }
 
-#warning{
-    margin-left: 4.4vw;
-}
-
 @media (max-aspect-ratio: 1/1) {
-    #user{
+    .user{
         padding-left: 0;
         flex-direction: column-reverse;
     }
@@ -27,14 +26,14 @@
 }
 
 .light ::-webkit-scrollbar-track{
-    background: var(--hr-light);
+    background: $hr-light;
 }
 .light ::-webkit-scrollbar-thumb{
-    background: var(--fill-light)
+    background: $fill-light;
 }
 .dark ::-webkit-scrollbar-track{
-    background: var(--hr-dark);
+    background: $hr-dark;
 }
 .dark ::-webkit-scrollbar-thumb{
-    background: var(--fill-dark)
+    background: $fill-dark;
 }

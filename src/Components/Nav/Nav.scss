@@ -21,6 +21,20 @@
         display: flex;
         flex-direction: column;
 
+        .active, .nav-btn{
+            &:hover{
+                transform: scale(1.09);
+
+                .gradient{
+                    opacity: 1;
+                }
+
+                ::after{
+                    transform: scale(1);
+                }
+            }
+        }
+
         .nav-btn{
             display: inline-block;
             background-color: transparent;
@@ -31,6 +45,29 @@
             transition-duration: $transition-duration;
             padding: 0 2.08vw;
 
+            &.active{
+                transform: scale(1.09);
+    
+                &::after, .gradient{
+                    opacity: 1;
+                }
+    
+                &:hover{
+                    cursor: default;
+                }
+            }
+
+            svg{
+                width: 3.125vw;
+                height: 3.125vw;
+            }
+
+            .gradient{
+                opacity: 0.0;
+                transition: opacity .5s ease;
+                display: inline-block;
+            }
+
             &::after{
                 transition: .5s;
                 opacity: 0;
@@ -38,10 +75,10 @@
                 content: '';
                 display: block;
                 height: 110%;
-                width: 0.26vw;
+                width: 0.27vw;
                 background-color: #33eb7f;
                 position: absolute;
-                right: 5px;
+                right: 3px;
                 top: -5%;
             }
         }
@@ -59,140 +96,124 @@
     }
 }
 
-.nav-btn:hover,
-.btns .active{
-    transform: scale(1.09);
-}
-.nav-btn:hover::after,
-.active::after{
-    transform: scale(1);
-}
-nav .gradient, .gradient{
-    opacity: 0.0;
-    display: inline-block;
-}
-.gradient{
-    transition: opacity .3s ease;
-}
-nav .gradient{
-    transition: opacity .5s ease;
-}
-button:hover .gradient, 
-a:hover .gradient,
-.active .gradient,
-.active::after
-{
-    opacity: 1.0;
-}
-.nav-btn svg{
-    width: 3.125vw;
-    height: 3.125vw;
-}
-button:focus{
-    outline: none;
-}
-button > * {
-    pointer-events: none;
-}
-
 .light nav{
     background-color: $nav-light;
     box-shadow: $shadow-light;
-}
-.light nav svg{
-    filter: $icon-shadow-light;
-}
-.light g rect:first-child{
-    fill: $fill-light;
-}
-.light nav g rect:first-child{
-    fill: $nav-fill-light;
+
+    svg{
+        filter: $icon-shadow-light;
+
+        rect:first-child{
+            fill: $nav-fill-light;
+        }
+    }
 }
 
 .dark nav{
     background-color: $nav-dark;
     box-shadow: $shadow-dark;
-}
-.dark nav svg{
-    filter: $icon-shadow-dark;
-}
-.dark g rect:first-child{
-    fill: $fill-dark;
-}
-.dark nav g rect:first-child{
-    fill: $nav-fill-dark;
-}
 
+    svg{
+        filter: $icon-shadow-dark;
+
+        rect:first-child{
+            fill: $nav-fill-dark;
+        }
+    }
+}
 
 @media (max-aspect-ratio: 1/1) {
-    nav{
+    .nav{
         width: auto;
         flex-direction: row;
         border-radius: 3.5vh;
+
+        .btns{
+            flex-direction: row;
+
+            .nav-btn{
+                padding: 2vh 0;
+
+                &.active, &:hover{
+                    &::active{
+                        transform: scale(1);
+                    }
+                }
+
+                &::after{
+                    border-radius: 3px;
+                    width: 110%;
+                    height: 3px;
+                    top: 3px;
+                    right: -5%;
+                }
+
+                svg{
+                    height: 4vh;
+                    width: 4vh;
+                }
+            }
+
+            &:nth-child(1) button{
+                margin-top: 0;
+                margin-left: 3vh;
+            }
+
+            &:nth-child(2) button{
+                margin-bottom: 0;
+                margin-right: 3vh;
+
+                &:first-child{
+                    margin-top: 0;
+                }
+            }
+        }
     }
-    .btns{
-        flex-direction: row;
-    }
-    .btns:nth-child(1) button{
-        margin-top: 0;
-        margin-left: 3vh;
-    }
-    .btns:nth-child(2) button{
-        margin-bottom: 0;
-        margin-right: 3vh;
-    }
-    .nav-btn{
-        padding: 2vh 0;
-    }
-    .nav-btn svg{
-        height: 4vh;
-        width: 4vh;
-    }
-    .nav-btn::after{
-        border-radius: 3px;
-        width: 110%;
-        height: 3px;
-        top: 3px;
-        right: -5%;
-    }
+
     .nav-btn:hover::after,
     .active::after{
         transform: scale(1);
     }
-    .btns:nth-child(2) button:first-child{
-        margin-top: 0;
-    }
 }
 
 @media (min-aspect-ratio: 3/1){
-    .btns:nth-child(1) button{
-        margin-top: 0vw;
-    }
-    .btns:nth-child(2) button{
-        margin-bottom: 0vw;
-    }
-    .btns:nth-child(2) button:first-child{
-        margin-top: 0vw;
-    }
-    .btns{
+    .nav .btns{
         display: flex;
         flex-direction: row;
-    }
-    .btns:nth-child(1) .nav-btn svg{
-        margin-top: 1vw;
-    }
-    .btns:nth-child(2) .nav-btn svg{
-        margin-bottom: 1vw;
-    }
-    .nav-btn::after{
-        border-radius: 3px;
-        width: 50%;
-        height: 2px;
-        right: 25%;
-        top: 4px;
-    }
-    .btns:nth-child(2) .nav-btn::after{
-        top: auto;
-        bottom: 4px;
+
+        .nav-btn::after{
+            border-radius: 3px;
+            width: 50%;
+            height: 2px;
+            right: 25%;
+            top: 4px;
+        }
+
+        &:nth-child(1) button{
+            margin-top: 0vw;
+
+            .nav-btn svg{
+                margin-top: 1vw;
+            }
+        }
+
+        &:nth-child(2) button{
+            margin-bottom: 0vw;
+
+            .nav-btn{
+                &::after{
+                    top: auto;
+                    bottom: 4px;
+                }
+
+                svg{
+                    margin-bottom: 1vw;
+                }
+            }
+
+            &:first-child{
+                margin-top: 0vw;
+            }
+        }
     }
 }

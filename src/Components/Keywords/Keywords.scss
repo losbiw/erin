@@ -6,108 +6,127 @@ $placeholder-dark: #454546;
 
 .keywords{
     border-radius: 1.82vw;
-}  
-.keywords input{
-    border: none;
-    position: relative;
-    border-radius: 1.82vw;
-}
-.keywords input::placeholder{
-    top: 50%;
-    left: 0;
-    transform: translate(0, -10%);
-    position: absolute;
-    font-size: 1.1vw;
-}
-.keywords .background{
-    background: $gradient;
-}
-.container{
-    min-height: 4vw;
-    padding: 0.3125vw 0 0 0.3125vw;
-    padding-bottom: 0;
-    border-radius: 1.82vw;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    position: relative;
-    flex-wrap: wrap;
-    overflow: hidden;
-}
-.container .keyword{
-    height: 3.375vw;
-    margin: 0 0.3125vw 0.3125vw 0;
-    padding: 0 1.1vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3vw;
-    border-radius: 1.7vw;
-    z-index: 2;
-    transition-property: background-color, color;
-    transition-timing-function: $transition-function;
-    transition-duration: $transition-duration;
-}
-.container .keyword p{
-    margin-right: 1vw;
-    transition-property: box-shadow;
-    transition-timing-function: $transition-function;
-    transition-duration: $transition-duration;
-}
-.container .delete{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    width: 0.7vw;
-    height: 0.7vw;
-    background: transparent;
-    border: none;
-    box-sizing: border-box;
-    transition-property: transform;
-    transition-timing-function: $transition-function;
-    transition-duration: $transition-duration;
-}
-.container .delete svg{
-    width: 100%;
-    height: 100%;
-}
-.container .delete:hover{
-    transform: scale(1.25);
-}
-.container .keyword:last-child{
-    margin-right: 0;
-}
-.click{
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
-    z-index: 1;
-    background: transparent;
-}
-.click:hover .transparent{
-    opacity: 0;
+
+    input{
+        border: none;
+        position: relative;
+        border-radius: 1.82vw;
+
+        &::placeholder{
+            top: 50%;
+            left: 0;
+            transform: translate(0, -10%);
+            position: absolute;
+            font-size: 1.1vw;
+        }
+    }
+
+    .background{
+        background: $gradient;
+    }
+
+    .keywords-container{
+        min-height: 4vw;
+        padding: 0.3125vw 0 0 0.3125vw;
+        padding-bottom: 0;
+        border-radius: 1.82vw;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        position: relative;
+        flex-wrap: wrap;
+        overflow: hidden;
+
+        .keyword{
+            height: 3.375vw;
+            margin: 0 0.3125vw 0.3125vw 0;
+            padding: 0 1.1vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3vw;
+            border-radius: 1.7vw;
+            z-index: 2;
+            transition-property: background-color, color;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+
+            p{
+                margin-right: 1vw;
+                transition-property: box-shadow;
+                transition-timing-function: $transition-function;
+                transition-duration: $transition-duration;
+            }
+
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+
+        .delete{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            width: 0.7vw;
+            height: 0.7vw;
+            background: transparent;
+            border: none;
+            box-sizing: border-box;
+            transition-property: transform;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+
+            svg{
+                width: 100%;
+                height: 100%;
+            }
+
+            &:hover{
+                transform: scale(1.25);
+            }
+        }
+
+        .click{
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            z-index: 1;
+
+            &:hover .transparent{
+                opacity: 0;
+            }
+        }
+    }
 }
 
-.light .keywords{
-    box-shadow: $item-shadow-light;
-}
-.light .click .transparent{
-    background-color: $fill-light;
-}
-.light .keywords input{
-    background-color: $fill-light;
-    color: $background-light;
-}
-.light .keywords input::placeholder{
-    color: $placeholder-light;
-}
-.light .container .keyword{
-    background-color: $background-light;
-    color: $fill-light;
+.light{
+    .keywords{
+        box-shadow: $item-shadow-light;
+
+        input{
+            background-color: $fill-light;
+            color: $background-light;
+
+            &::placeholder{
+                color: $placeholder-light;
+            }
+        }
+    }
+
+    .keywords-container{
+        .click .transparent{
+            background-color: $fill-light;
+        }
+
+        .keyword{
+            background-color: $background-light;
+            color: $fill-light;
+        }
+    }
 }
 
 .dark .keywords{
@@ -123,25 +142,25 @@ $placeholder-dark: #454546;
 .dark .keywords input::placeholder{
     color: $placeholder-dark;
 }
-.dark .container .keyword{
+.dark .keywords-container .keyword{
     background-color: $background-dark;
     color: $fill-dark;
 }
 
 @media (max-aspect-ratio: 1/1){
-    .container{
+    .keywords-container{
         min-height: 6vw;
         padding: 0.4vw 0 0 0.4vw;
         border-radius: 3vw;
     }
-    .container .keyword{
+    .keywords-container .keyword{
         height: 5vw;
         margin: 0 0.4vw 0.4vw 0;
         padding: 0 1.5vw;
         font-size: 1.8vw;
         border-radius: 3vw;
     }
-    .container .delete{
+    .keywords-container .delete{
         width: 1.1vw;
         height: 1.1vw;
     }

@@ -1,0 +1,7 @@
+.link{
+    cursor: pointer;
+    
+    &:hover .gradient{
+        opacity: 1;
+    }
+}
