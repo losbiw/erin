@@ -1,0 +1,85 @@
+@import "../../style/main.scss";
+@import "../../style/nav.scss";
+
+.update{
+    position: absolute;
+    z-index: 8;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &.container, .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .content, .text{
+        flex-direction: column;
+    }
+
+    .text{
+        .title{
+            font-size: 2.5vmax;
+            margin: 0;
+            margin-bottom: 1.5vmax;
+        }
+
+        .description{
+            text-align: center;
+            line-height: 2vmax;
+            font-size: 1.2vmax;
+            margin: 0;
+        }
+    }
+
+    .action{
+        width: 3vmax;
+        background-color: transparent;
+        border: none;
+        margin-top: 2.5vmax;
+        transition-property: transform;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
+    
+        svg{
+            height: 100%;
+            width: 100%;
+        }
+    
+        &:hover{
+            transform: scale(1.2);
+        }
+    
+        &:nth-child(1){
+            margin-right: 4vmax;
+        }
+    }
+
+    .content{
+        padding: 3vmax 5vmax;
+        border-radius: 3vmax;
+    }
+}
+
+.dark .update{
+    background-color: rgba(18, 18, 20, 0.9);
+
+    .content{
+        color: $nav-fill-dark;
+        background-color: $nav-dark;
+        box-shadow: $shadow-dark;
+    }
+}
+
+.light .update{
+    background-color: rgba(244, 244, 248, 0.9);
+
+    .content{
+        color: $nav-fill-light;
+        background-color: $nav-light;
+        box-shadow: $shadow-light;
+    }
+}
