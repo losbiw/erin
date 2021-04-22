@@ -35,54 +35,6 @@
             }
         }
 
-        .nav-btn{
-            display: inline-block;
-            background-color: transparent;
-            border: none;
-            position: relative;
-            transition-property: transform;
-            transition-timing-function: $transition-function;
-            transition-duration: $transition-duration;
-            padding: 0 2.08vw;
-
-            &.active{
-                transform: scale(1.09);
-    
-                &::after, .gradient{
-                    opacity: 1;
-                }
-    
-                &:hover{
-                    cursor: default;
-                }
-            }
-
-            svg{
-                width: 3.125vw;
-                height: 3.125vw;
-            }
-
-            .gradient{
-                opacity: 0.0;
-                transition: opacity .5s ease;
-                display: inline-block;
-            }
-
-            &::after{
-                transition: .5s;
-                opacity: 0;
-                border-radius: 20px;
-                content: '';
-                display: block;
-                height: 110%;
-                width: 0.27vw;
-                background-color: #33eb7f;
-                position: absolute;
-                right: 3px;
-                top: -5%;
-            }
-        }
-
         &:nth-child(1) button{
             margin-top: 2.4vw;
         }
@@ -177,42 +129,47 @@
 }
 
 @media (min-aspect-ratio: 3/1){
-    .nav .btns{
-        display: flex;
-        flex-direction: row;
+    .nav{
+        justify-content: center;
 
-        .nav-btn::after{
-            border-radius: 3px;
-            width: 50%;
-            height: 2px;
-            right: 25%;
-            top: 4px;
-        }
-
-        &:nth-child(1) button{
-            margin-top: 0vw;
-
-            .nav-btn svg{
-                margin-top: 1vw;
+        .btns{
+            display: flex;
+            flex-direction: row;
+    
+            .nav-btn::after{
+                border-radius: 3px;
+                width: 50%;
+                height: 2px;
+                right: 25%;
+                top: -4px;
             }
-        }
-
-        &:nth-child(2) button{
-            margin-bottom: 0vw;
-
-            .nav-btn{
-                &::after{
-                    top: auto;
-                    bottom: 4px;
-                }
-
-                svg{
-                    margin-bottom: 1vw;
-                }
-            }
-
-            &:first-child{
+    
+            &:nth-child(1) button{
                 margin-top: 0vw;
+                margin-bottom: 10vh;
+    
+                .nav-btn svg{
+                    margin-top: 1vw;
+                }
+            }
+    
+            &:nth-child(2) button{
+                margin-bottom: 0vw;
+    
+                .nav-btn{
+                    &::after{
+                        top: auto;
+                        bottom: -4px;
+                    }
+    
+                    svg{
+                        margin-bottom: 1vw;
+                    }
+                }
+    
+                &:first-child{
+                    margin-top: 0vw;
+                }
             }
         }
     }

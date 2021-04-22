@@ -28,7 +28,7 @@
             width: 29vw;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .separator{
@@ -108,6 +108,10 @@ select:focus, input:focus{
     .settings{
         .item{
             width: 80vw;
+
+            .setting{
+                width: 50%;
+            }
         }
 
         .title{
@@ -119,10 +123,6 @@ select:focus, input:focus{
             h1{
                 font-size: 3vw;
             }
-        }
-
-        .setting{
-            width: 50%;
         }
 
         .separator{

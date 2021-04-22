@@ -8,9 +8,19 @@ $placeholder-dark: #454546;
     border-radius: 1.82vw;
 
     input{
+        font-size: 1.5625vw;
+        height: 4vw;
+        width: 100%;
+        border-radius: 1.82vw;
+        font-family: 'Montserrat', sans-serif;
+        box-sizing: border-box;
+        font-weight: 600;
+        padding: 0 1.4vw;
+        transition-property: background-color, color, box-shadow;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
         border: none;
         position: relative;
-        border-radius: 1.82vw;
 
         &::placeholder{
             top: 50%;
@@ -129,39 +139,60 @@ $placeholder-dark: #454546;
     }
 }
 
-.dark .keywords{
-    box-shadow: $item-shadow-dark;
-}
-.dark .click .transparent{
-    background-color: $fill-dark;
-}
-.dark .keywords input{
-    background-color: $fill-dark;
-    color: $background-dark;
-}
-.dark .keywords input::placeholder{
-    color: $placeholder-dark;
-}
-.dark .keywords-container .keyword{
-    background-color: $background-dark;
-    color: $fill-dark;
+.dark{
+    .keywords{
+        box-shadow: $item-shadow-dark;
+
+        input{
+            background-color: $fill-dark;
+            color: $background-dark;
+    
+            &::placeholder{
+                color: $placeholder-dark;
+            }
+        }
+    }
+
+    .keywords-container{
+        .click .transparent{
+            background-color: $fill-dark;
+        }
+
+        .keyword{
+            background-color: $background-dark;
+            color: $fill-dark;
+        }
+    }
 }
 
 @media (max-aspect-ratio: 1/1){
-    .keywords-container{
+    .keywords .keywords-container{
         min-height: 6vw;
         padding: 0.4vw 0 0 0.4vw;
         border-radius: 3vw;
-    }
-    .keywords-container .keyword{
-        height: 5vw;
-        margin: 0 0.4vw 0.4vw 0;
-        padding: 0 1.5vw;
-        font-size: 1.8vw;
-        border-radius: 3vw;
-    }
-    .keywords-container .delete{
-        width: 1.1vw;
-        height: 1.1vw;
+
+        .keyword{
+            height: 5vw;
+            margin: 0 0.4vw 0.4vw 0;
+            padding: 0 1.5vw;
+            font-size: 1.8vw;
+            border-radius: 3vw;
+
+            input{
+                height: 6vw;
+                border-radius: 6vw;
+                font-size: 1.8vw;
+                box-sizing: border-box;
+
+                &::placeholder{
+                    font-size: 1.8vw;
+                }
+            }
+        }
+
+        .delete{
+            width: 1.1vw;
+            height: 1.1vw;
+        }
     }
 }

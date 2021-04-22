@@ -1,7 +1,7 @@
 @import '../../style/main.scss';
 @import '../../style/settings.scss';
 
-select, .keywords input{
+select{
     font-size: 1.5625vw;
     height: 4vw;
     width: 100%;
@@ -13,9 +13,10 @@ select, .keywords input{
     transition-property: background-color, color, box-shadow;
     transition-timing-function: $transition-function;
     transition-duration: $transition-duration;
-}
-option{
-    font-size: 1.2vw;
+
+    option{
+        font-size: 1.2vw;
+    }
 }
 
 .light select{
@@ -23,6 +24,7 @@ option{
     color: $background-light;
     box-shadow: $item-shadow-light;
 }
+
 .dark select{
     background-color: $fill-dark;
     color: $background-dark;
@@ -30,13 +32,14 @@ option{
 }
 
 @media (max-aspect-ratio: 1/1){
-    select, .keywords input{
+    select{
         height: 6vw;
         border-radius: 6vw;
         font-size: 1.8vw;
         box-sizing: border-box;
     }
-    select, option, .keywords input::placeholder{
+    
+    select, option{
         font-size: 1.8vw;
     }
 }

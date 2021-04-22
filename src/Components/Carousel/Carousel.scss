@@ -32,6 +32,10 @@
             margin-right: 0;
         }
     }
+
+    .active .gradient{
+        opacity: 1;
+    }
     
     .non-active:hover{
         transform: scale(1.3);
