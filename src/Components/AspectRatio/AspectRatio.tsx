@@ -19,7 +19,7 @@ export default function AspectRatio(props: Props){
              onClick={ handleClick }>
             <div className='transparent'/>
             <div className='container'>
-                <img id={ id } src={ src } alt='wallpaper'/>
+                <img className={ id } src={ src } alt='wallpaper'/>
             </div>
         </div>
     )

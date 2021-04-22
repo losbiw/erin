@@ -22,7 +22,7 @@ export const CustomWarning = (props: CustomProps) => {
     const { message, Icon } = props.warning;
 
     return(
-        <div id='warning'>
+        <div className='warning'>
             <Icon />
             <p>{ message }</p>
 

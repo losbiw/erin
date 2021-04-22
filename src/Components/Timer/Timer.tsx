@@ -79,7 +79,7 @@ const Timer: FC<Props> = (props) => {
                                     onChange={ updateCfgTime }
                                     onFocus={ () => setFocus(index) }
                                     name={ unit } 
-                                    id={ unit }
+                                    className={ unit }
                                     key={ unit + index }/>
                             { 
                                 unit !== 'seconds' && 
