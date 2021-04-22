@@ -29,17 +29,18 @@ export default class Keywords extends Component<Props, State>{
         }
     }
 
-    handleDelete = (keyword: string) =>{
+    handleDelete = (keyword: string) => {
         const { keywords, changeKeywords } = this.props;
-
         const index = keywords.indexOf(keyword);
+
         if(index > -1){
-            keywords.splice(index, 1);
-            changeKeywords(keywords);
+            const dataKeywords = [...keywords];
+            dataKeywords.splice(index, 1);
+            changeKeywords(dataKeywords);
         }
     }
 
-    handleClick = () => {
+    handleClick = () => {        
         this.setState({
             isInput: true
         });
@@ -47,17 +48,18 @@ export default class Keywords extends Component<Props, State>{
 
     keyDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { changeKeywords, setWarning, keywords } = this.props;
+        const dataKeywords = [...keywords];
         
         if(e.key === 'Enter' && keywords.length < 10){
             const { value } = e.target as HTMLInputElement;
             const converted = value.toLowerCase();
             const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
             
-            if(converted !== "" && !isRepeating) keywords.push(converted);
+            if(converted !== "" && !isRepeating) dataKeywords.push(converted);
             else if(!converted) setWarning("Keyword's value should not be empty");
             else if(isRepeating) setWarning("Keywords should not repeat");
                 
-            changeKeywords(keywords);
+            changeKeywords(dataKeywords);
             
             this.setState({
                 isInput: false
@@ -88,7 +90,7 @@ export default class Keywords extends Component<Props, State>{
 
     componentDidUpdate(){
         const { isInput } = this.state;
-        const { keywords, isActive } = this.props;
+        const { keywords, isSetup } = this.props;
         
         if(keywords.length === 0 && !isInput){
             this.setState({
@@ -96,7 +98,7 @@ export default class Keywords extends Component<Props, State>{
             });
         }
 
-        if(isInput && isActive && this.inputRef.current){
+        if(isInput && !isSetup && this.inputRef.current){
             this.inputRef.current.focus({ preventScroll: true });
         }
     }

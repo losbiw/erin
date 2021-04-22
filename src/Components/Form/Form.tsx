@@ -33,7 +33,9 @@ interface Props{
 
 const Form: FC<Props> = (props) => { 
     const updateState = (update: ConfigUpdate) => {
-        const { setWarning, updateSettingsState } = props;
+        const { setWarning, updateSettingsState, config } = props;
+
+        if(!update.mode) update.mode = config.mode;
         const settingsWarning = warning.match(update, false);
 
         setWarning(settingsWarning?.value || '');
@@ -42,7 +44,7 @@ const Form: FC<Props> = (props) => {
 
     const { config, items, setWarning, theme, isSetup, activeIndex, setIsComplete } = props;
 
-    const renderSettingsItem = (name: Settings, isActive: boolean) => {
+    const renderSettingsItem = (name: Settings, isActive: boolean, isSetup: boolean) => {
         const { privacy, mode, timer, keywords, startup, quality } = config;
     
         if(name === Settings.Privacy){
@@ -105,7 +107,7 @@ const Form: FC<Props> = (props) => {
                             </div>
 
                             <div className={`setting ${key}`}>
-                                { renderSettingsItem(key, isActive) }
+                                { renderSettingsItem(key, isActive, isSetup) }
                             </div>
                         </div>
                         

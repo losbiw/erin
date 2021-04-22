@@ -1,4 +1,5 @@
-import { ConfigUpdate } from '@interfaces/Config'
+import { Settings } from '@/interfaces/Settings';
+import { ConfigUpdate, Mode, Quality } from '@interfaces/Config'
 
 interface Warning{
     condition: (config: ConfigUpdate, name: keyof ConfigUpdate) => boolean,
@@ -32,21 +33,21 @@ const match = (config: ConfigUpdate, requiredOnly: boolean) => { //add return ty
 
 const getWarnings = (): WarningOptions => ({
     quality: {
-        condition: (config, name) => (name === 'quality' && config.quality === 'original'),
+        condition: (config, name) => (name === Settings.Quality && config.quality === Quality.High),
         value: "Choosing the high quality might slow down the download speed"
     },
     keywords: {
-        condition: (config, name) => (name === 'keywords'  && config.keywords?.length === 0 && config.mode === 'keywords'),
+        condition: (config, name) => (name === Settings.Keywords && config.keywords?.length === 0 && config.mode === Mode.Keywords),
         value: "You have to enter at least one keyword or change the mode",
         isRequired: true
     },
     timer: {
-        condition: (config, name) => (name === 'timer' && !!config.timer && config.timer > 1000 * 60 * 60 * 24 * 7),
+        condition: (config, name) => (name === Settings.Timer && !!config.timer && config.timer > 1000 * 60 * 60 * 24 * 7),
         value: "Timer can't be set to a value more than a week",
         isRequired: true
     },
     privacy: {
-        condition: (config, name) => (name === 'privacy' && !config.privacy),
+        condition: (config, name) => (name === Settings.Privacy && !config.privacy),
         value: "You have to agree to our privacy policy",
         isRequired: true
     }
