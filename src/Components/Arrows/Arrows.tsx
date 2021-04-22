@@ -7,7 +7,7 @@ interface ArrowsProps{
 }
 
 interface ArrowProps{
-    Icon: any, //change
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>,
     index: number,
     handleClick: () => void
 }
