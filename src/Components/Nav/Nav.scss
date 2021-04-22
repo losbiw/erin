@@ -35,10 +35,10 @@
             }
         }
 
-        &:nth-child(1) button{
+        &:nth-child(1) .nav-btn{
             margin-top: 2.4vw;
         }
-        &:nth-child(2) button{
+        &:nth-child(2) .nav-btn{
             margin-bottom: 2.4vw;
 
             &:first-child{
@@ -48,7 +48,7 @@
     }
 }
 
-.light nav{
+.light .nav{
     background-color: $nav-light;
     box-shadow: $shadow-light;
 
@@ -61,7 +61,7 @@
     }
 }
 
-.dark nav{
+.dark .nav{
     background-color: $nav-dark;
     box-shadow: $shadow-dark;
 
@@ -106,12 +106,12 @@
                 }
             }
 
-            &:nth-child(1) button{
+            &:nth-child(1) .nav-btn{
                 margin-top: 0;
                 margin-left: 3vh;
             }
 
-            &:nth-child(2) button{
+            &:nth-child(2) .nav-btn{
                 margin-bottom: 0;
                 margin-right: 3vh;
 
@@ -144,7 +144,7 @@
                 top: -4px;
             }
     
-            &:nth-child(1) button{
+            &:nth-child(1) .nav-btn{
                 margin-top: 0vw;
                 margin-bottom: 10vh;
     
@@ -153,7 +153,7 @@
                 }
             }
     
-            &:nth-child(2) button{
+            &:nth-child(2) .nav-btn{
                 margin-bottom: 0vw;
     
                 .nav-btn{

@@ -43,7 +43,7 @@
         display: flex;
         align-items: center;
 
-        h1{
+        .setting-title{
             font-size: 2vw;
             margin: 0;
             font-weight: 600;
@@ -74,7 +74,7 @@ select:focus, input:focus{
     }
 
     .settings .title, .setup-title{
-        h1{
+        .setting-title{
             color: $fill-light;
             text-shadow: $title-shadow-light;
         }
@@ -92,7 +92,7 @@ select:focus, input:focus{
     }
 
     .settings .title, .setup-title{
-        h1{
+        .setting-title{
             color: $fill-dark;
             text-shadow: $title-shadow-dark;
         }
@@ -120,7 +120,7 @@ select:focus, input:focus{
                 margin-right: 3vw;
             }
 
-            h1{
+            .setting-title{
                 font-size: 3vw;
             }
         }

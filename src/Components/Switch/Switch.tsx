@@ -12,6 +12,7 @@ export default function Switch(props: Props){
     return(
         <label className="switch">
             <input type="checkbox" 
+                    className='switch-input'
                    defaultChecked={ isChecked }
                    onChange={ _e => handleSwitch() } />
             <span className="switch-slider">

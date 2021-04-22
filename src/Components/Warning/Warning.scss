@@ -23,7 +23,7 @@
         margin-left: 4.4vw;
     }
 
-    p{
+    .message{
         font-size: 1.35vw;
         font-weight: 600;
         margin: 0 2vw;
@@ -71,7 +71,7 @@
     background-color: $nav-light;
     box-shadow: $shadow-light;
 
-    p{
+    .message{
         color: $fill-light;
     }
 
@@ -84,7 +84,7 @@
     background-color: $nav-dark;
     box-shadow: $shadow-dark;
 
-    p{
+    .message{
         color: $fill-dark;
     }
 
@@ -109,7 +109,7 @@
             width: 3.65vh;
         }
 
-        p{
+        .message{
             font-size: 1.5vh;
             margin: 0 3vw;
         }

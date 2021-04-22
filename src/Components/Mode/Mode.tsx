@@ -21,13 +21,14 @@ export default function Mode(props: Props){
                     <div className="radio" key={ modeName }>
                         <input type="radio" 
                                 name="mode" 
+                                className='mode-input'
                                 value={ modeName } 
                                 checked={ modeName === current }
                                 onChange={ () => changeMode(modeName) }
                                 data-value="value"/>
                         <div className="background">
                             <div className="transparent"></div>
-                            <label htmlFor={ label }>{ capitalizeFirstLetter(label) }</label>
+                            <label className='mode-label' htmlFor={ label }>{ capitalizeFirstLetter(label) }</label>
                         </div>
                     </div>
                 )

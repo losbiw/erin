@@ -24,8 +24,8 @@ export default function Save(props: Props){
                 <div className="transparent" />
             </div>
 
-            <button>
-                <p>Continue</p>
+            <button className="save-button">
+                <p className="title">Continue</p>
             </button>
         </div>
     )

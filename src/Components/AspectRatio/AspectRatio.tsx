@@ -3,14 +3,13 @@ import './AspectRatio.scss'
 
 interface Props{
     src: string,
-    id?: string,
     isActive?: boolean,
     name?: string,
     handleClick?: () => void
 }
 
 export default function AspectRatio(props: Props){
-    const { src, id, isActive, name, handleClick } = props;
+    const { src, isActive, name, handleClick } = props;
     const addActiveClass = isActive ? 'active' : '';
     
     return(
@@ -19,7 +18,7 @@ export default function AspectRatio(props: Props){
              onClick={ handleClick }>
             <div className='transparent'/>
             <div className='container'>
-                <img className={ id } src={ src } alt='wallpaper'/>
+                <img className='aspect-image' src={ src } alt='wallpaper'/>
             </div>
         </div>
     )

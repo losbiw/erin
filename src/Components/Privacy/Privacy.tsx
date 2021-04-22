@@ -13,7 +13,7 @@ export default function Privacy(props: Props){
 
     return(
         <div className="text">
-            <p>I agree to the </p>
+            <p className='agreement'>I agree to the </p>
 
             <Links links={{ 
                 privacy: {
@@ -22,7 +22,7 @@ export default function Privacy(props: Props){
                 } 
             }}/>
 
-            <p>: </p>
+            <p className='agreement'>: </p>
             <Switch isChecked={ isAccepted } handleSwitch={ acceptPolicy }/>
         </div>
     )

@@ -1,7 +1,7 @@
 @import '../../style/main.scss';
 @import '../../style/settings.scss';
 
-select{
+.quality-select{
     font-size: 1.5625vw;
     height: 4vw;
     width: 100%;
@@ -14,32 +14,32 @@ select{
     transition-timing-function: $transition-function;
     transition-duration: $transition-duration;
 
-    option{
+    .quality-option{
         font-size: 1.2vw;
     }
 }
 
-.light select{
+.light .quality-select{
     background-color: $fill-light;
     color: $background-light;
     box-shadow: $item-shadow-light;
 }
 
-.dark select{
+.dark .quality-select{
     background-color: $fill-dark;
     color: $background-dark;
     box-shadow: $item-shadow-dark;
 }
 
 @media (max-aspect-ratio: 1/1){
-    select{
+    .quality-select{
         height: 6vw;
         border-radius: 6vw;
         font-size: 1.8vw;
         box-sizing: border-box;
     }
     
-    select, option{
+    .quality-select, .quality-option{
         font-size: 1.8vw;
     }
 }

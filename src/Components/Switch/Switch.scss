@@ -10,7 +10,7 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
     width: 5.72vw;
     height: 2.6vw;
 
-    input{ 
+    .switch-input{ 
         width: 0;
         height: 0;
         
@@ -100,7 +100,7 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
             bottom: 0.5vw;
         }
 
-        input:checked + .switch-slider:before {
+        .switch-input:checked + .switch-slider:before {
             transform: translateX(4.1vw);
         }
     }

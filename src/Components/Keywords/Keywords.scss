@@ -7,7 +7,7 @@ $placeholder-dark: #454546;
 .keywords{
     border-radius: 1.82vw;
 
-    input{
+    .keyword-input{
         font-size: 1.5625vw;
         height: 4vw;
         width: 100%;
@@ -117,7 +117,7 @@ $placeholder-dark: #454546;
     .keywords{
         box-shadow: $item-shadow-light;
 
-        input{
+        .keyword-input{
             background-color: $fill-light;
             color: $background-light;
 
@@ -143,7 +143,7 @@ $placeholder-dark: #454546;
     .keywords{
         box-shadow: $item-shadow-dark;
 
-        input{
+        .keyword-input{
             background-color: $fill-dark;
             color: $background-dark;
     
@@ -178,7 +178,7 @@ $placeholder-dark: #454546;
             font-size: 1.8vw;
             border-radius: 3vw;
 
-            input{
+            .keyword-input{
                 height: 6vw;
                 border-radius: 6vw;
                 font-size: 1.8vw;

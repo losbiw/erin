@@ -57,29 +57,23 @@ $shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
 }
 
 .light .error{
-    h1, h2{
-        text-shadow: 0px 0px 43px rgba(82, 82, 82, 0.15);
-    }
-
     .description{
         color: $hr-light;
     }
 
     .code-key, .fix{
         color: $fill-light;
+        text-shadow: 0px 0px 43px rgba(82, 82, 82, 0.15);
     }
 }  
 
 .dark .error{
-    h1, h2{
-        text-shadow: 0px 0px 76px rgba(0, 0, 0, 0.56);
-    }
-
     .description{
         color: $hr-dark;
     }
 
     .code-key, .fix{
         color: $fill-dark;
+        text-shadow: 0px 0px 76px rgba(0, 0, 0, 0.56);
     }
 }  

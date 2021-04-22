@@ -84,13 +84,20 @@
 
         .link{
             color: $fill-light;
-            svg{ fill: $fill-light; }
+
+            svg{ 
+                fill: $fill-light; 
+            }
         }
 
-        svg{ filter: $icon-shadow-light; }
+        svg{ 
+            filter: $icon-shadow-light; 
+        }
     }
 
-    p{ text-shadow: $title-shadow-light; }
+    .link-title, .resources{ 
+        text-shadow: $title-shadow-light; 
+    }
 }
 
 .dark{
@@ -99,13 +106,20 @@
 
         .link{
             color: $fill-dark;
-            svg{ fill: $fill-dark; }
+
+            svg{ 
+                fill: $fill-dark; 
+            }
         }
 
-        svg{ filter: $icon-shadow-dark; }
+        svg{ 
+            filter: $icon-shadow-dark; 
+        }
     }
 
-    p{ text-shadow: $title-shadow-dark; }
+    .link-title, .resources{ 
+        text-shadow: $title-shadow-dark; 
+    }
 }
 
 @media (max-aspect-ratio: 1/1) {

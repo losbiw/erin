@@ -102,8 +102,8 @@ const Form: FC<Props> = (props) => {
                         <div className="container">
                             <div className={ isSetup ? "setup-title" : "title" }>
                                 { Icon && <Icon /> }
-                                <h1>{ title || capitalized }</h1>
-                                <p>{ description || undefined }</p>
+                                <h1 className='setting-title'>{ title || capitalized }</h1>
+                                <p className='setting-desc'>{ description || undefined }</p>
                             </div>
 
                             <div className={`setting ${key}`}>

@@ -71,6 +71,7 @@ const Timer: FC<Props> = (props) => {
                         <div className="wrapper">
                             <input type="number"
                                     defaultValue={ time[unit as keyof Time] }
+                                    className='time-input'
                                    ref={ ref => {
                                        if(ref && props.isActive && index === focusIndex){
                                            ref.focus({ preventScroll: true });
@@ -79,7 +80,6 @@ const Timer: FC<Props> = (props) => {
                                     onChange={ updateCfgTime }
                                     onFocus={ () => setFocus(index) }
                                     name={ unit } 
-                                    className={ unit }
                                     key={ unit + index }/>
                             { 
                                 unit !== 'seconds' && 
@@ -87,7 +87,7 @@ const Timer: FC<Props> = (props) => {
                             }
                         </div>
                         
-                        <label>{ capitalizeFirstLetter(unit) }</label>
+                        <label className='time-label'>{ capitalizeFirstLetter(unit) }</label>
                     </div>
                 )
             })

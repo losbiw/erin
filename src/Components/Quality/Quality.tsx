@@ -26,7 +26,8 @@ export default function Quality(props: Props){
     }];
 
     return(
-        <select name="quality" 
+        <select name="quality" //todo custom dropdown
+                className="quality-select"
                 data-value="value"
                 defaultValue={ initialQuality }>
             {
@@ -34,7 +35,8 @@ export default function Quality(props: Props){
                     const { value, label } = option;
 
                     return(
-                        <option value={ value } 
+                        <option className='quality-option'
+                                value={ value }
                                 onClick={ () => changeQuality(value) }
                                 key={ value }>
                             { capitalizeFirstLetter(label) }

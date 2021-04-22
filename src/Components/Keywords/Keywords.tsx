@@ -109,6 +109,7 @@ export default class Keywords extends Component<Props, State>{
         return (
             this.state.isInput
             ? <input type="text" 
+                    className='keyword-input'
                     name="keywords" 
                     ref={ inputRef }
                     placeholder="Type something and press enter"

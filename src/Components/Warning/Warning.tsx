@@ -24,7 +24,7 @@ export const CustomWarning = (props: CustomProps) => {
     return(
         <div className='warning'>
             <Icon />
-            <p>{ message }</p>
+            <p className='message'>{ message }</p>
 
             <button className='delete'
                     onClick={ props.removeWarning }>
@@ -38,7 +38,7 @@ export const Warning = (props: Props) => {
     return(
         <div className='warning'>
             <General.Warning />
-            <p>{ props.warning }</p>
+            <p className='message'>{ props.warning }</p>
 
             <button className='delete'
                     onClick={ props.removeWarning }>
