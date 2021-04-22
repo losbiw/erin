@@ -1,12 +1,8 @@
 //change all error handlers
-
-import { TimeInterface } from "@interfaces/Time";
+import Weather from '@interfaces/Weather'
 
 //add types to fetchAPI, fetchPexels
-interface Weather{
-    main: string,
-    time: TimeInterface
-}
+
 
 const fetchAPI = async(url: string, handleError: (error: number) => void, headers?: HeadersInit) => {
     try{

@@ -35,10 +35,6 @@ module.exports = {
                     loader: 'sass-loader'
                   }
                 ]
-            },
-            {
-                test: /\.css$/, //change remove css
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             }
         ]
     },
@@ -67,7 +63,8 @@ module.exports = {
             '@controls': path.resolve(__dirname, 'src/assets/controls'),
             '@settings': path.resolve(__dirname, 'src/assets/settings'),
             '@modules': path.resolve(__dirname, 'src/modules'),
-            '@interfaces': path.resolve(__dirname, 'src/interfaces')
+            '@interfaces': path.resolve(__dirname, 'src/interfaces'),
+            '@helpers': path.resolve(__dirname, 'src/helpers')
         },
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     }

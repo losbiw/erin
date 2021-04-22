@@ -2,7 +2,7 @@ import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
 
-import { LinuxCommands, LinuxDistros } from '../../interfaces/Linux.d'
+import { LinuxCommands, LinuxDistros } from '@interfaces/Linux.d'
 
 const fs = window.require('fs');
 const path = window.require('path');

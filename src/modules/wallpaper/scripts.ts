@@ -1,4 +1,4 @@
-import { LinuxDistros } from '../../interfaces/Linux.d'
+import { LinuxDistros } from '@interfaces/Linux.d'
 
 const linux = (imgPath: string): LinuxDistros => ({
     other: {

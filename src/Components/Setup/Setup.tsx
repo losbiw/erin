@@ -3,12 +3,13 @@ import Slider from '../Slider/Slider'
 import Carousel from '../Carousel/Carousel'
 import { Arrows } from '../Arrows/Arrows'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
-import { items, Slides } from './items'
+import { items } from '../Slider/items'
 
 import './Setup.scss'
 import '../Settings/Settings.scss'
 import { Theme } from '@/interfaces/Config'
 import { Warning } from '@/interfaces/Warning'
+import { Settings } from '@/interfaces/Settings'
 
 interface Props{
     theme: Theme,
@@ -32,7 +33,7 @@ export default function Setup(props: Props){
         changeSlide(index);
     } 
 
-    const changeSlideByName = (name: Slides): void => {
+    const changeSlideByName = (name: Settings): void => {
         const index = items.map(i => i.name).indexOf(name);
         changeSlide(index);
     }

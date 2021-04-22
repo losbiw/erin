@@ -1,15 +1,15 @@
-type Config = import('./Config').Config;
+import { Config } from '@interfaces/Config'
+import Weather from '@interfaces/Weather'
 
 export interface State{
     collection: Picture[],
     pictureIndex: number,
-    config: Config, //change
+    config: Config,
     isLocked: boolean,
     progress: number,
     error: number | null,
     current: Pages,
-    position: any, //change
-    weather: any, //change
+    weather: Weather | undefined, //change
     isRequiredFilled: boolean
 }
 

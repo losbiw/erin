@@ -22,7 +22,8 @@
       "@controls/*": ["src/assets/controls/*"],
       "@settings/*": ["src/assets/settings/*"],
       "@modules/*": ["src/modules/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@interfaces/*": ["src/interfaces/*"],
+      "@helpers/*": ["src/helpers/*"]
    }       
   }
 }
