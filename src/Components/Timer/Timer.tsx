@@ -43,11 +43,12 @@ const Timer: FC<Props> = (props) => {
             const numberValue = parseInt(value);
 
             if(value.length < 3){
-                let milliseconds = numberValue * convertation[name] || 0;
+                let milliseconds = numberValue * convertation[name as keyof Time] || 0;
     
                 for(const unit in time){
                     if(unit !== name){
-                        milliseconds += time[unit] * convertation[unit];
+                        const unitKey = unit as keyof Time;
+                        milliseconds += time[unitKey] * convertation[unitKey];
                     }
                 }
                 
@@ -69,7 +70,7 @@ const Timer: FC<Props> = (props) => {
                     <div className="time" key={ unit }>
                         <div className="wrapper">
                             <input type="number"
-                                    defaultValue={ time[unit] }
+                                    defaultValue={ time[unit as keyof Time] }
                                    ref={ ref => {
                                        if(ref && props.isActive && index === focusIndex){
                                            ref.focus({ preventScroll: true });

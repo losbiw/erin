@@ -1,7 +1,15 @@
 import React from 'react'
 import './AspectRatio.scss'
 
-export default function AspectRatio(props){
+interface Props{
+    src: string,
+    id?: string,
+    isActive?: boolean,
+    name?: string,
+    handleClick?: () => void
+}
+
+export default function AspectRatio(props: Props){
     const { src, id, isActive, name, handleClick } = props;
     const addActiveClass = isActive ? 'active' : '';
     
