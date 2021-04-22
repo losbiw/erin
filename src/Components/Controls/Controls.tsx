@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import Control from '../Icons/Control'
 import { Crosses } from '../Icons/UI'
-import Button from '../Button/Button'
-import './Controls.css'
+import './Controls.scss'
 
 const { ipcRenderer } = window.require('electron');
 
-interface ButtonsIcons{ //remove this later potomu chto eto pizdec
-    minimize: any,
-    maximize: any,
-    close: any
+interface ButtonsIcons{
+    minimize: React.FC<React.SVGProps<SVGSVGElement>>,
+    maximize: React.FC<React.SVGProps<SVGSVGElement>>,
+    close: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 export default function Controls(_props: {}){
@@ -21,8 +20,7 @@ export default function Controls(_props: {}){
         close: Crosses.Red
     }
 
-    const handleClick = e => {
-        const { name } = e.target.dataset;
+    const handleClick = (name: keyof ButtonsIcons) => {
         const res = ipcRenderer.sendSync(`${name}-window`);
 
         if(name === 'maximize'){
@@ -34,18 +32,21 @@ export default function Controls(_props: {}){
     const keys = Object.keys(buttons);
 
     return(
-        <div id="controls">
-            <div id="draggable"></div>
-            <div id="control-btns">
+        <div className="control">
+            <div className="draggable"></div>
+
+            <div className="control-container">
                 {
                     keys.map(key => {
                         const Icon = buttons[key as keyof ButtonsIcons];
                         
-                        return(
-                            <Button name={ key } 
-                                    key={ key }
-                                    handleClick={ handleClick }
-                                    Content={ Icon }/>
+                        return (
+                            <button className='control-btn' 
+                                    onClick={ () => handleClick(key as keyof ButtonsIcons) }
+                                    name={ key }
+                                    key={ key }>
+                                <Icon />
+                            </button>
                         )
                     })
                 }

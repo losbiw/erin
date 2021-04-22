@@ -1,9 +1,8 @@
 import React from 'react'
-import Button from '../Button/Button'
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import NavIcons from '../Icons/Nav'
-import './Nav.css'
-import { Theme } from '@interfaces/Config'
+import './Nav.scss'
+import { Theme } from '@/interfaces/Config'
 import { Pages } from '@/interfaces/UserState'
 
 interface Props{
@@ -15,7 +14,7 @@ interface Props{
 
 interface NavButton{
     target: Pages,
-    Icon: (() => JSX.Element)
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 export default function Nav(props: Props){
@@ -30,7 +29,7 @@ export default function Nav(props: Props){
         Icon: Home
     }, 
     {
-        target: Pages.Home,
+        target: Pages.Picker,
         Icon: Picker
     }],
     [{
@@ -44,7 +43,7 @@ export default function Nav(props: Props){
     ]
 
     return(
-        <nav>
+        <nav className='nav'>
             { buttons.map(group => {
                 return <div className="btns" key={ group[0].target + group[1].target }>
                     {

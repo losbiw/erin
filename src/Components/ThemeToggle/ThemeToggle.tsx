@@ -1,8 +1,7 @@
-import { Theme } from '@interfaces/Config';
+import { Theme } from '@/interfaces/Config';
 import React from 'react'
-import Button from '../Button/Button'
 import Themes from '../Icons/Themes'
-import './ThemeToggle.css'
+import './ThemeToggle.scss'
 
 interface Props{
     theme: Theme,
@@ -13,10 +12,12 @@ export default function ThemeToggle(props: Props){
     const { theme, switchTheme } = props;
     const { Moon, Sun } = Themes;
 
-    const themeIcon = theme === 'dark' ? Sun : Moon;
+    const ThemeIcon = theme === Theme.Dark ? Sun : Moon;
 
-    return <Button className='nav-btn'
-                    handleClick={ switchTheme }
-                    Content={ themeIcon }
-                    id="theme-switch"/>
+    return(
+        <button className='nav-btn theme-switch'
+                onClick={ switchTheme }>
+            <ThemeIcon />
+        </button>
+    )
 }

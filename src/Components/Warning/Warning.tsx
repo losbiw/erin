@@ -1,19 +1,17 @@
 import React from 'react'
 import { General, Crosses } from '../Icons/UI'
-import Button from '../Button/Button'
-
 import { Warning as WarningInterface } from '@interfaces/Warning.d'
 
-import './Warning.css'
+import './Warning.scss'
 
 interface Props{
     warning: string,
-    removeWarning: (value: string | WarningInterface) => void
+    removeWarning: () => void
 }
 
 interface CustomProps{
     warning: WarningInterface,
-    removeWarning: (value: string | WarningInterface) => void
+    removeWarning: () => void
 }
 
 interface Warning{
@@ -24,26 +22,28 @@ export const CustomWarning = (props: CustomProps) => {
     const { message, Icon } = props.warning;
 
     return(
-        <div id="warning">
+        <div id='warning'>
             <Icon />
             <p>{ message }</p>
 
-            <Button className="delete" 
-                    Content={ Crosses.Yellow }
-                    handleClick={ () => props.removeWarning('') }/>
+            <button className='delete'
+                    onClick={ props.removeWarning }>
+                <Crosses.Yellow />
+            </button>
         </div>
     )
 }
 
 export const Warning = (props: Props) => {
     return(
-        <div id="warning">
+        <div className='warning'>
             <General.Warning />
             <p>{ props.warning }</p>
 
-            <Button className="delete" 
-                    Content={ Crosses.Yellow }
-                    handleClick={ () => props.removeWarning('') }/>
+            <button className='delete'
+                    onClick={ props.removeWarning }>
+                <Crosses.Yellow />
+            </button>
         </div>
     )
 }

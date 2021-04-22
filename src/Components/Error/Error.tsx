@@ -1,5 +1,5 @@
 import React from 'react'
-import './Error.css'
+import './Error.scss'
 
 interface Error{
     fix: string,
@@ -36,19 +36,21 @@ export default function Error(props: Props){
     let index = 0;
     
     return (
-        <div id="error" className="page">
-            <div id="err-code">
+        <div className='error page'>
+            <div className='err-code'>
                 {
                     codeSpread.map(char => {
                         index++;
-                        return <h1 key={ `char${index}` }>{ char }</h1>
+                        return <h1 className='code-key' key={ `char${index}` }>{ char }</h1>
                     })
                 }
             </div>
             
-            <h2>{ codes[code]?.fix }</h2>
-            <p>{ `Oopsie Woopsie! ${ codes[code]?.description }. 
-                  The code monkeys at our office are sorry for this.` }</p>
+            <h2 className='fix'>{ codes[code]?.fix }</h2>
+            <p className='description'>
+                { `Oopsie Woopsie! ${ codes[code]?.description }. 
+                  The code monkeys at our office are sorry.` }
+            </p>
         </div>
     )
 }

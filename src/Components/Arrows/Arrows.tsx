@@ -1,10 +1,9 @@
 import React from 'react'
-import Button from '../Button/Button'
 import { Arrows as Icons } from '../Icons/UI'
-import './Arrows.css'
+import './Arrows.scss'
 
 interface ArrowsProps{
-    handleChange: () => void
+    handleChange: (() => void)[]
 }
 
 interface ArrowProps{
@@ -17,13 +16,13 @@ const Arrows = (props: ArrowsProps) => {
     const keys = Object.keys(Icons);
 
     return(
-        <div id='arrows'>
-            {/* { keys.map((Icon, index: number) => 
-                <Arrow Icon={ Icon } 
+        <div className='arrows'>
+            { keys.map((Icon, index: number) => 
+                <Arrow Icon={ Icons[Icon] } 
                        index={ index } 
                        handleClick={ props.handleChange[index] }
                        key={ index }/>)
-            }   */}
+            }  
         </div>
     )
 }
