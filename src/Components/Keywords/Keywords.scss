@@ -106,8 +106,12 @@ $placeholder-dark: #454546;
             position: absolute;
             z-index: 1;
 
-            &:hover .transparent{
-                opacity: 0;
+            &:hover{
+                cursor: pointer;
+
+                .transparent{
+                    opacity: 0;
+                }
             }
         }
     }

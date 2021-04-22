@@ -76,6 +76,10 @@
                     }
                 }
             }
+
+            &:not(:checked):hover{
+                cursor: pointer;
+            }
         }
 
         &:hover .background{

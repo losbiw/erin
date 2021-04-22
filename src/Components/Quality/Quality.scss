@@ -14,6 +14,10 @@
     transition-timing-function: $transition-function;
     transition-duration: $transition-duration;
 
+    &:hover, .quality-option:hover{
+        cursor: pointer;
+    }
+
     .quality-option{
         font-size: 1.2vw;
     }
