@@ -1,15 +1,15 @@
-import React, { Component, createRef, MouseEventHandler } from 'react'
-import Button from '../Button/Button'
-import { Crosses } from '../Svg/Loader'
+import React, { Component, createRef } from 'react'
+import { Crosses } from '../Icons/UI'
 import areEqual from '@modules/areEqual'
-import './Keywords.css'
+import './Keywords.scss'
+import { Warning } from '@/interfaces/Warning';
 
 interface Props{
-    dataKeywords: string[],
+    keywords: string[],
     isActive: boolean,
     isSetup: boolean,
-    handleChange: any //change,
-    handleWarningChange: any //change
+    changeKeywords: (keywords: string[]) => void,
+    setWarning: (warning: Warning | string) => void
 }
 
 interface State{
@@ -25,53 +25,47 @@ export default class Keywords extends Component<Props, State>{
         this.inputRef = createRef();
         
         this.state = {
-            isInput: this.props.dataKeywords.length === 0
+            isInput: this.props.keywords.length === 0
         }
     }
 
-    handleDelete = (e: React.MouseEvent<HTMLButtonElement>) =>{
-        e.preventDefault();
+    handleDelete = (keyword: string) =>{
+        const { keywords, changeKeywords } = this.props;
 
-        const { dataset } = e.target as HTMLButtonElement;
-        const { name } = dataset;
-        const keywords = [...this.props.dataKeywords];
-
-        const index = keywords.indexOf(name as string);
+        const index = keywords.indexOf(keyword);
         if(index > -1){
             keywords.splice(index, 1);
-            this.props.handleChange('keywords', keywords);
+            changeKeywords(keywords);
         }
     }
 
-    handleClick = (_e: React.MouseEvent<HTMLDivElement>) => {
+    handleClick = () => {
         this.setState({
             isInput: true
         });
     }
 
-    enterDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const keywords = [...this.props.dataKeywords];
+    keyDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const { changeKeywords, setWarning, keywords } = this.props;
         
         if(e.key === 'Enter' && keywords.length < 10){
             const { value } = e.target as HTMLInputElement;
             const converted = value.toLowerCase();
             const isRepeating = keywords.indexOf(converted) === -1 ? false : true;
-
-            let warning;
             
             if(converted !== "" && !isRepeating) keywords.push(converted);
-            else if(!converted) warning = "Keyword's value should not be empty";
-            else if(isRepeating) warning = "Keywords should not repeat"
+            else if(!converted) setWarning("Keyword's value should not be empty");
+            else if(isRepeating) setWarning("Keywords should not repeat");
                 
-            this.props.handleChange('keywords', keywords);
-            this.props.handleWarningChange({ warning: warning });
+            changeKeywords(keywords);
             
             this.setState({
                 isInput: false
             });
         }
         else if(e.key === 'Enter'){
-            this.props.handleWarningChange({ warning: "You can't enter more than 10 keywords" });
+            setWarning("You can't enter more than 10 keywords");
+
             this.setState({
                 isInput: false
             });
@@ -79,7 +73,7 @@ export default class Keywords extends Component<Props, State>{
     }
 
     shouldComponentUpdate(nextProps: Props, nextState: State){
-        if(!areEqual.arrays(this.props.dataKeywords, nextProps.dataKeywords) || 
+        if(!areEqual.arrays(this.props.keywords, nextProps.keywords) || 
            !areEqual.objects(this.state, nextState) ||
            nextProps.isSetup)
         {
@@ -94,9 +88,9 @@ export default class Keywords extends Component<Props, State>{
 
     componentDidUpdate(){
         const { isInput } = this.state;
-        const { dataKeywords, isActive } = this.props;
+        const { keywords, isActive } = this.props;
         
-        if(dataKeywords.length === 0 && !isInput){
+        if(keywords.length === 0 && !isInput){
             this.setState({
                 isInput: true
             });
@@ -108,31 +102,32 @@ export default class Keywords extends Component<Props, State>{
     }
 
     render(){
-        const { isInput } = this.state;
+        const { inputRef, handleClick, keyDownListener, handleDelete, props } = this;
 
         return (
-            isInput
-            ?
-            <input type="text" 
+            this.state.isInput
+            ? <input type="text" 
                     name="keywords" 
-                    ref={ this.inputRef }
+                    ref={ inputRef }
                     placeholder="Type something and press enter"
                     maxLength={15}
-                    onKeyDown={ this.enterDownListener } /> 
-            :
-            <div id="container">
-                <div id="click" className="background" onClick={ this.handleClick }>
+                    onKeyDown={ keyDownListener } /> 
+
+            : <div className="keywords-container">
+                <div className="click background" onClick={ handleClick }>
                     <div className="transparent" />
                 </div>
+
                 {
-                    this.props.dataKeywords.map(keyword => {
+                    props.keywords.map(keyword => {
                         return(
                             <div className="keyword" key={ keyword }>
                                 <p>{ keyword }</p>
-                                <Button className="delete"
-                                        handleClick={ this.handleDelete } 
-                                        name={ keyword }
-                                        Content={ Crosses.Green }/>
+
+                                <button className='delete'
+                                        onClick={ () => handleDelete(keyword) }>
+                                    <Crosses.Green />
+                                </button>
                             </div>
                         )
                     })

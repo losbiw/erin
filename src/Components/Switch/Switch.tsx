@@ -1,18 +1,20 @@
 import React from 'react'
-import './Switch.css'
+import './Switch.scss'
 
-export default function Switch(props){
-    const { data, handleChange, name } = props;
+interface Props{
+    isChecked: boolean,
+    handleSwitch: Function
+}
+
+export default function Switch(props: Props){
+    const { isChecked, handleSwitch } = props;
     
     return(
         <label className="switch">
             <input type="checkbox" 
-                   name={ name || "startup" }
-                   defaultChecked={ data.length === 0 ? false : true }
-                   onChange={ handleChange }
-                   data-value="checked"
-                />
-            <span className="slider round">
+                   defaultChecked={ isChecked }
+                   onChange={ _e => handleSwitch() } />
+            <span className="switch-slider">
                 <span className="gradient"></span>
             </span>
         </label>

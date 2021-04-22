@@ -1,32 +1,43 @@
 import React from 'react'
 import { capitalizeFirstLetter } from '@modules/convert'
-import './Quality.css'
+import './Quality.scss'
+import { Quality as QualityInterface } from '@/interfaces/Config';
 
-export default function Quality(props){
+interface Props{
+    changeQuality: (quality: QualityInterface) => void,
+    initialQuality: QualityInterface
+}
+
+export default function Quality(props: Props){
+    const { changeQuality, initialQuality } = props;
+
     const options = [
     {
-        label: 'high',
-        value: 'original'
+        label: 'High',
+        value: QualityInterface.High
     },
     {
-        label: 'medium',
-        value: 'large2x'
+        label: 'Medium',
+        value: QualityInterface.Medium
     },
     {
-        label: 'low',
-        value: 'large'
+        label: 'Low',
+        value: QualityInterface.Low
     }];
 
     return(
         <select name="quality" 
-                onChange={ props.handleChange } 
                 data-value="value"
-                defaultValue={ props.data }>
+                defaultValue={ initialQuality }>
             {
                 options.map(option => {
+                    const { value, label } = option;
+
                     return(
-                        <option value={ option.value } key={ option.value }>
-                            { capitalizeFirstLetter(option.label) }
+                        <option value={ value } 
+                                onClick={ () => changeQuality(value) }
+                                key={ value }>
+                            { capitalizeFirstLetter(label) }
                         </option>
                     )
                 })

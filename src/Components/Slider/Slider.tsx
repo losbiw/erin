@@ -2,84 +2,88 @@ import React, { Component } from 'react'
 import Form from '../Form/Form'
 import config from '@modules/config'
 import warning from '@modules/warning'
-import './Slider.css'
-import './Items.css'
+import './Slider.scss'
+import './Items.scss'
+import { Config, ConfigUpdate, Theme } from '@/interfaces/Config'
+import { Slides, items } from '../Setup/items'
+import { Warning } from '@/interfaces/Warning'
 
-export default class Slider extends Component{
-    constructor(_props){
-        super();
+interface Props{
+    changeSlide: (name: Slides) => void,
+    setWarning: (warning: string | Warning) => void,
+    setIsComplete: (isComplete: boolean) => void,
+    setIsRequiredFilled: (isFilled: boolean) => void,
+    activeIndex: number,
+    isComplete: boolean,
+    theme: Theme
+}
+
+export default class Slider extends Component<Props, Config>{
+    constructor(props: Props){
+        super(props);
 
         this.state = config.get();
     }
-
+    
     componentDidUpdate(){
-        const { isCompleted, handleAppStateChange, handleSlide } = this.props;
+        const { isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide } = this.props;
 
-        if(isCompleted){
-            const settingsWarning = warning.match(this.state, true);
-            let data;
+        if(isComplete){
+            const settingsWarning = warning.match(this.state as Config, true);
 
             if(settingsWarning?.value){
                 const { value, name } = settingsWarning;
-                data = { 
-                    isCompleted: false,
-                    warning: value
-                }
+                config.set({ isComplete: false });
 
-                config.set({ isCompleted: false });
+                changeSlide(name as Slides);
 
-                handleSlide(name);
+                setIsComplete(false);
+                setWarning(value);
             } 
             else{
-                data = { 
-                    isRequiredFilled: true, 
-                    isCompleted: true
-                }
+                setIsRequiredFilled(true);
+                setIsComplete(true);
             }
-
-            handleAppStateChange(data);
         }
     }
 
-    handleStateChange = (name, value) => {
-        const upd = {}
-        upd[name] = value;
+    updateSlideState = (update: ConfigUpdate) => {
+        const config: Config = { ...this.state, ...update };
+        this.setState(config);
+    }
 
-        this.setState(upd);
+    calcSlidePosition = (amount: number, activeIndex: number) => {
+        const middle = Math.round((amount - 1) / 2);
+        const equalizer = amount % 2 === 0 ? 40 : 0;
+        const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
+
+        return multiplier * 80 - equalizer;
     }
 
     render(){ 
-        const { state, props, handleStateChange } = this;
-        const { items, handleAppStateChange, active, activeIndex, keys, theme } = props;
+        const { state, props, updateSlideState, calcSlidePosition } = this;
+        const { setWarning, activeIndex, theme, setIsComplete } = props;
+        const keys = Object.keys(items);
 
-        const middle = Math.round((keys.length - 1) / 2);
-        const equalizer = keys.length % 2 === 0 ? 40 : 0;
-        const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
+        const transform = calcSlidePosition(keys.length, activeIndex);
 
-        const transform = multiplier * 80 - equalizer;
-
-        if(!!Object.keys(state).length){
+        if(Object.keys(state).length){
             return(
-                <div id="slider-container">
-                    <div id="translate" style={{ 
-                        transform: `translateX(${ transform }vw)` 
-                    }}>
-                        <Form data={ items } 
-                              config={ state }
-                              active={ active }
+                <div className="slider-container">
+                    <div className="translate" style={{ transform: `translateX(${ transform }vw)` }}>
+                        <Form config={ state }
                               isSetup={ true }
                               activeIndex={ activeIndex }
-                              handlers={{
-                                handleWarningChange: handleAppStateChange,
-                                handleStateChange
-                              }}
+                              setWarning={ setWarning }
+                              setIsComplete={ setIsComplete }
+                              updateSlideState={ updateSlideState }
                               theme={ theme }/>
                     </div>
                 </div>
             )
         }
         else{
-            return <form id="settings"></form>
+            return <form className="settings"></form>
         }
     }
 }

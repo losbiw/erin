@@ -8,15 +8,21 @@ import Quality from '../Quality/Quality'
 import config from '@modules/config'
 import areEqual from '@modules/areEqual'
 import warning from '@modules/warning'
-import './Settings.css'
+import './Settings.scss'
+import { Config } from '@/interfaces/Config'
+import { Warning } from '@/interfaces/Warning'
 
-export default class Settings extends Component{
-    constructor(props){
-        super(props);
+interface Props{
+    config: Config,
+    updateConfig: (config: Config, isRequiredFilled: boolean) => void,
+    setWarning: (warning: string | Warning) => void
+}
 
-        this.state = {
-            ...this.props.data
-        }
+interface State extends Config {}
+
+export default class Settings extends Component<Props, State>{
+    state: State = {
+        ...this.props.config
     }
 
     componentDidMount(){
@@ -28,17 +34,17 @@ export default class Settings extends Component{
         }
     }
 
-    static getDerivedStateFromProps(props, state){
+    static getDerivedStateFromProps(props: Props, state: State){
         if(!Object.keys(state).length){
             return {
-                ...props.data
+                ...props.config
             }
         }
         return null
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(!areEqual.objects(this.state, nextProps.data) ||
+    shouldComponentUpdate(nextProps: Props, nextState: State){
+        if(!areEqual.objects(this.state, nextProps.config) ||
            !areEqual.objects(this.state, nextState)){
             return true
         }
@@ -46,28 +52,23 @@ export default class Settings extends Component{
     }
 
     componentWillUnmount(){
-        const cfg = this.state;
-        const { handleUserStateChange, data, handleAppStateChange } = this.props;
+        const stateConfig = this.state;
+        const { updateConfig, config: cfg, setWarning } = this.props;
 
-        const settingsWarning = warning.match(cfg, true);
-        const areConfigsEqual = areEqual.objects(cfg, data);
+        const settingsWarning = warning.match(stateConfig, true);
+        const areConfigsEqual = areEqual.objects(stateConfig, cfg);
 
-        handleAppStateChange({ warning: undefined });
+        setWarning('');
 
         if((!areConfigsEqual && !!settingsWarning) || !!settingsWarning){
-            handleUserStateChange({ 
-                config: cfg,
-                isRequiredFilled: false
-            });
-            handleAppStateChange({ warning: settingsWarning.value });
+            updateConfig(stateConfig, false);
+            setWarning(settingsWarning.value);
         }
         else if(!areConfigsEqual){
-            handleUserStateChange({ 
-                config: cfg,
-                isRequiredFilled: true
-            });
+            updateConfig(stateConfig, true);
         }
-        config.set(cfg);
+
+        config.set(stateConfig);
     }
 
     handleStateChange = (name, value) => {
@@ -104,12 +105,12 @@ export default class Settings extends Component{
         if(!!Object.keys(this.state).length){
             return (
                 <div className="page">
-                    <Form data={ items } 
+                    {/* <Form data={ items } 
                          config={ this.state }
+                         setWarning={ this.props.setWarning }
                          handlers={{
-                             handleWarningChange: this.props.handleAppStateChange,
                              handleStateChange: this.handleStateChange
-                         }} />
+                         }} /> */}
                 </div>
             )
         }

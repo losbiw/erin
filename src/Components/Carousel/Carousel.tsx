@@ -1,25 +1,40 @@
 import React from 'react'
-import Button from '../Button/Button'
 import { General } from '../Icons/UI'
-import './Carousel.css'
+import './Carousel.scss'
 
-export default function Carousel(props){
-    const { handleChange, current, amount } = props;
+interface Props{
+    amount: number,
+    activeIndex: number,
+    changeSlide: (index: number) => void
+}
+
+export default function Carousel(props: Props){
+    const { changeSlide, activeIndex, amount } = props;
+    const items: JSX.Element[] = [];
+
+    for(let i = 0; i < amount; i++){
+        const className = 'car-button ' + (i === activeIndex ? 'active' : 'non-active');
+
+        const clickHandler = () => {
+            if(i !== activeIndex){
+                changeSlide(i);
+            }
+        }
+
+        const item = (
+            <button className={ className } 
+                    key={ `carousel-${i}` }
+                    onClick={ clickHandler }>
+                <General.Circle />
+            </button>
+        );
+
+        items.push(item);
+    }
     
     return(
-        <div id="carousel">
-            {
-                amount.map((_button, index) => {
-                    return(
-                        <button className={ index === current ? 'active' : 'non-active'} 
-                                name={ index }
-                                key={ `carousel-${index}` }
-                                onClick={ () => { if(index !== current) handleChange(index) } }>
-                            <General.Circle />
-                        </button>
-                    )
-                })
-            }
+        <div className="carousel">
+            { items.map(item => item) }
         </div>
     )
 }

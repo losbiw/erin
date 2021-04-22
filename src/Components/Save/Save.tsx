@@ -1,28 +1,32 @@
 import React from 'react'
-import Button from '../Button/Button'
 import config from "@modules/config"
-import './Save.css'
+import './Save.scss'
+import { Config } from '@/interfaces/Config';
 
-export default function Save(props){
-    const handleClick = e => {
-        e.preventDefault();
-        const { config: data, handleWarningChange: handleAppStateChange } = props;
+interface Props{
+    configData: Config,
+    setIsComplete: (isComplete: boolean) => void
+}
 
-        data.isCompleted = true;
+export default function Save(props: Props){
+    const handleClick = () => {
+        const { configData, setIsComplete } = props;
+
+        configData.isComplete = true;
+        config.set(configData);
         
-        config.set(data);
-        
-        handleAppStateChange({
-            isCompleted: true
-        });
+        setIsComplete(true);
     }
     
     return(
-        <div id="continue" onClick={ handleClick }>
+        <div className="continue" onClick={ handleClick }>
             <div className="background">
                 <div className="transparent" />
             </div>
-            <Button Content={ () => <p>Continue</p> } />
+
+            <button>
+                <p>Continue</p>
+            </button>
         </div>
     )
 }

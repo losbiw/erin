@@ -1,22 +1,29 @@
 import React from 'react'
 import Links from '../Links/Links'
 import Switch from '../Switch/Switch'
-import './Privacy.css'
+import './Privacy.scss'
 
-export default function Privacy(props){
-    const { data, handleChange } = props;
+interface Props{
+    isAccepted: boolean,
+    acceptPolicy: () => void
+}
+
+export default function Privacy(props: Props){
+    const { isAccepted, acceptPolicy } = props;
 
     return(
-        <div id="text">
+        <div className="text">
             <p>I agree to the </p>
+
             <Links links={{ 
                 privacy: {
                     href: 'https://erin-web.herokuapp.com/privacy',
                     title: 'privacy policy'
                 } 
             }}/>
+
             <p>: </p>
-            <Switch data={ data } handleChange={ handleChange } name='privacy'/>
+            <Switch isChecked={ isAccepted } handleSwitch={ acceptPolicy }/>
         </div>
     )
 }

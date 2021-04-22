@@ -1,24 +1,36 @@
 import React from 'react'
 import { capitalizeFirstLetter } from '@modules/convert'
-import './Mode.css'
+import './Mode.scss'
+import { Mode as ModeEnum } from '@/interfaces/Config'
 
-export default function Mode(props){
-    const labels = ['keywords', 'weather', 'time'];
+interface Props{
+    current: ModeEnum,
+    changeMode: (mode: ModeEnum) => void
+}
 
-    return labels.map(label => {
-        return(
-            <div className="radio" key={ label }>
-                <input type="radio" 
-                        name="mode" 
-                        value={ label } 
-                        checked={ label === props.data }
-                        onChange={ props.handleChange }
-                        data-value="value"/>
-                <div className="background">
-                    <div className="transparent"></div>
-                    <label forhtml={ label }>{ capitalizeFirstLetter(label) }</label>
-                </div>
-            </div>
-        )
-    })
+export default function Mode(props: Props){
+    const { current, changeMode } = props;
+
+    return(
+        <div className='mode-container'>{
+            Object.keys(ModeEnum).map(label => {
+                const modeName = ModeEnum[label];
+
+                return(
+                    <div className="radio" key={ modeName }>
+                        <input type="radio" 
+                                name="mode" 
+                                value={ modeName } 
+                                checked={ modeName === current }
+                                onChange={ () => changeMode(modeName) }
+                                data-value="value"/>
+                        <div className="background">
+                            <div className="transparent"></div>
+                            <label htmlFor={ label }>{ capitalizeFirstLetter(label) }</label>
+                        </div>
+                    </div>
+                )
+            })
+        }</div>
+    )
 }
