@@ -67,21 +67,21 @@ const fetchGeocoding = (handleError: (error: number) => void): Promise<string> =
         catch(err){
             handleError(503);
 
-            return res('')
+            return res('');
         }
     }
 
-    return fetchGeolocation(callback)
+    return fetchGeolocation(callback);
 }
 
 const fetchGeolocation = (callback: Function): Promise<any> => {
     return new Promise(res => {
-        navigator.geolocation.getCurrentPosition(position => callback(res, position))
+        navigator.geolocation.getCurrentPosition(position => callback(res, position));
     })
 }
 
 const fetchPexels = async(keywords: string[], handleError: (error: number) => void) => {
-    let collection: any[] = []; //change mb pridumat chto-to
+    const collection: any[] = []; //change mb pridumat chto-to
     let canRequestMore = true;
     
     for(let key of keywords){

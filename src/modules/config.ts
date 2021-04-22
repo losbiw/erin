@@ -1,5 +1,5 @@
 import startup from './startup'
-import { Config, ConfigUpdate, Mode, Theme } from '@interfaces/Config.d'
+import { Config, ConfigUpdate, Mode, Quality, Theme } from '@/interfaces/Config'
 
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
@@ -58,15 +58,15 @@ const isMatchingSchema = (cfg: Config): boolean => {
 }
 
 const getDefaultOptions = (): Config => ({
-    mode: Mode.Weather,
-    keywords: [],
+    mode: Mode.Keywords,
+    keywords: ['mountains'],
     timer: 60000,
-    quality: 'original',
+    quality: Quality.High,
     startup: true,
     theme: Theme.Dark,
     privacy: false,
     isFirstTime: true,
-    isCompleted: false
+    isComplete: false
 })
 
 export default { get, set, getAppPath }
