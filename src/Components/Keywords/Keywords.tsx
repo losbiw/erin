@@ -90,7 +90,7 @@ export default class Keywords extends Component<Props, State>{
 
     componentDidUpdate(){
         const { isInput } = this.state;
-        const { keywords, isSetup } = this.props;
+        const { keywords, isSetup, isActive } = this.props;
         
         if(keywords.length === 0 && !isInput){
             this.setState({
@@ -98,7 +98,7 @@ export default class Keywords extends Component<Props, State>{
             });
         }
 
-        if(isInput && !isSetup && this.inputRef.current){
+        if(isInput && (!isSetup || isActive) && this.inputRef.current){
             this.inputRef.current.focus({ preventScroll: true });
         }
     }
