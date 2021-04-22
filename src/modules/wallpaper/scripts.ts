@@ -1,13 +1,4 @@
-interface LinuxCommands{
-	set: string,
-	align?: string
-}
-
-interface LinuxDistros{
-	other: LinuxCommands,
-	kde: LinuxCommands,
-	xfce: LinuxCommands
-}
+import { LinuxDistros } from '../../interfaces/Linux.d'
 
 const linux = (imgPath: string): LinuxDistros => ({
     other: {

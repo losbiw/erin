@@ -23,11 +23,12 @@ const get = (): Config => {
 }
 
 const set = (options: ConfigUpdate): void => {
-    const updated = get();
+    const updated: Config = get();
     const cfgPath = getConfigPath();
 
     for(const key in options){
-        updated[key] = options[key as keyof Config];
+        const configKey = key as keyof Config;
+        (updated as any)[configKey] = options[configKey];
     }
     
     const json = JSON.stringify(updated);

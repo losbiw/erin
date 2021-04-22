@@ -2,6 +2,8 @@ import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
 
+import { LinuxCommands, LinuxDistros } from '../../interfaces/Linux.d'
+
 const fs = window.require('fs');
 const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -101,10 +103,10 @@ const set = (img: string, macPath: string): void => {
 	else if(os === 'linux'){
 		const desktopEnv = OS.defineDesktopEnvironment(os);
 		const options = scripts.linux(imgPath);
-		const commands = options[desktopEnv] || options.other;
+		const commands = options[desktopEnv as keyof LinuxDistros] || options.other;
 		
 		for(let command in commands){
-			execSync(commands[command]);
+			execSync(commands[command as keyof LinuxCommands]);
 		}
 
 		return;
