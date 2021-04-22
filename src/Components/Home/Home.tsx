@@ -38,10 +38,12 @@ export default function Home(props: Props){
             
             <div className='wrapper'>
                 { isLocked && <ProgressBar width={ progress }/> }
-                <Links links={[{
-                    href: photographerUrl,
-                    Content: author
-                }]}/>
+                <Links links={{
+                    author: {
+                        href: photographerUrl,
+                        Content: author
+                    }
+                }}/>
             </div>
         </div>
     )
