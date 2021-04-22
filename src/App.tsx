@@ -9,11 +9,11 @@ import config from '@modules/config'
 import OS from '@modules/OS'
 import { fetchGeocoding } from '@modules/APIs'
 
-import { Theme } from '@interfaces/Config.d'
+import { Theme } from '@/interfaces/Config'
 import { Warning as WarningInterface } from '@interfaces/Warning.d'
 
-import './App.css'
-import './root.css'
+import './App.scss'
+import './style/global.scss'
 
 const { ipcRenderer } = window.require('electron');
 
@@ -21,7 +21,7 @@ interface State{
     theme: Theme,
     isUpdateAvailable: boolean,
     isRequiredFilled: boolean,
-    isCompleted: boolean | null,
+    isComplete: boolean | null,
     warning: string | WarningInterface,
 }
 
@@ -30,12 +30,12 @@ export default class App extends Component<{}, State>{
         theme: Theme.Dark,
         isUpdateAvailable: false,
         isRequiredFilled: false,
-        isCompleted: null,
+        isComplete: null,
         warning: ''
     };
 
     async componentDidMount(){
-        const { theme, isCompleted, isFirstTime } = config.get();
+        const { theme, isComplete, isFirstTime } = config.get();
         const location = await fetchGeocoding(() => {});
 
         if(isFirstTime || typeof isFirstTime === 'undefined'){
@@ -63,8 +63,8 @@ export default class App extends Component<{}, State>{
 
         this.setState({
             theme,
-            isCompleted,
-            isRequiredFilled: isCompleted
+            isComplete,
+            isRequiredFilled: isComplete
         });
     }
 
@@ -77,12 +77,24 @@ export default class App extends Component<{}, State>{
         }
 
         config.set(updated);
-        this.setState(updated as State);
+        this.setState(updated);
     }
 
     rejectUpdate = (): void => {
         this.setState({
             isUpdateAvailable: false
+        });
+    }
+
+    setIsRequiredFilled = (isRequiredFilled: boolean): void => {
+        this.setState({
+            isRequiredFilled
+        });
+    }
+
+    setIsComplete = (isComplete: boolean): void => {
+        this.setState({
+            isComplete
         });
     }
 
@@ -93,32 +105,32 @@ export default class App extends Component<{}, State>{
     }
 
     render(){
-        const { state, switchTheme, setWarning, rejectUpdate } = this;
-        const { theme, isCompleted, warning, isRequiredFilled, isUpdateAvailable } = state;
-
-        const childProps = {
-            theme,
-            isCompleted,
-            switchTheme,
-            setWarning
-        }
+        const { switchTheme, setWarning, rejectUpdate, setIsComplete, setIsRequiredFilled } = this;
+        const { theme, isComplete, warning, isRequiredFilled, isUpdateAvailable } = this.state;
 
         return(
-            <div id="theme" className={ theme }>
+            <div className={ `theme ${theme}` }>
                 <Controls />
 
-                { isCompleted !== null
-                    ? isCompleted && isRequiredFilled
-                    ? <User theme={ theme } setWarning={ setWarning } switchTheme={ switchTheme }/> 
-                    : <Setup { ...childProps }/>
+                { isComplete !== null
+                    ? isComplete && isRequiredFilled
+                    ? <User theme={ theme } 
+                            setWarning={ setWarning } 
+                            switchTheme={ switchTheme }/> 
+                    : <Setup theme={ theme }
+                            isComplete={ isComplete }
+                            switchTheme={ switchTheme }
+                            setWarning={ setWarning }
+                            setIsComplete={ setIsComplete }
+                            setIsRequiredFilled={ setIsRequiredFilled }/>
                     : <></>  
                 }
 
                 { isUpdateAvailable && <Update rejectUpdate={ rejectUpdate } setWarning={ setWarning } /> }
 
                 { (warning && typeof warning === 'string')
-                    ? <Warning warning={ warning } removeWarning={ setWarning }/>
-                    : warning && <CustomWarning warning={ warning as WarningInterface } removeWarning={ setWarning } />
+                    ? <Warning warning={ warning } removeWarning={ () => setWarning('') }/>
+                    : warning && <CustomWarning warning={ warning as WarningInterface } removeWarning={ () => setWarning('') } />
                 }
             </div>
         )
