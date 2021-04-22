@@ -1,7 +1,8 @@
 import React from 'react'
 import { capitalizeFirstLetter } from '@modules/convert'
-import './Mode.scss'
+import enumKeys from '../../helpers/enum'
 import { Mode as ModeEnum } from '@/interfaces/Config'
+import './Mode.scss'
 
 interface Props{
     current: ModeEnum,
@@ -13,7 +14,7 @@ export default function Mode(props: Props){
 
     return(
         <div className='mode-container'>{
-            Object.keys(ModeEnum).map(label => {
+            enumKeys(ModeEnum).map(label => {
                 const modeName = ModeEnum[label];
 
                 return(
