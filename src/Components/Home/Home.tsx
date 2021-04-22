@@ -3,40 +3,44 @@ import AspectRatio from '../AspectRatio/AspectRatio'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import { Arrows } from '../Arrows/Arrows'
 import Links from '../Links/Links'
-import './Home.css'
+import './Home.scss'
 
-import { State as UserState } from '@interfaces/UserState' 
+import { Picture } from '@interfaces/UserState' 
 
-interface Props extends UserState{
-    
+interface Props{
+    picture: Picture,
+    progress: number,
+    isLocked: boolean,
+    pictureIndex: number,
+    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void
 }
 
 export default function Home(props: Props){
     const { picture, progress, isLocked, switchWallpaper, pictureIndex } = props;
-    const { photographer, srcMain, photographerURL } = picture;
+    const { photographer, srcMain, photographerUrl } = picture;
     
-    const handleSlideForward = () => switchWallpaper(pictureIndex + 1);
-    const handleSlideBack = () => switchWallpaper(pictureIndex - 1) ;
+    const handleSlideForward = () => switchWallpaper(pictureIndex + 1, true);
+    const handleSlideBack = () => switchWallpaper(pictureIndex - 1, true);
 
-    const link = () => (
-        <div id="link">
-            <p>Photo by </p>
-            <span className="medium" id="name"> {photographer} </span>
-            <p> on </p>
-            <span className="medium">Pexels</span>
+    const author = () => (
+        <div className='author'>
+            <p className='text'>Photo by </p>
+            <span className='medium'> {photographer} </span>
+            <p className='text'> on </p>
+            <span className='medium'>Pexels</span>
         </div>)
 
 
     return(
-        <div id="home" className="page">
-            <Arrows handleChange={[ handleSlideBack, handleSlideForward ]}/>
-            <AspectRatio id="pic" src={ srcMain }/>
+        <div className='page home'>
+            <Arrows handleChange={[ handleSlideBack, handleSlideForward ]}/> 
+            <AspectRatio src={ srcMain }/>
             
-            <div className="wrapper">
+            <div className='wrapper'>
                 { isLocked && <ProgressBar width={ progress }/> }
                 <Links links={[{
-                    href: photographerURL,
-                    Content: link
+                    href: photographerUrl,
+                    Content: author
                 }]}/>
             </div>
         </div>

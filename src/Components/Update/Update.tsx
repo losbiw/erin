@@ -1,7 +1,6 @@
 import React from 'react'
-import Button from '../Button/Button'
 import { General, Crosses } from '../Icons/UI'
-import './Update.css'
+import './Update.scss'
 
 import { Warning } from '@interfaces/Warning.d'
 
@@ -12,12 +11,17 @@ interface Props{
     setWarning: (warning: string | Warning) => void
 }
 
+interface Button{
+    action: 'accept' | 'reject',
+    Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+    value: boolean
+}
+
 export default function Update(props: Props){
-    const handleIPCevent = e => {
-        const { name: shouldUpdate } = e.target.dataset;
+    const handleIPCevent = (shouldUpdate: boolean): void => {
         const { rejectUpdate, setWarning } = props;
 
-        if(shouldUpdate === 'true'){
+        if(shouldUpdate){
             ipcRenderer.send('should-update');
 
             setWarning({
@@ -29,39 +33,37 @@ export default function Update(props: Props){
         rejectUpdate();
     }
 
-    const buttons = [
+    const buttons: Button[] = [
         {
-            id: 'accept',
-            content: General.Accept,
-            value: true,
-            handleClick: handleIPCevent
+            action: 'accept',
+            Icon: General.Accept,
+            value: true
         },
         {
-            id: 'reject',
-            content: Crosses.Red,
-            value: false,
-            handleClick: handleIPCevent
+            action: 'reject',
+            Icon: Crosses.Red,
+            value: false
         }
     ]
 
     return(
-        <div id="update">
-            <div id="content" className="container">
-                <div id="title" className="container">
-                    <h1>Update available</h1>
-                    <p>Do you want to download and install it?</p>
+        <div className="update container">
+            <div className="content container">
+                <div className="text container">
+                    <h1 className="title">Update available</h1>
+                    <p className="description">Do you want to download and install it?</p>
                 </div>
-                <div id="buttons" className="container">
+                <div className="buttons container">
                     {
                         buttons.map(button => {
-                            const { id, value, handleClick, content } = button;
+                            const { action, value, Icon } = button;
                             
                             return(
-                                <Button id={ id }
-                                        name={ value }
-                                        handleClick={ handleClick }
-                                        Content={ content } 
-                                        key={ id }/>
+                                <button className='action'
+                                        onClick={ () => handleIPCevent(value) }
+                                        key={ action }>
+                                    <Icon />
+                                </button>
                             )
                         })
                     }
