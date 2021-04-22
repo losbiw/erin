@@ -116,7 +116,8 @@ export default class App extends Component<{}, State>{
                     ? isComplete && isRequiredFilled
                     ? <User theme={ theme } 
                             setWarning={ setWarning } 
-                            switchTheme={ switchTheme }/> 
+                            switchTheme={ switchTheme }
+                            setIsComplete={ setIsComplete }/> 
                     : <Setup theme={ theme }
                             isComplete={ isComplete }
                             switchTheme={ switchTheme }

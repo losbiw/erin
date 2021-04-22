@@ -5,11 +5,13 @@ import warning from '@modules/warning'
 import './Slider.scss'
 import './Items.scss'
 import { Config, ConfigUpdate, Theme } from '@/interfaces/Config'
-import { Slides, items } from '../Setup/items'
+import { items } from './items'
 import { Warning } from '@/interfaces/Warning'
+import { Settings } from '@/interfaces/Settings'
+
 
 interface Props{
-    changeSlide: (name: Slides) => void,
+    changeSlide: (name: Settings) => void,
     setWarning: (warning: string | Warning) => void,
     setIsComplete: (isComplete: boolean) => void,
     setIsRequiredFilled: (isFilled: boolean) => void,
@@ -35,7 +37,7 @@ export default class Slider extends Component<Props, Config>{
                 const { value, name } = settingsWarning;
                 config.set({ isComplete: false });
 
-                changeSlide(name as Slides);
+                changeSlide(name as Settings);
 
                 setIsComplete(false);
                 setWarning(value);
@@ -72,11 +74,12 @@ export default class Slider extends Component<Props, Config>{
                 <div className="slider-container">
                     <div className="translate" style={{ transform: `translateX(${ transform }vw)` }}>
                         <Form config={ state }
+                              items={ items }
                               isSetup={ true }
                               activeIndex={ activeIndex }
                               setWarning={ setWarning }
                               setIsComplete={ setIsComplete }
-                              updateSlideState={ updateSlideState }
+                              updateSettingsState={ updateSlideState }
                               theme={ theme }/>
                     </div>
                 </div>

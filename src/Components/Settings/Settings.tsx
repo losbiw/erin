@@ -1,28 +1,27 @@
 import React, { Component } from 'react'
-import Mode from '../Mode/Mode'
-import Keywords from '../Keywords/Keywords'
-import Timer from '../Timer/Timer'
-import Startup from '../Switch/Switch'
 import Form from '../Form/Form'
-import Quality from '../Quality/Quality'
+import items from './items'
 import config from '@modules/config'
 import areEqual from '@modules/areEqual'
 import warning from '@modules/warning'
 import './Settings.scss'
-import { Config } from '@/interfaces/Config'
+import { Config, ConfigUpdate } from '@/interfaces/Config'
 import { Warning } from '@/interfaces/Warning'
 
 interface Props{
     config: Config,
     updateConfig: (config: Config, isRequiredFilled: boolean) => void,
+    setIsComplete: (isComplete: boolean) => void,
     setWarning: (warning: string | Warning) => void
 }
 
-interface State extends Config {}
+export default class Settings extends Component<Props, Config>{
+    constructor(props: Props){
+        super(props);
 
-export default class Settings extends Component<Props, State>{
-    state: State = {
-        ...this.props.config
+        this.state = {
+            ...this.props.config
+        }
     }
 
     componentDidMount(){
@@ -34,7 +33,7 @@ export default class Settings extends Component<Props, State>{
         }
     }
 
-    static getDerivedStateFromProps(props: Props, state: State){
+    static getDerivedStateFromProps(props: Props, state: Config){
         if(!Object.keys(state).length){
             return {
                 ...props.config
@@ -43,7 +42,7 @@ export default class Settings extends Component<Props, State>{
         return null
     }
 
-    shouldComponentUpdate(nextProps: Props, nextState: State){
+    shouldComponentUpdate(nextProps: Props, nextState: Config){
         if(!areEqual.objects(this.state, nextProps.config) ||
            !areEqual.objects(this.state, nextState)){
             return true
@@ -71,51 +70,28 @@ export default class Settings extends Component<Props, State>{
         config.set(stateConfig);
     }
 
-    handleStateChange = (name, value) => {
-        const upd = {}
-        upd[name] = value;
-
-        this.setState(upd)
+    handleStateChange = (update: ConfigUpdate) => {
+        const config: Config = { ...this.state, ...update };
+        this.setState(config);
     }
 
     render(){
-        const items = [
-            {
-                name: 'mode',
-                element: Mode
-            },
-            {
-                name: 'keywords',
-                element: Keywords
-            },
-            {
-                name: 'timer',
-                element: Timer
-            },
-            {
-                name: 'startup',
-                element: Startup
-            },
-            {
-                name: 'quality',
-                element: Quality
-            }
-        ]
-        
-        if(!!Object.keys(this.state).length){
+        if(this.state){
+            const { setIsComplete, setWarning } = this.props;
+            
             return (
                 <div className="page">
-                    {/* <Form data={ items } 
+                    <Form items={ items } 
                          config={ this.state }
-                         setWarning={ this.props.setWarning }
-                         handlers={{
-                             handleStateChange: this.handleStateChange
-                         }} /> */}
+                         isSetup={ false }
+                         setIsComplete={ setIsComplete }
+                         setWarning={ setWarning }
+                         updateSettingsState={ this.handleStateChange } />
                 </div>
             )
         }
         else{
-            return <form id="settings"></form>
+            return <form className="settings"></form>
         }
     }
 }

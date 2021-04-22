@@ -19,6 +19,7 @@ const { ipcRenderer } = window.require('electron');
 interface Props{
     theme: Theme,
     setWarning: (warning: string | Warning) => void,
+    setIsComplete: (isComplete: boolean) => void
     switchTheme: () => void
 }
 
@@ -44,8 +45,7 @@ export default class User extends Component<Props, State>{
             progress: 0,
             error: null,
             current: Pages.Home,
-            position: {},
-            weather: {},
+            weather: undefined,
             isRequiredFilled: true
         }
     }
@@ -76,7 +76,7 @@ export default class User extends Component<Props, State>{
         }
     }
 
-    getWallpaperCollection = async(): Promise<void> => { //change to config type
+    getWallpaperCollection = async(): Promise<void> => {
         const { sortPictures, getSearchQuery, setError, timers } = this;
         const { keywords, quality, mode } = this.state.config;
 
@@ -109,7 +109,7 @@ export default class User extends Component<Props, State>{
         });
     }
 
-    getSearchQuery = async(mode: Mode, keywords: string[]): Promise<string[]> => { //change type string to possible modes
+    getSearchQuery = async(mode: Mode, keywords: string[]): Promise<string[]> => {
         if(mode === Mode.Keywords){
             return keywords
         }
@@ -248,6 +248,7 @@ export default class User extends Component<Props, State>{
                 { error && (current === Pages.Home || current === Pages.Picker)
                     ? <Error code={ error }/>
                     : <Page setWarning={ this.props.setWarning }
+                            setIsComplete={ this.props.setIsComplete }
                             switchWallpaper = { switchWallpaper }
                             updateConfig={ updateConfig }
                             { ...this.state }/>

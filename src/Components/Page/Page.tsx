@@ -12,11 +12,12 @@ import { Warning } from '@/interfaces/Warning'
 interface Props extends UserState{
     switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void,
     setWarning: (warning: string | Warning) => void,
+    setIsComplete: (isComplete: boolean) => void,
     updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
 export default function Page(props: Props){
-    const { switchWallpaper, current, collection, pictureIndex, isLocked, progress, config } = props;
+    const { switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config } = props;
 
     if(current === Pages.Home && collection.length > 0){
         return(
@@ -26,7 +27,6 @@ export default function Page(props: Props){
                     pictureIndex={ pictureIndex }
                     switchWallpaper={ switchWallpaper }/>
         )
-        return <></>
     }
     else if(current === Pages.Picker){
         return(
@@ -43,6 +43,7 @@ export default function Page(props: Props){
         return(
             <Settings config={ config }
                     setWarning={ setWarning }
+                    setIsComplete={ setIsComplete }
                     updateConfig={ updateConfig }/>
         )
     }
