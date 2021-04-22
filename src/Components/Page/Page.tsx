@@ -3,62 +3,55 @@ import Home from '../Home/Home'
 import Picker from '../Picker/Picker'
 import Settings from '../Settings/Settings'
 import Info from '../Info/Info'
-import './Page.css'
+import './Page.scss'
 
-import { Pages, State as UserState } from '@interfaces/UserState.d'
+import { Pages, State as UserState } from '@/interfaces/UserState'
+import { Config } from '@/interfaces/Config'
+import { Warning } from '@/interfaces/Warning'
 
 interface Props extends UserState{
-    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void, //maybe replace the whole thing with destructured props
+    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void,
+    setWarning: (warning: string | Warning) => void,
+    updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
 export default function Page(props: Props){
-    const components = {
-        home: Home,
-        picker: Picker,
-        settings: Settings,
-        info: Info
-    }
+    const { switchWallpaper, current, collection, pictureIndex, isLocked, progress, config } = props;
 
-    const { current, collection, pictureIndex, isLocked, progress, handleUserStateChange, switchWallpaper, handleAppStateChange, isRequiredFilled } = props;
-    const Current = components[current];
-    let data;
-
-    if(current === Pages.Home){
-        data = { 
-            picture: { ...collection[pictureIndex] },
-            isLocked,
-            progress,
-            pictureIndex,
-            collection,
-            switchWallpaper
-        }
+    if(current === Pages.Home && collection.length > 0){
+        return(
+            <Home picture={ collection[pictureIndex] }
+                    isLocked={ isLocked }
+                    progress={ progress }
+                    pictureIndex={ pictureIndex }
+                    switchWallpaper={ switchWallpaper }/>
+        )
+        return <></>
     }
     else if(current === Pages.Picker){
-        data = {
-            pictureIndex,
-            collection,
-            isLocked,
-            progress,
-            switchWallpaper
-        }
+        return(
+            <Picker pictureIndex={ pictureIndex }
+                    collection={ collection }
+                    isLocked={ isLocked }
+                    progress={ progress }
+                    switchWallpaper={ switchWallpaper }/>
+        )
     }
     else if(current === Pages.Settings){
-        data = {
-            data: { ...props.config },
-            handleAppStateChange,
-            isLocked,
-            isRequiredFilled
-        }
+        const { setWarning, updateConfig } = props;
+
+        return(
+            <Settings config={ config }
+                    setWarning={ setWarning }
+                    updateConfig={ updateConfig }/>
+        )
     }
     else if(current === Pages.Info){
-        data = {
-            handleAppStateChange
-        }
+        return(
+            <Info setWarning={ props.setWarning }/>
+        )
     }
-
-    return(
-        <div id="page">
-            <Current { ...data } handleUserStateChange={ handleUserStateChange }/>
-        </div>
-    )
+    else{
+        return <></>
+    }
 }
