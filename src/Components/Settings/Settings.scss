@@ -73,7 +73,7 @@ select:focus, input:focus{
         background-color: $hr-light;
     }
 
-    .title, .setup-title{
+    .settings .title, .setup-title{
         h1{
             color: $fill-light;
             text-shadow: $title-shadow-light;
@@ -91,7 +91,7 @@ select:focus, input:focus{
         background-color: $hr-dark;
     }
 
-    .title, .setup-title{
+    .settings .title, .setup-title{
         h1{
             color: $fill-dark;
             text-shadow: $title-shadow-dark;

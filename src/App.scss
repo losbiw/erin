@@ -23,7 +23,7 @@ body{
     }
 
     svg,
-    g rect:first-child{
+    rect:first-child{
         transition-property: fill;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;

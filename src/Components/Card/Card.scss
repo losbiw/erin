@@ -23,16 +23,18 @@
 
         &:hover{
             transform: scale(1.15);
+
+            .gradient{
+                opacity: 1.0;
+            }
         }
-        &:hover .gradient{
-            opacity: 1.0;
-        }
+
         &:nth-child(-n+2){
             margin-right: 3.35vw;
         }
 
         svg{
-            width: 100%;
+            width: 6.5vw;
             height: 6.5vw;
         }
         .title{
@@ -62,6 +64,10 @@
         background-color: $nav-light;
         box-shadow: $shadow-light;
 
+        svg rect:first-child{
+            fill: $nav-fill-light;
+        }
+
         .title{
             text-shadow: $title-shadow-light;
         }
@@ -73,6 +79,10 @@
         color: $nav-fill-dark;
         background-color: $nav-dark;
         box-shadow: $shadow-dark;
+
+        svg rect:first-child{
+            fill: $nav-fill-dark;
+        }
 
         .title{
             text-shadow: $title-shadow-dark;
