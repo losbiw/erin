@@ -1,14 +1,14 @@
 import React from 'react'
+import './Links.scss'
 const { shell } = window.require('electron');
+
+// interface Props{
+//     links:  
+// }
 
 export default function Links(props){
     const { links } = props;
     const keys = Object.keys(links);
-
-    const openLink = e => {
-        e.preventDefault();
-        shell.openExternal(e.target.href);
-    }
     
     return(
         <div className="links">
@@ -17,10 +17,10 @@ export default function Links(props){
                     const { title, href, Content } = links[key];
                     
                     return(
-                        <a key={ key } href={ href } onClick={ openLink }>
+                        <div className='link' key={ key } onClick={ () => shell.openExternal(href) }>
                             { Content && <Content /> }
-                            { title && <p>{ title }</p> }
-                        </a>
+                            { title && <p className='title'>{ title }</p> }
+                        </div>
                     )
                 })
             }

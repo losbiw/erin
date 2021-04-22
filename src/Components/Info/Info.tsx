@@ -1,50 +1,27 @@
 import React from 'react'
-import Cards from '../Cards/Cards'
+import Card from '../Card/Card'
 import Links from '../Links/Links'
-import Icons from '../Icons/Info'
-import './Info.css'
+import { links } from './links'
+import { Warning } from '@/interfaces/Warning'
+import './Info.scss'
 
-export default function Info(props){
-    const { Github, Reddit } = Icons;
-    const linksData = {
-        author: {
-            github: {
-                href: "https://github.com/losbiw/erin",
-                Content: Github
-            },
-            reddit: {
-                href: "https://www.reddit.com/user/losbiw",
-                Content: Reddit
-            }
-        },
-        credits: {
-            pexels: {
-                title: "Pexels",
-                href: "https://www.pexels.com/",
-            },
-            openweathermap: {
-                title: "OpenWeatherMap",
-                href: "https://openweathermap.org/",
-            },
-            flaticon: {
-                title: "FlatIcon",
-                href: "https://www.flaticon.com/",
-            }
-        }
-    }
+interface Props{
+    setWarning: (warning: string | Warning) => void
+}
 
+export default function Info(props: Props){
     return(
-        <div id="info" className="page">
-            <div id="contact">
-                <p>Contact us:</p>
-                <Links links={ linksData.author }/>
+        <div className='page info'>
+            <div className='contact'>
+                <p className='link-title'>Contact us:</p>
+                <Links links={ links.author }/>
             </div>
             
-            <Cards handleAppStateChange={ props.handleAppStateChange }/>
+            <Card setWarning={ props.setWarning }/>
 
-            <div id="reference">
-                <p id="resources">The app is using APIs and icons from the following resources:</p>
-                <Links links={ linksData.credits }/>
+            <div className='reference'>
+                <p className='resources'>The app is using APIs and icons from the following resources:</p>
+                <Links links={ links.credits }/>
             </div>
         </div>
     )
