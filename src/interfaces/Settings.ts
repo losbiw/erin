@@ -1,4 +1,4 @@
-export enum Settings{
+enum Settings{
     Privacy = 'privacy',
     Mode = 'mode',
     Keywords = 'keywords',
@@ -7,3 +7,5 @@ export enum Settings{
     Quality = 'quality',
     Save = 'save'
 }
+
+export default Settings;

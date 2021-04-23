@@ -1,4 +1,4 @@
 export interface Warning{
-    message: string, 
+    message: string,
     Icon: React.FC<React.SVGProps<SVGSVGElement>>
 }

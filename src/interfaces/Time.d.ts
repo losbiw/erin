@@ -1,4 +1,4 @@
 export interface TimeInterface{
-    sunset: any, //change
-    sunrise: any //change
+    sunset: any, // change
+    sunrise: any // change
 }

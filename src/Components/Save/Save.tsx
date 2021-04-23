@@ -1,6 +1,6 @@
-import React from 'react'
-import config from "@modules/config"
-import './Save.scss'
+import React from 'react';
+import config from '@modules/config';
+import './Save.scss';
 import { Config } from '@/interfaces/Config';
 
 interface Props{
@@ -8,25 +8,25 @@ interface Props{
     setIsComplete: (isComplete: boolean) => void
 }
 
-export default function Save(props: Props){
-    const handleClick = () => {
-        const { configData, setIsComplete } = props;
+export default function Save(props: Props) {
+  const handleClick = () => {
+    const { configData, setIsComplete } = props;
 
-        configData.isComplete = true;
-        config.set(configData);
-        
-        setIsComplete(true);
-    }
-    
-    return(
-        <div className="continue" onClick={ handleClick }>
-            <div className="background">
-                <div className="transparent" />
-            </div>
+    configData.isComplete = true;
+    config.set(configData);
 
-            <button className="save-button">
-                <p className="title">Continue</p>
-            </button>
-        </div>
-    )
+    setIsComplete(true);
+  };
+
+  return (
+    <div className="continue" role="presentation" onClick={handleClick}>
+      <div className="background">
+        <div className="transparent" />
+      </div>
+
+      <button className="save-button" type="button">
+        <p className="title">Continue</p>
+      </button>
+    </div>
+  );
 }

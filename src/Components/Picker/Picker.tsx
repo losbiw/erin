@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Picture } from '@/interfaces/UserState';
 import AspectRatio from '../AspectRatio/AspectRatio';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { Arrows } from '../Icons/UI'
+import { Arrows } from '../Icons/UI';
 import { Arrow } from '../Arrows/Arrows';
 import './Picker.scss';
 
@@ -53,7 +53,7 @@ export default class Picker extends Component<Props, State> {
 
     sortCollection = (collection: Picture[], startIndex: number): void => {
       const sorted: PickerPicture[] = [];
-      for (let i = startIndex; i < startIndex + 6; i++) {
+      for (let i = startIndex; i < startIndex + 6; i += 1) {
         if (collection[i]) {
           const { srcPicker, photographer } = collection[i];
 
@@ -77,13 +77,17 @@ export default class Picker extends Component<Props, State> {
       const { collection } = props;
       let updated = isNext ? startIndex + 6 : startIndex - 6;
 
-      if (updated + 6 > collection.length) { updated = 0; } else if (updated < 0) { updated = collection.length - 6; }
+      if (updated + 6 > collection.length) {
+        updated = 0;
+      } else if (updated < 0) {
+        updated = collection.length - 6;
+      }
 
       const closest = findClosestDividible(updated, 6);
       sortCollection(collection, closest);
     }
 
-    findClosestDividible(number: number, divider: number): number {
+    findClosestDividible = (number: number, divider: number): number => {
       if (number) return number - (number % divider);
       return 0;
     }
@@ -91,35 +95,44 @@ export default class Picker extends Component<Props, State> {
     render() {
       const { switchWallpaperBlock, state, props } = this;
       const { collection } = state;
-      const { progress, isLocked, switchWallpaper } = props;
+      const {
+        progress, isLocked, switchWallpaper, pictureIndex,
+      } = props;
 
       return (
         <div className="picker page">
           <div className="wrapper">
-            <Arrow Icon={Arrows.Forward}
-                  index={0}
-                  handleClick={() => switchWallpaperBlock(false)}/>
+            <Arrow
+              Icon={Arrows.Forward}
+              index={0}
+              handleClick={() => switchWallpaperBlock(false)}
+            />
           </div>
 
           <div className="slider">
             { collection
-                && collection.map((pic) => {
-                  const { src, key, index } = pic;
-                  const isActive = this.props.pictureIndex === pic.index;
+              && collection.map((pic) => {
+                const { src, key, index } = pic;
+                const isActive = pictureIndex === pic.index;
 
-                  return (
-                    <AspectRatio src={src} key={key} isActive={isActive}
-                      handleClick={isActive ? undefined : () => switchWallpaper(index, false)}/>
-                  );
-                })}
+                return (
+                  <AspectRatio
+                    src={src}
+                    key={key}
+                    isActive={isActive}
+                    handleClick={isActive ? undefined : () => switchWallpaper(index, false)}
+                  />
+                );
+              })}
           </div>
 
           <div className="wrapper">
             { isLocked && <ProgressBar width={progress} /> }
 
-            <Arrow Icon={Arrows.Back}
-                  index={0}
-                  handleClick={() => switchWallpaperBlock(true)}
+            <Arrow
+              Icon={Arrows.Back}
+              index={0}
+              handleClick={() => switchWallpaperBlock(true)}
             />
           </div>
         </div>

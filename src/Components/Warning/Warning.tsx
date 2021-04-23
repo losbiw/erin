@@ -1,8 +1,8 @@
-import React from 'react'
-import { General, Crosses } from '../Icons/UI'
-import { Warning as WarningInterface } from '@interfaces/Warning.d'
+import React from 'react';
+import { Warning as WarningInterface } from '@interfaces/Warning.d';
+import { General, Crosses } from '../Icons/UI';
 
-import './Warning.scss'
+import './Warning.scss';
 
 interface Props{
     warning: string,
@@ -14,36 +14,41 @@ interface CustomProps{
     removeWarning: () => void
 }
 
-interface Warning{
-    warning: string | undefined
-}
-
 export const CustomWarning = (props: CustomProps) => {
-    const { message, Icon } = props.warning;
+  const { warning, removeWarning } = props;
+  const { message, Icon } = warning;
 
-    return(
-        <div className='warning'>
-            <Icon />
-            <p className='message'>{ message }</p>
+  return (
+    <div className="warning">
+      <Icon />
+      <p className="message">{ message }</p>
 
-            <button className='delete'
-                    onClick={ props.removeWarning }>
-                <Crosses.Yellow />
-            </button>
-        </div>
-    )
-}
+      <button
+        type="button"
+        className="delete"
+        onClick={removeWarning}
+      >
+        <Crosses.Yellow />
+      </button>
+    </div>
+  );
+};
 
 export const Warning = (props: Props) => {
-    return(
-        <div className='warning'>
-            <General.Warning />
-            <p className='message'>{ props.warning }</p>
+  const { warning, removeWarning } = props;
 
-            <button className='delete'
-                    onClick={ props.removeWarning }>
-                <Crosses.Yellow />
-            </button>
-        </div>
-    )
-}
+  return (
+    <div className="warning">
+      <General.Warning />
+      <p className="message">{ warning }</p>
+
+      <button
+        type="button"
+        className="delete"
+        onClick={removeWarning}
+      >
+        <Crosses.Yellow />
+      </button>
+    </div>
+  );
+};

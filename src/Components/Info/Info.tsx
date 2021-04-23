@@ -1,28 +1,30 @@
-import React from 'react'
-import Card from '../Card/Card'
-import Links from '../Links/Links'
-import { links } from './links'
-import { Warning } from '@/interfaces/Warning'
-import './Info.scss'
+import React from 'react';
+import { Warning } from '@/interfaces/Warning';
+import Card from '../Card/Card';
+import Links from '../Links/Links';
+import { links } from './links';
+import './Info.scss';
 
 interface Props{
     setWarning: (warning: string | Warning) => void
 }
 
-export default function Info(props: Props){
-    return(
-        <div className='page info'>
-            <div className='contact'>
-                <p className='link-title'>Contact us:</p>
-                <Links links={ links.author }/>
-            </div>
-            
-            <Card setWarning={ props.setWarning }/>
+export default function Info(props: Props) {
+  const { setWarning } = props;
 
-            <div className='reference'>
-                <p className='resources'>The app is using APIs and icons from the following resources:</p>
-                <Links links={ links.credits }/>
-            </div>
-        </div>
-    )
+  return (
+    <div className="page info">
+      <div className="contact">
+        <p className="link-title">Contact us:</p>
+        <Links links={links.author} />
+      </div>
+
+      <Card setWarning={setWarning} />
+
+      <div className="reference">
+        <p className="resources">The app is using APIs and icons from the following resources:</p>
+        <Links links={links.credits} />
+      </div>
+    </div>
+  );
 }

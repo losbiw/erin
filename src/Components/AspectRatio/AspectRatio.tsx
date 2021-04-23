@@ -1,25 +1,38 @@
-import React from 'react'
-import './AspectRatio.scss'
+import React, { FC } from 'react';
+import './AspectRatio.scss';
 
 interface Props{
     src: string,
     isActive?: boolean,
-    name?: string,
     handleClick?: () => void
 }
 
-export default function AspectRatio(props: Props){
-    const { src, isActive, name, handleClick } = props;
-    const addActiveClass = isActive ? 'active' : '';
-    
-    return(
-        <div className={ `aspect-ratio ${ addActiveClass }` } 
-             data-name={ name }
-             onClick={ handleClick }>
-            <div className='transparent'/>
-            <div className='container'>
-                <img className='aspect-image' src={ src } alt='wallpaper'/>
-            </div>
-        </div>
-    )
-}
+const defaultProps = {
+  isActive: false,
+  handleClick: undefined,
+};
+
+const AspectRatio: FC<Props> = (props: Props) => {
+  const {
+    src, isActive, handleClick,
+  } = props;
+  const addActiveClass = isActive ? 'active' : '';
+
+  return (
+    <div
+      className={`aspect-ratio ${addActiveClass}`}
+      role="presentation"
+      onClick={handleClick}
+      onKeyDown={handleClick}
+    >
+      <div className="transparent" />
+      <div className="container">
+        <img className="aspect-image" src={src} alt="wallpaper" />
+      </div>
+    </div>
+  );
+};
+
+AspectRatio.defaultProps = defaultProps;
+
+export default AspectRatio;

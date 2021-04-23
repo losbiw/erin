@@ -1,13 +1,13 @@
-const autoLaunch = window.require('auto-launch');
+const AutoLaunch = window.require('auto-launch');
 
-const launch = new autoLaunch({
-    name: 'Erin',
-    isHidden: true
-})
+const launch = new AutoLaunch({
+  name: 'Erin',
+  isHidden: true,
+});
 
 const set = (isEnabled: boolean): void => {
-    if(isEnabled) launch.enable();
-    else launch.disable();
-}
+  if (isEnabled) launch.enable();
+  else launch.disable();
+};
 
-export default { set }
+export default { set };

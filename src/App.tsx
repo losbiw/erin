@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import config from '@modules/config';
 import OS from '@modules/OS';
 import { fetchGeocoding } from '@modules/APIs';
@@ -15,29 +15,17 @@ import './style/global.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-interface State{
-    theme: Theme,
-    isUpdateAvailable: boolean,
-    isRequiredFilled: boolean,
-    isComplete: boolean | null,
-    warning: string | WarningInterface,
-}
+const App: FC = () => {
+  const cfg = config.get();
 
-export default class App extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
+  const [theme, setTheme] = useState(cfg.theme);
+  const [isUpdateAvailable, setUpdate] = useState(false);
+  const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
+  const [isComplete, setIsComplete] = useState(cfg.isComplete);
+  const [warning, setWarning] = useState<string | WarningInterface>('');
 
-    this.state = {
-      theme: Theme.Dark,
-      isUpdateAvailable: false,
-      isRequiredFilled: false,
-      isComplete: null,
-      warning: '',
-    };
-  }
-
-  async componentDidMount() {
-    const { theme, isComplete, isFirstTime } = config.get();
+  const defineLocation = async () => {
+    const { isFirstTime } = cfg;
     const location = await fetchGeocoding(() => {});
 
     if (isFirstTime || typeof isFirstTime === 'undefined') {
@@ -54,98 +42,61 @@ export default class App extends Component<{}, State> {
 
       config.set({ isFirstTime: false });
     }
+  };
+
+  useEffect(() => {
+    defineLocation();
 
     ipcRenderer.send('component-did-mount');
 
     ipcRenderer.on('update-is-available', () => {
-      this.setState({
-        isUpdateAvailable: true,
-      });
+      setUpdate(true);
+    });
+  });
+
+  const switchTheme = (): void => {
+    const value = theme === Theme.Dark ? Theme.Light : Theme.Dark;
+
+    config.set({
+      theme: value,
     });
 
-    this.setState({
-      theme,
-      isComplete,
-      isRequiredFilled: isComplete,
-    });
-  }
+    setTheme(value);
+  };
 
-    switchTheme = (): void => {
-      const { theme: current } = this.state;
-      const value = current === Theme.Dark ? Theme.Light : Theme.Dark;
+  const rejectUpdate = () => setUpdate(false);
 
-      const updated = {
-        theme: value,
-      };
+  return (
+    <div className={`theme ${theme}`}>
+      <Controls />
 
-      config.set(updated);
-      this.setState(updated);
-    }
+      { isComplete && isRequiredFilled
+        ? (
+          <User
+            theme={theme}
+            setWarning={setWarning}
+            switchTheme={switchTheme}
+            setIsComplete={setIsComplete}
+          />
+        )
+        : (
+          <Setup
+            theme={theme}
+            isComplete={isComplete}
+            switchTheme={switchTheme}
+            setWarning={setWarning}
+            setIsComplete={setIsComplete}
+            setIsRequiredFilled={setIsRequiredFilled}
+          />
+        )}
 
-    rejectUpdate = (): void => {
-      this.setState({
-        isUpdateAvailable: false,
-      });
-    }
+      { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
 
-    setIsRequiredFilled = (isRequiredFilled: boolean): void => {
-      this.setState({
-        isRequiredFilled,
-      });
-    }
+      { (warning && typeof warning === 'string')
+        ? <Warning warning={warning} removeWarning={() => setWarning('')} />
+        : warning && <CustomWarning warning={warning as WarningInterface} removeWarning={() => setWarning('')} />}
+    </div>
+  );
+};
 
-    setIsComplete = (isComplete: boolean): void => {
-      this.setState({
-        isComplete,
-      });
-    }
-
-    setWarning = (warning: string | WarningInterface): void => {
-      this.setState({
-        warning,
-      });
-    }
-
-    render() {
-      const {
-        switchTheme, setWarning, rejectUpdate, setIsComplete, setIsRequiredFilled,
-      } = this;
-      const {
-        theme, isComplete, warning, isRequiredFilled, isUpdateAvailable,
-      } = this.state;
-
-      return (
-        <div className={`theme ${theme}`}>
-          <Controls />
-
-          { isComplete !== null
-            ? isComplete && isRequiredFilled
-              ? (
-                <User
-                  theme={theme}
-                  setWarning={setWarning}
-                  switchTheme={switchTheme}
-                  setIsComplete={setIsComplete}
-                />
-              )
-              : (
-                <Setup
-                  theme={theme}
-                  isComplete={isComplete}
-                  switchTheme={switchTheme}
-                  setWarning={setWarning}
-                  setIsComplete={setIsComplete}
-                  setIsRequiredFilled={setIsRequiredFilled}
-                />
-              )
-            : <></>}
-
-          { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
-
-          { (warning && typeof warning === 'string')
-            ? <Warning warning={warning} removeWarning={() => setWarning('')} />
-            : warning && <CustomWarning warning={warning as WarningInterface} removeWarning={() => setWarning('')} />}
-        </div>
-      );
-    }
-}
+export default App;

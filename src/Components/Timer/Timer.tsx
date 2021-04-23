@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react'
-import { capitalizeFirstLetter } from '@modules/convert'
-import './Timer.scss'
+import React, { FC, useState } from 'react';
+import capitalizeFirstLetter from '@modules/convert';
+import './Timer.scss';
 
 interface Time{
     hours: number,
@@ -14,85 +14,82 @@ interface Props{
     updateTimeout: (time: number) => void
 }
 
-const convertTime = (ms: number, convertation: Time): Time =>{
-    const { hours, minutes, seconds } = convertation;
+const convertTime = (ms: number, convertation: Time): Time => {
+  const { hours, minutes, seconds } = convertation;
 
-    return {
-        hours: Math.floor(ms / hours),
-        minutes: Math.floor((ms % hours) / minutes),
-        seconds: Math.floor((ms % hours % minutes)/ seconds)
-    }
-}
+  return {
+    hours: Math.floor(ms / hours),
+    minutes: Math.floor((ms % hours) / minutes),
+    seconds: Math.floor((ms % hours % minutes) / seconds),
+  };
+};
 
-const Timer: FC<Props> = (props) => {
-    const [focusIndex, setFocus] = useState(0);
+const Timer: FC<Props> = (props: Props) => {
+  const [focusIndex, setFocus] = useState(0);
+  const { time: propTime } = props;
 
-    const convertation = {
-        hours: 3600000,
-        minutes: 60000,
-        seconds: 1000
-    }
+  const convertation = {
+    hours: 3600000,
+    minutes: 60000,
+    seconds: 1000,
+  };
 
-    const time = convertTime(props.time, convertation);
-    const keys = time ? Object.keys(time) : [];
+  const time = convertTime(propTime, convertation);
+  const keys = time ? Object.keys(time) : [];
 
-    const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+  const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const numberValue = parseInt(value, 10);
 
-        try{
-            const numberValue = parseInt(value);
+    if (value.length < 3) {
+      let milliseconds = numberValue * convertation[name as keyof Time] || 0;
 
-            if(value.length < 3){
-                let milliseconds = numberValue * convertation[name as keyof Time] || 0;
-    
-                for(const unit in time){
-                    if(unit !== name){
-                        const unitKey = unit as keyof Time;
-                        milliseconds += time[unitKey] * convertation[unitKey];
-                    }
-                }
-                
-                props.updateTimeout(milliseconds);
-            }
-            else{
-                e.target.value = value.slice(0, 2);
-            }
+      Object.keys(time).forEach((unit) => {
+        if (unit !== name) {
+          const unitKey = unit as keyof Time;
+          milliseconds += time[unitKey] * convertation[unitKey];
         }
-        catch(e){
-            throw e;
-        }
+      });
+
+      props.updateTimeout(milliseconds);
+    } else {
+      e.target.value = value.slice(0, 2);
     }
+  };
 
-    return(
-        <div className="time-container">{
-            keys.map((unit, index) => {
-                return(
-                    <div className="time" key={ unit }>
-                        <div className="wrapper">
-                            <input type="number"
-                                    defaultValue={ time[unit as keyof Time] }
-                                    className='time-input'
-                                   ref={ ref => {
-                                       if(ref && props.isActive && index === focusIndex){
-                                           ref.focus({ preventScroll: true });
-                                       }
-                                   } }
-                                    onChange={ updateCfgTime }
-                                    onFocus={ () => setFocus(index) }
-                                    name={ unit } 
-                                    key={ unit + index }/>
-                            { 
-                                unit !== 'seconds' && 
-                                <span className="colon">:</span> 
-                            }
-                        </div>
-                        
-                        <label className='time-label'>{ capitalizeFirstLetter(unit) }</label>
-                    </div>
-                )
-            })
-        }</div>
-    )
-}
+  return (
+    <div className="time-container">
+      {
+        keys.map((unit, index) => (
+          <div className="time" key={unit}>
+            <div className="wrapper">
+              <input
+                type="number"
+                defaultValue={time[unit as keyof Time]}
+                id={unit}
+                className="time-input"
+                ref={(ref) => {
+                  if (ref && props.isActive && index === focusIndex) {
+                    ref.focus({ preventScroll: true });
+                  }
+                }}
+                onChange={updateCfgTime}
+                onFocus={() => setFocus(index)}
+                name={unit}
+                key={unit}
+              />
+              {
+                unit !== 'seconds'
+                && <span className="colon">:</span>
+              }
+            </div>
 
-export default Timer
+            <label className="time-label" htmlFor={unit}>{ capitalizeFirstLetter(unit) }</label>
+          </div>
+        ))
+      }
+    </div>
+  );
+};
+
+export default Timer;

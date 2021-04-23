@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 
 export default (props: { raw: string }) => {
-    return <span dangerouslySetInnerHTML={{ __html: props.raw }} />
-}
+  const { raw } = props;
+  return <span dangerouslySetInnerHTML={{ __html: raw }} />;
+};

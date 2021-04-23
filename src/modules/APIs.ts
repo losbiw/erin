@@ -1,7 +1,5 @@
-// change all error handlers
+/* eslint-disable no-await-in-loop */
 import Weather from '@interfaces/Weather';
-
-// add types to fetchAPI, fetchPexels
 
 const fetchAPI = async (url: string, handleError: (err: number) => void, headers?: HeadersInit) => {
   try {
@@ -13,8 +11,13 @@ const fetchAPI = async (url: string, handleError: (err: number) => void, headers
     return res;
   } catch {
     handleError(502);
+    throw Error('Something went wrong');
   }
 };
+
+const fetchGeolocation = (callback: Function): Promise<any> => new Promise((res) => {
+  navigator.geolocation.getCurrentPosition((position) => callback(res, position));
+});
 
 const fetchWeather = (handleError: (error: number) => void): Promise<Weather | undefined> => {
   const callback = async (res: Function, position: any): Promise<void> => {
@@ -43,7 +46,7 @@ const fetchWeather = (handleError: (error: number) => void): Promise<Weather | u
 };
 
 const fetchGeocoding = (handleError: (error: number) => void): Promise<string> => {
-  const callback = async (res: Function, position: any): Promise<string> => { // change mb pridumat chto-to
+  const callback = async (res: Function, position: any): Promise<string> => {
     try {
       const key = window.process.env.GOOGLE_API_KEY;
       const { latitude: lat, longitude: lng } = position.coords;
@@ -64,14 +67,12 @@ const fetchGeocoding = (handleError: (error: number) => void): Promise<string> =
   return fetchGeolocation(callback);
 };
 
-const fetchGeolocation = (callback: Function): Promise<any> => new Promise((res) => {
-  navigator.geolocation.getCurrentPosition((position) => callback(res, position));
-});
-
-const fetchPexels = async (keywords: string[], handleError: (error: number) => void) => {
-  const collection: any[] = []; // change mb pridumat chto-to
+// eslint-disable-next-line max-len
+const fetchPexels = async (keywords: string[], handleError: (err: number) => void): Promise<any[] | undefined> => {
+  const collection: any[] = [];
   let canRequestMore = true;
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const key of keywords) {
     let page = 1;
     const headers: HeadersInit = new Headers();
@@ -88,14 +89,14 @@ const fetchPexels = async (keywords: string[], handleError: (error: number) => v
 
         const { photos } = await res;
 
-        if (!res) return;
+        if (!res) return undefined;
         if (photos.length < 78) canRequestMore = false;
 
-        page++;
+        page += 1;
         collection.push(...photos);
       } catch {
         handleError(429);
-        return false;
+        return undefined;
       }
     }
   }

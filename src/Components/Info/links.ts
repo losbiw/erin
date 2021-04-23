@@ -1,4 +1,5 @@
-import Icons from '../Icons/Info'
+import Icons from '../Icons/Info';
+
 const { Github, Reddit } = Icons;
 
 interface Link{
@@ -11,35 +12,35 @@ interface Group{
     [key: string]: Link
 }
 
-interface Links{   
+interface Links{
     [key: string]: Group
 }
 
 const links: Links = {
-    author: {
-        github: {
-            href: 'https://github.com/losbiw/erin',
-            Content: Github
-        },
-        reddit: {
-            href: 'https://www.reddit.com/user/losbiw',
-            Content: Reddit
-        }
+  author: {
+    github: {
+      href: 'https://github.com/losbiw/erin',
+      Content: Github,
     },
-    credits: {
-        pexels: {
-            title: 'Pexels',
-            href: 'https://www.pexels.com/',
-        },
-        openweathermap: {
-            title: 'OpenWeatherMap',
-            href: 'https://openweathermap.org/',
-        },
-        flaticon: {
-            title: 'FlatIcon',
-            href: 'https://www.flaticon.com/',
-        }
-    }
-}
+    reddit: {
+      href: 'https://www.reddit.com/user/losbiw',
+      Content: Reddit,
+    },
+  },
+  credits: {
+    pexels: {
+      title: 'Pexels',
+      href: 'https://www.pexels.com/',
+    },
+    openweathermap: {
+      title: 'OpenWeatherMap',
+      href: 'https://openweathermap.org/',
+    },
+    flaticon: {
+      title: 'FlatIcon',
+      href: 'https://www.flaticon.com/',
+    },
+  },
+};
 
-export { links, Link }
+export { links, Link };

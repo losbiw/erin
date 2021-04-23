@@ -1,6 +1,6 @@
-import React from 'react'
-import { Arrows as Icons } from '../Icons/UI'
-import './Arrows.scss'
+import React from 'react';
+import { Arrows as Icons } from '../Icons/UI';
+import './Arrows.scss';
 
 interface ArrowsProps{
     handleChange: (() => void)[]
@@ -12,32 +12,37 @@ interface ArrowProps{
     handleClick: () => void
 }
 
-const Arrows = (props: ArrowsProps) => {
-    const keys = Object.keys(Icons);
-
-    return(
-        <div className='arrows'>
-            { keys.map((Icon, index: number) => 
-                <Arrow Icon={ Icons[Icon] } 
-                       index={ index } 
-                       handleClick={ props.handleChange[index] }
-                       key={ index }/>)
-            }  
-        </div>
-    )
-}
-
 const Arrow = (props: ArrowProps) => {
-    const { Icon, index, handleClick } = props;
+  const { Icon, index, handleClick } = props;
 
-    return(
-        <button className='arrow' 
-                name='arrow'
-                onClick={ handleClick }
-                key={ `arrow-${index}` }>
-            <Icon />
-        </button>
-    )
-}
+  return (
+    <button
+      className="arrow"
+      type="button"
+      name="arrow"
+      onClick={handleClick}
+      key={`arrow-${index}`}
+    >
+      <Icon />
+    </button>
+  );
+};
 
-export { Arrows, Arrow }
+const Arrows = (props: ArrowsProps) => {
+  const keys = Object.keys(Icons);
+
+  return (
+    <div className="arrows">
+      { keys.map((Icon, index: number) => (
+        <Arrow
+          Icon={Icons[Icon]}
+          index={index}
+          handleClick={props.handleChange[index]}
+          key={Icon}
+        />
+      ))}
+    </div>
+  );
+};
+
+export { Arrows, Arrow };

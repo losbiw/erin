@@ -1,10 +1,12 @@
-import React from 'react'
-import './ProgressBar.scss'
+import React, { FC } from 'react';
+import './ProgressBar.scss';
 
-export default function ProgressBar(props: { width: number }){
-    return(
-        <div className="progress-bar">
-            <div className="fill" style={{ width: props.width + '%' }}></div>
-        </div>
-    )
-}
+interface Props { width: number }
+
+const ProgressBar: FC<Props> = ({ width }: Props) => (
+  <div className="progress-bar">
+    <div className="fill" style={{ width: `${width}%` }} />
+  </div>
+);
+
+export default ProgressBar;
