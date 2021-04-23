@@ -6,7 +6,6 @@
     "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "react",
     "sourceMap": true,
-    "noImplicitAny": false, //change
     "outDir": "./build/",
     "removeComments": true,
     "strict": true,
