@@ -2,15 +2,17 @@ import {
   app, BrowserWindow, screen, nativeImage, Tray,
 // eslint-disable-next-line import/no-extraneous-dependencies
 } from 'electron';
+import { join } from 'path';
+import { readFileSync, existsSync } from 'fs';
 import defineOS from './os';
+import tray from './tray';
+import initIPCEvents from './ipcEvents';
+import initPowerEvents from './powerEvents';
+import initUpdateEvents from './updateEvents';
 
-const { join } = require('path');
-const { readFileSync, existsSync } = require('fs');
-const tray = require('./tray');
-const initializeIPCEvents = require('./ipcEvents');
+require('dotenv').config({ path: join(__dirname, '.env') }); // change
 
-require('dotenv').config({ path: join(__dirname, '.env') });
-require('./updateEvents')();
+initUpdateEvents();
 
 let win: BrowserWindow;
 let winTray: Tray;
@@ -28,6 +30,10 @@ let winTray: Tray;
     });
   }
 })();
+
+app.on('activate', () => {
+  win.show();
+});
 
 const findIconPath = (size: number) => {
   const os = defineOS();
@@ -78,7 +84,8 @@ const loadFile = () => {
   win.loadURL(url);
 
   hideWindow();
-  initializeIPCEvents(win);
+  initIPCEvents(win);
+  initPowerEvents(win);
 };
 
 app.on('ready', () => {
