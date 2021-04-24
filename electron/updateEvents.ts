@@ -1,4 +1,5 @@
 import { IpcMainEvent } from 'electron/main';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import defineOS from './os';

@@ -1,5 +1,6 @@
 import {
   app, BrowserWindow, screen, nativeImage, Tray,
+// eslint-disable-next-line import/no-extraneous-dependencies
 } from 'electron';
 import defineOS from './os';
 
@@ -65,7 +66,7 @@ const loadFile = () => {
   });
 
   if (app.isPackaged) {
-    url = `file://${__dirname}/../build/index.html`;
+    url = `file://${__dirname}/../react-build/index.html`;
   } else {
     // require('electron-debug')();
 

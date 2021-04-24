@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Tray, BrowserWindow, Menu } from 'electron';
 
 function create(win: BrowserWindow, iconPath: string) {
