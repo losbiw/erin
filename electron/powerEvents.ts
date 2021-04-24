@@ -2,7 +2,7 @@
 import { BrowserWindow, powerMonitor } from 'electron';
 
 const setListeners = (win: BrowserWindow) => {
-  powerMonitor.on('unlock-screen', () => {
+  powerMonitor.on('resume', () => {
     win.webContents.send('unlock-screen');
   });
 };
