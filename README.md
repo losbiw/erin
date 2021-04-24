@@ -4,9 +4,9 @@ A simple way to change wallpaper automatically
 
 ## Installation
 
-**Compiled app**
-
 Download an installation file corresponding to your OS from [GitHub releases](https://github.com/losbiw/erin/releases/latest)
+
+## Local deployment/build
 
 **Setup**
 
