@@ -51,7 +51,7 @@ export default class User extends Component<Props, State> {
         isLocked: true,
         progress: 0,
         error: null,
-        current: Pages.Settings,
+        current: Pages.Home,
         weather: undefined,
         isRequiredFilled: true,
       };

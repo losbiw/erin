@@ -2,6 +2,7 @@
 node_modules/
 dist/
 build/
+react-build/
 .DS_Store
 yarn.lock
 yarn-error.log
