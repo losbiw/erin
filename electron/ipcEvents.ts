@@ -5,7 +5,7 @@ import { autoUpdater } from 'electron-updater';
 
 const { Notification } = require('electron');
 
-function setListeners(win: BrowserWindow) {
+const setListeners = (win: BrowserWindow) => {
   ipcMain.on('get-app-path', (event) => {
     event.returnValue = app.getPath('userData');
   });
@@ -45,6 +45,6 @@ function setListeners(win: BrowserWindow) {
 
     win.webContents.send('update-is-available');
   });
-}
+};
 
-module.exports = setListeners;
+export default setListeners;

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Tray, BrowserWindow, Menu } from 'electron';
 
-function create(win: BrowserWindow, iconPath: string) {
+const create = (win: BrowserWindow, iconPath: string) => {
   const tray = new Tray(iconPath);
 
   const cntxMenu = Menu.buildFromTemplate([
@@ -29,6 +29,6 @@ function create(win: BrowserWindow, iconPath: string) {
 
   tray.setContextMenu(cntxMenu);
   return tray;
-}
+};
 
-module.exports = { create };
+export default { create };

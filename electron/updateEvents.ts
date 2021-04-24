@@ -4,7 +4,7 @@ import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import defineOS from './os';
 
-function setListeners() {
+const setListeners = () => {
   const os = defineOS();
 
   if (os === 'win32' || os === 'darwin') {
@@ -28,6 +28,6 @@ function setListeners() {
       autoUpdater.quitAndInstall();
     });
   }
-}
+};
 
-module.exports = setListeners;
+export default setListeners;
