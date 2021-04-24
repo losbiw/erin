@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import './Timer.scss';
+import { Warning } from '@/interfaces/Warning';
 
 interface Time{
     hours: number,
@@ -11,6 +12,7 @@ interface Time{
 interface Props{
     time: number,
     isActive: boolean,
+    setWarning: (warning: Warning | string) => void,
     updateTimeout: (time: number) => void
 }
 
@@ -38,22 +40,26 @@ const Timer: FC<Props> = (props: Props) => {
   const keys = time ? Object.keys(time) : [];
 
   const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const numberValue = parseInt(value, 10);
+    try {
+      const { name, value } = e.target;
+      const numberValue = parseInt(value, 10);
 
-    if (value.length < 3) {
-      let milliseconds = numberValue * convertation[name as keyof Time] || 0;
+      if (value.length < 3) {
+        let milliseconds = numberValue * convertation[name as keyof Time] || 0;
 
-      Object.keys(time).forEach((unit) => {
-        if (unit !== name) {
-          const unitKey = unit as keyof Time;
-          milliseconds += time[unitKey] * convertation[unitKey];
-        }
-      });
+        Object.keys(time).forEach((unit) => {
+          if (unit !== name) {
+            const unitKey = unit as keyof Time;
+            milliseconds += time[unitKey] * convertation[unitKey];
+          }
+        });
 
-      props.updateTimeout(milliseconds);
-    } else {
-      e.target.value = value.slice(0, 2);
+        props.updateTimeout(milliseconds);
+      } else {
+        e.target.value = value.slice(0, 2);
+      }
+    } catch {
+      props.setWarning('Invalid time format');
     }
   };
 

@@ -88,6 +88,7 @@ const Form: FC<Props> = (props: Props) => {
         <Timer
           isActive={isActive}
           time={timer}
+          setWarning={setWarning}
           updateTimeout={(timer: number) => updateState({ timer })}
         />
       );
