@@ -44,12 +44,8 @@ Building react app:
 ```
 yarn react-build
 ```
-Compiling electron .ts files to .js(required):
-```
-yarn electron-compile
-```
 Building electron app for:
 * Windows: ```yarn build-win```
 * Linux: ```yarn build-linux```
 * MacOS: ```yarn build-mac```
-* ALl three of them: ```yarn build-all```
+* ALl three of them: ```yarn build-mwl```

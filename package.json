@@ -56,15 +56,15 @@
   "scripts": {
     "react-start": "webpack serve",
     "react-build": "webpack --env NODE_ENV=production",
+    "electron-start": "electron .",
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env",
-    "copy-env": "cd ./electron && chflags nohidden .env && cp .env ../build/.env",
-    "electron-start": "electron .",
-    "build-win": "electron-builder -w",
-    "build-linux": "electron-builder -l",
-    "build-mac": "electron-builder -m",
-    "build-all": "electron-builder -mwl",
-    "electron-release": "electron-builder -mwl -p always"
+    "electron-release": "electron-builder -mwl -p always",
+    "build-win": "yarn electron-compile && electron-builder -w",
+    "build-linux": "yarn electron-compile && electron-builder -l",
+    "build-mac": "yarn electron-compile && electron-builder -m",
+    "build-mwl": "yarn electron-compile && electron-builder -mwl",
+    "copy-env": "cd ./electron && chflags nohidden .env && cp .env ../build/.env"
   },
   "build": {
     "appId": "com.erin.start",
