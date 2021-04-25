@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { Picture } from '@interfaces/UserState';
 import AspectRatio from '../AspectRatio/AspectRatio';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Arrows } from '../Arrows/Arrows';
-import Links from '../Links/Links';
+import { MemoizedLinks as Links } from '../Links/Links';
 import './Home.scss';
 
 interface Props{
@@ -14,14 +14,19 @@ interface Props{
     switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void
 }
 
-export default function Home(props: Props) {
+const Home: FC<Props> = (props: Props) => {
   const {
     picture, progress, isLocked, switchWallpaper, pictureIndex,
   } = props;
   const { photographer, srcMain, photographerUrl } = picture;
 
-  const handleSlideForward = () => switchWallpaper(pictureIndex + 1, true);
-  const handleSlideBack = () => switchWallpaper(pictureIndex - 1, true);
+  const handleNextWallpaper = useCallback(
+    () => switchWallpaper(pictureIndex + 1, true), [pictureIndex],
+  );
+
+  const handlePrevWallpaper = useCallback(
+    () => switchWallpaper(pictureIndex - 1, true), [pictureIndex],
+  );
 
   const author = () => (
     <div className="author">
@@ -36,21 +41,27 @@ export default function Home(props: Props) {
     </div>
   );
 
+  const links = useMemo(() => ({
+    author: {
+      href: photographerUrl,
+      Content: author,
+    },
+  }), [photographerUrl]);
+
   return (
     <div className="page home">
-      <Arrows handleChange={[handleSlideBack, handleSlideForward]} />
+      <Arrows
+        handleForwardClick={handleNextWallpaper}
+        handleBackClick={handlePrevWallpaper}
+      />
       <AspectRatio src={srcMain} />
 
       <div className="wrapper">
         { isLocked && <ProgressBar width={progress} /> }
-        <Links links={{
-          author: {
-            href: photographerUrl,
-            Content: author,
-          },
-        }}
-        />
+        <Links links={links} />
       </div>
     </div>
   );
-}
+};
+
+export default Home;

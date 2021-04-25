@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import './AspectRatio.scss';
 
 interface Props{
@@ -12,7 +12,7 @@ const defaultProps = {
   handleClick: undefined,
 };
 
-const AspectRatio: FC<Props> = (props: Props) => {
+const AspectRatio: FC<Props> = memo((props: Props) => {
   const {
     src, isActive, handleClick,
   } = props;
@@ -31,7 +31,7 @@ const AspectRatio: FC<Props> = (props: Props) => {
       </div>
     </div>
   );
-};
+});
 
 AspectRatio.defaultProps = defaultProps;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 import './Links.scss';
 
 const { shell } = window.require('electron');
@@ -15,7 +15,7 @@ interface Props{
     }
 }
 
-export default function Links(props: Props) {
+const Links: FC<Props> = (props: Props) => {
   const { links } = props;
   const keys = Object.keys(links);
 
@@ -35,4 +35,8 @@ export default function Links(props: Props) {
       }
     </div>
   );
-}
+};
+
+const MemoizedLinks = memo(Links);
+
+export { Links, MemoizedLinks };

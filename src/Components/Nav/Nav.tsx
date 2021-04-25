@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 import { Theme } from '@/interfaces/Config';
 import { Pages } from '@/interfaces/UserState';
+import buttons from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import NavIcons from '../Icons/Nav';
 import './Nav.scss';
 
 interface Props{
@@ -12,37 +12,9 @@ interface Props{
     switchTheme: () => void
 }
 
-interface NavButton{
-    target: Pages,
-    Icon: React.FC<React.SVGProps<SVGSVGElement>>
-}
-
-export default function Nav(props: Props) {
+const Nav: FC<Props> = memo((props: Props) => {
   const { theme, switchTheme } = props;
-  const {
-    Home, Picker, Settings, Info,
-  } = NavIcons;
-
   let isFirst = true;
-
-  const buttons: Array<Array<NavButton>> = [
-    [{
-      target: Pages.Home,
-      Icon: Home,
-    },
-    {
-      target: Pages.Picker,
-      Icon: Picker,
-    }],
-    [{
-      target: Pages.Settings,
-      Icon: Settings,
-    },
-    {
-      target: Pages.Info,
-      Icon: Info,
-    }],
-  ];
 
   return (
     <nav className="nav">
@@ -80,4 +52,6 @@ export default function Nav(props: Props) {
       )) }
     </nav>
   );
-}
+});
+
+export default Nav;

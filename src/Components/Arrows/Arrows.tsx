@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 import { Arrows as Icons } from '../Icons/UI';
 import './Arrows.scss';
 
 interface ArrowsProps{
-    handleChange: (() => void)[]
+  handleForwardClick: () => void,
+  handleBackClick: () => void
 }
 
 interface ArrowProps{
@@ -12,7 +13,7 @@ interface ArrowProps{
     handleClick: () => void
 }
 
-const Arrow = (props: ArrowProps) => {
+const Arrow: FC<ArrowProps> = memo((props: ArrowProps) => {
   const { Icon, index, handleClick } = props;
 
   return (
@@ -26,9 +27,10 @@ const Arrow = (props: ArrowProps) => {
       <Icon />
     </button>
   );
-};
+});
 
-const Arrows = (props: ArrowsProps) => {
+const Arrows: FC<ArrowsProps> = memo((props: ArrowsProps) => {
+  const { handleBackClick, handleForwardClick } = props;
   const keys = Object.keys(Icons);
 
   return (
@@ -37,12 +39,12 @@ const Arrows = (props: ArrowsProps) => {
         <Arrow
           Icon={Icons[Icon]}
           index={index}
-          handleClick={props.handleChange[index]}
+          handleClick={index === 0 ? handleBackClick : handleForwardClick}
           key={Icon}
         />
       ))}
     </div>
   );
-};
+});
 
 export { Arrows, Arrow };
