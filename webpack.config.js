@@ -1,5 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
@@ -25,28 +29,35 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-          },
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
         ],
       },
     ],
   },
   plugins: [
+    new webpack.EnvironmentPlugin({
+      DEBUG_PROD: false,
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode:
+        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
+    }),
   ],
   optimization: {
     minimize: true,
     minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
       new CssMinimizerPlugin(),
     ],
     splitChunks: {
