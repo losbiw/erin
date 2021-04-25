@@ -54,7 +54,7 @@
   "scripts": {
     "react-start": "webpack serve",
     "react-build": "webpack --env NODE_ENV=production",
-    "electron-build": "webpack --config ./electron/webpack.config.main.js && yarn copy-env",
+    "electron-compile": "webpack --config ./electron/webpack.config.main.js && yarn copy-env",
     "copy-env": "cd ./electron && chflags nohidden .env && cp .env ../build/.env",
     "electron-start": "electron .",
     "build-win": "electron-builder -w",
