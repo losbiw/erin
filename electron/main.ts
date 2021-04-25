@@ -1,6 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {
   app, BrowserWindow, screen, nativeImage, Tray,
-// eslint-disable-next-line import/no-extraneous-dependencies
 } from 'electron';
 import { join } from 'path';
 import { readFileSync, existsSync } from 'fs';
@@ -11,6 +11,7 @@ import initPowerEvents from './powerEvents';
 import initUpdateEvents from './updateEvents';
 
 require('dotenv').config({ path: join(__dirname, '.env') }); // change
+require('v8-compile-cache');
 
 initUpdateEvents();
 
