@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { General } from '../Icons/UI';
 import './Carousel.scss';
 
@@ -8,7 +8,7 @@ interface Props{
     changeSlide: (index: number) => void
 }
 
-export default function Carousel(props: Props) {
+const Carousel: FC<Props> = (props: Props) => {
   const { changeSlide, activeIndex, amount } = props;
   const items: JSX.Element[] = [];
 
@@ -40,4 +40,6 @@ export default function Carousel(props: Props) {
       { items.map((item) => item) }
     </div>
   );
-}
+};
+
+export default Carousel;

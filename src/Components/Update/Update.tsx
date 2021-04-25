@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Warning } from '@interfaces/Warning.d';
 import { General, Crosses } from '../Icons/UI';
 import './Update.scss';
@@ -16,7 +16,7 @@ interface Button{
     value: boolean
 }
 
-export default function Update(props: Props) {
+const Update: FC<Props> = (props: Props) => {
   const handleIPCevent = (shouldUpdate: boolean): void => {
     const { rejectUpdate, setWarning } = props;
 
@@ -73,4 +73,6 @@ export default function Update(props: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default Update;

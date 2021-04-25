@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Warning } from '@/interfaces/Warning';
 import getCards from './items';
 import './Card.scss';
@@ -7,7 +7,7 @@ interface Props{
   setWarning: (warning: string | Warning) => void
 }
 
-export default function Card(props: Props) {
+const Card: FC<Props> = (props: Props) => {
   const { setWarning } = props;
   const cards = getCards(setWarning);
 
@@ -35,4 +35,6 @@ export default function Card(props: Props) {
       }
     </div>
   );
-}
+};
+
+export default Card;

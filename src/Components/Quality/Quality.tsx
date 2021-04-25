@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import './Quality.scss';
 import { Quality as QualityInterface } from '@/interfaces/Config';
@@ -9,7 +9,7 @@ interface Props{
     initialQuality: QualityInterface
 }
 
-export default function Quality(props: Props) {
+const Quality: FC<Props> = (props: Props) => {
   const { changeQuality, initialQuality } = props;
 
   return (
@@ -37,4 +37,6 @@ export default function Quality(props: Props) {
       }
     </select>
   );
-}
+};
+
+export default Quality;

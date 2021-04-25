@@ -65,6 +65,7 @@ const App: FC = () => {
   };
 
   const rejectUpdate = () => setUpdate(false);
+  const removeWarning = () => setWarning('');
 
   return (
     <div className={`theme ${theme}`}>
@@ -93,8 +94,9 @@ const App: FC = () => {
       { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
 
       { (warning && typeof warning === 'string')
-        ? <Warning warning={warning} removeWarning={() => setWarning('')} />
-        : warning && <CustomWarning warning={warning as WarningInterface} removeWarning={() => setWarning('')} />}
+        ? <Warning warning={warning} removeWarning={removeWarning} />
+        : warning
+        && <CustomWarning warning={warning as WarningInterface} removeWarning={removeWarning} />}
     </div>
   );
 };

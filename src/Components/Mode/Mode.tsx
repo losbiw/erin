@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import { Mode as ModeEnum } from '@/interfaces/Config';
 import enumKeys from '@helpers/enum';
@@ -9,7 +9,7 @@ interface Props{
     changeMode: (mode: ModeEnum) => void
 }
 
-export default function Mode(props: Props) {
+const Mode: FC<Props> = (props: Props) => {
   const { current, changeMode } = props;
 
   return (
@@ -37,4 +37,6 @@ export default function Mode(props: Props) {
       }
     </div>
   );
-}
+};
+
+export default Mode;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 import { Pages, SharedState } from '@/interfaces/UserState';
 import { Warning } from '@/interfaces/Warning';
 import { Config } from '@/interfaces/Config';
@@ -15,7 +15,7 @@ interface Props extends SharedState{
     updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
-export default function Page(props: Props) {
+const Page: FC<Props> = (props: Props) => {
   const {
     switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config,
   } = props;
@@ -63,4 +63,6 @@ export default function Page(props: Props) {
   }
 
   return <></>;
-}
+};
+
+export default Page;

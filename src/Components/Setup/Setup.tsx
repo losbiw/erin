@@ -38,6 +38,9 @@ const Setup: FC<Props> = (props: Props) => {
     changeSlide(index);
   };
 
+  const handlePrevSlide = () => handleScroll(false);
+  const handleNextSlide = () => handleScroll(true);
+
   const {
     isComplete, switchTheme, theme, setWarning, setIsComplete, setIsRequiredFilled,
   } = props;
@@ -49,7 +52,10 @@ const Setup: FC<Props> = (props: Props) => {
         theme={theme}
       />
 
-      <Arrows handleChange={[() => handleScroll(false), () => handleScroll(true)]} />
+      <Arrows
+        handleBackClick={handlePrevSlide}
+        handleForwardClick={handleNextSlide}
+      />
 
       <Slider
         changeSlide={changeSlideByName}

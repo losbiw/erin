@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import config from '@modules/config';
 import './Save.scss';
 import { Config } from '@/interfaces/Config';
@@ -8,7 +8,7 @@ interface Props{
     setIsComplete: (isComplete: boolean) => void
 }
 
-export default function Save(props: Props) {
+const Save: FC<Props> = (props: Props) => {
   const handleClick = () => {
     const { configData, setIsComplete } = props;
 
@@ -29,4 +29,6 @@ export default function Save(props: Props) {
       </button>
     </div>
   );
-}
+};
+
+export default Save;

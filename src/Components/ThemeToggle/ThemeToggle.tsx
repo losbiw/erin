@@ -1,5 +1,5 @@
 import { Theme } from '@/interfaces/Config';
-import React from 'react';
+import React, { FC } from 'react';
 import Themes from '../Icons/Themes';
 import './ThemeToggle.scss';
 
@@ -8,7 +8,7 @@ interface Props{
     switchTheme: () => void
 }
 
-export default function ThemeToggle(props: Props) {
+const ThemeToggle: FC<Props> = (props: Props) => {
   const { theme, switchTheme } = props;
   const { Moon, Sun } = Themes;
 
@@ -23,4 +23,6 @@ export default function ThemeToggle(props: Props) {
       <ThemeIcon />
     </button>
   );
-}
+};
+
+export default ThemeToggle;

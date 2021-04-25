@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Warning } from '@/interfaces/Warning';
 import Card from '../Card/Card';
-import Links from '../Links/Links';
+import { Links } from '../Links/Links';
 import { links } from './links';
 import './Info.scss';
 
@@ -9,7 +9,7 @@ interface Props{
     setWarning: (warning: string | Warning) => void
 }
 
-export default function Info(props: Props) {
+const Info: FC<Props> = (props: Props) => {
   const { setWarning } = props;
 
   return (
@@ -27,4 +27,6 @@ export default function Info(props: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default Info;

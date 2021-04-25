@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Warning as WarningInterface } from '@interfaces/Warning.d';
 import { General, Crosses } from '../Icons/UI';
 
@@ -14,7 +14,7 @@ interface CustomProps{
     removeWarning: () => void
 }
 
-export const CustomWarning = (props: CustomProps) => {
+const CustomWarning: FC<CustomProps> = (props: CustomProps) => {
   const { warning, removeWarning } = props;
   const { message, Icon } = warning;
 
@@ -34,7 +34,7 @@ export const CustomWarning = (props: CustomProps) => {
   );
 };
 
-export const Warning = (props: Props) => {
+const Warning: FC<Props> = (props: Props) => {
   const { warning, removeWarning } = props;
 
   return (
@@ -52,3 +52,5 @@ export const Warning = (props: Props) => {
     </div>
   );
 };
+
+export { Warning, CustomWarning };

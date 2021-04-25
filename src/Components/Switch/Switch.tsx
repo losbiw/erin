@@ -6,7 +6,7 @@ interface Props{
     handleSwitch: Function
 }
 
-export default function Switch(props: Props) {
+const Switch = (props: Props) => {
   const { isChecked, handleSwitch } = props;
 
   return (
@@ -23,4 +23,6 @@ export default function Switch(props: Props) {
       </span>
     </label>
   );
-}
+};
+
+export default Switch;

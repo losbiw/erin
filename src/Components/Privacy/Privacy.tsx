@@ -1,5 +1,5 @@
-import React from 'react';
-import Links from '../Links/Links';
+import React, { FC } from 'react';
+import { Links } from '../Links/Links';
 import Switch from '../Switch/Switch';
 import './Privacy.scss';
 
@@ -8,7 +8,7 @@ interface Props{
     acceptPolicy: () => void
 }
 
-export default function Privacy(props: Props) {
+const Privacy: FC<Props> = (props: Props) => {
   const { isAccepted, acceptPolicy } = props;
 
   return (
@@ -27,4 +27,6 @@ export default function Privacy(props: Props) {
       <Switch isChecked={isAccepted} handleSwitch={acceptPolicy} />
     </div>
   );
-}
+};
+
+export default Privacy;

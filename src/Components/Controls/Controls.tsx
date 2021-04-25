@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import Control from '../Icons/Control';
 import { Crosses } from '../Icons/UI';
 import './Controls.scss';
@@ -11,7 +11,7 @@ interface ButtonsIcons{
     close: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
-export default function Controls(_props: {}) {
+const Controls: FC = () => {
   const [MaximizeIcon, setIcon] = useState(() => Control.Maximize);
 
   const buttons: ButtonsIcons = {
@@ -61,4 +61,6 @@ export default function Controls(_props: {}) {
       </div>
     </div>
   );
-}
+};
+
+export default Controls;
