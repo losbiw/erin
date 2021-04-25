@@ -7,7 +7,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 module.exports = {
   mode: 'production',
   target: 'electron-main',
-  entry: './electron/main.ts',
+  entry: './ts-temp/main.js',
   output: {
     path: path.join(__dirname, '../build'),
     filename: 'main.js',
@@ -15,8 +15,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
+        test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
     ],
@@ -44,6 +44,6 @@ module.exports = {
     __filename: false,
   },
   resolve: {
-    extensions: ['.ts'],
+    extensions: ['.js'],
   },
 };

@@ -6,10 +6,9 @@
     "lib": ["esnext", "dom"],
     "jsx": "react",
     "sourceMap": true,
-    "outDir": "../build/",
+    "outDir": "../ts-temp/",
     "removeComments": true,
     "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,    
   }

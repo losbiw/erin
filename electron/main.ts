@@ -8,11 +8,11 @@ import defineOS from './os';
 import tray from './tray';
 import initIPCEvents from './ipcEvents';
 import initPowerEvents from './powerEvents';
-// import initUpdateEvents from './updateEvents';
+import initUpdateEvents from './updateEvents';
 
 require('dotenv').config({ path: join(__dirname, './.env') }); // change
 
-// initUpdateEvents();
+initUpdateEvents();
 
 let win: BrowserWindow;
 let winTray: Tray;
