@@ -12,6 +12,10 @@ const codes: Codes = {
     fix: 'Change keywords in settings',
     description: 'We couldn’t find any wallpaper according to your request',
   },
+  429: {
+    fix: 'Try reinstalling the app',
+    description: 'Unauthorized API connection',
+  },
   503: {
     fix: 'Change mode in settings',
     description: 'Weather services are currently unavailable',
