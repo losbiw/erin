@@ -16,11 +16,11 @@ const AspectRatio: FC<Props> = memo((props: Props) => {
   const {
     src, isActive, handleClick,
   } = props;
-  const addActiveClass = isActive ? 'active' : '';
+  const activeClass = isActive ? 'active' : '';
 
   return (
     <div
-      className={`aspect-ratio ${addActiveClass}`}
+      className={`aspect-ratio ${activeClass}`}
       role="presentation"
       onClick={handleClick}
       onKeyDown={handleClick}

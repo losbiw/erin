@@ -1,5 +1,5 @@
 import React, {
-  FC, useState, useEffect, lazy, Suspense,
+  FC, useState, useEffect,
 } from 'react';
 import config from '@modules/config';
 import OS from '@modules/OS';
@@ -8,14 +8,12 @@ import { Theme } from '@/interfaces/Config';
 import { Warning as WarningInterface } from '@interfaces/Warning.d';
 import Controls from './Components/Controls/Controls';
 import { Warning, CustomWarning } from './Components/Warning/Warning';
+import User from './Components/User/User';
+import Setup from './Components/Setup/Setup';
 import Update from './Components/Update/Update';
-import Loading from './Components/Loading/Loading';
 
 import './App.scss';
 import './style/global.scss';
-
-const User = lazy(() => import('./Components/User/User'));
-const Setup = lazy(() => import('./Components/Setup/Setup'));
 
 const { ipcRenderer } = window.require('electron');
 
@@ -75,27 +73,25 @@ const App: FC = () => {
     <div className={`theme ${theme}`}>
       <Controls />
 
-      <Suspense fallback={<Loading />}>
-        { isComplete && isRequiredFilled
-          ? (
-            <User
-              theme={theme}
-              setWarning={setWarning}
-              switchTheme={switchTheme}
-              setIsComplete={setIsComplete}
-            />
-          )
-          : (
-            <Setup
-              theme={theme}
-              isComplete={isComplete}
-              switchTheme={switchTheme}
-              setWarning={setWarning}
-              setIsComplete={setIsComplete}
-              setIsRequiredFilled={setIsRequiredFilled}
-            />
-          )}
-      </Suspense>
+      { isComplete && isRequiredFilled
+        ? (
+          <User
+            theme={theme}
+            setWarning={setWarning}
+            switchTheme={switchTheme}
+            setIsComplete={setIsComplete}
+          />
+        )
+        : (
+          <Setup
+            theme={theme}
+            isComplete={isComplete}
+            switchTheme={switchTheme}
+            setWarning={setWarning}
+            setIsComplete={setIsComplete}
+            setIsRequiredFilled={setIsRequiredFilled}
+          />
+        )}
 
       { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
 

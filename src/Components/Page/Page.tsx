@@ -1,14 +1,12 @@
-import React, { FC, lazy, Suspense } from 'react';
+import React, { FC, memo } from 'react';
 import { Pages, SharedState } from '@/interfaces/UserState';
 import { Warning } from '@/interfaces/Warning';
 import { Config } from '@/interfaces/Config';
+import Home from '../Home/Home';
+import Picker from '../Picker/Picker';
+import Settings from '../Settings/Settings';
+import Info from '../Info/Info';
 import './Page.scss';
-import Loading from '../Loading/Loading';
-
-const Home = lazy(() => import('../Home/Home'));
-const Picker = lazy(() => import('../Picker/Picker'));
-const Settings = lazy(() => import('../Settings/Settings'));
-const Info = lazy(() => import('../Info/Info'));
 
 interface Props extends SharedState{
     switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void,
@@ -21,10 +19,9 @@ const Page: FC<Props> = (props: Props) => {
   const {
     switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config,
   } = props;
-  let Element;
 
   if (current === Pages.Home && collection.length > 0) {
-    Element = () => (
+    return (
       <Home
         picture={collection[pictureIndex]}
         isLocked={isLocked}
@@ -33,8 +30,9 @@ const Page: FC<Props> = (props: Props) => {
         switchWallpaper={switchWallpaper}
       />
     );
-  } else if (current === Pages.Picker) {
-    Element = () => (
+  }
+  if (current === Pages.Picker) {
+    return (
       <Picker
         pictureIndex={pictureIndex}
         collection={collection}
@@ -43,10 +41,11 @@ const Page: FC<Props> = (props: Props) => {
         switchWallpaper={switchWallpaper}
       />
     );
-  } else if (current === Pages.Settings) {
+  }
+  if (current === Pages.Settings) {
     const { setWarning, updateConfig } = props;
 
-    Element = () => (
+    return (
       <Settings
         config={config}
         setWarning={setWarning}
@@ -54,21 +53,16 @@ const Page: FC<Props> = (props: Props) => {
         updateConfig={updateConfig}
       />
     );
-  } else if (current === Pages.Info) {
+  }
+  if (current === Pages.Info) {
     const { setWarning } = props;
 
-    Element = () => (
+    return (
       <Info setWarning={setWarning} />
     );
-  } else {
-    Element = () => <></>;
   }
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <Element />
-    </Suspense>
-  );
+  return <></>;
 };
 
 export default Page;
