@@ -3,7 +3,7 @@ import './Switch.scss';
 
 interface Props{
     isChecked: boolean,
-    handleSwitch: Function
+    handleSwitch: () => void
 }
 
 const Switch = (props: Props) => {
@@ -16,7 +16,7 @@ const Switch = (props: Props) => {
         type="checkbox"
         className="switch-input"
         defaultChecked={isChecked}
-        onChange={(_e) => handleSwitch()}
+        onChange={handleSwitch}
       />
       <span className="switch-slider">
         <span className="gradient" />

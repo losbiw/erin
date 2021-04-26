@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import warning from '@modules/warning';
 import {
@@ -36,6 +36,13 @@ interface Props{
 }
 
 const Form: FC<Props> = (props: Props) => {
+  const {
+    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete,
+  } = props;
+  const {
+    privacy, mode, timer, keywords, startup, quality,
+  } = config;
+
   const updateState = (update: ConfigUpdate) => {
     const { setWarning, updateSettingsState, config } = props;
     const clone = { ...update };
@@ -47,20 +54,19 @@ const Form: FC<Props> = (props: Props) => {
     updateSettingsState(update);
   };
 
-  const {
-    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete,
-  } = props;
+  const privacyHandler = useCallback(() => updateState({ privacy: !privacy }), [privacy]);
+  const modeHandler = useCallback((mode: ModeEnum) => updateState({ mode }), []);
+  const keywordsHandler = useCallback((keywords: string[]) => updateState({ keywords }), []);
+  const timerHandler = useCallback((timer: number) => updateState({ timer }), []);
+  const startupHandler = useCallback(() => updateState({ startup: !startup }), [startup]);
+  const qualityHandler = useCallback((quality: QualityInterface) => updateState({ quality }), []);
 
   const renderSettingsItem = (name: Settings, isActive: boolean) => {
-    const {
-      privacy, mode, timer, keywords, startup, quality,
-    } = config;
-
     if (name === Settings.Privacy) {
       return (
         <Privacy
           isAccepted={privacy}
-          acceptPolicy={() => updateState({ privacy: !privacy })}
+          acceptPolicy={privacyHandler}
         />
       );
     }
@@ -68,7 +74,7 @@ const Form: FC<Props> = (props: Props) => {
       return (
         <Mode
           current={mode}
-          changeMode={(mode: ModeEnum) => updateState({ mode })}
+          changeMode={modeHandler}
         />
       );
     }
@@ -78,7 +84,7 @@ const Form: FC<Props> = (props: Props) => {
           keywords={[...keywords]}
           isActive={isActive}
           isSetup={isSetup}
-          changeKeywords={(keywords: string[]) => updateState({ keywords })}
+          changeKeywords={keywordsHandler}
           setWarning={setWarning}
         />
       );
@@ -89,7 +95,7 @@ const Form: FC<Props> = (props: Props) => {
           isActive={isActive}
           time={timer}
           setWarning={setWarning}
-          updateTimeout={(timer: number) => updateState({ timer })}
+          updateTimeout={timerHandler}
         />
       );
     }
@@ -97,7 +103,7 @@ const Form: FC<Props> = (props: Props) => {
       return (
         <Startup
           isChecked={startup}
-          handleSwitch={() => updateState({ startup: !startup })}
+          handleSwitch={startupHandler}
         />
       );
     }
@@ -105,7 +111,7 @@ const Form: FC<Props> = (props: Props) => {
       return (
         <Quality
           initialQuality={quality}
-          changeQuality={(quality: QualityInterface) => updateState({ quality })}
+          changeQuality={qualityHandler}
         />
       );
     }
