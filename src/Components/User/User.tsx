@@ -63,12 +63,14 @@ export default class User extends Component<Props, State> {
       ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => this.switchWallpaper(args, false));
 
       ipcRenderer.on('unlock-screen', () => {
-        const { collection } = this.state;
-        const randomIndex = Math.round(Math.random() * collection.length);
+        setTimeout(() => {
+          const { collection } = this.state;
+          const randomIndex = Math.round(Math.random() * collection.length);
 
-        this.setState({
-          pictureIndex: randomIndex,
-        });
+          this.setState({
+            pictureIndex: randomIndex,
+          });
+        }, 1000);
       });
     }
 
