@@ -1,38 +1,40 @@
-.loading{
+.loading {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    span{
-        svg{
+    span {
+        svg {
             width: 2vw;
             height: 2vw;
             margin-right: 3vw;
             animation: circle-size linear 1.5s infinite;
 
-            .gradient{
+            .gradient {
                 animation: gradient ease-in 1.5s infinite;
             }
         }
 
-        &:nth-child(2){
-            svg, .gradient{
+        &:nth-child(2) {
+            svg,
+            .gradient {
                 animation-delay: 0.4s;
             }
         }
 
-        &:nth-child(3){
-            svg, .gradient{
+        &:nth-child(3) {
+            svg,
+            .gradient {
                 animation-delay: 0.8s;
             }
         }
     }
 }
 
-@keyframes circle-size{
-    33%{
+@keyframes circle-size {
+    33% {
         transform: scale(1.5);
     }
     66% {
@@ -40,8 +42,8 @@
     }
 }
 
-@keyframes gradient{
-    33%{
+@keyframes gradient {
+    33% {
         opacity: 1;
     }
     66% {

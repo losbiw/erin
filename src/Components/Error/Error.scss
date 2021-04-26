@@ -1,29 +1,30 @@
-@import '../../style/main.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
 
 $shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
 
-.error{
+.error {
     width: $page-width;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    .code-key, .fix{
+    .code-key,
+    .fix {
         transition-property: color, text-shadow;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;
     }
 
-    .fix{
+    .fix {
         margin: 0;
         font-size: 3.65vw;
         font-weight: 700;
         margin: 3vw;
     }
-    
-    .description{
+
+    .description {
         margin: 0;
         width: 51vw;
         font-weight: 500;
@@ -32,18 +33,18 @@ $shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
         text-align: center;
     }
 
-    .err-code{
+    .err-code {
         height: auto;
         display: flex;
         align-items: center;
 
-        .code-key{
+        .code-key {
             font-size: 18.2vw;
             line-height: 17vw;
             font-weight: 600;
             margin: 0;
 
-            &:nth-child(2){
+            &:nth-child(2) {
                 font-size: 22.4vw;
                 background: $gradient;
                 -webkit-background-clip: text;
@@ -56,24 +57,26 @@ $shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
     }
 }
 
-.light .error{
-    .description{
+.light .error {
+    .description {
         color: $hr-light;
     }
 
-    .code-key, .fix{
+    .code-key,
+    .fix {
         color: $fill-light;
         text-shadow: 0px 0px 43px rgba(82, 82, 82, 0.15);
     }
-}  
+}
 
-.dark .error{
-    .description{
+.dark .error {
+    .description {
         color: $hr-dark;
     }
 
-    .code-key, .fix{
+    .code-key,
+    .fix {
         color: $fill-dark;
         text-shadow: 0px 0px 76px rgba(0, 0, 0, 0.56);
     }
-}  
+}

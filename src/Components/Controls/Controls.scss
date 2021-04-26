@@ -1,6 +1,6 @@
-@import '../../style/main.scss';
+@import "../../style/main.scss";
 
-.control{
+.control {
     width: 100%;
     top: 0;
     right: 1.56vmax;
@@ -8,17 +8,17 @@
     z-index: 10;
     display: flex;
 
-    .draggable{
+    .draggable {
         margin-top: 0.1vh;
         width: 100%;
         -webkit-app-region: drag;
     }
 
-    .control-container{
+    .control-container {
         margin-top: 1.56vmax;
         display: flex;
 
-        .control-btn{
+        .control-btn {
             width: 1.2vw;
             height: 1.2vw;
             border: none;
@@ -28,13 +28,13 @@
             transition-duration: $transition-duration;
             padding: 0;
 
-            &:nth-child(-n+2){
+            &:nth-child(-n + 2) {
                 margin-right: 1.5vw;
             }
-            &:hover{
+            &:hover {
                 transform: scale(1.2);
             }
-            svg{
+            svg {
                 height: 100%;
                 width: 100%;
             }
@@ -42,22 +42,22 @@
     }
 }
 
-.light .control .control-btn svg{
+.light .control .control-btn svg {
     filter: $icon-shadow-light;
     fill: $fill-light;
 }
 
-.dark .control .control-btn svg{
+.dark .control .control-btn svg {
     filter: $icon-shadow-dark;
     fill: $fill-dark;
 }
 
-@media (max-aspect-ratio: 1/1){
-    .control .control-btn{
+@media (max-aspect-ratio: 1/1) {
+    .control .control-btn {
         width: 2vh;
         height: 2vh;
 
-        &:nth-child(-n+2){
+        &:nth-child(-n + 2) {
             margin-right: 3vw;
         }
     }

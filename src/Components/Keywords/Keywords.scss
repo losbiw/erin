@@ -1,13 +1,13 @@
-@import '../../style/main.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
 
 $placeholder-light: #d7d7d7;
 $placeholder-dark: #454546;
 
-.keywords{
+.keywords {
     border-radius: 1.82vw;
 
-    .keyword-input{
+    .keyword-input {
         font-size: 1.5625vw;
         height: 4vw;
         width: 100%;
@@ -21,7 +21,7 @@ $placeholder-dark: #454546;
         border: none;
         position: relative;
 
-        &::placeholder{
+        &::placeholder {
             top: 50%;
             left: 0;
             transform: translate(0, -10%);
@@ -30,11 +30,11 @@ $placeholder-dark: #454546;
         }
     }
 
-    .background{
+    .background {
         background: $gradient;
     }
 
-    .keywords-container{
+    .keywords-container {
         min-height: 4vw;
         padding: 0.3125vw 0 0 0.3125vw;
         padding-bottom: 0;
@@ -47,7 +47,7 @@ $placeholder-dark: #454546;
         flex-wrap: wrap;
         overflow: hidden;
 
-        .keyword{
+        .keyword {
             height: 3.375vw;
             margin: 0 0.3125vw 0.3125vw 0;
             padding: 0 1.1vw;
@@ -61,19 +61,19 @@ $placeholder-dark: #454546;
             transition-timing-function: $transition-function;
             transition-duration: $transition-duration;
 
-            p{
+            p {
                 margin-right: 1vw;
                 transition-property: box-shadow;
                 transition-timing-function: $transition-function;
                 transition-duration: $transition-duration;
             }
 
-            &:last-child{
+            &:last-child {
                 margin-right: 0;
             }
         }
 
-        .delete{
+        .delete {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -87,17 +87,17 @@ $placeholder-dark: #454546;
             transition-timing-function: $transition-function;
             transition-duration: $transition-duration;
 
-            svg{
+            svg {
                 width: 100%;
                 height: 100%;
             }
 
-            &:hover{
+            &:hover {
                 transform: scale(1.25);
             }
         }
 
-        .click{
+        .click {
             top: 0;
             bottom: 0;
             right: 0;
@@ -105,10 +105,10 @@ $placeholder-dark: #454546;
             position: absolute;
             z-index: 1;
 
-            &:hover{
+            &:hover {
                 cursor: pointer;
 
-                .transparent{
+                .transparent {
                     opacity: 0;
                 }
             }
@@ -116,84 +116,84 @@ $placeholder-dark: #454546;
     }
 }
 
-.light{
-    .keywords{
+.light {
+    .keywords {
         box-shadow: $item-shadow-light;
 
-        .keyword-input{
+        .keyword-input {
             background-color: $fill-light;
             color: $background-light;
 
-            &::placeholder{
+            &::placeholder {
                 color: $placeholder-light;
             }
         }
     }
 
-    .keywords-container{
-        .click .transparent{
+    .keywords-container {
+        .click .transparent {
             background-color: $fill-light;
         }
 
-        .keyword{
+        .keyword {
             background-color: $background-light;
             color: $fill-light;
         }
     }
 }
 
-.dark{
-    .keywords{
+.dark {
+    .keywords {
         box-shadow: $item-shadow-dark;
 
-        .keyword-input{
+        .keyword-input {
             background-color: $fill-dark;
             color: $background-dark;
-    
-            &::placeholder{
+
+            &::placeholder {
                 color: $placeholder-dark;
             }
         }
     }
 
-    .keywords-container{
-        .click .transparent{
+    .keywords-container {
+        .click .transparent {
             background-color: $fill-dark;
         }
 
-        .keyword{
+        .keyword {
             background-color: $background-dark;
             color: $fill-dark;
         }
     }
 }
 
-@media (max-aspect-ratio: 1/1){
-    .keywords .keywords-container{
+@media (max-aspect-ratio: 1/1) {
+    .keywords .keywords-container {
         min-height: 6vw;
         padding: 0.4vw 0 0 0.4vw;
         border-radius: 3vw;
 
-        .keyword{
+        .keyword {
             height: 5vw;
             margin: 0 0.4vw 0.4vw 0;
             padding: 0 1.5vw;
             font-size: 1.8vw;
             border-radius: 3vw;
 
-            .keyword-input{
+            .keyword-input {
                 height: 6vw;
                 border-radius: 6vw;
                 font-size: 1.8vw;
                 box-sizing: border-box;
 
-                &::placeholder{
+                &::placeholder {
                     font-size: 1.8vw;
                 }
             }
         }
 
-        .delete{
+        .delete {
             width: 1.1vw;
             height: 1.1vw;
         }

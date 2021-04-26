@@ -1,19 +1,19 @@
-@import '../../style/main.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
 
-.mode-container{
+.mode-container {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    .radio{
+    .radio {
         height: 4vw;
         box-sizing: border-box;
         position: relative;
         border-radius: 1.82vw;
 
-        .background{
+        .background {
             height: 100%;
             padding: 0.25vw;
             box-sizing: border-box;
@@ -21,21 +21,21 @@
             justify-content: center;
             align-items: center;
             border-radius: 1.82vw;
-            transition: .2s;
+            transition: 0.2s;
 
-            .transparent{
-                opacity: 1.0;
+            .transparent {
+                opacity: 1;
                 position: absolute;
                 top: 0;
                 bottom: 0;
                 right: 0;
                 left: 0;
                 z-index: 2;
-                transition: .3s;
+                transition: 0.3s;
                 border-radius: 1.7vw;
             }
 
-            .mode-label{
+            .mode-label {
                 display: flex;
                 align-items: center;
                 height: 100%;
@@ -52,100 +52,100 @@
             }
         }
 
-        .mode-input{
+        .mode-input {
             opacity: 0;
             height: 100%;
             width: 100%;
             position: absolute;
             z-index: 4;
 
-            &:checked{
-                .background{
+            &:checked {
+                .background {
                     box-shadow: $item-shadow-light;
                 }
 
-                & + .background{
+                & + .background {
                     background: $gradient;
 
-                    .transparent{
+                    .transparent {
                         opacity: 0;
                     }
 
-                    .mode-label{
+                    .mode-label {
                         box-shadow: none;
                     }
                 }
             }
 
-            &:not(:checked):hover{
+            &:not(:checked):hover {
                 cursor: pointer;
             }
         }
 
-        &:hover .background{
+        &:hover .background {
             background: $gradient;
-        
-            .transparent{
+
+            .transparent {
                 opacity: 0.4;
             }
-        
-            .mode-label{
+
+            .mode-label {
                 box-shadow: none;
             }
         }
     }
 }
 
-.light .radio{
-    .background{
+.light .radio {
+    .background {
         background: $background-light;
 
-        .mode-label{
+        .mode-label {
             color: $background-light;
             background-color: $fill-light;
             box-shadow: $item-shadow-light;
         }
 
-        .transparent{
+        .transparent {
             background-color: $background-light;
         }
     }
 
-    .mode-input:checked + .background{
+    .mode-input:checked + .background {
         box-shadow: $item-shadow-light;
     }
 }
 
-.dark .radio{
-    .background{
+.dark .radio {
+    .background {
         background: $background-dark;
 
-        .mode-label{
+        .mode-label {
             color: $background-dark;
             background-color: $fill-dark;
             box-shadow: $item-shadow-dark;
         }
 
-        .transparent{
+        .transparent {
             background-color: $background-dark;
         }
     }
 
-    .mode-input:checked + .background{
+    .mode-input:checked + .background {
         box-shadow: $item-shadow-dark;
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .mode-container .radio{
+    .mode-container .radio {
         height: 6vw;
         border-radius: 3vw;
 
-        .background{
+        .background {
             padding: 0.4vw;
             border-radius: 3vw;
 
-            .mode-label{
+            .mode-label {
                 padding: 0 2vw;
                 font-size: 2vw;
                 border-radius: 3vw;

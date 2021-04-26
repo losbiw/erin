@@ -1,29 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-@import './style/main.scss';
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+@import "./style/main.scss";
 
-body{
+body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     user-select: none;
 
-    .theme{
+    .theme {
         transition-property: background-color;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;
 
-        &.light{
+        &.light {
             background-color: $background-light;
         }
 
-        &.dark{
+        &.dark {
             background-color: $background-dark;
         }
     }
 
     svg,
-    rect:first-child{
+    rect:first-child {
         transition-property: fill;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;

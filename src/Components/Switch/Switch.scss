@@ -1,5 +1,5 @@
-@import '../../style/main.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
 
 $switch-on-shadow: -2px 1px 16.38px 1.62px rgba(0, 0, 0, 0.32);
 $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
@@ -10,14 +10,14 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
     width: 5.72vw;
     height: 2.6vw;
 
-    .switch-input{ 
+    .switch-input {
         width: 0;
         height: 0;
-        
-        &:checked + .switch-slider{
+
+        &:checked + .switch-slider {
             background-color: transparent;
 
-            &:before{
+            &:before {
                 box-shadow: $switch-on-shadow;
                 background: white;
                 transform: translateX(3.15vw);
@@ -29,7 +29,7 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
         }
     }
 
-    .switch-slider{
+    .switch-slider {
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -52,7 +52,7 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
             box-shadow: $switch-off-shadow;
         }
 
-        .gradient{
+        .gradient {
             background: $gradient;
             top: 0;
             bottom: 0;
@@ -66,30 +66,31 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
     }
 }
 
-.light .switch-slider{
+.light .switch-slider {
     background-color: $fill-light;
     box-shadow: $item-shadow-light;
 
-    &:before{
+    &:before {
         background: $background-light;
     }
 }
 
-.dark .switch-slider{
+.dark .switch-slider {
     background-color: $fill-dark;
     box-shadow: $item-shadow-dark;
 
-    &:before{
+    &:before {
         background: $background-dark;
     }
 }
 
-@media (max-aspect-ratio: 1/1){
+@media (max-aspect-ratio: 1/1) {
     .switch {
         width: 8vw;
         height: 4vw;
 
-        .switch-slider, .switch-slider .gradient{
+        .switch-slider,
+        .switch-slider .gradient {
             border-radius: 4vw;
         }
 

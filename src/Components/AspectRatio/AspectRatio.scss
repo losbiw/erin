@@ -1,12 +1,12 @@
-@import '../../style/main.scss';
+@import "../../style/main.scss";
 
-.aspect-ratio{
-    .transparent{
+.aspect-ratio {
+    .transparent {
         width: 0;
         height: 0;
     }
 
-    .container{
+    .container {
         overflow: hidden;
         height: 0;
         width: 100%;
@@ -16,7 +16,7 @@
         border-radius: 2.5vw;
     }
 
-    .aspect-image{
+    .aspect-image {
         min-height: 100%;
         width: 100%;
         position: absolute;
@@ -32,10 +32,10 @@
     }
 }
 
-.light .aspect-ratio .container{
+.light .aspect-ratio .container {
     background: $background-light;
 }
 
-.dark .aspect-ratio .container{
+.dark .aspect-ratio .container {
     background: $background-dark;
 }

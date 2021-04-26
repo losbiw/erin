@@ -1,13 +1,13 @@
-@import '../../style/main.scss';
-@import '../../style/nav.scss';
+@import "../../style/main.scss";
+@import "../../style/nav.scss";
 
-.slider-container{
+.slider-container {
     height: 100%;
     width: 100%;
     overflow: visible;
     position: relative;
 
-    .translate{
+    .translate {
         width: 100%;
         height: 100%;
         transition-property: transform;
@@ -16,33 +16,33 @@
     }
 }
 
-.setup{
-    .settings{
+.setup {
+    .settings {
         flex-direction: row;
     }
 
-    .setup-title{
+    .setup-title {
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: center;
         padding: 0 5vw;
-    
-        svg{
+
+        svg {
             height: 15vw;
             width: 15vw;
             margin-right: 0;
             margin-top: 12.75vh;
         }
-    
-        h1{
+
+        h1 {
             line-height: 2vw;
             font-size: 2.35vw;
             margin: 5.8vh 0 3vh;
             text-align: center;
         }
-    
-        p{
+
+        p {
             font-size: 1.4vw;
             line-height: 2.5vw;
             margin: 0;
@@ -50,74 +50,74 @@
         }
     }
 
-    .item{
+    .item {
         min-width: 70vw;
         position: relative;
         margin-right: 10vw;
         border-radius: 3.125vw;
         background-size: cover;
         background-position: center;
-    
-        .setting{
+
+        .setting {
             margin: 4.8vh 0 8vh;
             transition-property: transform;
             transition-timing-function: $transition-function;
             transition-duration: $transition-duration;
-    
-            &:hover{
+
+            &:hover {
                 transform: scale(1.1);
             }
         }
-    
-        .container{
+
+        .container {
             flex-direction: column;
             border-radius: 3.125vw;
         }
-    
-        &.active-item{
+
+        &.active-item {
             transform: scale(1.05);
         }
-    
-        &:first-child{
+
+        &:first-child {
             margin-left: 9.5vw;
         }
     }
 
-    .separator{
+    .separator {
         display: none;
     }
 }
 
-.light .setup .item{
+.light .setup .item {
     box-shadow: $shadow-light;
     color: $fill-light;
 
-    .container{
+    .container {
         background: rgba(248, 248, 252, 0.7);
     }
 }
 
-.dark .setup .item{
+.dark .setup .item {
     box-shadow: $shadow-dark;
     color: $fill-dark;
 
-    .container{
-        background:  rgba(22, 22, 24, 0.85);
+    .container {
+        background: rgba(22, 22, 24, 0.85);
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .setup .setup-title{
-        svg{
+    .setup .setup-title {
+        svg {
             width: 10vh;
         }
 
-        h1{
+        h1 {
             line-height: 2vh;
             font-size: 2.35vh;
         }
 
-        p{
+        p {
             font-size: 1.4vh;
             line-height: 2.5vh;
         }

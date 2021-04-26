@@ -1,15 +1,16 @@
-@import 'main.scss';
+@import "main.scss";
 
-button{
-    &:hover{
+button {
+    &:hover {
         cursor: pointer;
 
-        .gradient{
-            opacity: 1.0;
+        .gradient {
+            opacity: 1;
         }
     }
 
-    &:focus{ //change
+    &:focus {
+        //change
         outline: none;
     }
 
@@ -18,11 +19,13 @@ button{
     }
 }
 
-button, input, select{
-    font-family: 'Montserrat', sans-serif;
+button,
+input,
+select {
+    font-family: "Montserrat", sans-serif;
 }
 
-.background{
+.background {
     height: 100%;
     padding: 0.25vw;
     box-sizing: border-box;
@@ -30,22 +33,22 @@ button, input, select{
     justify-content: center;
     align-items: center;
     border-radius: 1.82vw;
-    transition: .2s;
+    transition: 0.2s;
 }
 
-.transparent{
-    opacity: 1.0;
+.transparent {
+    opacity: 1;
     position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
     z-index: 2;
-    transition: .3s;
+    transition: 0.3s;
     border-radius: 1.7vw;
 }
 
-.nav-btn{
+.nav-btn {
     display: inline-block;
     background-color: transparent;
     border: none;
@@ -55,38 +58,39 @@ button, input, select{
     transition-duration: $transition-duration;
     padding: 0 2.08vw;
 
-    &:hover{
+    &:hover {
         transform: scale(1.09);
     }
 
-    &.active{
+    &.active {
         transform: scale(1.09);
 
-        &::after, .gradient{
+        &::after,
+        .gradient {
             opacity: 1;
         }
 
-        &:hover{
+        &:hover {
             cursor: default;
         }
     }
 
-    svg{
+    svg {
         width: 3.125vw;
         height: 3.125vw;
     }
 
-    .gradient{
-        opacity: 0.0;
-        transition: opacity .5s ease;
+    .gradient {
+        opacity: 0;
+        transition: opacity 0.5s ease;
         display: inline-block;
     }
 
-    &::after{
-        transition: .5s;
+    &::after {
+        transition: 0.5s;
         opacity: 0;
         border-radius: 20px;
-        content: '';
+        content: "";
         display: block;
         height: 110%;
         width: 0.27vw;
@@ -97,16 +101,16 @@ button, input, select{
     }
 }
 
-.gradient{
-    opacity: 0.0;
-    transition: opacity .3s ease;
+.gradient {
+    opacity: 0;
+    transition: opacity 0.3s ease;
     display: inline-block;
 }
 
-.light svg rect:first-child{
+.light svg rect:first-child {
     fill: $fill-light;
 }
 
-.dark svg rect:first-child{
+.dark svg rect:first-child {
     fill: $fill-dark;
 }

@@ -1,30 +1,28 @@
-@import '../../style/main.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
 
-.timer{
+.timer {
     justify-content: center;
     margin-bottom: 1.3vw;
 
-    .time-container{
+    .time-container {
         display: flex;
         align-items: center;
         justify-content: flex-start;
 
-        .time{
+        .time {
             display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: relative;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
 
-            
-
-            .wrapper{
+            .wrapper {
                 display: flex;
                 justify-content: center;
                 align-items: center;
 
-                .time-input{
+                .time-input {
                     font-weight: 600;
                     height: 4vw;
                     text-align: center;
@@ -36,19 +34,19 @@
                     transition-timing-function: $transition-function;
                     transition-duration: $transition-duration;
 
-                    &:focus{
+                    &:focus {
                         outline: none;
                     }
                 }
 
-                .colon{
+                .colon {
                     font-weight: 500;
                     margin: 0 0.72vw;
                     font-size: 1.8vw;
                 }
             }
 
-            .time-label{
+            .time-label {
                 font-weight: 500;
                 text-align: center;
                 width: 4.6vw;
@@ -63,67 +61,67 @@
 
 .time-input::-webkit-outer-spin-button,
 .time-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.light .timer .time-container .time{
-    .wrapper{
-        .time-input{
+.light .timer .time-container .time {
+    .wrapper {
+        .time-input {
             background-color: $fill-light;
             color: $background-light;
             box-shadow: $item-shadow-light;
         }
 
-        .colon{
+        .colon {
             color: $fill-light;
         }
     }
 
-    .time-label{
+    .time-label {
         color: #626262;
     }
 }
- 
-.dark .timer .time-container .time{
-    .wrapper{
-        .time-input{
+
+.dark .timer .time-container .time {
+    .wrapper {
+        .time-input {
             background-color: $fill-dark;
             color: $background-dark;
             box-shadow: $item-shadow-dark;
         }
 
-        .colon{
+        .colon {
             color: $fill-dark;
         }
     }
 
-    .time-label{
+    .time-label {
         color: #d1d1d1;
     }
 }
 
-@media (max-aspect-ratio: 1/1){
-    .timer{
+@media (max-aspect-ratio: 1/1) {
+    .timer {
         justify-content: flex-start;
         margin-bottom: 1.3vw;
 
-        .time-container .time{
-            .wrapper{
-                .time-input{
+        .time-container .time {
+            .wrapper {
+                .time-input {
                     height: 6vw;
                     border-radius: 2.3vw;
                     width: 6.3vw;
                     font-size: 3vw;
                 }
 
-                .colon{
+                .colon {
                     margin: 0 0.72vw;
                     font-size: 1.8vw;
                 }
             }
 
-            .time-label{
+            .time-label {
                 width: 6.3vw;
                 font-size: 1.5vw;
                 top: 7vw;

@@ -1,6 +1,6 @@
-@import '../../style/main.scss';
+@import "../../style/main.scss";
 
-.carousel{
+.carousel {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -10,7 +10,7 @@
     left: 50%;
     transform: translate(-50%);
 
-    .car-button{
+    .car-button {
         background-color: transparent;
         display: flex;
         justify-content: center;
@@ -24,44 +24,44 @@
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;
 
-        svg{
+        svg {
             width: 90%;
             height: 90%;
         }
-        &:last-child{
+        &:last-child {
             margin-right: 0;
         }
     }
 
-    .active .gradient{
+    .active .gradient {
         opacity: 1;
     }
-    
-    .non-active:hover{
+
+    .non-active:hover {
         transform: scale(1.3);
 
-        svg .gradient{
+        svg .gradient {
             opacity: 0;
         }
     }
 
-    .active{
+    .active {
         transform: scale(1.375);
     }
 }
 
-.light .carousel .car-button svg{
+.light .carousel .car-button svg {
     fill: $fill-light;
     filter: $icon-shadow-light;
 }
 
-.dark .carousel .car-button svg{
+.dark .carousel .car-button svg {
     fill: $fill-dark;
     filter: $icon-shadow-dark;
 }
 
-@media (min-aspect-ratio: 18/9){
-    .carousel{
+@media (min-aspect-ratio: 18/9) {
+    .carousel {
         display: none;
     }
 }

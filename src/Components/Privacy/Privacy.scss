@@ -1,18 +1,18 @@
-.privacy{
+.privacy {
     justify-content: center;
 
-    .text{
+    .text {
         display: flex;
         align-items: center;
         font-size: 1vw;
         white-space: pre;
     }
 
-    .switch{
+    .switch {
         transform: scale(0.75);
     }
 
-    .link .title{
+    .link .title {
         text-decoration: underline;
         text-underline-position: under;
     }

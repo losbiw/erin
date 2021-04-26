@@ -1,7 +1,7 @@
 @import "../../style/settings.scss";
 @import "../../style/main.scss";
 
-.user{
+.user {
     padding: 0;
     margin: 0;
     height: 100vh;
@@ -11,7 +11,7 @@
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .user{
+    .user {
         padding-left: 0;
         flex-direction: column-reverse;
     }
@@ -21,19 +21,20 @@
     height: 7px;
     width: 7px;
 }
-::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
     border-radius: 7px;
 }
 
-.light ::-webkit-scrollbar-track{
+.light ::-webkit-scrollbar-track {
     background: $hr-light;
 }
-.light ::-webkit-scrollbar-thumb{
+.light ::-webkit-scrollbar-thumb {
     background: $fill-light;
 }
-.dark ::-webkit-scrollbar-track{
+.dark ::-webkit-scrollbar-track {
     background: $hr-dark;
 }
-.dark ::-webkit-scrollbar-thumb{
+.dark ::-webkit-scrollbar-thumb {
     background: $fill-dark;
 }

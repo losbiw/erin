@@ -1,14 +1,14 @@
-@import '../../style/main.scss';
-@import '../../style/nav.scss';
-@import '../../style/settings.scss';
+@import "../../style/main.scss";
+@import "../../style/nav.scss";
+@import "../../style/settings.scss";
 
-.cards{
+.cards {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .card{
+    .card {
         width: 23vw;
         height: 27.7vw;
         padding: 3.8vw 1.5vw 0;
@@ -21,28 +21,28 @@
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;
 
-        &:hover{
+        &:hover {
             transform: scale(1.15);
 
-            .gradient{
-                opacity: 1.0;
+            .gradient {
+                opacity: 1;
             }
         }
 
-        &:nth-child(-n+2){
+        &:nth-child(-n + 2) {
             margin-right: 3.35vw;
         }
 
-        svg{
+        svg {
             width: 6.5vw;
             height: 6.5vw;
         }
-        .title{
+        .title {
             font-weight: 600;
             font-size: 2.18vw;
             margin: 0.8vw 0;
         }
-        .description{
+        .description {
             font-size: 1.05vw;
             line-height: 2.1vw;
             text-align: center;
@@ -50,7 +50,7 @@
             margin: 0;
             padding: 0;
         }
-        .special{
+        .special {
             margin-top: 4.375vw;
             font-size: 0.78vw;
             font-weight: 600;
@@ -58,76 +58,75 @@
     }
 }
 
-.light{
-    .card{
+.light {
+    .card {
         color: $nav-fill-light;
         background-color: $nav-light;
         box-shadow: $shadow-light;
 
-        svg rect:first-child{
+        svg rect:first-child {
             fill: $nav-fill-light;
         }
 
-        .title{
+        .title {
             text-shadow: $title-shadow-light;
         }
     }
 }
 
-.dark{
-    .card{
+.dark {
+    .card {
         color: $nav-fill-dark;
         background-color: $nav-dark;
         box-shadow: $shadow-dark;
 
-        svg rect:first-child{
+        svg rect:first-child {
             fill: $nav-fill-dark;
         }
 
-        .title{
+        .title {
             text-shadow: $title-shadow-dark;
         }
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .cards{
+    .cards {
         flex-direction: column;
 
-        .card{
+        .card {
             width: 70%;
             height: auto;
 
-            &:nth-child(-n+2){
+            &:nth-child(-n + 2) {
                 margin-right: 0;
             }
-            &:nth-child(n+2){
+            &:nth-child(n + 2) {
                 margin-top: 3.35vh;
             }
 
-            svg{
+            svg {
                 width: 100%;
                 height: 5vh;
             }
-            .title{
+            .title {
                 font-size: 2vh;
                 margin: 1.5vh 0;
             }
-            .description{
+            .description {
                 font-size: 1.3vh;
                 line-height: 2.1vh;
             }
-            .special{
+            .special {
                 margin: 2.5vh 0 1vh;
                 font-size: 1vh;
             }
         }
     }
-   
 }
 
-@media (min-aspect-ratio: 20/9){
-    .cards{
+@media (min-aspect-ratio: 20/9) {
+    .cards {
         margin: 4vw 0;
     }
 }
