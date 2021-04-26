@@ -26,7 +26,12 @@ const Links: FC<Props> = (props: Props) => {
           const { title, href, Content } = links[key];
 
           return (
-            <button type="button" className="link" key={key} onClick={() => shell.openExternal(href)}>
+            <button
+              type="button"
+              className="link"
+              key={key}
+              onClick={() => shell.openExternal(href)}
+            >
               { Content && <Content /> }
               { title && <p className="title">{ title }</p> }
             </button>

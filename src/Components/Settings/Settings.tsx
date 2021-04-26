@@ -15,7 +15,7 @@ interface Props{
     setWarning: (warningMsg: string | Warning) => void
 }
 
-export default class Settings extends Component<Props, Config> {
+class Settings extends Component<Props, Config> {
   constructor(props: Props) {
     super(props);
 
@@ -31,15 +31,6 @@ export default class Settings extends Component<Props, Config> {
       const cfg = config.get();
       this.setState(cfg);
     }
-  }
-
-  static getDerivedStateFromProps(props: Props, state: Config) {
-    if (!Object.keys(state).length) {
-      return {
-        ...props.config,
-      };
-    }
-    return null;
   }
 
   shouldComponentUpdate(nextProps: Props, nextState: Config) {
@@ -95,3 +86,5 @@ export default class Settings extends Component<Props, Config> {
       return <form className="settings" />;
     }
 }
+
+export default Settings;
