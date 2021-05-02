@@ -71,4 +71,6 @@ const set = (options: ConfigUpdate): void => {
   });
 };
 
-export default { get, set, getAppPath };
+export default {
+  get, set, getAppPath, getDefaultOptions,
+};
