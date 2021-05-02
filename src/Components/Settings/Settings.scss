@@ -1,6 +1,10 @@
 @import "../../style/main.scss";
 @import "../../style/settings.scss";
 
+.user .settings {
+    overflow-y: auto;
+}
+
 .settings {
     display: flex;
     justify-content: center;
@@ -61,7 +65,7 @@
 }
 
 .page .item:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 select:focus,
@@ -137,7 +141,6 @@ input:focus {
 @media (min-aspect-ratio: 21/9) {
     .settings {
         justify-content: flex-start;
-        overflow-y: scroll;
         overflow-x: visible;
         padding: 5vh 0 0;
     }

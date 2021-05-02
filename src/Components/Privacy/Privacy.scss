@@ -1,3 +1,5 @@
+@import "../../style/main.scss";
+
 .privacy {
     justify-content: center;
 
@@ -12,8 +14,29 @@
         transform: scale(0.75);
     }
 
-    .link .title {
-        text-decoration: underline;
-        text-underline-position: under;
+    .link {
+        padding: 0;
+
+        .title {
+            font-size: 1vw;
+            text-decoration: underline;
+            text-underline-position: under;
+        }
+    }
+}
+
+.light .privacy .title {
+    color: $fill-light;
+}
+
+.dark .privacy .title {
+    color: $fill-dark;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .privacy{
+        .agreement, .link .title{
+            font-size: 1.3vh;
+        }
     }
 }

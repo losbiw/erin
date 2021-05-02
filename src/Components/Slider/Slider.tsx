@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
 import './Slider.scss';
-import './Items.scss';
 import { Config, ConfigUpdate, Theme } from '@/interfaces/Config';
 import { Warning } from '@/interfaces/Warning';
 import Settings from '@/interfaces/Settings';

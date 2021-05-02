@@ -9,6 +9,7 @@
     align-items: center;
     overflow: hidden;
     position: relative;
+    overflow-y: auto;
 
     .settings .item .setting {
         justify-content: center;
@@ -46,11 +47,6 @@
     box-shadow: $shadow-dark;
 }
 
-@media (min-aspect-ratio: 18/9) {
-    .setup {
-        overflow-y: scroll;
-    }
-}
 @media (min-aspect-ratio: 21/9) {
     .setup {
         .settings {

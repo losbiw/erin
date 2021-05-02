@@ -2,10 +2,10 @@
 @import "../../style/nav.scss";
 
 .slider-container {
-    height: 100%;
     width: 100%;
     overflow: visible;
     position: relative;
+    z-index: 3;
 
     .translate {
         width: 100%;
@@ -65,7 +65,7 @@
             transition-duration: $transition-duration;
 
             &:hover {
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
         }
 
