@@ -58,20 +58,13 @@ export default class User extends Component<Props, State> {
     }
 
     async componentDidMount() {
-      this.getWallpaperCollection();
+      const { handleReloadAfterSleep, switchWallpaper, getWallpaperCollection } = this;
+      getWallpaperCollection();
 
-      ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => this.switchWallpaper(args, false));
+      ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => switchWallpaper(args, false));
 
-      ipcRenderer.on('unlock-screen', () => {
-        setTimeout(() => {
-          const { collection } = this.state;
-          const randomIndex = Math.round(Math.random() * collection.length);
-
-          this.setState({
-            pictureIndex: randomIndex,
-          });
-        }, 1000);
-      });
+      ipcRenderer.on('unlock-screen', handleReloadAfterSleep);
+      window.addEventListener('online', handleReloadAfterSleep);
     }
 
     componentDidUpdate(_prevProps: Props, prevState: State) {
@@ -89,6 +82,20 @@ export default class User extends Component<Props, State> {
       } else if (pictureIndex !== prevState.pictureIndex) {
         this.setWallpaper(collection, pictureIndex);
       }
+    }
+
+    componentWillUnmount() {
+      const { handleReloadAfterSleep } = this;
+      window.removeEventListener('online', handleReloadAfterSleep);
+    }
+
+    handleReloadAfterSleep = () => {
+      const { collection } = this.state;
+      const randomIndex = Math.round(Math.random() * collection.length);
+
+      this.setState({
+        pictureIndex: randomIndex,
+      });
     }
 
     getWallpaperCollection = async (): Promise<void> => {
