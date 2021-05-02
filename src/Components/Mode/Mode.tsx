@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import { Mode as ModeEnum } from '@/interfaces/Config';
-import enumKeys from '@helpers/enum';
+import { enumKeys } from '@helpers/enum';
 import './Mode.scss';
 
 interface Props{
