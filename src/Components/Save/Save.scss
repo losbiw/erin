@@ -3,6 +3,7 @@
 
 .save {
     justify-content: center;
+    cursor: pointer;
 
     .continue {
         box-sizing: border-box;
@@ -49,7 +50,7 @@
         visibility: visible;
         padding: 0.9vw 1.4vw;
         font-size: 1.2vw;
-        font-weight: 600;
+        font-weight: 500;
         box-sizing: border-box;
         border-radius: 1.7vw;
         border: none;
@@ -57,7 +58,6 @@
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;
         background: $gradient;
-        font-weight: 600;
 
         .title {
             z-index: 3;
