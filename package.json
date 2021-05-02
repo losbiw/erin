@@ -56,8 +56,8 @@
   "main": "./build/main.js",
   "scripts": {
     "react-start": "webpack serve",
-    "react-build": "webpack --env NODE_ENV=production",
     "electron-start": "electron .",
+    "react-build": "webpack --env NODE_ENV=production",
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env",
     "electron-release": "electron-builder -mwl -p always",
