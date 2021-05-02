@@ -1,50 +1,187 @@
 @import "../../style/main.scss";
+@import "../../style/nav.scss";
 @import "../../style/settings.scss";
 
-.quality-select {
-    font-size: 1.5625vw;
-    height: 4vw;
+.dropdown {
     width: 100%;
-    border-radius: 1.82vw;
-    box-sizing: border-box;
-    font-weight: 600;
-    padding: 0 1.4vw;
-    transition-property: background-color, color, box-shadow;
-    transition-timing-function: $transition-function;
-    transition-duration: $transition-duration;
+    position: relative;
+    cursor: pointer;
 
-    &:hover,
-    .quality-option:hover {
-        cursor: pointer;
+    .preview {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.4vw;
+        height: 3.5vw;
+        width: 100%;
+        border-radius: 1.82vw;
+        box-sizing: border-box;
+        font-weight: 500;
+        padding: 0 1.4vw;
+        transition-property: box-shadow;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
+        position: relative;
+        z-index: 4;
+
+        .preview-text,
+        span {
+            pointer-events: none;
+        }
+
+        span,
+        svg {
+            height: 1.5vw;
+            width: 1.5vw;
+        }
+
+        svg {
+            transform: rotate(-90deg);
+        }
+
+        &:hover svg .gradient {
+            opacity: 1;
+        }
     }
 
-    .quality-option {
-        font-size: 1.2vw;
+    .preview-background {
+        border-radius: 2vw;
+        width: calc(100% + 0.6vw);
+        right: auto;
+        bottom: auto;
+        top: -0.3vw;
+        left: -0.3vw;
+        height: 4.1vw;
+        opacity: 0;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+    .background {
+        background: $gradient;
+    }
+
+    .options-container {
+        padding: 0.6vw;
+        border-radius: 1.4vw;
+        position: absolute;
+        box-sizing: border-box;
+        font-weight: 500;
+        font-size: 1.3vw;
+        top: 4.5vw;
+        left: 1.4vw;
+
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.3vw;
+            padding: 0.85vw 3.5vw;
+            margin-bottom: 0.1vw;
+            position: relative;
+
+            .text,
+            .background {
+                pointer-events: none;
+            }
+
+            .text {
+                transition-property: color;
+                transition-timing-function: $transition-function;
+                transition-duration: $transition-duration;
+                z-index: 4;
+            }
+
+            .background {
+                padding: 0;
+                border-radius: 1.2vw;
+                opacity: 0;
+            }
+
+            &:hover {
+                cursor: pointer;
+                transition-property: background-color;
+                transition-timing-function: $transition-function;
+                transition-duration: $transition-duration;
+
+                .text {
+                    color: $fill-dark;
+                }
+
+                .background {
+                    opacity: 1;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 
-.light .quality-select {
-    background-color: $fill-light;
-    color: $background-light;
-    box-shadow: $item-shadow-light;
+.light {
+    .preview,
+    .dropdown .options-container {
+        background-color: $fill-light;
+        color: $background-light;
+
+        .background {
+            box-shadow: 3px 4px 8px rgba(50, 50, 50, 0.5);
+        }
+    }
+
+    .preview {
+        box-shadow: $item-shadow-light;
+
+        svg rect:first-child {
+            fill: $background-light;
+        }
+    }
 }
 
-.dark .quality-select {
-    background-color: $fill-dark;
-    color: $background-dark;
-    box-shadow: $item-shadow-dark;
+.dark {
+    .preview,
+    .dropdown .options-container {
+        background-color: $fill-dark;
+        color: $background-dark;
+
+        .background {
+            box-shadow: 3px 4px 4px rgba(106, 106, 106, 0.11);
+        }
+    }
+
+    .preview {
+        box-shadow: $item-shadow-dark;
+
+        svg rect:first-child {
+            fill: $background-dark;
+        }
+    }
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .quality-select {
-        height: 6vw;
-        border-radius: 6vw;
-        font-size: 1.8vw;
-        box-sizing: border-box;
-    }
+    .dropdown {
+        .preview{
+            height: 5.5vw;
+            border-radius: 6vw;
+            font-size: 1.8vw;
+            box-sizing: border-box;
+        }
 
-    .quality-select,
-    .quality-option {
-        font-size: 1.8vw;
+        .preview-background {
+            border-radius: 6vw;
+            width: calc(100% + 0.8vw);
+            top: -0.4vw;
+            left: -0.4vw;
+            height: 6.3vw;
+        }
+
+        .options-container{
+            font-size: 1.8vw;
+            top: 6.5vw;
+        }
     }
 }
