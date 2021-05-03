@@ -1,15 +1,19 @@
 import { LinuxCommands, Distros } from '@interfaces/Linux.d';
+import * as https from 'https';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
 
-const fs = window.require('fs');
-const https = require('https');
+const { writeFile } = window.require('fs').promises;
 
 const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
-const { execFileSync, execSync } = window.require('child_process');
+const { promisify } = window.require('util');
+const { execFile: _execFile, exec: _exec } = window.require('child_process');
 const Stream = require('stream').Transform;
+
+const exec = promisify(_exec);
+const execFile = promisify(_execFile);
 
 interface Handlers{
   handleLargeFiles: (index: number | boolean, isUnlocked: boolean) => void,
@@ -27,7 +31,7 @@ const getFallbackPath = (initialPath: string): string => {
   return result;
 };
 
-const set = (img: string, macPath: string) => {
+const set = async (img: string, macPath: string) => {
   const imgPath = path.resolve(img);
 
   if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
@@ -39,18 +43,18 @@ const set = (img: string, macPath: string) => {
     const resourcePath = isPackaged ? window.process.resourcesPath : path.join(__dirname, '../../');
     const execPath = path.join(resourcePath, 'build/Wallpaper/Wallpaper.exe');
 
-    execFileSync(execPath, [imgPath, 'True']);
+    await execFile(execPath, [imgPath, 'True']);
   } else if (os === 'linux') {
     const desktopEnv = OS.defineDesktopEnvironment(os);
     const options = scripts.linux(imgPath);
     const commands = options[desktopEnv as keyof Distros] || options.other;
 
-    Object.keys(commands).forEach((command) => {
-      execSync(commands[command as keyof LinuxCommands]);
+    Object.keys(commands).forEach(async (command) => {
+      await exec(commands[command as keyof LinuxCommands]);
     });
   } else if (os === 'darwin') {
     const macos = scripts.macos(macPath);
-    execSync(macos);
+    await exec(macos);
   }
 };
 
@@ -87,18 +91,18 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         downloaded += chunk.length;
       });
 
-      res.on('end', () => {
+      res.on('end', async () => {
         clearInterval(progressInterval);
         const pic = data.read();
         const fallbackPath = getFallbackPath(initialPath);
 
-        fs.writeFileSync(initialPath, pic);
+        await writeFile(initialPath, pic);
 
         if (os === 'darwin') {
-          fs.writeFileSync(fallbackPath, pic);
+          await writeFile(fallbackPath, pic);
         }
 
-        set(initialPath, fallbackPath);
+        await set(initialPath, fallbackPath);
         setTimer();
 
         updateProgress(0);
