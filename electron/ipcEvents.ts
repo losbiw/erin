@@ -27,7 +27,7 @@ const setListeners = (win: BrowserWindow) => {
   ipcMain.on('maximize-window', (event) => {
     const isMaximized = win.isMaximized();
 
-    if (isMaximized) win.restore();
+    if (isMaximized) win.unmaximize();
     else win.maximize();
 
     event.returnValue = !isMaximized;
