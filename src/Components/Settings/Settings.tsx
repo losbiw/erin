@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useState, memo,
+  FC, useEffect, useState, useRef, memo,
 } from 'react';
 import config from '@modules/config';
 import areEqual from '@modules/areEqual';
@@ -22,36 +22,36 @@ const Settings: FC<Props> = memo((props: Props) => {
     updateConfig, config: propsConfig, setWarning, setIsComplete,
   } = props;
   const [stateConfig, updateStateConfig] = useState(propsConfig);
+  const configRef = useRef<Config>(propsConfig);
 
-  const unmountHook = () => {
-    const settingsWarning = warning.match(stateConfig, true);
-    const areConfigsEqual = areEqual.objects(stateConfig, propsConfig);
-
-    setWarning('');
-
-    if ((!areConfigsEqual && !!settingsWarning) || !!settingsWarning) {
-      updateConfig(stateConfig, false);
-      setWarning(settingsWarning.value);
-    } else if (!areConfigsEqual) {
-      updateConfig(stateConfig, true);
-    }
-
-    config.set(stateConfig);
-  };
+  useEffect(() => {
+    configRef.current = stateConfig;
+  }, [stateConfig]);
 
   useEffect(() => {
     const keys = Object.keys(stateConfig);
 
-    const setConfig = async () => {
-      const initConfig = await config.get();
-      updateStateConfig(initConfig);
-    };
-
     if (keys.length === 0) {
-      setConfig();
+      const initConfig = config.get();
+      updateStateConfig(initConfig);
     }
 
-    return unmountHook;
+    return () => {
+      const { current } = configRef;
+      const settingsWarning = warning.match(current, true);
+      const areConfigsEqual = areEqual.objects(current, propsConfig);
+
+      setWarning('');
+
+      if ((!areConfigsEqual && !!settingsWarning) || !!settingsWarning) {
+        updateConfig(current, false);
+        setWarning(settingsWarning.value);
+      } else if (!areConfigsEqual) {
+        updateConfig(current, true);
+      }
+
+      config.set(current);
+    };
   }, []);
 
   const handleStateChange = (update: ConfigUpdate) => {
