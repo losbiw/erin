@@ -35,14 +35,12 @@ const Slider: FC<Props> = (props: Props) => {
       isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide,
     } = props;
 
-    const changeConfigComplete = async () => config.set({ isComplete: false });
-
     if (isComplete) {
       const settingsWarning = warning.match(stateConfig, true);
 
       if (settingsWarning?.value) {
         const { value, name } = settingsWarning;
-        changeConfigComplete();
+        config.set({ isComplete: false });
 
         changeSlide(name as Settings);
 

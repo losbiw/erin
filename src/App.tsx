@@ -54,9 +54,9 @@ const App: FC = () => {
     ipcRenderer.on('update-is-available', () => {
       setUpdate(true);
     });
-  });
+  }, []);
 
-  const switchTheme = (): void => {
+  const switchTheme = () => {
     const value = theme === Theme.Dark ? Theme.Light : Theme.Dark;
 
     config.set({

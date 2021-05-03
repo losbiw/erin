@@ -5,7 +5,7 @@ import startup from './startup';
 
 const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
-const fs = window.require('fs');
+const { readFileSync, writeFileSync, statSync } = window.require('fs');
 
 const getDefaultOptions = (): Config => ({
   mode: Mode.Keywords,
@@ -40,35 +40,30 @@ const isMatchingSchema = (cfg: Config): boolean => {
 };
 
 const get = (): Config => {
-  const cfgPath = getConfigPath();
+  const defaultConfig = getDefaultOptions();
 
-  if (fs.existsSync(cfgPath)) {
-    const cfg = fs.readFileSync(cfgPath, 'utf8');
+  try {
+    const configPath = getConfigPath();
+    statSync(configPath);
+    const cfg = readFileSync(configPath, 'utf8');
+    const json = JSON.parse(cfg);
 
-    try {
-      const json = JSON.parse(cfg);
-      return isMatchingSchema(json) ? json : getDefaultOptions();
-    } catch { return getDefaultOptions(); }
-  } else {
-    return getDefaultOptions();
+    return isMatchingSchema(json) ? json : defaultConfig;
+  } catch {
+    return defaultConfig;
   }
 };
 
-const set = (options: ConfigUpdate): void => {
-  const updated: Config = get();
+const set = (options: ConfigUpdate) => {
+  const cfg: Config = get();
   const cfgPath = getConfigPath();
 
-  Object.keys(options).forEach((key) => {
-    const configKey = key as keyof Config;
-    (updated as any)[configKey] = options[configKey];
-  });
+  const updated = { ...cfg, ...options };
 
   const json = JSON.stringify(updated);
   startup.set(options.startup as boolean);
 
-  fs.writeFileSync(cfgPath, json, (err: Error) => {
-    if (err) throw err;
-  });
+  writeFileSync(cfgPath, json, 'utf8');
 };
 
 export default {
