@@ -37,6 +37,7 @@ $switch-off-shadow: 2px 1px 17.7084px 0.2916px rgba(0, 0, 0, 0.32);
         right: 0;
         bottom: 0;
         border-radius: 1.3vw;
+        transition: 400ms;
 
         &:before {
             position: absolute;
