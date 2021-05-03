@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  FC, useEffect, useState, memo,
+} from 'react';
 import config from '@modules/config';
 import areEqual from '@modules/areEqual';
 import warning from '@modules/warning';
@@ -15,38 +17,15 @@ interface Props{
     setWarning: (warningMsg: string | Warning) => void
 }
 
-class Settings extends Component<Props, Config> {
-  constructor(props: Props) {
-    super(props);
+const Settings: FC<Props> = memo((props: Props) => {
+  const {
+    updateConfig, config: propsConfig, setWarning, setIsComplete,
+  } = props;
+  const [stateConfig, updateStateConfig] = useState(propsConfig);
 
-    this.state = {
-      ...props.config,
-    };
-  }
-
-  componentDidMount() {
-    const keys = Object.keys(this.state);
-
-    if (keys.length === 0) {
-      const cfg = config.get();
-      this.setState(cfg);
-    }
-  }
-
-  shouldComponentUpdate(nextProps: Props, nextState: Config) {
-    if (!areEqual.objects(this.state, nextProps.config)
-           || !areEqual.objects(this.state, nextState)) {
-      return true;
-    }
-    return false;
-  }
-
-  componentWillUnmount() {
-    const stateConfig = this.state;
-    const { updateConfig, config: cfg, setWarning } = this.props;
-
+  const unmountHook = () => {
     const settingsWarning = warning.match(stateConfig, true);
-    const areConfigsEqual = areEqual.objects(stateConfig, cfg);
+    const areConfigsEqual = areEqual.objects(stateConfig, propsConfig);
 
     setWarning('');
 
@@ -58,33 +37,44 @@ class Settings extends Component<Props, Config> {
     }
 
     config.set(stateConfig);
+  };
+
+  useEffect(() => {
+    const keys = Object.keys(stateConfig);
+
+    const setConfig = async () => {
+      const initConfig = await config.get();
+      updateStateConfig(initConfig);
+    };
+
+    if (keys.length === 0) {
+      setConfig();
+    }
+
+    return unmountHook;
+  }, []);
+
+  const handleStateChange = (update: ConfigUpdate) => {
+    const updatedConfig: Config = { ...stateConfig, ...update };
+    updateStateConfig(updatedConfig);
+  };
+
+  if (stateConfig) {
+    return (
+      <div className="page">
+        <Form
+          items={items}
+          config={stateConfig}
+          isSetup={false}
+          setIsComplete={setIsComplete}
+          setWarning={setWarning}
+          updateSettingsState={handleStateChange}
+        />
+      </div>
+    );
   }
 
-    handleStateChange = (update: ConfigUpdate) => {
-      const cfg: Config = { ...this.state, ...update };
-      this.setState(cfg);
-    }
-
-    render() {
-      if (this.state) {
-        const { setIsComplete, setWarning } = this.props;
-
-        return (
-          <div className="page">
-            <Form
-              items={items}
-              config={this.state}
-              isSetup={false}
-              setIsComplete={setIsComplete}
-              setWarning={setWarning}
-              updateSettingsState={this.handleStateChange}
-            />
-          </div>
-        );
-      }
-
-      return <form className="settings" />;
-    }
-}
+  return <form className="settings" />;
+});
 
 export default Settings;

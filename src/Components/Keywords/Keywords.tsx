@@ -1,5 +1,6 @@
-import React, { Component, createRef } from 'react';
-import areEqual from '@modules/areEqual';
+import React, {
+  FC, useEffect, useState, useRef, memo,
+} from 'react';
 import './Keywords.scss';
 import { Warning } from '@/interfaces/Warning';
 import { Crosses } from '../Icons/UI';
@@ -12,141 +13,95 @@ interface Props{
     setWarning: (warning: Warning | string) => void
 }
 
-interface State{
-    isInput: boolean
-}
+const Keywords: FC<Props> = memo((props: Props) => {
+  const {
+    keywords, changeKeywords, setWarning, isActive, isSetup,
+  } = props;
 
-export default class Keywords extends Component<Props, State> {
-    private inputRef: React.RefObject<HTMLInputElement>;
+  const [isInput, setInput] = useState(keywords.length === 0);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    constructor(props: Props) {
-      super(props);
-
-      this.inputRef = createRef();
-
-      this.state = {
-        isInput: props.keywords.length === 0,
-      };
+  useEffect(() => {
+    if (keywords.length === 0 && !isInput) {
+      setInput(true);
     }
 
-    componentDidMount() {
-      this.componentDidUpdate();
+    if (isInput && (!isSetup || isActive)) {
+      inputRef?.current?.focus({ preventScroll: true });
     }
+  });
 
-    shouldComponentUpdate(nextProps: Props, nextState: State) {
-      const { keywords } = this.props;
+  const handleDelete = (keyword: string) => {
+    const index = keywords.indexOf(keyword);
 
-      if (!areEqual.arrays(keywords, nextProps.keywords)
-             || !areEqual.objects(this.state, nextState)
-             || nextProps.isSetup) {
-        return true;
-      }
-      return false;
-    }
-
-    componentDidUpdate() {
-      const { isInput } = this.state;
-      const { keywords, isSetup, isActive } = this.props;
-
-      if (keywords.length === 0 && !isInput) {
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({
-          isInput: true,
-        });
-      }
-
-      if (isInput && (!isSetup || isActive) && this.inputRef.current) {
-        this.inputRef.current.focus({ preventScroll: true });
-      }
-    }
-
-    handleDelete = (keyword: string) => {
-      const { keywords, changeKeywords } = this.props;
-      const index = keywords.indexOf(keyword);
-
-      if (index > -1) {
-        const dataKeywords = [...keywords];
-        dataKeywords.splice(index, 1);
-        changeKeywords(dataKeywords);
-      }
-    }
-
-    handleClick = () => {
-      this.setState({
-        isInput: true,
-      });
-    }
-
-    keyDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const { changeKeywords, setWarning, keywords } = this.props;
+    if (index > -1) {
       const dataKeywords = [...keywords];
-
-      if (e.key === 'Enter' && keywords.length < 10) {
-        const { value } = e.target as HTMLInputElement;
-        const converted = value.toLowerCase();
-        const isRepeating = keywords.indexOf(converted) !== -1;
-
-        if (converted !== '' && !isRepeating) dataKeywords.push(converted);
-        else if (!converted) setWarning("Keyword's value should not be empty");
-        else if (isRepeating) setWarning('Keywords should not repeat');
-
-        changeKeywords(dataKeywords);
-
-        this.setState({
-          isInput: false,
-        });
-      } else if (e.key === 'Enter') {
-        setWarning("You can't enter more than 10 keywords");
-
-        this.setState({
-          isInput: false,
-        });
-      }
+      dataKeywords.splice(index, 1);
+      changeKeywords(dataKeywords);
     }
+  };
 
-    render() {
-      const {
-        inputRef, handleClick, keyDownListener, handleDelete, props,
-      } = this;
-      const { isInput } = this.state;
+  const handleClick = () => {
+    setInput(true);
+  };
 
-      return (
-        isInput
-          ? (
-            <input
-              type="text"
-              className="keyword-input"
-              name="keywords"
-              ref={inputRef}
-              placeholder="Type something and press enter"
-              maxLength={15}
-              onKeyDown={keyDownListener}
-            />
-          )
+  const keyDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const dataKeywords = [...keywords];
 
-          : (
-            <div className="keywords-container">
-              <div className="click background" role="presentation" onClick={handleClick}>
-                <div className="transparent" />
+    if (e.key === 'Enter' && keywords.length < 10) {
+      const { value } = e.target as HTMLInputElement;
+      const converted = value.toLowerCase();
+      const isRepeating = keywords.indexOf(converted) !== -1;
+
+      if (converted !== '' && !isRepeating) dataKeywords.push(converted);
+      else if (!converted) setWarning("Keyword's value should not be empty");
+      else if (isRepeating) setWarning('Keywords should not repeat');
+
+      changeKeywords(dataKeywords);
+      setInput(false);
+    } else if (e.key === 'Enter') {
+      setWarning("You can't enter more than 10 keywords");
+      setInput(false);
+    }
+  };
+
+  return (
+    isInput
+      ? (
+        <input
+          type="text"
+          className="keyword-input"
+          name="keywords"
+          ref={inputRef}
+          placeholder="Type something and press enter"
+          maxLength={15}
+          onKeyDown={keyDownListener}
+        />
+      )
+
+      : (
+        <div className="keywords-container">
+          <div className="click background" role="presentation" onClick={handleClick}>
+            <div className="transparent" />
+          </div>
+          {
+            keywords.map((keyword) => (
+              <div className="keyword" key={keyword}>
+                <p>{ keyword }</p>
+
+                <button
+                  className="delete"
+                  type="button"
+                  onClick={() => handleDelete(keyword)}
+                >
+                  <Crosses.Green />
+                </button>
               </div>
+            ))
+          }
+        </div>
+      )
+  );
+});
 
-              {
-                props.keywords.map((keyword) => (
-                  <div className="keyword" key={keyword}>
-                    <p>{ keyword }</p>
-
-                    <button
-                      className="delete"
-                      type="button"
-                      onClick={() => handleDelete(keyword)}
-                    >
-                      <Crosses.Green />
-                    </button>
-                  </div>
-                ))
-              }
-            </div>
-          )
-      );
-    }
-}
+export default Keywords;

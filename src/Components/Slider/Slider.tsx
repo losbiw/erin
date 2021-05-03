@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
 import './Slider.scss';
@@ -18,24 +18,31 @@ interface Props{
     theme: Theme
 }
 
-export default class Slider extends Component<Props, Config> {
-  constructor(props: Props) {
-    super(props);
+const Slider: FC<Props> = (props: Props) => {
+  const [stateConfig, updateConfig] = useState(config.getDefaultOptions());
 
-    this.state = config.get();
-  }
+  useEffect(() => {
+    const setConfig = async () => {
+      const cfg = await config.get();
+      updateConfig(cfg);
+    };
 
-  componentDidUpdate() {
+    setConfig();
+  }, []);
+
+  useEffect(() => {
     const {
       isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide,
-    } = this.props;
+    } = props;
+
+    const changeConfigComplete = async () => config.set({ isComplete: false });
 
     if (isComplete) {
-      const settingsWarning = warning.match(this.state as Config, true);
+      const settingsWarning = warning.match(stateConfig, true);
 
       if (settingsWarning?.value) {
         const { value, name } = settingsWarning;
-        config.set({ isComplete: false });
+        changeConfigComplete();
 
         changeSlide(name as Settings);
 
@@ -46,51 +53,48 @@ export default class Slider extends Component<Props, Config> {
         setIsComplete(true);
       }
     }
+  });
+
+  const updateSlideState = (update: ConfigUpdate) => {
+    const cfg: Config = { ...stateConfig, ...update };
+    updateConfig(cfg);
+  };
+
+  const calcSlidePosition = (amount: number, activeIndex: number) => {
+    const middle = Math.round((amount - 1) / 2);
+    const equalizer = amount % 2 === 0 ? 40 : 0;
+    const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
+
+    return multiplier * 80 - equalizer;
+  };
+
+  const {
+    setWarning, activeIndex, theme, setIsComplete,
+  } = props;
+  const keys = Object.keys(items);
+
+  const transform = calcSlidePosition(keys.length, activeIndex);
+
+  if (Object.keys(stateConfig).length) {
+    return (
+      <div className="slider-container">
+        <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
+          <Form
+            config={stateConfig}
+            items={items}
+            isSetup
+            activeIndex={activeIndex}
+            setWarning={setWarning}
+            setIsComplete={setIsComplete}
+            updateSettingsState={updateSlideState}
+            theme={theme}
+          />
+        </div>
+      </div>
+    );
   }
 
-    updateSlideState = (update: ConfigUpdate) => {
-      const cfg: Config = { ...this.state, ...update };
-      this.setState(cfg);
-    }
+  return <form className="settings" />;
+};
 
-    calcSlidePosition = (amount: number, activeIndex: number) => {
-      const middle = Math.round((amount - 1) / 2);
-      const equalizer = amount % 2 === 0 ? 40 : 0;
-      const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
-
-      return multiplier * 80 - equalizer;
-    }
-
-    render() {
-      const {
-        state, props, updateSlideState, calcSlidePosition,
-      } = this;
-      const {
-        setWarning, activeIndex, theme, setIsComplete,
-      } = props;
-      const keys = Object.keys(items);
-
-      const transform = calcSlidePosition(keys.length, activeIndex);
-
-      if (Object.keys(state).length) {
-        return (
-          <div className="slider-container">
-            <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
-              <Form
-                config={state}
-                items={items}
-                isSetup
-                activeIndex={activeIndex}
-                setWarning={setWarning}
-                setIsComplete={setIsComplete}
-                updateSettingsState={updateSlideState}
-                theme={theme}
-              />
-            </div>
-          </div>
-        );
-      }
-
-      return <form className="settings" />;
-    }
-}
+export default Slider;

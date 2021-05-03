@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import capitalizeFirstLetter from '@modules/convert';
 import warning from '@modules/warning';
 import {
@@ -37,14 +37,13 @@ interface Props{
 
 const Form: FC<Props> = (props: Props) => {
   const {
-    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete,
+    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete, updateSettingsState,
   } = props;
   const {
     privacy, mode, timer, keywords, startup, quality,
   } = config;
 
   const updateState = (update: ConfigUpdate) => {
-    const { setWarning, updateSettingsState, config } = props;
     const clone = { ...update };
 
     if (!update.mode) clone.mode = config.mode;
@@ -54,12 +53,12 @@ const Form: FC<Props> = (props: Props) => {
     updateSettingsState(update);
   };
 
-  const privacyHandler = useCallback(() => updateState({ privacy: !privacy }), [privacy]);
-  const modeHandler = useCallback((mode: ModeEnum) => updateState({ mode }), []);
-  const keywordsHandler = useCallback((keywords: string[]) => updateState({ keywords }), []);
-  const timerHandler = useCallback((timer: number) => updateState({ timer }), []);
-  const startupHandler = useCallback(() => updateState({ startup: !startup }), [startup]);
-  const qualityHandler = useCallback((quality: QualityInterface) => updateState({ quality }), []);
+  const privacyHandler = () => updateState({ privacy: !privacy });
+  const modeHandler = (mode: ModeEnum) => updateState({ mode });
+  const keywordsHandler = (keywords: string[]) => updateState({ keywords });
+  const timerHandler = (timer: number) => updateState({ timer });
+  const startupHandler = () => updateState({ startup: !startup });
+  const qualityHandler = (quality: QualityInterface) => updateState({ quality });
 
   const renderSettingsItem = (name: Settings, isActive: boolean) => {
     if (name === Settings.Privacy) {
