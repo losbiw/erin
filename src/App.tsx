@@ -52,6 +52,10 @@ const App: FC = () => {
     ipcRenderer.send('component-did-mount');
 
     ipcRenderer.on('update-is-available', () => {
+      const notification = new Notification('Update available', {
+        body: 'Click here for more details',
+      });
+
       setUpdate(true);
     });
   }, []);

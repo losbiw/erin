@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import {
-  app, BrowserWindow, screen, nativeImage, Tray,
+  app, BrowserWindow, screen, nativeImage, Tray, nativeTheme,
 } from 'electron';
 import { join } from 'path';
 import { promises as fs } from 'fs';
@@ -9,6 +9,11 @@ import tray from './tray';
 import initIPCEvents from './ipcEvents';
 import initPowerEvents from './powerEvents';
 import initUpdateEvents from './updateEvents';
+
+enum Theme{
+  Dark = 'dark',
+  Light = 'light'
+}
 
 require('dotenv').config({ path: join(__dirname, './.env') }); // change
 
@@ -50,7 +55,7 @@ const hideWindow = () => {
 
 const loadFile = async () => {
   const { height, width } = screen.getPrimaryDisplay().size;
-  let url; let theme;
+  let url; let theme: Theme;
 
   const cfgPath = join(app.getPath('userData'), 'config.json');
 
@@ -61,7 +66,7 @@ const loadFile = async () => {
 
     theme = config.theme;
   } catch {
-    theme = 'dark';
+    theme = nativeTheme.shouldUseDarkColors ? Theme.Dark : Theme.Light;
   }
 
   win = new BrowserWindow({
@@ -72,15 +77,12 @@ const loadFile = async () => {
     },
     frame: false,
     icon: nativeImage.createFromPath(findIconPath(1024)),
-    backgroundColor: theme === 'dark' ? '#121214' : '#f4f4f8',
+    backgroundColor: theme === Theme.Dark ? '#121214' : '#f4f4f8',
   });
 
   if (app.isPackaged) {
     url = `file://${__dirname}/../react-build/index.html`;
   } else {
-    // require('electron-debug')();
-
-    // win.webContents.openDevTools();
     url = 'http://localhost:8080/';
   }
 

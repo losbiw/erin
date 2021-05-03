@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-param-reassign */
-import { app, ipcMain, BrowserWindow } from 'electron';
+import {
+  app, ipcMain, BrowserWindow, nativeTheme,
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
-
-const { Notification } = require('electron');
 
 const setListeners = (win: BrowserWindow) => {
   ipcMain.on('get-app-path', (event) => {
@@ -12,6 +12,10 @@ const setListeners = (win: BrowserWindow) => {
 
   ipcMain.on('is-app-packaged', (event) => {
     event.returnValue = app.isPackaged;
+  });
+
+  ipcMain.on('should-use-dark-mode', (event) => {
+    event.returnValue = nativeTheme.shouldUseDarkColors;
   });
 
   ipcMain.on('close-window', (event) => {
@@ -34,15 +38,6 @@ const setListeners = (win: BrowserWindow) => {
   });
 
   autoUpdater.on('update-available', () => {
-    const updateNotification = new Notification('Update available', {
-      body: 'Click here for more details',
-    });
-
-    updateNotification.onclick = () => {
-      win.show();
-      win.focus();
-    };
-
     win.webContents.send('update-is-available');
   });
 };
