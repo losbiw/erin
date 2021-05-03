@@ -3,7 +3,7 @@ export interface LinuxCommands{
   align?: string
 }
 
-export interface LinuxDistros{
+export interface Distros{
   other: LinuxCommands,
   kde: LinuxCommands,
   xfce: LinuxCommands

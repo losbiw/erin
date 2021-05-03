@@ -1,6 +1,6 @@
-import { LinuxDistros } from '@interfaces/Linux.d';
+import { Distros } from '@interfaces/Linux.d';
 
-const linux = (imgPath: string): LinuxDistros => ({
+const linux = (imgPath: string): Distros => ({
   other: {
     set: `gsettings set org.gnome.desktop.background picture-uri 'file://${imgPath}'`,
     align: 'gsettings set org.gnome.desktop.background picture-options \'zoom\'',

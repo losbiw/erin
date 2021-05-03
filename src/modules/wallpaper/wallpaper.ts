@@ -1,4 +1,4 @@
-import { LinuxCommands, LinuxDistros } from '@interfaces/Linux.d';
+import { LinuxCommands, Distros } from '@interfaces/Linux.d';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
@@ -27,7 +27,7 @@ const getFallbackPath = (initialPath: string): string => {
   return result;
 };
 
-const set = (img: string, macPath: string): void => {
+const set = (img: string, macPath: string) => {
   const imgPath = path.resolve(img);
 
   if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
@@ -43,7 +43,7 @@ const set = (img: string, macPath: string): void => {
   } else if (os === 'linux') {
     const desktopEnv = OS.defineDesktopEnvironment(os);
     const options = scripts.linux(imgPath);
-    const commands = options[desktopEnv as keyof LinuxDistros] || options.other;
+    const commands = options[desktopEnv as keyof Distros] || options.other;
 
     Object.keys(commands).forEach((command) => {
       execSync(commands[command as keyof LinuxCommands]);
