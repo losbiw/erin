@@ -7,13 +7,15 @@ const { ipcRenderer } = window.require('electron');
 const { join } = window.require('path');
 const { readFileSync, writeFileSync, statSync } = window.require('fs');
 
+const isDarkMode = (): boolean => ipcRenderer.sendSync('should-use-dark-mode') as boolean;
+
 const getDefaultOptions = (): Config => ({
   mode: Mode.Keywords,
   keywords: ['mountains'],
   timer: 60000,
   quality: Quality.High,
   startup: true,
-  theme: Theme.Dark,
+  theme: isDarkMode() ? Theme.Dark : Theme.Light,
   privacy: false,
   isFirstTime: true,
   isComplete: false,
