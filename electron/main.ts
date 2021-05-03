@@ -3,7 +3,7 @@ import {
   app, BrowserWindow, screen, nativeImage, Tray,
 } from 'electron';
 import { join } from 'path';
-import { readFileSync, existsSync } from 'fs';
+import { promises as fs } from 'fs';
 import defineOS from './os';
 import tray from './tray';
 import initIPCEvents from './ipcEvents';
@@ -48,17 +48,21 @@ const hideWindow = () => {
   if (startArgs.indexOf('--hidden') !== -1) win.hide();
 };
 
-const loadFile = () => {
+const loadFile = async () => {
   const { height, width } = screen.getPrimaryDisplay().size;
-  let url; let
-    theme;
+  let url; let theme;
 
   const cfgPath = join(app.getPath('userData'), 'config.json');
 
-  if (existsSync(cfgPath)) {
-    const config = JSON.parse(readFileSync(cfgPath, 'utf8'));
+  try {
+    await fs.stat(cfgPath);
+    const cfgFile = await fs.readFile(cfgPath, 'utf8');
+    const config = JSON.parse(cfgFile);
+
     theme = config.theme;
-  } else theme = 'dark';
+  } catch {
+    theme = 'dark';
+  }
 
   win = new BrowserWindow({
     width: width * 0.8,
@@ -88,7 +92,7 @@ const loadFile = () => {
   initPowerEvents(win);
 };
 
-app.on('ready', () => {
-  loadFile();
+app.on('ready', async () => {
+  await loadFile();
   winTray = tray.create(win, findIconPath(24));
 });
