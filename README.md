@@ -18,7 +18,7 @@ Include your own .env file (or use [the existing one](https://github.com/losbiw/
 * PEXELS_API_KEY
 * WEATHER_API_KEY( OpenWeatherMap API is supported by default, in case of using another API you have to: 
   * Change hard-coded values in [weather.ts](https://github.com/losbiw/erin/blob/master/src/modules/weather.ts)
-  * Change [req.main](https://github.com/losbiw/erin/blob/master/src/Components/User/User.ts#L151) and [req.time](https://github.com/losbiw/erin/blob/master/src/Components/User/User.ts#L155) to whatever your API returns instead
+  * Change [req.main](https://github.com/losbiw/erin/blob/master/src/Components/User/User.tsx#L151) and [req.time](https://github.com/losbiw/erin/blob/master/src/Components/User/User.tsx#L155) to whatever your API returns instead
 )
 * GOOGLE_API_KEY
 * GH_TOKEN(optional, but auto-updater won't work without it)
@@ -48,4 +48,4 @@ Building electron app for:
 * Windows: ```yarn build-win```
 * Linux: ```yarn build-linux```
 * MacOS: ```yarn build-mac```
-* ALl three of them: ```yarn build-mwl```
+* All three of them: ```yarn build-mwl```
