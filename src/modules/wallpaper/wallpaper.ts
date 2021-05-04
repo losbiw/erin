@@ -96,10 +96,10 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         const pic = data.read();
         const fallbackPath = getFallbackPath(initialPath);
 
-        await writeFile(initialPath, pic);
-
         if (os === 'darwin') {
           await writeFile(fallbackPath, pic);
+        } else {
+          await writeFile(initialPath, pic);
         }
 
         await set(initialPath, fallbackPath);
