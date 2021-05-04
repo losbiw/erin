@@ -10,31 +10,29 @@ const setListeners = (win: BrowserWindow) => {
     event.returnValue = app.getPath('userData');
   });
 
-  ipcMain.on('is-app-packaged', (event) => {
-    event.returnValue = app.isPackaged;
-  });
+  ipcMain.handle('is-app-packaged', () => app.isPackaged);
 
   ipcMain.on('should-use-dark-mode', (event) => {
     event.returnValue = nativeTheme.shouldUseDarkColors;
   });
 
-  ipcMain.on('close-window', (event) => {
+  ipcMain.handle('close-window', () => {
     win.hide();
-    event.returnValue = 'hidden';
+    return 'hidden';
   });
 
-  ipcMain.on('minimize-window', (event) => {
+  ipcMain.handle('minimize-window', () => {
     win.minimize();
-    event.returnValue = 'minimized';
+    return 'minimized';
   });
 
-  ipcMain.on('maximize-window', (event) => {
+  ipcMain.handle('maximize-window', () => {
     const isMaximized = win.isMaximized();
 
     if (isMaximized) win.unmaximize();
     else win.maximize();
 
-    event.returnValue = !isMaximized;
+    return !isMaximized;
   });
 
   autoUpdater.on('update-available', () => {

@@ -38,14 +38,14 @@ const set = async (img: string, macPath: string) => {
   const os = OS.define();
 
   if (os === 'win32') {
-    const isPackaged = ipcRenderer.sendSync('is-app-packaged');
+    const isPackaged = await ipcRenderer.invoke('is-app-packaged');
 
     const resourcePath = isPackaged ? window.process.resourcesPath : path.join(__dirname, '../../');
     const execPath = path.join(resourcePath, 'build/Wallpaper/Wallpaper.exe');
 
     await execFile(execPath, [imgPath, 'True']);
   } else if (os === 'linux') {
-    const desktopEnv = OS.defineDesktopEnvironment(os);
+    const desktopEnv = await OS.defineDesktopEnvironment(os);
     const options = scripts.linux(imgPath);
     const commands = options[desktopEnv as keyof Distros] || options.other;
 

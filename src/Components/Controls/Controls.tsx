@@ -20,8 +20,8 @@ const Controls: FC = () => {
     close: Crosses.Red,
   };
 
-  const handleClick = (name: keyof ButtonsIcons) => {
-    const res = ipcRenderer.sendSync(`${name}-window`);
+  const handleClick = async (name: keyof ButtonsIcons) => {
+    const res = await ipcRenderer.invoke(`${name}-window`);
 
     if (name === 'maximize') {
       const isMaximized = res;

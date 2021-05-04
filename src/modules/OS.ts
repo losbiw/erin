@@ -1,7 +1,9 @@
 import { Distros } from '../interfaces/Linux.d';
 
-const { execSync } = window.require('child_process');
+const { exec: _exec } = window.require('child_process');
+const { promisify } = window.require('util');
 
+const exec = promisify(_exec);
 const define = (): NodeJS.Platform => window.process.platform;
 
 const convertEnvName = (name: string): keyof Distros => {
@@ -18,9 +20,9 @@ const convertEnvName = (name: string): keyof Distros => {
   return 'other';
 };
 
-const defineDesktopEnvironment = (OS: NodeJS.Platform): string | keyof Distros => {
+const defineDesktopEnvironment = async (OS: NodeJS.Platform): Promise<string | keyof Distros> => {
   if (OS === 'linux') {
-    const environment: string = execSync('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
+    const environment: string = await exec('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
     return convertEnvName(environment);
   }
 
