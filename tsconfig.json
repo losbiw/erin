@@ -20,6 +20,7 @@
       "@themes/*": ["src/assets/themes/*"],
       "@controls/*": ["src/assets/controls/*"],
       "@settings/*": ["src/assets/settings/*"],
+      "@app/*": ["src/assets/app/*"],
       "@modules/*": ["src/modules/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@helpers/*": ["src/helpers/*"]

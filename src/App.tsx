@@ -6,6 +6,7 @@ import OS from '@modules/OS';
 import { fetchGeocoding } from '@modules/APIs';
 import { Theme } from '@/interfaces/Config';
 import { Warning as WarningInterface } from '@interfaces/Warning.d';
+import logo from '@app/erin.png';
 import Controls from './Components/Controls/Controls';
 import { Warning, CustomWarning } from './Components/Warning/Warning';
 import User from './Components/User/User';
@@ -28,9 +29,10 @@ const App: FC = () => {
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
-    const location = await fetchGeocoding(() => {});
 
     if (isFirstTime || typeof isFirstTime === 'undefined') {
+      const location = await fetchGeocoding(() => {});
+
       await fetch('https://erin-downloads.herokuapp.com/api/increase', {
         method: 'POST',
         headers: {
@@ -54,6 +56,7 @@ const App: FC = () => {
     ipcRenderer.on('update-is-available', () => {
       const notification = new Notification('Update available', {
         body: 'Click here for more details',
+        icon: logo,
       });
 
       setUpdate(true);

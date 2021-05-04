@@ -27,6 +27,10 @@ module.exports = {
         use: 'raw-loader',
       },
       {
+        test: /\.png$/,
+        use: 'file-loader',
+      },
+      {
         test: /\.scss$/,
         use: [
           { loader: 'style-loader' },
@@ -94,6 +98,7 @@ module.exports = {
       '@themes': path.resolve(__dirname, 'src/assets/themes'),
       '@controls': path.resolve(__dirname, 'src/assets/controls'),
       '@settings': path.resolve(__dirname, 'src/assets/settings'),
+      '@app': path.resolve(__dirname, 'src/assets/app'),
       '@modules': path.resolve(__dirname, 'src/modules'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
