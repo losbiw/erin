@@ -199,11 +199,11 @@ export default class User extends Component<Props, State> {
       }
     }
 
-    switchWallpaper = (index: number | boolean, isUnlocked: boolean): void => {
+    switchWallpaper = (index: number | boolean, shouldForceSwitch: boolean): void => {
       const { collection, isLocked, pictureIndex } = this.state;
       const { setWarning } = this.props;
 
-      if (isLocked && !isUnlocked) {
+      if (isLocked && !shouldForceSwitch) {
         setWarning('Please wait until the previous picture is downloaded');
       } else {
         let validated = pictureIndex;

@@ -9,7 +9,7 @@ import Info from '../Info/Info';
 import './Page.scss';
 
 interface Props extends SharedState{
-    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void,
+    switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
     setWarning: (warning: string | Warning) => void,
     setIsComplete: (isComplete: boolean) => void,
     updateConfig: (config: Config, isRequiredFilled?: boolean) => void

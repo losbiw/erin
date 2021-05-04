@@ -13,7 +13,7 @@ interface Props{
     pictureIndex: number,
     isLocked: boolean,
     progress: number,
-    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void
+    switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
 }
 
 interface PickerPicture{

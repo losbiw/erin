@@ -11,7 +11,7 @@ interface Props{
     progress: number,
     isLocked: boolean,
     pictureIndex: number,
-    switchWallpaper: (index: number | boolean, isUnlocked: boolean) => void
+    switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
 }
 
 const Home: FC<Props> = (props: Props) => {

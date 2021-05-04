@@ -16,7 +16,7 @@ const exec = promisify(_exec);
 const execFile = promisify(_execFile);
 
 interface Handlers{
-  handleLargeFiles: (index: number | boolean, isUnlocked: boolean) => void,
+  handleLargeFiles: (index: number | boolean, shouldForceSwitch: boolean) => void,
   setTimer: () => void,
   setWarning: (warning: string) => void,
   setError: (error: number) => void,
