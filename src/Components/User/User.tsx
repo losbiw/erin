@@ -94,6 +94,7 @@ export default class User extends Component<Props, State> {
       const randomIndex = Math.round(Math.random() * collection.length);
 
       this.setState({
+        error: null,
         pictureIndex: randomIndex,
       });
     }
