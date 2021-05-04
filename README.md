@@ -48,4 +48,4 @@ Building electron app for:
 * Windows: ```yarn build-win```
 * Linux: ```yarn build-linux```
 * MacOS: ```yarn build-mac```
-* ALl three of them: ```yarn build-mwl```
+* All three of them: ```yarn build-mwl```
