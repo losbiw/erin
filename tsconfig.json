@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "./build/",
+    "removeComments": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["src/*"],
+      "@nav/*": ["src/assets/nav/*"],
+      "@info/*": ["src/assets/info/*"],
+      "@ui/*": ["src/assets/ui/*"],
+      "@themes/*": ["src/assets/themes/*"],
+      "@controls/*": ["src/assets/controls/*"],
+      "@settings/*": ["src/assets/settings/*"],
+      "@app/*": ["src/assets/app/*"],
+      "@modules/*": ["src/modules/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@helpers/*": ["src/helpers/*"]
+   }       
+  }
+}

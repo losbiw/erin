@@ -1,0 +1,41 @@
+@import "../../style/main.scss";
+
+.aspect-ratio {
+    .transparent {
+        width: 0;
+        height: 0;
+    }
+
+    .container {
+        overflow: hidden;
+        height: 0;
+        width: 100%;
+        padding-top: 56.25%;
+        background: black;
+        position: relative;
+        border-radius: 2.5vw;
+    }
+
+    .aspect-image {
+        min-height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        user-select: none;
+    }
+
+    > * {
+        pointer-events: none;
+    }
+}
+
+.light .aspect-ratio .container {
+    background: $background-light;
+}
+
+.dark .aspect-ratio .container {
+    background: $background-dark;
+}

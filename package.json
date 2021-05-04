@@ -3,55 +3,69 @@
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
   "version": "2.1.1",
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "auto-launch": "^5.0.5",
-    "customize-cra": "^1.0.0",
-    "dotenv": "^8.2.0",
-    "electron-updater": "^4.3.5",
-    "node-fetch": "^2.6.1",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
+    "@types/webpack": "^4.41.26",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.1.3",
+    "css-minimizer-webpack-plugin": "^1.3.0",
+    "electron": "^10.2.0",
+    "electron-builder": "^22.9.1",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.3.9",
+    "node-sass": "^5.0.0",
+    "prettier": "^2.2.1",
     "raw-loader": "^4.0.2",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "react-scripts": "3.4.4"
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.18",
+    "typescript": "^4.2.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.27.1",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "dotenv": "^8.2.0",
+    "electron-updater": "^4.3.8",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/losbiw/erin.git"
   },
   "homepage": "./",
-  "main": "electron/main.js",
+  "main": "./build/main.js",
   "scripts": {
-    "react-start": "react-app-rewired start",
-    "react-build": "react-app-rewired build",
+    "react-start": "webpack serve",
     "electron-start": "electron .",
-    "electron-build": "electron-builder",
-    "electron-release": "electron-builder -mwl -p always"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "config-overrides-path": "src/config/config-override.js",
-  "devDependencies": {
-    "electron": "^10.2.0",
-    "electron-builder": "^22.9.1",
-    "electron-debug": "^3.1.0",
-    "react-app-rewired": "^2.1.6",
-    "electron-log": "^4.3.0"
+    "react-build": "webpack --env NODE_ENV=production",
+    "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
+    "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env",
+    "electron-release": "electron-builder -mwl -p always",
+    "build-win": "yarn electron-compile && electron-builder -w",
+    "build-linux": "yarn electron-compile && electron-builder -l",
+    "build-mac": "yarn electron-compile && electron-builder -m",
+    "build-mwl": "yarn electron-compile && electron-builder -mwl",
+    "copy-env": "cd ./electron && chflags nohidden .env && cp .env ../build/.env"
   },
   "build": {
     "appId": "com.erin.start",
@@ -59,12 +73,15 @@
     "productName": "Erin",
     "extends": null,
     "extraResources": [
-      "**/electron/Wallpaper/**",
+      {
+        "from": "./electron/Wallpaper",
+        "to": "./build/Wallpaper"
+      },
       "**/assets/**"
     ],
     "files": [
-      "electron/**/*",
       "build/**/*",
+      "react-build/**/*",
       "node_modules/**/*"
     ],
     "directories": {
