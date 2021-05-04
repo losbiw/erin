@@ -63,7 +63,11 @@ export default class User extends Component<Props, State> {
 
       ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => switchWallpaper(args, false));
 
-      ipcRenderer.on('unlock-screen', handleReloadAfterSleep);
+      ipcRenderer.on('unlock-screen', () => {
+        if (window.navigator.onLine) {
+          handleReloadAfterSleep();
+        }
+      });
       window.addEventListener('online', handleReloadAfterSleep);
     }
 
