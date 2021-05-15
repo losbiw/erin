@@ -4,7 +4,7 @@ import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
 
-const { writeFile } = window.require('fs').promises;
+const { writeFile, unlink } = window.require('fs').promises;
 
 const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -55,6 +55,7 @@ const set = async (img: string, macPath: string) => {
   } else if (os === 'darwin') {
     const macos = scripts.macos(macPath);
     await exec(macos);
+    await unlink(macPath);
   }
 };
 
@@ -96,11 +97,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         const pic = data.read();
         const fallbackPath = getFallbackPath(initialPath);
 
-        if (os === 'darwin') {
-          await writeFile(fallbackPath, pic);
-        } else {
-          await writeFile(initialPath, pic);
-        }
+        await writeFile(os === 'darwin' ? fallbackPath : initialPath, pic);
 
         await set(initialPath, fallbackPath);
         setTimer();
