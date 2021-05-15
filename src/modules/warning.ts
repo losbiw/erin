@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import Settings from '@/interfaces/Settings';
+import Settings from '@interfaces/Settings';
 import { ConfigUpdate, Mode, Quality } from '@interfaces/Config';
 
 interface Warning{

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { FC } from 'react';
-import capitalizeFirstLetter from '@/helpers/convert';
+import capitalizeFirstLetter from '@helpers/convert';
 import warning from '@modules/warning';
 import {
   Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,
-} from '@/interfaces/Config';
-import { Warning } from '@/interfaces/Warning';
-import Settings from '@/interfaces/Settings';
+} from '@interfaces/Config';
+import { Warning } from '@interfaces/Warning';
+import Settings from '@interfaces/Settings';
 import Icons from '../Icons/Settings';
 import Privacy from '../Privacy/Privacy';
 import Mode from '../Mode/Mode';

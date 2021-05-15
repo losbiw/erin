@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
 import './Slider.scss';
-import { Config, ConfigUpdate, Theme } from '@/interfaces/Config';
-import { Warning } from '@/interfaces/Warning';
-import Settings from '@/interfaces/Settings';
+import { Config, ConfigUpdate, Theme } from '@interfaces/Config';
+import { Warning } from '@interfaces/Warning';
+import Settings from '@interfaces/Settings';
 import Form from '../Form/Form';
 import { items } from './items';
 

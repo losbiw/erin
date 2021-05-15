@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
-import { Pages, SharedState } from '@/interfaces/UserState';
-import { Warning } from '@/interfaces/Warning';
-import { Config } from '@/interfaces/Config';
+import { Pages, SharedState } from '@interfaces/UserState';
+import { Warning } from '@interfaces/Warning';
+import { Config } from '@interfaces/Config';
 import Home from '../Home/Home';
 import Picker from '../Picker/Picker';
 import Settings from '../Settings/Settings';

@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Theme } from '@/interfaces/Config';
-import { Warning } from '@/interfaces/Warning';
-import Settings from '@/interfaces/Settings';
+import { Theme } from '@interfaces/Config';
+import { Warning } from '@interfaces/Warning';
+import Settings from '@interfaces/Settings';
 import Slider from '../Slider/Slider';
 import Carousel from '../Carousel/Carousel';
 import { Arrows } from '../Arrows/Arrows';

@@ -1,4 +1,4 @@
-import { Theme } from '@/interfaces/Config';
+import { Theme } from '@interfaces/Config';
 import React, { FC } from 'react';
 import Themes from '../Icons/Themes';
 import './ThemeToggle.scss';

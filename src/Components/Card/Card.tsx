@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Warning } from '@/interfaces/Warning';
+import { Warning } from '@interfaces/Warning';
 import getCards from './items';
 import './Card.scss';
 

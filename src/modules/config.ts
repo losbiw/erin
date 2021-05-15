@@ -1,6 +1,6 @@
 import {
   Config, ConfigUpdate, Mode, Quality, Theme,
-} from '@/interfaces/Config';
+} from '@interfaces/Config';
 import startup from './startup';
 
 const { ipcRenderer } = window.require('electron');

@@ -2,7 +2,7 @@ import React, {
   FC, useEffect, useState, useRef, memo,
 } from 'react';
 import './Keywords.scss';
-import { Warning } from '@/interfaces/Warning';
+import { Warning } from '@interfaces/Warning';
 import { Crosses } from '../Icons/UI';
 
 interface Props{

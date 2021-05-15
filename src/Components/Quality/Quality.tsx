@@ -1,10 +1,10 @@
 import React, {
   FC, useState, useEffect, useCallback,
 } from 'react';
-import capitalizeFirstLetter from '@/helpers/convert';
+import capitalizeFirstLetter from '@helpers/convert';
 import { getEnumKeyByValue } from '@helpers/enum';
 import './Quality.scss';
-import { Quality as QualityInterface } from '@/interfaces/Config';
+import { Quality as QualityInterface } from '@interfaces/Config';
 import { Arrows } from '../Icons/UI';
 import options from './options';
 

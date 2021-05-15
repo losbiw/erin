@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import config from '@modules/config';
-import wallpaper from '@/modules/wallpaper/wallpaper';
+import wallpaper from '@modules/wallpaper/wallpaper';
 import time from '@modules/time';
 import weatherCodes from '@modules/weather';
 import { fetchPexels, fetchWeather } from '@modules/APIs';
-import areEqual from '@/helpers/areEqual';
+import areEqual from '@helpers/areEqual';
 import './User.scss';
 import {
   Config, Mode, Quality, Theme,
-} from '@/interfaces/Config';
-import { State, Picture, Pages } from '@/interfaces/UserState';
-import { Warning } from '@/interfaces/Warning';
+} from '@interfaces/Config';
+import { State, Picture, Pages } from '@interfaces/UserState';
+import { Warning } from '@interfaces/Warning';
 import Error from '../Error/Error';
 import Page from '../Page/Page';
 import Nav from '../Nav/Nav';

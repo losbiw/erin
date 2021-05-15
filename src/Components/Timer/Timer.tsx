@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
-import capitalizeFirstLetter from '@/helpers/convert';
+import capitalizeFirstLetter from '@helpers/convert';
 import './Timer.scss';
-import { Warning } from '@/interfaces/Warning';
+import { Warning } from '@interfaces/Warning';
 
 interface Time{
     hours: number,

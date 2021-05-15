@@ -1,7 +1,7 @@
 import React, {
   FC, useState, useEffect, memo,
 } from 'react';
-import { Picture } from '@/interfaces/UserState';
+import { Picture } from '@interfaces/UserState';
 import AspectRatio from '../AspectRatio/AspectRatio';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { Arrows } from '../Icons/UI';

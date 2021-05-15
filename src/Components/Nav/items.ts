@@ -1,4 +1,4 @@
-import { Pages } from '@/interfaces/UserState';
+import { Pages } from '@interfaces/UserState';
 import NavIcons from '../Icons/Nav';
 
 interface NavButton{

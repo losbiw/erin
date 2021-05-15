@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Warning } from '@/interfaces/Warning';
+import { Warning } from '@interfaces/Warning';
 import Card from '../Card/Card';
 import { Links } from '../Links/Links';
 import { links } from './links';

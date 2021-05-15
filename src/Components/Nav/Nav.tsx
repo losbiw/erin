@@ -1,6 +1,6 @@
 import React, { FC, memo } from 'react';
-import { Theme } from '@/interfaces/Config';
-import { Pages } from '@/interfaces/UserState';
+import { Theme } from '@interfaces/Config';
+import { Pages } from '@interfaces/UserState';
 import buttons from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import './Nav.scss';

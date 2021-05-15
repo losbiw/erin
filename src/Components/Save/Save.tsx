@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import config from '@modules/config';
 import './Save.scss';
-import { Config } from '@/interfaces/Config';
+import { Config } from '@interfaces/Config';
 
 interface Props{
     configData: Config,

@@ -2,11 +2,11 @@ import React, {
   FC, useEffect, useState, useRef, memo,
 } from 'react';
 import config from '@modules/config';
-import areEqual from '@/helpers/areEqual';
+import areEqual from '@helpers/areEqual';
 import warning from '@modules/warning';
 import './Settings.scss';
-import { Config, ConfigUpdate } from '@/interfaces/Config';
-import { Warning } from '@/interfaces/Warning';
+import { Config, ConfigUpdate } from '@interfaces/Config';
+import { Warning } from '@interfaces/Warning';
 import Form from '../Form/Form';
 import items from './items';
 

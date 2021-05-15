@@ -1,4 +1,4 @@
-import { Quality as QualityInterface } from '@/interfaces/Config';
+import { Quality as QualityInterface } from '@interfaces/Config';
 
 const options = [
   {
