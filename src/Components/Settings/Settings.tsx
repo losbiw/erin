@@ -2,7 +2,7 @@ import React, {
   FC, useEffect, useState, useRef, memo,
 } from 'react';
 import config from '@modules/config';
-import areEqual from '@modules/areEqual';
+import areEqual from '@/helpers/areEqual';
 import warning from '@modules/warning';
 import './Settings.scss';
 import { Config, ConfigUpdate } from '@/interfaces/Config';

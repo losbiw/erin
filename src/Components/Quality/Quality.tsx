@@ -1,7 +1,7 @@
 import React, {
   FC, useState, useEffect, useCallback,
 } from 'react';
-import capitalizeFirstLetter from '@modules/convert';
+import capitalizeFirstLetter from '@/helpers/convert';
 import { getEnumKeyByEnumValue } from '@helpers/enum';
 import './Quality.scss';
 import { Quality as QualityInterface } from '@/interfaces/Config';

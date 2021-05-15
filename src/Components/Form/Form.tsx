@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { FC } from 'react';
-import capitalizeFirstLetter from '@modules/convert';
+import capitalizeFirstLetter from '@/helpers/convert';
 import warning from '@modules/warning';
 import {
   Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,

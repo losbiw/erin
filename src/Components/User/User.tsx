@@ -4,7 +4,7 @@ import wallpaper from '@/modules/wallpaper/wallpaper';
 import time from '@modules/time';
 import weatherCodes from '@modules/weather';
 import { fetchPexels, fetchWeather } from '@modules/APIs';
-import areEqual from '@modules/areEqual';
+import areEqual from '@/helpers/areEqual';
 import './User.scss';
 import {
   Config, Mode, Quality, Theme,
