@@ -2,7 +2,7 @@ import React, {
   FC, useState, useEffect, useCallback,
 } from 'react';
 import capitalizeFirstLetter from '@/helpers/convert';
-import { getEnumKeyByEnumValue } from '@helpers/enum';
+import { getEnumKeyByValue } from '@helpers/enum';
 import './Quality.scss';
 import { Quality as QualityInterface } from '@/interfaces/Config';
 import { Arrows } from '../Icons/UI';
@@ -30,7 +30,7 @@ const Quality: FC<Props> = (props: Props) => {
     return () => window.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const initValue = getEnumKeyByEnumValue(QualityInterface, initialQuality);
+  const initValue = getEnumKeyByValue(QualityInterface, initialQuality);
   const activeClass = isOpen ? 'active' : '';
 
   return (
