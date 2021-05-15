@@ -95,7 +95,7 @@ export default class User extends Component<Props, State> {
 
     handleReloadAfterSleep = () => {
       const { collection } = this.state;
-      const randomIndex = Math.round(Math.random() * collection.length);
+      const randomIndex = Math.round(Math.random() * (collection.length - 1));
 
       this.setState({
         error: null,
@@ -129,7 +129,7 @@ export default class User extends Component<Props, State> {
       }
 
       const sorted = sortPictures(fetchRes, quality);
-      const randomIndex = Math.round(Math.random() * sorted.length);
+      const randomIndex = Math.round(Math.random() * (sorted.length - 1));
 
       this.setState({
         collection: sorted,
