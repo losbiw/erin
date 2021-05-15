@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-const arrays = (arr1: any[], arr2: any[]): boolean => { // change types
+const arrays = (arr1: any[], arr2: any[]): boolean => {
   if (arr1.length !== arr2.length) {
     return false;
   }
@@ -15,7 +15,7 @@ const arrays = (arr1: any[], arr2: any[]): boolean => { // change types
   return true;
 };
 
-const objects = (obj1: any, obj2: any): boolean => { // change types
+const objects = (obj1: any, obj2: any): boolean => {
   const firstKeys = Object.keys(obj1);
   const secondKeys = Object.keys(obj2);
 
