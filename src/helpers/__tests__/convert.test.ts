@@ -8,7 +8,7 @@ const cases = [
 
 describe('.capitalizeFirstLetter util', () => {
   test.each(cases)(
-    'given %i string returns %i',
+    'if given %i string returns %i',
     (input, result) => {
       expect(capitalizeFirstLetter(input)).toEqual(result);
     },
