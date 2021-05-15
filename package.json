@@ -67,6 +67,7 @@
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env",
     "build": "yarn react-build && yarn electron-compile",
     "electron-release": "yarn build && electron-builder -mwl -p always",
+    "electron-release-without-build": "electron-builder -mwl -p always",
     "build-win": "yarn build && electron-builder -w",
     "build-linux": "yarn build && electron-builder -l",
     "build-mac": "yarn build && electron-builder -m",

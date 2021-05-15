@@ -40,10 +40,6 @@ yarn electron-start
 
 **Build**
 
-Building react app:
-```
-yarn react-build
-```
 Building electron app for:
 * Windows: ```yarn build-win```
 * Linux: ```yarn build-linux```
