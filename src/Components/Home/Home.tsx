@@ -21,11 +21,11 @@ const Home: FC<Props> = (props: Props) => {
   const { photographer, srcMain, photographerUrl } = picture;
 
   const handleNextWallpaper = useCallback(
-    () => switchWallpaper(pictureIndex + 1, true), [pictureIndex],
+    () => switchWallpaper(pictureIndex + 1, false), [pictureIndex],
   );
 
   const handlePrevWallpaper = useCallback(
-    () => switchWallpaper(pictureIndex - 1, true), [pictureIndex],
+    () => switchWallpaper(pictureIndex - 1, false), [pictureIndex],
   );
 
   const author = () => (
