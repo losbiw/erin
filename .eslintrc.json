@@ -28,6 +28,7 @@
         "@typescript-eslint/no-use-before-define": ["error"],
         "no-unused-vars": ["off"],
         "import/no-unresolved": "off",
+        "import/no-extraneous-dependencies": "off",
         "import/extensions": "off",
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx", "scss", ".test.ts"] }],
         "jest/no-disabled-tests": "warn",

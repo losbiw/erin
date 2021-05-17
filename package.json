@@ -6,6 +6,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.13.16",
+    "@testing-library/react": "^11.2.7",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
@@ -66,8 +67,8 @@
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env && yarn delete-temp",
     "build": "yarn react-build && yarn electron-compile",
-    "electron-release": "yarn build && electron-builder -mwl -p always",
-    "electron-release-without-build": "electron-builder -mwl -p always",
+    "electron-release": "yarn build && electron-builder -m -w -p always",
+    "electron-release-linux": "electron-builder -l -p always",
     "build-win": "yarn build && electron-builder -w",
     "build-linux": "yarn build && electron-builder -l",
     "build-mac": "yarn build && electron-builder -m",
