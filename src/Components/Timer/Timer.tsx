@@ -1,60 +1,33 @@
 import React, { FC, useState } from 'react';
 import capitalizeFirstLetter from '@helpers/convert';
+import * as milliseconds from '@/modules/milliseconds';
 import './Timer.scss';
 import { Warning } from '@interfaces/Warning';
 
-interface Time{
-    hours: number,
-    minutes: number,
-    seconds: number
-}
-
 interface Props{
-    time: number,
-    isActive: boolean,
-    setWarning: (warning: Warning | string) => void,
-    updateTimeout: (time: number) => void
+  time: number,
+  isActive: boolean,
+  setWarning: (warning: Warning | string) => void,
+  updateTimeout: (time: number) => void
 }
-
-const convertTime = (ms: number, convertation: Time): Time => {
-  const { hours, minutes, seconds } = convertation;
-
-  return {
-    hours: Math.floor(ms / hours),
-    minutes: Math.floor((ms % hours) / minutes),
-    seconds: Math.floor((ms % hours % minutes) / seconds),
-  };
-};
 
 const Timer: FC<Props> = (props: Props) => {
   const [focusIndex, setFocus] = useState(0);
   const { time: propTime } = props;
 
-  const convertation = {
-    hours: 3600000,
-    minutes: 60000,
-    seconds: 1000,
-  };
-
-  const time = convertTime(propTime, convertation);
+  const time = milliseconds.from(propTime);
   const keys = time ? Object.keys(time) : [];
 
   const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const { name, value } = e.target;
-      const numberValue = parseInt(value, 10);
 
       if (value.length < 3) {
-        let milliseconds = numberValue * convertation[name as keyof Time] || 0;
+        const numberValue = parseInt(value, 10);
+        time[name as keyof milliseconds.Time] = numberValue;
+        const ms = milliseconds.to(time);
 
-        Object.keys(time).forEach((unit) => {
-          if (unit !== name) {
-            const unitKey = unit as keyof Time;
-            milliseconds += time[unitKey] * convertation[unitKey];
-          }
-        });
-
-        props.updateTimeout(milliseconds);
+        props.updateTimeout(ms);
       } else {
         e.target.value = value.slice(0, 2);
       }
@@ -71,7 +44,7 @@ const Timer: FC<Props> = (props: Props) => {
             <div className="wrapper">
               <input
                 type="number"
-                defaultValue={time[unit as keyof Time]}
+                defaultValue={time[unit as keyof milliseconds.Time]}
                 id={unit}
                 className="time-input"
                 ref={(ref) => {
