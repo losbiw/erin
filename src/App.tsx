@@ -8,7 +8,7 @@ import { Theme } from '@interfaces/Config';
 import { Warning as WarningInterface } from '@interfaces/Warning.d';
 import logo from '@app/erin.png';
 import Controls from './Components/Controls/Controls';
-import { Warning, CustomWarning } from './Components/Warning/Warning';
+import Warning from './Components/Warning/Warning';
 import User from './Components/User/User';
 import Setup from './Components/Setup/Setup';
 import Update from './Components/Update/Update';
@@ -102,10 +102,13 @@ const App: FC = () => {
 
       { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
 
-      { (warning && typeof warning === 'string')
-        ? <Warning warning={warning} removeWarning={removeWarning} />
-        : warning
-        && <CustomWarning warning={warning as WarningInterface} removeWarning={removeWarning} />}
+      {warning && (
+      <Warning
+        message={typeof warning === 'string' ? warning : warning.message}
+        Icon={typeof warning !== 'string' ? warning.Icon : undefined}
+        removeWarning={removeWarning}
+      />
+      )}
     </div>
   );
 };
