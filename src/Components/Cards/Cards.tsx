@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 import { Warning } from '@interfaces/Warning';
 import getCards from './items';
-import './Card.scss';
+import './Cards.scss';
 
 interface Props{
   setWarning: (warning: string | Warning) => void
 }
 
-const Card: FC<Props> = (props: Props) => {
-  const { setWarning } = props;
+const Cards: FC<Props> = ({ setWarning }: Props) => {
   const cards = getCards(setWarning);
 
   return (
@@ -37,4 +36,4 @@ const Card: FC<Props> = (props: Props) => {
   );
 };
 
-export default Card;
+export default Cards;

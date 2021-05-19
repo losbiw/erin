@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Warning } from '@interfaces/Warning';
-import Card from '../Card/Card';
+import Cards from '../Cards/Cards';
 import { Links } from '../Links/Links';
 import { links } from './links';
 import './Info.scss';
@@ -19,7 +19,7 @@ const Info: FC<Props> = (props: Props) => {
         <Links links={links.author} />
       </div>
 
-      <Card setWarning={setWarning} />
+      <Cards setWarning={setWarning} />
 
       <div className="reference">
         <p className="resources">The app is using APIs and icons from the following resources:</p>
