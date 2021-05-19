@@ -5,7 +5,7 @@ import './Timer.scss';
 import { Warning } from '@interfaces/Warning';
 
 interface Props{
-  time: number,
+  timeInMs: number,
   isActive: boolean,
   setWarning: (warning: Warning | string) => void,
   updateTimeout: (time: number) => void
@@ -13,9 +13,9 @@ interface Props{
 
 const Timer: FC<Props> = (props: Props) => {
   const [focusIndex, setFocus] = useState(0);
-  const { time: propTime } = props;
+  const { timeInMs } = props;
 
-  const time = milliseconds.from(propTime);
+  const time = milliseconds.from(timeInMs);
   const keys = time ? Object.keys(time) : [];
 
   const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +46,7 @@ const Timer: FC<Props> = (props: Props) => {
                 type="number"
                 defaultValue={time[unit as keyof milliseconds.Time]}
                 id={unit}
+                data-testid={unit}
                 className="time-input"
                 ref={(ref) => {
                   if (ref && props.isActive && index === focusIndex) {

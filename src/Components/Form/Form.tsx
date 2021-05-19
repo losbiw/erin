@@ -92,7 +92,7 @@ const Form: FC<Props> = (props: Props) => {
       return (
         <Timer
           isActive={isActive}
-          time={timer}
+          timeInMs={timer}
           setWarning={setWarning}
           updateTimeout={timerHandler}
         />
