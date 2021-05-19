@@ -9,19 +9,74 @@ import { Arrows } from '../Icons/UI';
 import options from './options';
 
 interface Props{
-    changeQuality: (quality: QualityInterface) => void,
-    initialQuality: QualityInterface
+  changeQuality: (quality: QualityInterface) => void,
+  initialQuality: QualityInterface
 }
 
+interface InnerProps{
+  initValue: keyof typeof QualityInterface | null,
+  activeClass: 'active' | false,
+  isExpanded: boolean,
+  handlePreviewClick: () => void,
+  handleOptionClick: (quality: QualityInterface) => void
+}
+
+const renderOptions = (handleClick: (quality: QualityInterface) => void) => {
+  const elements: JSX.Element[] = [];
+
+  options.forEach((option) => {
+    const { value, label } = option;
+
+    elements.push(
+      <div
+        className="option"
+        key={value}
+        role="presentation"
+        onClick={() => handleClick(value)}
+      >
+        <div className="text">{ capitalizeFirstLetter(label) }</div>
+        <div className="background transparent" />
+      </div>,
+    );
+  });
+
+  return elements;
+};
+
+const InnerQuality: FC<InnerProps> = (props: InnerProps) => {
+  const {
+    initValue, activeClass, isExpanded, handlePreviewClick, handleOptionClick,
+  } = props;
+
+  return (
+    <div className="dropdown">
+      <div
+        className="preview"
+        role="presentation"
+        onClick={handlePreviewClick}
+      >
+        <p className="preview-text">{initValue}</p>
+        <Arrows.Forward />
+      </div>
+      <div className={`background transparent preview-background ${activeClass}`} />
+      { isExpanded && (
+      <div className="options-container">
+        { renderOptions(handleOptionClick) }
+      </div>
+      ) }
+    </div>
+  );
+};
+
 const Quality: FC<Props> = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setExpansion] = useState(false);
   const { changeQuality, initialQuality } = props;
 
   const handleClickOutside = useCallback((event) => {
     const { className } = event.srcElement;
 
     if (className !== 'option' && className !== 'preview' && className !== 'options-container') {
-      setIsOpen(false);
+      setExpansion(false);
     }
   }, []);
 
@@ -30,45 +85,23 @@ const Quality: FC<Props> = (props: Props) => {
     return () => window.removeEventListener('click', handleClickOutside);
   }, []);
 
+  const handlePreviewClick = () => setExpansion(!isExpanded);
+
+  const handleOptionClick = (value: QualityInterface) => {
+    setExpansion(false);
+    changeQuality(value);
+  };
+
   const initValue = getEnumKeyByValue(QualityInterface, initialQuality);
-  const activeClass = isOpen ? 'active' : '';
 
   return (
-    <div className="dropdown">
-      <div
-        className="preview"
-        role="presentation"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <p className="preview-text">{initValue}</p>
-        <Arrows.Forward />
-      </div>
-      <div className={`background transparent preview-background ${activeClass}`} />
-      {isOpen && (
-      <div className="options-container">
-        {
-        options.map((option) => {
-          const { value, label } = option;
-
-          return (
-            <div
-              className="option"
-              key={value}
-              role="presentation"
-              onClick={() => {
-                setIsOpen(false);
-                changeQuality(value);
-              }}
-            >
-              <div className="text">{ capitalizeFirstLetter(label) }</div>
-              <div className="background transparent" />
-            </div>
-          );
-        })
-        }
-      </div>
-      ) }
-    </div>
+    <InnerQuality
+      initValue={initValue}
+      activeClass={isExpanded && 'active'}
+      isExpanded={isExpanded}
+      handlePreviewClick={handlePreviewClick}
+      handleOptionClick={handleOptionClick}
+    />
   );
 };
 

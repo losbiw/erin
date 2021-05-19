@@ -1,17 +1,100 @@
 import React, {
-  FC, useEffect, useState, useRef, memo,
+  FC, useEffect, useState, memo,
 } from 'react';
 import './Keywords.scss';
 import { Warning } from '@interfaces/Warning';
 import { Crosses } from '../Icons/UI';
 
 interface Props{
-    keywords: string[],
-    isActive: boolean,
-    isSetup: boolean,
-    changeKeywords: (keywords: string[]) => void,
-    setWarning: (warning: Warning | string) => void
+  keywords: string[],
+  isActive: boolean,
+  isSetup: boolean,
+  changeKeywords: (keywords: string[]) => void,
+  setWarning: (warning: Warning | string) => void
 }
+
+interface InputProps{
+  isFocused: boolean,
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
+}
+
+interface ContainerProps{
+  handleClick: () => void,
+  handleDelete: (keyword: string) => void,
+  keywords: string[],
+}
+
+interface InnerProps extends InputProps, ContainerProps{
+  isInput: boolean
+}
+
+const KeywordsInput: FC<InputProps> = (props: InputProps) => {
+  const { isFocused, handleKeyDown } = props;
+
+  return (
+    <input
+      type="text"
+      className="keyword-input"
+      name="keywords"
+      ref={(ref) => {
+        if (isFocused) ref?.focus({ preventScroll: true });
+      }}
+      placeholder="Type something and press enter"
+      maxLength={15}
+      onKeyDown={handleKeyDown}
+    />
+  );
+};
+
+const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
+  const { keywords, handleClick, handleDelete } = props;
+
+  return (
+    <div className="keywords-container">
+      <div
+        className="click background"
+        role="presentation"
+        onClick={handleClick}
+      >
+        <div className="transparent" />
+      </div>
+      {
+      keywords.map((keyword) => (
+        <div className="keyword" key={keyword}>
+          <p>{ keyword }</p>
+
+          <button
+            className="delete"
+            type="button"
+            onClick={() => handleDelete(keyword)}
+          >
+            <Crosses.Green />
+          </button>
+        </div>
+      ))
+    }
+    </div>
+  );
+};
+
+const InnerKeywords: FC<InnerProps> = (props: InnerProps) => {
+  const {
+    isInput, isFocused, handleDelete, handleKeyDown, handleClick, keywords,
+  } = props;
+
+  return isInput ? (
+    <KeywordsInput
+      isFocused={isFocused}
+      handleKeyDown={handleKeyDown}
+    />
+  ) : (
+    <KeywordsContainer
+      handleClick={handleClick}
+      handleDelete={handleDelete}
+      keywords={keywords}
+    />
+  );
+};
 
 const Keywords: FC<Props> = memo((props: Props) => {
   const {
@@ -19,15 +102,10 @@ const Keywords: FC<Props> = memo((props: Props) => {
   } = props;
 
   const [isInput, setInput] = useState(keywords.length === 0);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (keywords.length === 0 && !isInput) {
       setInput(true);
-    }
-
-    if (isInput && (!isSetup || isActive)) {
-      inputRef?.current?.focus({ preventScroll: true });
     }
   });
 
@@ -45,7 +123,7 @@ const Keywords: FC<Props> = memo((props: Props) => {
     setInput(true);
   };
 
-  const keyDownListener = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const dataKeywords = [...keywords];
 
     if (e.key === 'Enter' && keywords.length < 10) {
@@ -66,41 +144,14 @@ const Keywords: FC<Props> = memo((props: Props) => {
   };
 
   return (
-    isInput
-      ? (
-        <input
-          type="text"
-          className="keyword-input"
-          name="keywords"
-          ref={inputRef}
-          placeholder="Type something and press enter"
-          maxLength={15}
-          onKeyDown={keyDownListener}
-        />
-      )
-
-      : (
-        <div className="keywords-container">
-          <div className="click background" role="presentation" onClick={handleClick}>
-            <div className="transparent" />
-          </div>
-          {
-            keywords.map((keyword) => (
-              <div className="keyword" key={keyword}>
-                <p>{ keyword }</p>
-
-                <button
-                  className="delete"
-                  type="button"
-                  onClick={() => handleDelete(keyword)}
-                >
-                  <Crosses.Green />
-                </button>
-              </div>
-            ))
-          }
-        </div>
-      )
+    <InnerKeywords
+      keywords={keywords}
+      isInput={isInput}
+      isFocused={(!isSetup || isActive)}
+      handleClick={handleClick}
+      handleDelete={handleDelete}
+      handleKeyDown={handleKeyDown}
+    />
   );
 });
 

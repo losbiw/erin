@@ -139,7 +139,7 @@ const Form: FC<Props> = (props: Props) => {
 
           return (
             <div
-              className={`item ${isActive ? 'active-item' : ''}`}
+              className={`item ${isActive && 'active-item'}`}
               style={theme && { backgroundImage: setting[theme] ? `url(${setting[theme]})` : 'none' }}
               key={key}
             >

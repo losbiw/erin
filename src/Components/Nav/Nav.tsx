@@ -23,7 +23,7 @@ const Nav: FC<Props> = memo((props: Props) => {
           {
             group.map((button) => {
               const { Icon, target } = button;
-              const active = props.current === target ? ' active' : '';
+              const active = props.current === target && ' active';
 
               if (group === buttons[1]) isFirst = false;
 

@@ -2,9 +2,9 @@ import React, { FC, memo } from 'react';
 import './AspectRatio.scss';
 
 interface Props{
-    src: string,
-    isActive?: boolean,
-    handleClick?: () => void
+  src: string,
+  isActive?: boolean,
+  handleClick?: () => void
 }
 
 const defaultProps = {
@@ -12,26 +12,21 @@ const defaultProps = {
   handleClick: undefined,
 };
 
-const AspectRatio: FC<Props> = memo((props: Props) => {
-  const {
-    src, isActive, handleClick,
-  } = props;
-  const activeClass = isActive ? 'active' : '';
-
-  return (
-    <div
-      className={`aspect-ratio ${activeClass}`}
-      role="presentation"
-      onClick={handleClick}
-      onKeyDown={handleClick}
-    >
-      <div className="transparent" />
-      <div className="container">
-        <img className="aspect-image" src={src} alt="wallpaper" />
-      </div>
+const AspectRatio: FC<Props> = memo(({
+  src, isActive, handleClick,
+}: Props) => (
+  <div
+    className={`aspect-ratio ${isActive && 'active'}`}
+    role="presentation"
+    onClick={handleClick}
+    onKeyDown={handleClick}
+  >
+    <div className="transparent" />
+    <div className="container">
+      <img className="aspect-image" src={src} alt="wallpaper" />
     </div>
-  );
-});
+  </div>
+));
 
 AspectRatio.defaultProps = defaultProps;
 
