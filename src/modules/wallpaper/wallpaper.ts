@@ -1,5 +1,6 @@
 import { LinuxCommands, Distros } from '@interfaces/Linux.d';
 import * as https from 'https';
+import { IncomingMessage } from 'http';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
@@ -40,8 +41,8 @@ const set = async (img: string, macPath: string) => {
   if (os === 'win32') {
     const isPackaged = await ipcRenderer.invoke('is-app-packaged');
 
-    const resourcePath = isPackaged ? window.process.resourcesPath : path.join(__dirname, '../../');
-    const execPath = path.join(resourcePath, 'build/Wallpaper/Wallpaper.exe');
+    const resourcePath = isPackaged ? path.join(window.process.resourcesPath, 'build') : path.join(__dirname, '../../../electron');
+    const execPath = path.join(resourcePath, 'Wallpaper/Wallpaper.exe');
 
     await execFile(execPath, [imgPath]);
   } else if (os === 'linux') {
@@ -72,8 +73,8 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
     return;
   }
 
-  const callback = (res: any) => { // change
-    const size = res.headers['content-length'];
+  const callback = (res: IncomingMessage) => {
+    const size = parseInt(res.headers['content-length'] as string, 10);
 
     if (os === 'win32' && (size / 1024 / 1024) >= 27) {
       setWarning("The file is too big. It's been switched to the next one automatically");
@@ -107,11 +108,10 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
     }
   };
 
-  const req = https.get(url, callback);
-
-  req.on('error', () => {
-    setError(502);
-  });
+  https.get(url, callback)
+    .on('error', () => {
+      setError(502);
+    });
 };
 
 export default { download, set };
