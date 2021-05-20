@@ -8,19 +8,78 @@ import { Arrows } from '../Icons/UI';
 import { Arrow } from '../Arrows/Arrows';
 import './Picker.scss';
 
-interface Props{
-    collection: Picture[],
-    pictureIndex: number,
-    isLocked: boolean,
-    progress: number,
-    switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
+interface SharedProps {
+  pictureIndex: number,
+  isLocked: boolean,
+  progress: number,
+  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
 }
 
-interface PickerPicture{
-    src: string,
-    index: number,
-    key: string
+interface Props extends SharedProps {
+  collection: Picture[],
 }
+
+interface PickerPicture {
+  src: string,
+  index: number,
+  key: string
+}
+
+interface InnerProps extends SharedProps {
+  collection: PickerPicture[],
+  handleForwardClick: () => void,
+  handleBackClick: () => void,
+}
+
+interface ArrowProps {
+  children?: React.ReactNode,
+  handleClick: () => void
+}
+
+const ArrowWrapper: FC<ArrowProps> = ({ children, handleClick }: ArrowProps) => (
+  <div className="wrapper">
+    { children }
+    <Arrow
+      Icon={Arrows.Forward}
+      index={0}
+      handleClick={handleClick}
+    />
+  </div>
+);
+
+ArrowWrapper.defaultProps = {
+  children: undefined,
+};
+
+const InnerPicker: FC<InnerProps> = ({
+  collection, progress, isLocked, pictureIndex,
+  handleForwardClick, handleBackClick, switchWallpaper,
+}: InnerProps) => (
+  <div className="picker page">
+    <ArrowWrapper handleClick={handleBackClick} />
+
+    <div className="slider">
+      { collection
+        && collection.map(({ src, key, index }) => {
+          const isActive = pictureIndex === index;
+          const handleAspectClick = isActive ? undefined : () => switchWallpaper(index, false);
+
+          return (
+            <AspectRatio
+              src={src}
+              key={key}
+              isActive={isActive}
+              handleClick={handleAspectClick}
+            />
+          );
+        })}
+    </div>
+
+    <ArrowWrapper handleClick={handleForwardClick}>
+      { isLocked && <ProgressBar width={progress} /> }
+    </ArrowWrapper>
+  </div>
+);
 
 const Picker: FC<Props> = memo((props: Props) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -71,43 +130,19 @@ const Picker: FC<Props> = memo((props: Props) => {
     sortCollection(collection, closest);
   };
 
+  const setPrevBlock = () => switchWallpaperBlock(false);
+  const setNextBlock = () => switchWallpaperBlock(true);
+
   return (
-    <div className="picker page">
-      <div className="wrapper">
-        <Arrow
-          Icon={Arrows.Forward}
-          index={0}
-          handleClick={() => switchWallpaperBlock(false)}
-        />
-      </div>
-
-      <div className="slider">
-        { stateCollection
-          && stateCollection.map((pic) => {
-            const { src, key, index } = pic;
-            const isActive = pictureIndex === pic.index;
-
-            return (
-              <AspectRatio
-                src={src}
-                key={key}
-                isActive={isActive}
-                handleClick={isActive ? undefined : () => switchWallpaper(index, false)}
-              />
-            );
-          })}
-      </div>
-
-      <div className="wrapper">
-        { isLocked && <ProgressBar width={progress} /> }
-
-        <Arrow
-          Icon={Arrows.Back}
-          index={0}
-          handleClick={() => switchWallpaperBlock(true)}
-        />
-      </div>
-    </div>
+    <InnerPicker
+      collection={stateCollection}
+      progress={progress}
+      isLocked={isLocked}
+      pictureIndex={pictureIndex}
+      switchWallpaper={switchWallpaper}
+      handleBackClick={setPrevBlock}
+      handleForwardClick={setNextBlock}
+    />
   );
 });
 

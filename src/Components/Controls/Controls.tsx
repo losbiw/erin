@@ -5,15 +5,14 @@ import './Controls.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-interface Icons{
+interface Icons {
   minimize: React.FC<React.SVGProps<SVGSVGElement>>,
   maximize: React.FC<React.SVGProps<SVGSVGElement>>,
   close: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
-interface InnerProps{
-  icons: Icons,
-  handleClick: (name: keyof Icons) => void
+interface WrapperProps {
+  children: React.ReactNode
 }
 
 const renderButtons = (icons: Icons, handleClick: (name: keyof Icons) => void) => {
@@ -38,11 +37,11 @@ const renderButtons = (icons: Icons, handleClick: (name: keyof Icons) => void) =
   return result;
 };
 
-const InnerControl: FC<InnerProps> = ({ icons, handleClick }: InnerProps) => (
+const InnerControl: FC<WrapperProps> = ({ children }: WrapperProps) => (
   <div className="control">
     <div className="draggable" />
     <div className="control-container">
-      { renderButtons(icons, handleClick) }
+      { children }
     </div>
   </div>
 );
@@ -61,7 +60,11 @@ const Controls: FC = () => {
     if (name === 'maximize') setMaximize(!isMaximized);
   };
 
-  return <InnerControl icons={icons} handleClick={handleClick} />;
+  return (
+    <InnerControl>
+      { renderButtons(icons, handleClick) }
+    </InnerControl>
+  );
 };
 
 export default Controls;

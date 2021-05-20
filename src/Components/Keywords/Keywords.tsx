@@ -5,7 +5,7 @@ import './Keywords.scss';
 import { Warning } from '@interfaces/Warning';
 import { Crosses } from '../Icons/UI';
 
-interface Props{
+interface Props {
   keywords: string[],
   isActive: boolean,
   isSetup: boolean,
@@ -13,18 +13,23 @@ interface Props{
   setWarning: (warning: Warning | string) => void
 }
 
-interface InputProps{
+interface InputProps {
   isFocused: boolean,
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-interface ContainerProps{
+interface ContainerProps {
   handleClick: () => void,
   handleDelete: (keyword: string) => void,
   keywords: string[],
 }
 
-interface InnerProps extends InputProps, ContainerProps{
+interface KeywordProps {
+  keyword: string,
+  handleClick: () => void,
+}
+
+interface InnerProps extends InputProps, ContainerProps {
   isInput: boolean
 }
 
@@ -46,6 +51,20 @@ const KeywordsInput: FC<InputProps> = (props: InputProps) => {
   );
 };
 
+const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
+  <div className="keyword" key={keyword}>
+    <p>{ keyword }</p>
+
+    <button
+      className="delete"
+      type="button"
+      onClick={handleClick}
+    >
+      <Crosses.Green />
+    </button>
+  </div>
+);
+
 const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
   const { keywords, handleClick, handleDelete } = props;
 
@@ -59,19 +78,17 @@ const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
         <div className="transparent" />
       </div>
       {
-      keywords.map((keyword) => (
-        <div className="keyword" key={keyword}>
-          <p>{ keyword }</p>
+      keywords.map((keyword) => {
+        const handleKeywordClick = () => handleDelete(keyword);
 
-          <button
-            className="delete"
-            type="button"
-            onClick={() => handleDelete(keyword)}
-          >
-            <Crosses.Green />
-          </button>
-        </div>
-      ))
+        return (
+          <Keyword
+            keyword={keyword}
+            handleClick={handleKeywordClick}
+            key={keyword}
+          />
+        );
+      })
     }
     </div>
   );

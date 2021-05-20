@@ -47,19 +47,17 @@ $image-shadow-dark: 0px 0px 89.91px 21.09px rgba(0, 0, 0, 0.58);
         }
     }
 
-    .links {
-        .link {
-            text-decoration: none;
-            font-size: 0.7vw;
-            transition: transform 300ms;
+    .link {
+        text-decoration: none;
+        font-size: 0.7vw;
+        transition: transform 300ms;
 
-            &:hover {
-                transform: scale(1.1);
-            }
+        &:hover {
+            transform: scale(1.1);
         }
     }
 
-    .progress-bar + .links {
+    .progress-bar + .link {
         display: none;
     }
 }

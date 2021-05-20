@@ -3,45 +3,55 @@ import './Links.scss';
 
 const { shell } = window.require('electron');
 
-interface Link{
-    title?: string,
-    href: string,
-    Content?: React.FC<React.SVGProps<SVGSVGElement>>
+interface LinkInterface {
+  title?: string,
+  href: string,
+  Content?: React.FC<React.SVGProps<SVGSVGElement>> | (() => JSX.Element)
 }
 
-interface Props{
-    links: {
-        [key: string]: Link
-    }
+interface Props {
+  links: {
+    [key: string]: LinkInterface
+  }
 }
 
-const Links: FC<Props> = (props: Props) => {
-  const { links } = props;
-  const keys = Object.keys(links);
+const Link: FC<LinkInterface> = ({ Content, title, href }: LinkInterface) => (
+  <button
+    type="button"
+    className="link"
+    onClick={() => shell.openExternal(href)}
+  >
+    { Content && <Content /> }
+    { title && <p className="title">{ title }</p> }
+  </button>
+);
 
-  return (
-    <div className="links">
-      {
-        keys.map((key) => {
-          const { title, href, Content } = links[key];
-
-          return (
-            <button
-              type="button"
-              className="link"
-              key={key}
-              onClick={() => shell.openExternal(href)}
-            >
-              { Content && <Content /> }
-              { title && <p className="title">{ title }</p> }
-            </button>
-          );
-        })
-      }
-    </div>
-  );
+Link.defaultProps = {
+  title: '',
+  Content: undefined,
 };
+
+const Links: FC<Props> = ({ links }: Props) => (
+  <div className="links">
+    {
+      Object.keys(links).map((key) => {
+        const { title, href, Content } = links[key];
+
+        return (
+          <Link
+            title={title}
+            Content={Content}
+            href={href}
+            key={title}
+          />
+        );
+      })
+    }
+  </div>
+);
 
 const MemoizedLinks = memo(Links);
 
-export { Links, MemoizedLinks };
+export {
+  Links, MemoizedLinks, Link, LinkInterface,
+};

@@ -1,57 +1,90 @@
 import React, { FC, memo } from 'react';
 import { Theme } from '@interfaces/Config';
 import { Pages } from '@interfaces/UserState';
-import buttons from './items';
+import { buttons, NavButton as NavButtonInterface } from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import './Nav.scss';
 
-interface Props{
-    changePage: (name: Pages) => void,
-    current: string,
-    theme: Theme,
-    switchTheme: () => void
+interface Shared {
+  changePage: (name: Pages) => void,
+  current: Pages,
 }
 
-const Nav: FC<Props> = memo((props: Props) => {
-  const { theme, switchTheme } = props;
-  let isFirst = true;
+interface Props extends Shared {
+  theme: Theme,
+  switchTheme: () => void
+}
 
-  return (
-    <nav className="nav">
-      { buttons.map((group) => (
-        <div className="btns" key={group[0].target + group[1].target}>
-          {
-            group.map((button) => {
-              const { Icon, target } = button;
-              const active = props.current === target && ' active';
+interface ButtonProps {
+  active: false | 'active',
+  target: Pages,
+  handleClick: () => void,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>
+}
 
-              if (group === buttons[1]) isFirst = false;
+interface GroupProps extends Shared {
+  children: React.ReactNode,
+  group: NavButtonInterface[]
+}
 
-              return (
-                <button
-                  className={`nav-btn${active}`}
-                  type="button"
-                  name={target}
-                  key={target}
-                  onClick={() => props.changePage(target)}
-                >
-                  <Icon />
-                </button>
-              );
-            })
-          }
-          {
-            isFirst && (
-            <ThemeToggle
-              theme={theme}
-              switchTheme={switchTheme}
-            />
-            )
-          }
-        </div>
-      )) }
-    </nav>
-  );
-});
+const NavButton: FC<ButtonProps> = ({
+  active, target, handleClick, Icon,
+}: ButtonProps) => (
+  <button
+    className={`nav-btn ${active}`}
+    type="button"
+    name={target}
+    key={target}
+    onClick={handleClick}
+  >
+    <Icon />
+  </button>
+);
+
+const NavGroup: FC<GroupProps> = ({
+  children, group, current, changePage,
+}: GroupProps) => (
+  <div className="btns" key={group[0].target}>
+    {
+      group.map(({ Icon, target }) => {
+        const active = current === target && 'active';
+        const handleClick = () => changePage(target);
+
+        return (
+          <NavButton
+            active={active}
+            handleClick={handleClick}
+            target={target}
+            Icon={Icon}
+            key={target}
+          />
+        );
+      })
+    }
+    { children }
+  </div>
+);
+
+const Nav: FC<Props> = memo(({
+  theme, switchTheme, current, changePage,
+}: Props) => (
+  <nav className="nav">
+    { buttons.map((group, index) => (
+      <NavGroup
+        group={group}
+        current={current}
+        changePage={changePage}
+        key={group[0].target + group[1].target}
+      >
+        { index === 0 && (
+        <ThemeToggle
+          theme={theme}
+          switchTheme={switchTheme}
+        />
+        ) }
+      </NavGroup>
+    )) }
+  </nav>
+));
 
 export default Nav;
