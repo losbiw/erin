@@ -65,17 +65,13 @@
     "electron-start": "electron .",
     "react-build": "webpack --env NODE_ENV=production",
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
-    "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && yarn copy-env && yarn delete-temp",
+    "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && node ./scripts/postCompile",
     "build": "yarn react-build && yarn electron-compile",
-    "electron-release": "yarn build && electron-builder -m -w -p always",
-    "electron-release-linux": "electron-builder -l -p always",
-    "build-win": "yarn build && electron-builder -w",
-    "build-linux": "yarn build && electron-builder -l",
-    "build-mac": "yarn build && electron-builder -m",
+    "electron-release": "yarn build && electron-builder -mw -p always",
+    "electron-release-linux": "yarn build && electron-builder -l -p always",
+    "build-current-platform": "electron-builder",
     "build-mwl": "yarn build && electron-builder -mwl",
-    "copy-env": "cd ./electron && chflags nohidden .env && cp .env ../build/.env",
-    "test": "jest --watchAll",
-    "delete-temp": "rm -r ./ts-temp"
+    "test": "jest --watchAll"
   },
   "build": {
     "appId": "com.erin.start",
