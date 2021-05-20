@@ -5,7 +5,7 @@ import capitalizeFirstLetter from '@helpers/convert';
 import { getEnumKeyByValue } from '@helpers/enum';
 import './Quality.scss';
 import { Quality as QualityInterface } from '@interfaces/Config';
-import { Arrows } from '../Icons/UI';
+import { Arrows } from '@icons/UI';
 import options from './options';
 
 interface Props {

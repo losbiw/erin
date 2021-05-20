@@ -6,7 +6,7 @@ import Home from '../Home/Home';
 import Picker from '../Picker/Picker';
 import Settings from '../Settings/Settings';
 import Info from '../Info/Info';
-import './Page.scss';
+import './Router.scss';
 
 interface Props extends SharedState {
   switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
@@ -15,7 +15,7 @@ interface Props extends SharedState {
   updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
-const Page: FC<Props> = (props: Props) => {
+const Router: FC<Props> = (props: Props) => {
   const {
     switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config,
   } = props;
@@ -65,4 +65,4 @@ const Page: FC<Props> = (props: Props) => {
   return <></>;
 };
 
-export default Page;
+export default Router;

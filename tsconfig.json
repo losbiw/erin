@@ -13,7 +13,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/Components/*"],
+      "@icons/*": ["src/assets/Icons/*"],
       "@nav/*": ["src/assets/nav/*"],
       "@info/*": ["src/assets/info/*"],
       "@ui/*": ["src/assets/ui/*"],
@@ -23,7 +24,8 @@
       "@app/*": ["src/assets/app/*"],
       "@modules/*": ["src/modules/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@helpers/*": ["src/helpers/*"]
+      "@helpers/*": ["src/helpers/*"],
+      "@pages/*": ["src/Pages/*"]
    }       
   }
 }

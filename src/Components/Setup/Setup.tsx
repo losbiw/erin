@@ -9,7 +9,7 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import { items } from '../Slider/items';
 
 import './Setup.scss';
-import '../Settings/Settings.scss';
+import '@pages/Settings/Settings.scss';
 
 interface Props {
   theme: Theme,

@@ -7,7 +7,7 @@ import warning from '@modules/warning';
 import './Settings.scss';
 import { Config, ConfigUpdate } from '@interfaces/Config';
 import { Warning } from '@interfaces/Warning';
-import Form from '../Form/Form';
+import Form from '@/Form/Form';
 import items from './items';
 
 interface Props {

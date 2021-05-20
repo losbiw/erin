@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import './Keywords.scss';
 import { Warning } from '@interfaces/Warning';
-import { Crosses } from '../Icons/UI';
+import { Crosses } from '@icons/UI';
 
 interface Props {
   keywords: string[],

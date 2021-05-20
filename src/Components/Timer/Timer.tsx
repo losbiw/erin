@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import capitalizeFirstLetter from '@helpers/convert';
-import * as milliseconds from '@/modules/milliseconds';
+import * as milliseconds from '@modules/milliseconds';
 import './Timer.scss';
 import { Warning } from '@interfaces/Warning';
 

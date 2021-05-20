@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
-import Control from '../Icons/Control';
-import { Crosses } from '../Icons/UI';
+import Control from '@icons/Control';
+import { Crosses } from '@icons/UI';
 import './Controls.scss';
 
 const { ipcRenderer } = window.require('electron');

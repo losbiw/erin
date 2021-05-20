@@ -7,7 +7,7 @@ import {
 } from '@interfaces/Config';
 import { Warning } from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
-import Icons from '../Icons/Settings';
+import Icons from '@icons/Settings';
 import Privacy from '../Privacy/Privacy';
 import Mode from '../Mode/Mode';
 import Keywords from '../Keywords/Keywords';

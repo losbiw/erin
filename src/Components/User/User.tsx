@@ -11,9 +11,9 @@ import {
 } from '@interfaces/Config';
 import { State, Picture, Pages } from '@interfaces/UserState';
 import { Warning } from '@interfaces/Warning';
-import Error from '../Error/Error';
-import Page from '../Page/Page';
-import Nav from '../Nav/Nav';
+import Error from '@pages/Error/Error';
+import Router from '@pages/Router/Router';
+import Nav from '@/Nav/Nav';
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -289,7 +289,7 @@ export default class User extends Component<Props, State> {
           { error && (current === Pages.Home || current === Pages.Picker)
             ? <Error code={error} />
             : (
-              <Page
+              <Router
                 setWarning={setWarning}
                 setIsComplete={setIsComplete}
                 switchWallpaper={switchWallpaper}

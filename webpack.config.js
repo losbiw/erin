@@ -91,7 +91,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/'),
+      '@': path.resolve(__dirname, 'src/Components'),
+      '@icons': path.resolve(__dirname, 'src/assets/Icons'),
       '@nav': path.resolve(__dirname, 'src/assets/nav'),
       '@info': path.resolve(__dirname, 'src/assets/info'),
       '@ui': path.resolve(__dirname, 'src/assets/ui'),
@@ -102,6 +103,7 @@ module.exports = {
       '@modules': path.resolve(__dirname, 'src/modules'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
+      '@pages': path.resolve(__dirname, 'src/Pages'),
     },
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },

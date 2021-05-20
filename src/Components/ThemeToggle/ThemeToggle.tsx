@@ -1,6 +1,6 @@
 import { Theme } from '@interfaces/Config';
 import React, { FC } from 'react';
-import Themes from '../Icons/Themes';
+import Themes from '@icons/Themes';
 import './ThemeToggle.scss';
 
 interface Props {

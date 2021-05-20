@@ -1,5 +1,5 @@
 import React, { FC, memo } from 'react';
-import { Arrows as Icons } from '../Icons/UI';
+import { Arrows as Icons } from '@icons/UI';
 import './Arrows.scss';
 
 interface ArrowsProps {

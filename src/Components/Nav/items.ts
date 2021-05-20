@@ -1,5 +1,5 @@
 import { Pages } from '@interfaces/UserState';
-import NavIcons from '../Icons/Nav';
+import NavIcons from '@icons/Nav';
 
 interface NavButton {
   target: Pages,

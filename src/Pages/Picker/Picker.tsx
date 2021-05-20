@@ -2,10 +2,10 @@ import React, {
   FC, useState, useEffect, memo,
 } from 'react';
 import { Picture } from '@interfaces/UserState';
-import AspectRatio from '../AspectRatio/AspectRatio';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import { Arrows } from '../Icons/UI';
-import { Arrow } from '../Arrows/Arrows';
+import AspectRatio from '@/AspectRatio/AspectRatio';
+import ProgressBar from '@/ProgressBar/ProgressBar';
+import { Arrows } from '@icons/UI';
+import { Arrow } from '@/Arrows/Arrows';
 import './Picker.scss';
 
 interface SharedProps {

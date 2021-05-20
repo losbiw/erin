@@ -45,6 +45,7 @@ const Cards: FC<Props> = ({ setWarning }: Props) => {
             Icon={Icon}
             special={special}
             handleClick={handleClick}
+            key={title}
           />
         ))
       }

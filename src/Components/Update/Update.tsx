@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Warning } from '@interfaces/Warning.d';
-import { General, Crosses } from '../Icons/UI';
+import { General, Crosses } from '@icons/UI';
 import './Update.scss';
 
 const { ipcRenderer } = window.require('electron');

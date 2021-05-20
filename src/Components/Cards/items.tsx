@@ -1,7 +1,7 @@
 import React from 'react';
 import { Warning } from '@interfaces/Warning';
-import { General } from '../Icons/UI';
-import Info from '../Icons/Info';
+import { General } from '@icons/UI';
+import Info from '@icons/Info';
 
 const { clipboard } = window.require('electron');
 

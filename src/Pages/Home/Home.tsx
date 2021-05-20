@@ -1,9 +1,9 @@
 import React, { FC, useCallback } from 'react';
 import { Picture } from '@interfaces/UserState';
-import AspectRatio from '../AspectRatio/AspectRatio';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import { Arrows } from '../Arrows/Arrows';
-import { Link } from '../Links/Links';
+import AspectRatio from '@/AspectRatio/AspectRatio';
+import ProgressBar from '@/ProgressBar/ProgressBar';
+import { Arrows } from '@/Arrows/Arrows';
+import { Link } from '@/Links/Links';
 import './Home.scss';
 
 interface Props {

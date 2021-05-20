@@ -42,7 +42,7 @@ const Links: FC<Props> = ({ links }: Props) => (
             title={title}
             Content={Content}
             href={href}
-            key={title}
+            key={key}
           />
         );
       })

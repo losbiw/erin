@@ -1,4 +1,4 @@
-import Icons from '../Icons/Info';
+import Icons from '@icons/Info';
 
 const { Github, Reddit } = Icons;
 
