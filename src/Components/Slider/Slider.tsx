@@ -8,26 +8,22 @@ import Settings from '@interfaces/Settings';
 import Form from '../Form/Form';
 import { items } from './items';
 
-interface Props{
-    changeSlide: (name: Settings) => void,
-    setWarning: (warningMsg: string | Warning) => void,
-    setIsComplete: (isComplete: boolean) => void,
-    setIsRequiredFilled: (isFilled: boolean) => void,
-    activeIndex: number,
-    isComplete: boolean,
-    theme: Theme
+interface Props {
+  changeSlide: (name: Settings) => void,
+  setWarning: (warningMsg: string | Warning) => void,
+  setIsComplete: (isComplete: boolean) => void,
+  setIsRequiredFilled: (isFilled: boolean) => void,
+  activeIndex: number,
+  isComplete: boolean,
+  theme: Theme
 }
 
 const Slider: FC<Props> = (props: Props) => {
   const [stateConfig, updateConfig] = useState(config.getDefaultOptions());
 
   useEffect(() => {
-    const setConfig = async () => {
-      const cfg = await config.get();
-      updateConfig(cfg);
-    };
-
-    setConfig();
+    const cfg = config.get();
+    updateConfig(cfg);
   }, []);
 
   useEffect(() => {

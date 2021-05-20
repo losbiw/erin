@@ -2,17 +2,17 @@
 import Settings from '@interfaces/Settings';
 import { ConfigUpdate, Mode, Quality } from '@interfaces/Config';
 
-interface Warning{
-    condition: (config: ConfigUpdate, name: keyof ConfigUpdate) => boolean,
-    value: string,
-    isRequired?: boolean
+interface Warning {
+  condition: (config: ConfigUpdate, name: keyof ConfigUpdate) => boolean,
+  value: string,
+  isRequired?: boolean
 }
 
-interface WarningOptions{
-    quality: Warning,
-    keywords: Warning,
-    timer: Warning,
-    privacy: Warning
+interface WarningOptions {
+  quality: Warning,
+  keywords: Warning,
+  timer: Warning,
+  privacy: Warning
 }
 
 const getWarnings = (): WarningOptions => ({

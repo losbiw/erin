@@ -1,9 +1,9 @@
-export interface LinuxCommands{
+export interface LinuxCommands {
   set: string,
   align?: string
 }
 
-export interface Distros{
+export interface Distros {
   other: LinuxCommands,
   kde: LinuxCommands,
   xfce: LinuxCommands

@@ -16,23 +16,23 @@ import Startup from '../Switch/Switch';
 import Quality from '../Quality/Quality';
 import Save from '../Save/Save';
 
-interface Item{
-    name: Settings,
-    title?: string,
-    description?: string,
-    dark?: string,
-    light?: string
+interface Item {
+  name: Settings,
+  title?: string,
+  description?: string,
+  dark?: string,
+  light?: string
 }
 
-interface Props{
-    setWarning: (warningMsg: string | Warning) => void,
-    updateSettingsState: (update: ConfigUpdate) => void,
-    setIsComplete: (isComplete: boolean) => void,
-    items: Item[],
-    config: Config,
-    isSetup: boolean,
-    activeIndex?: number,
-    theme?: Theme
+interface Props {
+  setWarning: (warningMsg: string | Warning) => void,
+  updateSettingsState: (update: ConfigUpdate) => void,
+  setIsComplete: (isComplete: boolean) => void,
+  items: Item[],
+  config: Config,
+  isSetup: boolean,
+  activeIndex?: number,
+  theme?: Theme
 }
 
 const Form: FC<Props> = (props: Props) => {

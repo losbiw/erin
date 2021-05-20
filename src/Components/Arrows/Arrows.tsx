@@ -2,12 +2,12 @@ import React, { FC, memo } from 'react';
 import { Arrows as Icons } from '../Icons/UI';
 import './Arrows.scss';
 
-interface ArrowsProps{
+interface ArrowsProps {
   handleForwardClick: () => void,
   handleBackClick: () => void
 }
 
-interface ArrowProps{
+interface ArrowProps {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>,
   index: number,
   handleClick: () => void

@@ -1,10 +1,10 @@
-interface ErrorInterface{
-    fix: string,
-    description: string
+interface ErrorInterface {
+  fix: string,
+  description: string
 }
 
-interface Codes{
-    [name: string]: ErrorInterface
+interface Codes {
+  [name: string]: ErrorInterface
 }
 
 const codes: Codes = {

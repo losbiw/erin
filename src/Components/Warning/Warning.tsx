@@ -5,8 +5,8 @@ import { General, Crosses } from '../Icons/UI';
 import './Warning.scss';
 
 interface Props extends Partial<WarningInterface> {
-    message: string,
-    removeWarning: () => void
+  message: string,
+  removeWarning: () => void
 }
 
 const Warning: FC<Props> = (props: Props) => {

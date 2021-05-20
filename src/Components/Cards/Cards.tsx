@@ -3,11 +3,11 @@ import { Warning } from '@interfaces/Warning';
 import getCards from './items';
 import './Cards.scss';
 
-interface Props{
+interface Props {
   setWarning: (warning: string | Warning) => void
 }
 
-interface InnerProps{
+interface InnerProps {
   title: string,
   description: string,
   Icon: React.FC<React.SVGProps<SVGSVGElement>>,

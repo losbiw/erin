@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 import './AspectRatio.scss';
 
-interface Props{
+interface Props {
   src: string,
   isActive?: boolean,
   handleClick?: () => void

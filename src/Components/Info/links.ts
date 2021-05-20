@@ -2,18 +2,18 @@ import Icons from '../Icons/Info';
 
 const { Github, Reddit } = Icons;
 
-interface Link{
-    href: string,
-    Content?: React.FC<React.SVGProps<SVGSVGElement>>,
-    title?: string
+interface Link {
+  href: string,
+  Content?: React.FC<React.SVGProps<SVGSVGElement>>,
+  title?: string
 }
 
-interface Group{
-    [key: string]: Link
+interface Group {
+  [key: string]: Link
 }
 
-interface Links{
-    [key: string]: Group
+interface Links {
+  [key: string]: Group
 }
 
 const links: Links = {

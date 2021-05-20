@@ -3,15 +3,13 @@ import React, { FC } from 'react';
 import Themes from '../Icons/Themes';
 import './ThemeToggle.scss';
 
-interface Props{
-    theme: Theme,
-    switchTheme: () => void
+interface Props {
+  theme: Theme,
+  switchTheme: () => void
 }
 
-const ThemeToggle: FC<Props> = (props: Props) => {
-  const { theme, switchTheme } = props;
+const ThemeToggle: FC<Props> = ({ theme, switchTheme }: Props) => {
   const { Moon, Sun } = Themes;
-
   const ThemeIcon = theme === Theme.Dark ? Sun : Moon;
 
   return (

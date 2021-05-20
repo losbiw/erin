@@ -6,11 +6,11 @@ import Info from '../Icons/Info';
 const { clipboard } = window.require('electron');
 
 interface CardInterface {
-    title: string,
-    description: string,
-    Icon: React.FC<React.SVGProps<SVGSVGElement>>,
-    special?: string,
-    handleClick?: () => void,
+  title: string,
+  description: string,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+  special?: string,
+  handleClick?: () => void,
 }
 
 const getCards = (setWarning: (warning: string | Warning) => void): CardInterface[] => {

@@ -4,16 +4,17 @@ import * as milliseconds from '@/modules/milliseconds';
 import './Timer.scss';
 import { Warning } from '@interfaces/Warning';
 
-interface Props{
+interface Props {
   timeInMs: number,
   isActive: boolean,
   setWarning: (warning: Warning | string) => void,
   updateTimeout: (time: number) => void
 }
 
-const Timer: FC<Props> = (props: Props) => {
+const Timer: FC<Props> = ({
+  timeInMs, updateTimeout, setWarning, isActive,
+}: Props) => {
   const [focusIndex, setFocus] = useState(0);
-  const { timeInMs } = props;
 
   const time = milliseconds.from(timeInMs);
   const keys = time ? Object.keys(time) : [];
@@ -27,12 +28,12 @@ const Timer: FC<Props> = (props: Props) => {
         time[name as keyof milliseconds.Time] = numberValue;
         const ms = milliseconds.to(time);
 
-        props.updateTimeout(ms);
+        updateTimeout(ms);
       } else {
         e.target.value = value.slice(0, 2);
       }
     } catch {
-      props.setWarning('Invalid time format');
+      setWarning('Invalid time format');
     }
   };
 
@@ -49,7 +50,7 @@ const Timer: FC<Props> = (props: Props) => {
                 data-testid={unit}
                 className="time-input"
                 ref={(ref) => {
-                  if (ref && props.isActive && index === focusIndex) {
+                  if (ref && isActive && index === focusIndex) {
                     ref.focus({ preventScroll: true });
                   }
                 }}

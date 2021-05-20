@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import './ProgressBar.scss';
 
-interface Props { width: number }
+interface Props {
+  width: number
+}
 
 const ProgressBar: FC<Props> = ({ width }: Props) => (
   <div className="progress-bar">

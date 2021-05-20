@@ -18,16 +18,16 @@ import Nav from '../Nav/Nav';
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
-interface Props{
-    theme: Theme,
-    setWarning: (warning: string | Warning) => void,
-    setIsComplete: (isComplete: boolean) => void
-    switchTheme: () => void
+interface Props {
+  theme: Theme,
+  setWarning: (warning: string | Warning) => void,
+  setIsComplete: (isComplete: boolean) => void
+  switchTheme: () => void
 }
 
-interface Timers{
-    wallpaper: NodeJS.Timeout | undefined
-    weatherUpdate: NodeJS.Timeout | undefined
+interface Timers {
+  wallpaper: NodeJS.Timeout | undefined
+  weatherUpdate: NodeJS.Timeout | undefined
 }
 
 export default class User extends Component<Props, State> {

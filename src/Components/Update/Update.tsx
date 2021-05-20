@@ -5,15 +5,15 @@ import './Update.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-interface Props{
-    rejectUpdate: () => void,
-    setWarning: (warning: string | Warning) => void
+interface Props {
+  rejectUpdate: () => void,
+  setWarning: (warning: string | Warning) => void
 }
 
-interface Button{
-    action: 'accept' | 'reject',
-    Icon: React.FC<React.SVGProps<SVGSVGElement>>,
-    value: boolean
+interface Button {
+  action: 'accept' | 'reject',
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>,
+  value: boolean
 }
 
 const Update: FC<Props> = (props: Props) => {

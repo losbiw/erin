@@ -16,7 +16,7 @@ const Stream = require('stream').Transform;
 const exec = promisify(_exec);
 const execFile = promisify(_execFile);
 
-interface Handlers{
+interface Handlers {
   handleLargeFiles: (index: number | boolean, shouldForceSwitch: boolean) => void,
   setTimer: () => void,
   setWarning: (warning: string) => void,

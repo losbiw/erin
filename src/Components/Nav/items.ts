@@ -1,9 +1,9 @@
 import { Pages } from '@interfaces/UserState';
 import NavIcons from '../Icons/Nav';
 
-interface NavButton{
-    target: Pages,
-    Icon: React.FC<React.SVGProps<SVGSVGElement>>
+interface NavButton {
+  target: Pages,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 const {
@@ -29,4 +29,4 @@ const buttons: Array<Array<NavButton>> = [
   }],
 ];
 
-export default buttons;
+export { buttons, NavButton };

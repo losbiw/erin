@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 import { General } from '../Icons/UI';
 import './Carousel.scss';
 
-interface Props{
+interface Props {
   amount: number,
   activeIndex: number,
   changeSlide: (index: number) => void
 }
 
-interface ButtonProps{
+interface ButtonProps {
   activeClass: string,
   handleClick: () => void,
 }

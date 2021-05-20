@@ -8,12 +8,12 @@ import { Quality as QualityInterface } from '@interfaces/Config';
 import { Arrows } from '../Icons/UI';
 import options from './options';
 
-interface Props{
+interface Props {
   changeQuality: (quality: QualityInterface) => void,
   initialQuality: QualityInterface
 }
 
-interface InnerProps{
+interface InnerProps {
   initValue: keyof typeof QualityInterface | null,
   activeClass: 'active' | false,
   isExpanded: boolean,

@@ -1,28 +1,24 @@
 import React from 'react';
 import './Switch.scss';
 
-interface Props{
-    isChecked: boolean,
-    handleSwitch: () => void
+interface Props {
+  isChecked: boolean,
+  handleSwitch: () => void
 }
 
-const Switch = (props: Props) => {
-  const { isChecked, handleSwitch } = props;
-
-  return (
-    <label className="switch" htmlFor="switch">
-      <input
-        id="switch"
-        type="checkbox"
-        className="switch-input"
-        defaultChecked={isChecked}
-        onChange={handleSwitch}
-      />
-      <span className="switch-slider">
-        <span className="gradient" />
-      </span>
-    </label>
-  );
-};
+const Switch = ({ isChecked, handleSwitch }: Props) => (
+  <label className="switch" htmlFor="switch">
+    <input
+      id="switch"
+      type="checkbox"
+      className="switch-input"
+      defaultChecked={isChecked}
+      onChange={handleSwitch}
+    />
+    <span className="switch-slider">
+      <span className="gradient" />
+    </span>
+  </label>
+);
 
 export default Switch;

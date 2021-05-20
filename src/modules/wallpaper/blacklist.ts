@@ -1,7 +1,7 @@
-interface Blacklist{
-    win32: string[],
-    darwin: string[],
-    linux: string[]
+interface Blacklist {
+  win32: string[],
+  darwin: string[],
+  linux: string[]
 }
 
 const blacklist: Blacklist = {

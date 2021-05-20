@@ -11,13 +11,13 @@ import { items } from '../Slider/items';
 import './Setup.scss';
 import '../Settings/Settings.scss';
 
-interface Props{
-    theme: Theme,
-    isComplete: boolean,
-    switchTheme: () => void,
-    setWarning: (warning: string | Warning) => void,
-    setIsComplete: (isComplete: boolean) => void,
-    setIsRequiredFilled: (isFilled: boolean) => void,
+interface Props {
+  theme: Theme,
+  isComplete: boolean,
+  switchTheme: () => void,
+  setWarning: (warning: string | Warning) => void,
+  setIsComplete: (isComplete: boolean) => void,
+  setIsRequiredFilled: (isFilled: boolean) => void,
 }
 
 const Setup: FC<Props> = (props: Props) => {

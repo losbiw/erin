@@ -1,11 +1,11 @@
 import Settings from '@interfaces/Settings';
 
-export interface Slide{
-    name: Settings,
-    title: string,
-    description: string,
-    dark: string,
-    light: string
+export interface Slide {
+  name: Settings,
+  title: string,
+  description: string,
+  dark: string,
+  light: string
 }
 
 const items: Array<Slide> = [

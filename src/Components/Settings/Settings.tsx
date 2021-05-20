@@ -10,11 +10,11 @@ import { Warning } from '@interfaces/Warning';
 import Form from '../Form/Form';
 import items from './items';
 
-interface Props{
-    config: Config,
-    updateConfig: (cfg: Config, isRequiredFilled: boolean) => void,
-    setIsComplete: (isComplete: boolean) => void,
-    setWarning: (warningMsg: string | Warning) => void
+interface Props {
+  config: Config,
+  updateConfig: (cfg: Config, isRequiredFilled: boolean) => void,
+  setIsComplete: (isComplete: boolean) => void,
+  setWarning: (warningMsg: string | Warning) => void
 }
 
 const Settings: FC<Props> = memo((props: Props) => {

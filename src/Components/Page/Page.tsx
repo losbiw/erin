@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC } from 'react';
 import { Pages, SharedState } from '@interfaces/UserState';
 import { Warning } from '@interfaces/Warning';
 import { Config } from '@interfaces/Config';
@@ -8,11 +8,11 @@ import Settings from '../Settings/Settings';
 import Info from '../Info/Info';
 import './Page.scss';
 
-interface Props extends SharedState{
-    switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
-    setWarning: (warning: string | Warning) => void,
-    setIsComplete: (isComplete: boolean) => void,
-    updateConfig: (config: Config, isRequiredFilled?: boolean) => void
+interface Props extends SharedState {
+  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
+  setWarning: (warning: string | Warning) => void,
+  setIsComplete: (isComplete: boolean) => void,
+  updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
 const Page: FC<Props> = (props: Props) => {
