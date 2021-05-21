@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Warning } from '@interfaces/Warning.d';
+import Warning from '@interfaces/Warning.d';
 import { General, Crosses } from '@icons/UI';
 import './Update.scss';
 

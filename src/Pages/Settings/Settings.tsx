@@ -6,7 +6,7 @@ import areEqual from '@helpers/areEqual';
 import warning from '@modules/warning';
 import './Settings.scss';
 import { Config, ConfigUpdate } from '@interfaces/Config';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import Form from '@/Form/Form';
 import items from './items';
 

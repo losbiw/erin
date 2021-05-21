@@ -10,7 +10,7 @@ import {
   Config, Mode, Quality, Theme,
 } from '@interfaces/Config';
 import { State, Picture, Pages } from '@interfaces/UserState';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import Error from '@pages/Error/Error';
 import Router from '@pages/Router/Router';
 import Nav from '@/Nav/Nav';

@@ -3,7 +3,7 @@ import config from '@modules/config';
 import warning from '@modules/warning';
 import './Slider.scss';
 import { Config, ConfigUpdate, Theme } from '@interfaces/Config';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Form from '../Form/Form';
 import { items } from './items';
@@ -19,12 +19,7 @@ interface Props {
 }
 
 const Slider: FC<Props> = (props: Props) => {
-  const [stateConfig, updateConfig] = useState(config.getDefaultOptions());
-
-  useEffect(() => {
-    const cfg = config.get();
-    updateConfig(cfg);
-  }, []);
+  const [stateConfig, updateConfig] = useState(config.get());
 
   useEffect(() => {
     const {

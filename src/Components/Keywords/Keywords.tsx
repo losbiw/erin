@@ -2,7 +2,7 @@ import React, {
   FC, useEffect, useState, memo,
 } from 'react';
 import './Keywords.scss';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import { Crosses } from '@icons/UI';
 
 interface Props {
@@ -148,12 +148,16 @@ const Keywords: FC<Props> = memo((props: Props) => {
       const converted = value.toLowerCase();
       const isRepeating = keywords.indexOf(converted) !== -1;
 
-      if (converted !== '' && !isRepeating) dataKeywords.push(converted);
-      else if (!converted) setWarning("Keyword's value should not be empty");
-      else if (isRepeating) setWarning('Keywords should not repeat');
-
       changeKeywords(dataKeywords);
       setInput(false);
+
+      if (converted && !isRepeating) {
+        dataKeywords.push(converted);
+      } else if (!converted) {
+        setWarning("Keyword's value should not be empty");
+      } else if (isRepeating) {
+        setWarning('Keywords should not repeat');
+      }
     } else if (e.key === 'Enter') {
       setWarning("You can't enter more than 10 keywords");
       setInput(false);

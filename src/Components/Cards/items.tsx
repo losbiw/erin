@@ -1,5 +1,5 @@
 import React from 'react';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import { General } from '@icons/UI';
 import Info from '@icons/Info';
 

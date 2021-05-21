@@ -5,7 +5,7 @@ import warning from '@modules/warning';
 import {
   Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,
 } from '@interfaces/Config';
-import { Warning } from '@interfaces/Warning';
+import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Icons from '@icons/Settings';
 import Privacy from '../Privacy/Privacy';
@@ -101,6 +101,7 @@ const Form: FC<Props> = (props: Props) => {
     if (name === Settings.Startup) {
       return (
         <Startup
+          id="startup"
           isChecked={startup}
           handleSwitch={startupHandler}
         />
