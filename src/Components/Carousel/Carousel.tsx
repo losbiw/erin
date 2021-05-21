@@ -47,9 +47,11 @@ const Carousel: FC<Props> = (props: Props) => {
     }
   };
 
+  renderButtons();
+
   return (
     <div className="carousel">
-      { renderButtons }
+      { items }
     </div>
   );
 };
