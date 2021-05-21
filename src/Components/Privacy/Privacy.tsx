@@ -21,7 +21,11 @@ const Privacy: FC<Props> = (props: Props) => {
       />
 
       <p className="agreement">: </p>
-      <Switch isChecked={isAccepted} handleSwitch={acceptPolicy} />
+      <Switch
+        id="privacy-switch"
+        isChecked={isAccepted}
+        handleSwitch={acceptPolicy}
+      />
     </div>
   );
 };

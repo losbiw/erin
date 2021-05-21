@@ -3,13 +3,14 @@ import './Switch.scss';
 
 interface Props {
   isChecked: boolean,
-  handleSwitch: () => void
+  id: string,
+  handleSwitch: () => void,
 }
 
-const Switch = ({ isChecked, handleSwitch }: Props) => (
-  <label className="switch" htmlFor="switch">
+const Switch = ({ isChecked, handleSwitch, id }: Props) => (
+  <label className="switch" htmlFor={id}>
     <input
-      id="switch"
+      id={id}
       type="checkbox"
       className="switch-input"
       defaultChecked={isChecked}
