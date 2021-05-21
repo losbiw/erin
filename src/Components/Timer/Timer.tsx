@@ -1,18 +1,18 @@
 import React, { FC, useState } from 'react';
+import Warning from '@interfaces/Warning';
 import capitalizeFirstLetter from '@helpers/convert';
 import * as milliseconds from '@modules/milliseconds';
 import './Timer.scss';
-import { Warning } from '@interfaces/Warning';
 
 interface Props {
   timeInMs: number,
   isActive: boolean,
-  setWarning: (warning: Warning | string) => void,
-  updateTimeout: (time: number) => void
+  updateTimeout: (time: number) => void,
+  setWarning: (warningMsg: string | Warning) => void,
 }
 
 const Timer: FC<Props> = ({
-  timeInMs, updateTimeout, setWarning, isActive,
+  timeInMs, updateTimeout, isActive, setWarning,
 }: Props) => {
   const [focusIndex, setFocus] = useState(0);
 
@@ -20,20 +20,19 @@ const Timer: FC<Props> = ({
   const keys = time ? Object.keys(time) : [];
 
   const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const { name, value } = e.target;
+    const { name, value } = e.target;
 
-      if (value.length < 3) {
-        const numberValue = parseInt(value, 10);
-        time[name as keyof milliseconds.Time] = numberValue;
-        const ms = milliseconds.to(time);
+    if (!/^\d+$/.test(value)) setWarning('Only numbers are allowed');
 
-        updateTimeout(ms);
-      } else {
-        e.target.value = value.slice(0, 2);
-      }
-    } catch {
-      setWarning('Invalid time format');
+    if (value.length < 3) {
+      const numberValue = parseInt(value, 10);
+
+      time[name as keyof milliseconds.Time] = numberValue || 0;
+      const ms = milliseconds.to(time);
+
+      updateTimeout(ms);
+    } else {
+      e.target.value = value.slice(0, 2);
     }
   };
 
