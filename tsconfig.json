@@ -25,7 +25,8 @@
       "@modules/*": ["src/modules/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@helpers/*": ["src/helpers/*"],
-      "@pages/*": ["src/Pages/*"]
+      "@pages/*": ["src/Pages/*"],
+      "@constants/*": ["src/constants/*"]
    }       
   }
 }

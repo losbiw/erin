@@ -5,7 +5,7 @@ import config from '@modules/config';
 import OS from '@modules/OS';
 import { fetchGeocoding } from '@modules/APIs';
 import { Theme } from '@interfaces/Config';
-import { Warning as WarningInterface } from '@interfaces/Warning.d';
+import WarningInterface from '@interfaces/Warning.d';
 import logo from '@app/erin.png';
 import Controls from './Components/Controls/Controls';
 import Warning from './Components/Warning/Warning';

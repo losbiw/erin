@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  FC, useState, useEffect, useRef,
+} from 'react';
 import config from '@modules/config';
 import wallpaper from '@modules/wallpaper/wallpaper';
 import time from '@modules/time';
@@ -9,13 +11,15 @@ import './User.scss';
 import {
   Config, Mode, Quality, Theme,
 } from '@interfaces/Config';
-import { State, Picture, Pages } from '@interfaces/UserState';
+import { Picture, Pages } from '@interfaces/UserState';
+import Weather from '@interfaces/Weather';
 import Warning from '@interfaces/Warning';
 import Error from '@pages/Error/Error';
 import Router from '@pages/Router/Router';
 import Nav from '@/Nav/Nav';
+import wallpaperPath from '@constants/wallpaperPath';
+import timers from './timers';
 
-const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 interface Props {
@@ -25,284 +29,205 @@ interface Props {
   switchTheme: () => void
 }
 
-interface Timers {
-  wallpaper: NodeJS.Timeout | undefined
-  weatherUpdate: NodeJS.Timeout | undefined
-}
+const User: FC<Props> = ({
+  theme, setWarning, setIsComplete, switchTheme,
+}: Props) => {
+  const isMounted = useRef(false);
 
-export default class User extends Component<Props, State> {
-    private savePath: string;
+  const [collection, setCollection] = useState<Picture[]>([]);
+  const [stateConfig, setConfig] = useState(config.get());
+  const [page, setPage] = useState(Pages.Home);
+  const [error, setError] = useState<number | null>(null);
+  const [currentIndex, setIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isLocked, setLock] = useState(true);
+  const [isRequiredComplete, setRequiredComplete] = useState(true);
+  const [weather, setWeather] = useState<Weather | undefined>(undefined);
 
-    private timers: Timers = {
-      wallpaper: undefined,
-      weatherUpdate: undefined,
-    }
+  const getSearchQuery = async (mode: Mode): Promise<string[]> => {
+    const req = await fetchWeather(setError);
 
-    constructor(props: Props) {
-      super(props);
+    timers.weatherUpdate = global.setInterval(async () => {
+      const awaitReq = await fetchWeather(setError);
 
-      const appPath = config.getAppPath();
-      this.savePath = join(appPath, 'wallpaper.jpg');
-
-      this.state = {
-        collection: [],
-        pictureIndex: 0,
-        config: config.get(),
-        isLocked: true,
-        progress: 0,
-        error: null,
-        current: Pages.Home,
-        weather: undefined,
-        isRequiredFilled: true,
-      };
-    }
-
-    async componentDidMount() {
-      const { handleReloadAfterSleep, switchWallpaper, getWallpaperCollection } = this;
-      getWallpaperCollection();
-
-      ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => switchWallpaper(args, false));
-
-      ipcRenderer.on('unlock-screen', () => {
-        if (window.navigator.onLine) {
-          handleReloadAfterSleep();
-        }
-      });
-      window.addEventListener('online', handleReloadAfterSleep);
-    }
-
-    componentDidUpdate(_prevProps: Props, prevState: State) {
-      const {
-        config: cfg, pictureIndex, collection, isRequiredFilled,
-      } = this.state;
-
-      if (cfg !== prevState.config && isRequiredFilled) {
-        this.getWallpaperCollection();
-      } else if (cfg !== prevState.config) {
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({
-          current: Pages.Settings,
-        });
-      } else if (pictureIndex !== prevState.pictureIndex) {
-        this.setWallpaper(collection, pictureIndex);
+      if (!areEqual.objects(awaitReq, weather)) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        getWallpaperCollection();
       }
+    }, 3600000);
+
+    setWeather(req);
+
+    if (mode === Mode.Weather && req) {
+      const converted = weatherCodes.convertMain(req.main);
+      return [converted];
+    }
+    if (mode === Mode.Time && req) {
+      const { sunrise, sunset } = req.time;
+      const keyword = time.convert({ sunrise, sunset });
+
+      return [keyword];
+    }
+    return [];
+  };
+
+  const sortPictures = (pictures: any[], quality: Quality): Picture[] => pictures.map((picture) => {
+    const { src, photographer, photographer_url: photographerUrl } = picture;
+
+    const result: Picture = {
+      srcMain: src[quality],
+      srcPicker: src.large,
+      photographer,
+      photographerUrl,
+    };
+
+    return result;
+  });
+
+  const getWallpaperCollection = async (): Promise<void> => {
+    const { keywords, quality, mode } = stateConfig;
+
+    if (timers.weatherUpdate) {
+      clearInterval(timers.weatherUpdate);
     }
 
-    componentWillUnmount() {
-      const { handleReloadAfterSleep } = this;
-      window.removeEventListener('online', handleReloadAfterSleep);
+    const query = mode === Mode.Keywords ? keywords : await getSearchQuery(mode);
+    const fetchRes = await fetchPexels(query, setError);
+
+    if (!fetchRes) return;
+
+    if (fetchRes.length === 0) {
+      setError(404);
+      setLock(false);
+
+      return;
     }
 
-    handleReloadAfterSleep = () => {
-      const { collection } = this.state;
-      const randomIndex = Math.round(Math.random() * (collection.length - 1));
+    const sorted = sortPictures(fetchRes, quality);
+    const randomIndex = Math.round(Math.random() * (sorted.length - 1));
 
-      this.setState({
-        error: null,
-        pictureIndex: randomIndex,
-      });
+    setCollection(sorted);
+    setIndex(randomIndex);
+    setError(null);
+    setLock(true);
+  };
+
+  const handleReloadAfterSleep = () => {
+    const randomIndex = Math.round(Math.random() * (collection.length - 1));
+
+    setError(null);
+    setIndex(randomIndex);
+  };
+
+  const switchWallpaper = (index: number | boolean, shouldForceSwitch: boolean): void => {
+    if (isLocked && !shouldForceSwitch) {
+      setWarning('Please wait until the previous picture is downloaded');
+    } else {
+      let validated = currentIndex;
+
+      if (typeof index === 'number') validated = index;
+      else if (typeof index === 'boolean') validated = index ? currentIndex + 1 : currentIndex - 1;
+
+      if (validated >= collection.length) validated = 0;
+      else if (validated < 0) validated = collection.length - 1;
+
+      setIndex(validated);
+      setLock(true);
+    }
+  };
+
+  const setTimer = (): void => {
+    const { timer } = stateConfig;
+
+    if (timer) {
+      timers.wallpaper = global.setTimeout(() => switchWallpaper(true, false), timer);
+    }
+  };
+
+  const updateProgress = (progressUpd: number): void => {
+    const rounded = Math.floor(progressUpd);
+
+    if (rounded === 0) setLock(false);
+    setProgress(rounded);
+  };
+
+  const setWallpaper = (url: string): void => {
+    if (timers.wallpaper) {
+      clearTimeout(timers.wallpaper);
     }
 
-    getWallpaperCollection = async (): Promise<void> => {
-      const {
-        sortPictures, getSearchQuery, setError, timers,
-      } = this;
-      const { config: cfg } = this.state;
-      const { keywords, quality, mode } = cfg;
+    wallpaper.download(url, wallpaperPath, {
+      setWarning,
+      handleLargeFiles: switchWallpaper,
+      setTimer,
+      setError,
+      updateProgress,
+    });
+  };
 
-      if (timers.weatherUpdate) {
-        clearInterval(timers.weatherUpdate);
+  useEffect(() => {
+    getWallpaperCollection();
+
+    ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => switchWallpaper(args, false));
+
+    ipcRenderer.on('unlock-screen', () => {
+      if (window.navigator.onLine) {
+        handleReloadAfterSleep();
       }
-
-      const query = await getSearchQuery(mode, keywords);
-      const fetchRes = await fetchPexels(query, setError);
-
-      if (!fetchRes) return;
-
-      if (fetchRes.length === 0) {
-        this.setState({
-          error: 404,
-          isLocked: false,
-        });
-
-        return;
-      }
-
-      const sorted = sortPictures(fetchRes, quality);
-      const randomIndex = Math.round(Math.random() * (sorted.length - 1));
-
-      this.setState({
-        collection: sorted,
-        pictureIndex: randomIndex,
-        error: null,
-        isLocked: true,
-      });
-    }
-
-    getSearchQuery = async (mode: Mode, keywords: string[]): Promise<string[]> => {
-      if (mode === Mode.Keywords) {
-        return keywords;
-      }
-
-      const { getWallpaperCollection, setError, state } = this;
-      const req = await fetchWeather(setError);
-
-      this.timers.weatherUpdate = global.setInterval(async () => {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const req = await fetchWeather(setError);
-        const { weather } = state;
-
-        if (!areEqual.objects(req, weather)) {
-          getWallpaperCollection();
-        }
-      }, 1000 * 3600);
-
-      this.setState({
-        weather: req,
-      });
-
-      if (mode === Mode.Weather && req) {
-        const converted = weatherCodes.convertMain(req.main);
-        return [converted];
-      }
-      if (mode === Mode.Time && req) {
-        const { sunrise, sunset } = req.time;
-        const keyword = time.convert({ sunrise, sunset });
-
-        return [keyword];
-      }
-      return [];
-    }
-
-    setWallpaper = (collection: Picture[], index: number): void => {
-      if (this.timers.wallpaper) {
-        clearTimeout(this.timers.wallpaper);
-      }
-
-      const {
-        savePath, switchWallpaper, setTimer, setError, updateProgress,
-      } = this;
-      const url = collection[index].srcMain;
-      const { setWarning } = this.props;
-
-      wallpaper.download(url, savePath, {
-        setWarning,
-        handleLargeFiles: switchWallpaper,
-        setTimer,
-        setError,
-        updateProgress,
-      });
-    }
-
-    setTimer = (): void => {
-      const { config: cfg } = this.state;
-      const { timer } = cfg;
-
-      if (timer) {
-        this.timers.wallpaper = global.setTimeout(() => this.switchWallpaper(true, false), timer);
-      }
-    }
-
-    switchWallpaper = (index: number | boolean, shouldForceSwitch: boolean): void => {
-      const { collection, isLocked, pictureIndex } = this.state;
-      const { setWarning } = this.props;
-
-      if (isLocked && !shouldForceSwitch) {
-        setWarning('Please wait until the previous picture is downloaded');
-      } else {
-        let validated = pictureIndex;
-
-        if (typeof index === 'number') validated = index;
-        else if (typeof index === 'boolean') validated = index ? pictureIndex + 1 : pictureIndex - 1;
-
-        if (validated >= collection.length) validated = 0;
-        else if (validated < 0) validated = collection.length - 1;
-
-        this.setState({
-          pictureIndex: validated,
-          isLocked: true,
-        });
-      }
-    }
-
-    sortPictures = (pictures: any[], quality: Quality): Picture[] => pictures.map((picture) => {
-      const { src, photographer, photographer_url: photographerUrl } = picture;
-
-      const result: Picture = {
-        srcMain: src[quality],
-        srcPicker: src.large,
-        photographer,
-        photographerUrl,
-      };
-
-      return result;
     });
 
-    changePage = (name: Pages): void => {
-      this.setState({
-        current: name,
-      });
-    }
+    window.addEventListener('online', handleReloadAfterSleep);
 
-    updateProgress = (progress: number): void => {
-      const { isLocked } = this.state;
+    return () => {
+      window.removeEventListener('online', handleReloadAfterSleep);
+    };
+  }, []);
 
-      this.setState({
-        progress,
-        isLocked: progress === 0 ? false : isLocked,
-      });
-    }
+  useEffect(() => {
+    if (isMounted.current) setWallpaper(collection[currentIndex].srcMain);
+    else isMounted.current = true;
+  }, [currentIndex]);
 
-    updateConfig = (cfg: Config, isFilled?: boolean): void => {
-      const { isRequiredFilled } = this.state;
+  useEffect(() => {
+    // if (isMounted.current && isRequiredComplete) {
+    //   getWallpaperCollection('config');
+    // } else if (isMounted.current) {
+    //   setPage(Pages.Settings);
+    // }
+  }, [stateConfig]);
 
-      this.setState({
-        config: cfg,
-        isRequiredFilled: isFilled || isRequiredFilled,
-      });
-    }
+  const updateConfig = (cfg: Config, isFilled?: boolean): void => {
+    setConfig(cfg);
+    setRequiredComplete(isFilled || isRequiredComplete);
+  };
 
-    setError = (error: number): void => {
-      this.setState({
-        error,
-      });
-    }
+  return (
+    <div className="user">
+      <Nav
+        current={page}
+        changePage={setPage}
+        theme={theme}
+        switchTheme={switchTheme}
+      />
 
-    render() {
-      const {
-        changePage, switchWallpaper, updateConfig, state, props,
-      } = this;
-      const { setWarning, setIsComplete } = props;
-      const {
-        error, current, collection, pictureIndex, isLocked, progress, config: cfg,
-      } = state;
-
-      return (
-        <div className="user">
-          <Nav
-            current={current}
-            changePage={changePage}
-            theme={props.theme}
-            switchTheme={props.switchTheme}
+      { error && (page === Pages.Home || page === Pages.Picker)
+        ? <Error code={error} />
+        : (
+          <Router
+            setWarning={setWarning}
+            setIsComplete={setIsComplete}
+            switchWallpaper={switchWallpaper}
+            updateConfig={updateConfig}
+            current={page}
+            collection={collection}
+            pictureIndex={currentIndex}
+            isLocked={isLocked}
+            progress={progress}
+            config={stateConfig}
           />
+        )}
+    </div>
+  );
+};
 
-          { error && (current === Pages.Home || current === Pages.Picker)
-            ? <Error code={error} />
-            : (
-              <Router
-                setWarning={setWarning}
-                setIsComplete={setIsComplete}
-                switchWallpaper={switchWallpaper}
-                updateConfig={updateConfig}
-                current={current}
-                collection={collection}
-                pictureIndex={pictureIndex}
-                isLocked={isLocked}
-                progress={progress}
-                config={cfg}
-              />
-            )}
-        </div>
-      );
-    }
-}
+export default User;

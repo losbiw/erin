@@ -104,6 +104,7 @@ module.exports = {
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
       '@pages': path.resolve(__dirname, 'src/Pages'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
     },
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },
