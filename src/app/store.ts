@@ -1,9 +1,11 @@
-import warningSlice from '@redux/slices/warningSlice';
+import warningSlice from '@slices/warningSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import themeSlice from '@slices/themeSlice';
 
 const store = configureStore({
   reducer: {
     warning: warningSlice,
+    theme: themeSlice,
   },
 });
 

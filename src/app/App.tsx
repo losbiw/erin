@@ -13,7 +13,7 @@ import User from '@/User/User';
 import Setup from '@/Setup/Setup';
 import Update from '@/Update/Update';
 import { connect } from 'react-redux';
-import { closeWarning as closeWarningAction } from '@redux/slices/warningSlice';
+import { closeWarning as closeWarningAction } from '@slices/warningSlice';
 import { AppDispatch, RootState } from './store';
 
 import './App.scss';
@@ -33,7 +33,6 @@ const App: FC<Props> = ({ warning, closeWarning }: Props) => {
   const [isUpdateAvailable, setUpdate] = useState(false);
   const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
   const [isComplete, setIsComplete] = useState(cfg.isComplete);
-  const [warningOld, setWarning] = useState<string | WarningInterface>('');
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
@@ -82,7 +81,6 @@ const App: FC<Props> = ({ warning, closeWarning }: Props) => {
   };
 
   const rejectUpdate = () => setUpdate(false);
-  const removeWarning = () => setWarning('');
 
   return (
     <div className={`theme ${theme}`}>
@@ -102,7 +100,6 @@ const App: FC<Props> = ({ warning, closeWarning }: Props) => {
             theme={theme}
             isComplete={isComplete}
             switchTheme={switchTheme}
-            setWarning={setWarning}
             setIsComplete={setIsComplete}
             setIsRequiredFilled={setIsRequiredFilled}
           />
@@ -123,6 +120,7 @@ const App: FC<Props> = ({ warning, closeWarning }: Props) => {
 
 const mapStateToProps = (state: RootState) => ({
   warning: state.warning.value,
+  theme: state.theme.value,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

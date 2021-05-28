@@ -18,14 +18,12 @@ interface Props {
   theme: Theme
 }
 
-const Slider: FC<Props> = (props: Props) => {
+const Slider: FC<Props> = ({
+  isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex, theme,
+}: Props) => {
   const [stateConfig, updateConfig] = useState(config.get());
 
   useEffect(() => {
-    const {
-      isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide,
-    } = props;
-
     if (isComplete) {
       const settingsWarning = warning.match(stateConfig, true);
 
@@ -49,17 +47,14 @@ const Slider: FC<Props> = (props: Props) => {
     updateConfig(cfg);
   };
 
-  const calcSlidePosition = (amount: number, activeIndex: number) => {
+  const calcSlidePosition = (amount: number, index: number) => {
     const middle = Math.round((amount - 1) / 2);
     const equalizer = amount % 2 === 0 ? 40 : 0;
-    const multiplier = activeIndex === middle ? 0 : middle - activeIndex;
+    const multiplier = index === middle ? 0 : middle - index;
 
     return multiplier * 80 - equalizer;
   };
 
-  const {
-    setWarning, activeIndex, theme, setIsComplete,
-  } = props;
   const keys = Object.keys(items);
 
   const transform = calcSlidePosition(keys.length, activeIndex);

@@ -56,11 +56,8 @@
       "@pages/*": [
         "src/pages/*"
       ],
-      "@redux/*": [
-        "src/redux/*"
-      ],
       "@slices/*": [
-        "src/redux/slices/*"
+        "src/slices/*"
       ],
       "@app/*": [
         "src/app/*"
