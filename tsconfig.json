@@ -41,7 +41,7 @@
       "@settings/*": [
         "src/assets/settings/*"
       ],
-      "@app/*": [
+      "@logo/*": [
         "src/assets/app/*"
       ],
       "@modules/*": [
@@ -55,6 +55,15 @@
       ],
       "@pages/*": [
         "src/pages/*"
+      ],
+      "@redux/*": [
+        "src/redux/*"
+      ],
+      "@slices/*": [
+        "src/redux/slices/*"
+      ],
+      "@app/*": [
+        "src/app/*"
       ]
     }
   }

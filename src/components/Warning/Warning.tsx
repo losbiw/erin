@@ -6,27 +6,23 @@ import './Warning.scss';
 
 interface Props extends Partial<WarningInterface> {
   message: string,
-  removeWarning: () => void
+  closeWarning: () => void
 }
 
-const Warning: FC<Props> = (props: Props) => {
-  const { message, Icon, removeWarning } = props;
+const Warning: FC<Props> = ({ message, Icon, closeWarning }: Props) => (
+  <div className="warning">
+    {Icon ? <Icon /> : <General.Warning />}
+    <p className="message">{message}</p>
 
-  return (
-    <div className="warning">
-      {Icon ? <Icon /> : <General.Warning />}
-      <p className="message">{ message }</p>
-
-      <button
-        type="button"
-        className="close"
-        data-testid="close"
-        onClick={removeWarning}
-      >
-        <Crosses.Yellow />
-      </button>
-    </div>
-  );
-};
+    <button
+      type="button"
+      className="close"
+      data-testid="close"
+      onClick={closeWarning}
+    >
+      <Crosses.Yellow />
+    </button>
+  </div>
+);
 
 export default Warning;

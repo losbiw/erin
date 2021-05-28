@@ -6,26 +6,34 @@ import OS from '@modules/OS';
 import { fetchGeocoding } from '@modules/APIs';
 import { Theme } from '@interfaces/Config';
 import WarningInterface from '@interfaces/Warning.d';
-import logo from '@app/erin.png';
+import logo from '@logo/erin.png';
 import Controls from '@/Controls/Controls';
 import Warning from '@/Warning/Warning';
 import User from '@/User/User';
 import Setup from '@/Setup/Setup';
 import Update from '@/Update/Update';
+import { connect } from 'react-redux';
+import { closeWarning as closeWarningAction } from '@redux/slices/warningSlice';
+import { AppDispatch, RootState } from './store';
 
 import './App.scss';
 import '../style/global.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-const App: FC = () => {
+interface Props {
+  warning: string | WarningInterface,
+  closeWarning: () => void,
+}
+
+const App: FC<Props> = ({ warning, closeWarning }: Props) => {
   const cfg = config.get();
 
   const [theme, setTheme] = useState(cfg.theme);
   const [isUpdateAvailable, setUpdate] = useState(false);
   const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
   const [isComplete, setIsComplete] = useState(cfg.isComplete);
-  const [warning, setWarning] = useState<string | WarningInterface>('');
+  const [warningOld, setWarning] = useState<string | WarningInterface>('');
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
@@ -106,11 +114,21 @@ const App: FC = () => {
         <Warning
           message={typeof warning === 'string' ? warning : warning.message}
           Icon={typeof warning !== 'string' ? warning.Icon : undefined}
-          removeWarning={removeWarning}
+          closeWarning={closeWarning}
         />
       )}
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = (state: RootState) => ({
+  warning: state.warning.value,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  closeWarning: () => dispatch(closeWarningAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// export default App;

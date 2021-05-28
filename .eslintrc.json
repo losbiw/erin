@@ -23,23 +23,42 @@
     ],
     "rules": {
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-shadow": [
+            "error"
+        ],
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"],
-        "no-unused-vars": ["off"],
+        "@typescript-eslint/no-use-before-define": [
+            "error"
+        ],
+        "no-unused-vars": [
+            "off"
+        ],
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "import/extensions": "off",
-        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx", "scss", ".test.ts"] }],
+        "react/jsx-filename-extension": [
+            2,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx",
+                    "scss",
+                    ".test.ts"
+                ]
+            }
+        ],
         "jest/no-disabled-tests": "warn",
         "jest/no-focused-tests": "error",
         "jest/no-identical-title": "error",
         "jest/prefer-to-have-length": "warn",
         "jest/valid-expect": "error",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-param-reassign": "off"
     },
     "globals": {
-       "React": true,
+        "React": true,
         "JSX": true,
         "NodeJS": true,
         "Electron": true,

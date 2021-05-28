@@ -1,7 +1,9 @@
 import React from 'react';
 import Warning from '@interfaces/Warning';
+import { addWarning } from '@slices/warningSlice';
 import { General } from '@icons/UI';
 import Info from '@icons/Info';
+import store from '@app/store';
 
 const { clipboard } = window.require('electron');
 
@@ -13,7 +15,7 @@ interface CardInterface {
   handleClick?: () => void,
 }
 
-const getCards = (setWarning: (warning: string | Warning) => void): CardInterface[] => {
+const getCards = (): CardInterface[] => {
   const { Donation, Development, Smile } = Info;
   const wallet = '19zfpPUYbbNbUyLGqKGU7HBuV5x4bQTWh9';
 
@@ -25,10 +27,10 @@ const getCards = (setWarning: (warning: string | Warning) => void): CardInterfac
       handleClick: () => {
         clipboard.writeText(wallet);
 
-        setWarning({
+        store.dispatch(addWarning({
           message: 'The wallet is copied to the clipboard',
           Icon: General.Clipboard,
-        });
+        }));
       },
       Icon: Donation,
     },

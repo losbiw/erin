@@ -55,11 +55,7 @@ const Router: FC<Props> = (props: Props) => {
     );
   }
   if (current === Pages.Info) {
-    const { setWarning } = props;
-
-    return (
-      <Info setWarning={setWarning} />
-    );
+    return <Info />;
   }
 
   return <></>;

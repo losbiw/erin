@@ -1,11 +1,6 @@
 import React, { FC } from 'react';
-import Warning from '@interfaces/Warning';
 import getCards from './items';
 import './Cards.scss';
-
-interface Props {
-  setWarning: (warning: string | Warning) => void
-}
 
 interface InnerProps {
   title: string,
@@ -21,17 +16,17 @@ const InnerCard: FC<InnerProps> = ({
   <div className="card" role="presentation" key={title} onClick={handleClick}>
     <Icon />
 
-    <h2 className="title">{ title }</h2>
-    <p className="description">{ description }</p>
+    <h2 className="title">{title}</h2>
+    <p className="description">{description}</p>
 
     <p className="special">
-      { special }
+      {special}
     </p>
   </div>
 );
 
-const Cards: FC<Props> = ({ setWarning }: Props) => {
-  const cards = getCards(setWarning);
+const Cards: FC = () => {
+  const cards = getCards();
 
   return (
     <div className="cards">
