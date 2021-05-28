@@ -1,0 +1,64 @@
+@import "../../style/main.scss";
+
+.control {
+    width: 100%;
+    top: 0;
+    right: 1.56vmax;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+
+    .draggable {
+        margin-top: 0.1vh;
+        width: 100%;
+        -webkit-app-region: drag;
+    }
+
+    .control-container {
+        margin-top: 1.56vmax;
+        display: flex;
+
+        .control-btn {
+            width: 1.2vw;
+            height: 1.2vw;
+            border: none;
+            background: transparent;
+            transition-property: transform;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+            padding: 0;
+
+            &:nth-child(-n + 2) {
+                margin-right: 1.5vw;
+            }
+            &:hover {
+                transform: scale(1.2);
+            }
+            svg {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
+
+.light .control .control-btn svg {
+    filter: $icon-shadow-light;
+    fill: $fill-light;
+}
+
+.dark .control .control-btn svg {
+    filter: $icon-shadow-dark;
+    fill: $fill-dark;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .control .control-btn {
+        width: 2vh;
+        height: 2vh;
+
+        &:nth-child(-n + 2) {
+            margin-right: 3vw;
+        }
+    }
+}

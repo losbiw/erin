@@ -1,0 +1,157 @@
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
+
+.user .settings {
+    overflow-y: auto;
+}
+
+.settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+
+    .item {
+        display: flex;
+        width: 47vw;
+        flex-direction: column;
+        align-items: center;
+        transition-property: transform;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
+
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting {
+            width: 29vw;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .separator {
+            margin: 1.75vw 0;
+            height: 1px;
+            width: 95%;
+            border: none;
+        }
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+
+        .setting-title {
+            font-size: 2vw;
+            margin: 0;
+            font-weight: 600;
+            transition-property: color, text-shadow;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+        }
+
+        svg {
+            height: auto;
+            width: 3.35vw;
+            margin-right: 1.72vw;
+        }
+    }
+}
+
+.page .item:hover {
+    transform: scale(1.05);
+}
+
+select:focus,
+input:focus {
+    outline: none;
+}
+
+.light {
+    .separator {
+        background-color: $hr-light;
+    }
+
+    .settings .title,
+    .setup-title {
+        .setting-title {
+            color: $fill-light;
+            text-shadow: $title-shadow-light;
+        }
+
+        svg {
+            filter: $icon-shadow-light;
+            fill: $fill-light;
+        }
+    }
+}
+
+.dark {
+    .separator {
+        background-color: $hr-dark;
+    }
+
+    .settings .title,
+    .setup-title {
+        .setting-title {
+            color: $fill-dark;
+            text-shadow: $title-shadow-dark;
+        }
+
+        svg {
+            filter: $icon-shadow-dark;
+            fill: $fill-dark;
+        }
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .settings {
+        .item {
+            width: 80vw;
+
+            .setting {
+                width: 50%;
+            }
+        }
+
+        .title {
+            svg {
+                width: 4.3vw;
+                margin-right: 3vw;
+            }
+
+            .setting-title {
+                font-size: 3vw;
+            }
+        }
+
+        .separator {
+            margin: 3vw 0;
+        }
+    }
+}
+
+@media (min-aspect-ratio: 21/9) {
+    .settings {
+        justify-content: flex-start;
+        overflow-x: visible;
+        padding: 5vh 0 0;
+    }
+
+    .item {
+        &:first-child {
+            margin-top: 3vw;
+        }
+
+        &:last-child {
+            margin-bottom: 3vw;
+        }
+    }
+}

@@ -1,0 +1,178 @@
+@import "../../style/nav.scss";
+@import "../../style/main.scss";
+
+.nav {
+    height: auto;
+    width: auto;
+    margin: 1.56vmax;
+    margin-right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 2vw;
+    z-index: 5;
+    box-sizing: border-box;
+    transition-property: background-color;
+    transition-timing-function: $transition-function;
+    transition-duration: $transition-duration;
+
+    .btns {
+        display: flex;
+        flex-direction: column;
+
+        .active,
+        .nav-btn {
+            &:hover {
+                transform: scale(1.09);
+
+                .gradient {
+                    opacity: 1;
+                }
+
+                ::after {
+                    transform: scale(1);
+                }
+            }
+        }
+
+        &:nth-child(1) .nav-btn {
+            margin-top: 2.4vw;
+        }
+        &:nth-child(2) .nav-btn {
+            margin-bottom: 2.4vw;
+
+            &:first-child {
+                margin-top: 2.4vw;
+            }
+        }
+    }
+}
+
+.light .nav {
+    background-color: $nav-light;
+    box-shadow: $shadow-light;
+
+    svg {
+        filter: $icon-shadow-light;
+
+        rect:first-child {
+            fill: $nav-fill-light;
+        }
+    }
+}
+
+.dark .nav {
+    background-color: $nav-dark;
+    box-shadow: $shadow-dark;
+
+    svg {
+        filter: $icon-shadow-dark;
+
+        rect:first-child {
+            fill: $nav-fill-dark;
+        }
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .nav {
+        width: auto;
+        flex-direction: row;
+        border-radius: 3.5vh;
+
+        .btns {
+            flex-direction: row;
+
+            .nav-btn {
+                padding: 2vh 0;
+
+                &.active,
+                &:hover {
+                    &::active {
+                        transform: scale(1);
+                    }
+                }
+
+                &::after {
+                    border-radius: 3px;
+                    width: 110%;
+                    height: 3px;
+                    top: 3px;
+                    right: -5%;
+                }
+
+                svg {
+                    height: 4vh;
+                    width: 4vh;
+                }
+            }
+
+            &:nth-child(1) .nav-btn {
+                margin-top: 0;
+                margin-left: 3vh;
+            }
+
+            &:nth-child(2) .nav-btn {
+                margin-bottom: 0;
+                margin-right: 3vh;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    .nav-btn:hover::after,
+    .active::after {
+        transform: scale(1);
+    }
+}
+
+@media (min-aspect-ratio: 3/1) {
+    .nav {
+        justify-content: center;
+
+        .btns {
+            display: flex;
+            flex-direction: row;
+
+            .nav-btn::after {
+                border-radius: 3px;
+                width: 50%;
+                height: 2px;
+                right: 25%;
+                top: -4px;
+            }
+
+            &:nth-child(1) .nav-btn {
+                margin-top: 0vw;
+                margin-bottom: 10vh;
+
+                .nav-btn svg {
+                    margin-top: 1vw;
+                }
+            }
+
+            &:nth-child(2) .nav-btn {
+                margin-bottom: 0vw;
+
+                .nav-btn {
+                    &::after {
+                        top: auto;
+                        bottom: -4px;
+                    }
+
+                    svg {
+                        margin-bottom: 1vw;
+                    }
+                }
+
+                &:first-child {
+                    margin-top: 0vw;
+                }
+            }
+        }
+    }
+}

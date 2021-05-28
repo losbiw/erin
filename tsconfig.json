@@ -3,7 +3,11 @@
     "baseUrl": "./",
     "target": "es6",
     "module": "commonjs",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "jsx": "react",
     "sourceMap": true,
     "outDir": "./build/",
@@ -13,19 +17,45 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["src/Components/*"],
-      "@icons/*": ["src/assets/Icons/*"],
-      "@nav/*": ["src/assets/nav/*"],
-      "@info/*": ["src/assets/info/*"],
-      "@ui/*": ["src/assets/ui/*"],
-      "@themes/*": ["src/assets/themes/*"],
-      "@controls/*": ["src/assets/controls/*"],
-      "@settings/*": ["src/assets/settings/*"],
-      "@app/*": ["src/assets/app/*"],
-      "@modules/*": ["src/modules/*"],
-      "@interfaces/*": ["src/interfaces/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@pages/*": ["src/Pages/*"]
-   }       
+      "@/*": [
+        "src/components/*"
+      ],
+      "@icons/*": [
+        "src/assets/Icons/*"
+      ],
+      "@nav/*": [
+        "src/assets/nav/*"
+      ],
+      "@info/*": [
+        "src/assets/info/*"
+      ],
+      "@ui/*": [
+        "src/assets/ui/*"
+      ],
+      "@themes/*": [
+        "src/assets/themes/*"
+      ],
+      "@controls/*": [
+        "src/assets/controls/*"
+      ],
+      "@settings/*": [
+        "src/assets/settings/*"
+      ],
+      "@app/*": [
+        "src/assets/app/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@interfaces/*": [
+        "src/interfaces/*"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ]
+    }
   }
 }

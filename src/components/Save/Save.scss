@@ -1,0 +1,120 @@
+@import "../../style/main.scss";
+@import "../../style/settings.scss";
+
+.save {
+    justify-content: center;
+    cursor: pointer;
+
+    .continue {
+        box-sizing: border-box;
+        position: relative;
+        border-radius: 1.82vw;
+
+        .background {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            z-index: 1;
+            background: transparent;
+
+            .transparent {
+                opacity: 1;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: 2;
+                transition: 0.3s;
+                border-radius: 1.7vw;
+            }
+
+            &:hover {
+                .transparent {
+                    opacity: 0;
+                }
+
+                & ~ .save-button .title {
+                    color: $background-light;
+                }
+            }
+        }
+    }
+
+    .save-button {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        visibility: visible;
+        padding: 0.9vw 1.4vw;
+        font-size: 1.2vw;
+        font-weight: 500;
+        box-sizing: border-box;
+        border-radius: 1.7vw;
+        border: none;
+        transition-property: background-color, box-shadow;
+        transition-timing-function: $transition-function;
+        transition-duration: $transition-duration;
+        background: $gradient;
+
+        .title {
+            z-index: 3;
+            text-shadow: none;
+            transition-property: color;
+            margin: 0;
+            transition-timing-function: $transition-function;
+            transition-duration: $transition-duration;
+            text-shadow: $title-shadow-light;
+        }
+    }
+}
+
+.light .continue {
+    box-shadow: $item-shadow-light;
+
+    .transparent {
+        background-color: $fill-light;
+    }
+
+    .title {
+        color: $background-light;
+    }
+}
+
+.dark .continue {
+    box-shadow: $item-shadow-dark;
+
+    .transparent {
+        background-color: $fill-dark;
+    }
+
+    .title {
+        color: $background-dark;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .save .continue {
+        height: 6vw;
+        border-radius: 3vw;
+
+        .background {
+            border-radius: 3vw;
+
+            .transparent {
+                border-radius: 3vw;
+            }
+        }
+
+        .save-button {
+            padding: 0 2vw;
+            border-radius: 3vw;
+
+            .title {
+                font-size: 2vw;
+            }
+        }
+    }
+}
