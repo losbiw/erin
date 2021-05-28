@@ -38,7 +38,7 @@ interface ArrowProps {
 
 const ArrowWrapper: FC<ArrowProps> = ({ children, handleClick }: ArrowProps) => (
   <div className="wrapper">
-    { children}
+    {children}
     <Arrow
       Icon={Arrows.Forward}
       index={0}
