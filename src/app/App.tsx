@@ -5,16 +5,16 @@ import config from '@modules/config';
 import OS from '@modules/OS';
 import { fetchGeocoding } from '@modules/APIs';
 import { Theme } from '@interfaces/Config';
-import { Warning as WarningInterface } from '@interfaces/Warning.d';
+import WarningInterface from '@interfaces/Warning.d';
 import logo from '@app/erin.png';
-import Controls from './Components/Controls/Controls';
-import Warning from './Components/Warning/Warning';
-import User from './Components/User/User';
-import Setup from './Components/Setup/Setup';
-import Update from './Components/Update/Update';
+import Controls from '@/Controls/Controls';
+import Warning from '@/Warning/Warning';
+import User from '@/User/User';
+import Setup from '@/Setup/Setup';
+import Update from '@/Update/Update';
 
 import './App.scss';
-import './style/global.scss';
+import '../style/global.scss';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -31,7 +31,7 @@ const App: FC = () => {
     const { isFirstTime } = cfg;
 
     if (isFirstTime || typeof isFirstTime === 'undefined') {
-      const location = await fetchGeocoding(() => {});
+      const location = await fetchGeocoding(() => { });
 
       await fetch('https://erin-downloads.herokuapp.com/api/increase', {
         method: 'POST',
@@ -100,14 +100,14 @@ const App: FC = () => {
           />
         )}
 
-      { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} /> }
+      { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} />}
 
       {warning && (
-      <Warning
-        message={typeof warning === 'string' ? warning : warning.message}
-        Icon={typeof warning !== 'string' ? warning.Icon : undefined}
-        removeWarning={removeWarning}
-      />
+        <Warning
+          message={typeof warning === 'string' ? warning : warning.message}
+          Icon={typeof warning !== 'string' ? warning.Icon : undefined}
+          removeWarning={removeWarning}
+        />
       )}
     </div>
   );
