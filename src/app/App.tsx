@@ -23,13 +23,13 @@ const { ipcRenderer } = window.require('electron');
 
 interface Props {
   warning: string | WarningInterface,
+  theme: Theme,
   closeWarning: () => void,
 }
 
-const App: FC<Props> = ({ warning, closeWarning }: Props) => {
+const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
   const cfg = config.get();
 
-  const [theme, setTheme] = useState(cfg.theme);
   const [isUpdateAvailable, setUpdate] = useState(false);
   const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
   const [isComplete, setIsComplete] = useState(cfg.isComplete);
@@ -105,7 +105,7 @@ const App: FC<Props> = ({ warning, closeWarning }: Props) => {
           />
         )}
 
-      { isUpdateAvailable && <Update rejectUpdate={rejectUpdate} setWarning={setWarning} />}
+      { isUpdateAvailable && <Update /> }
 
       {warning && (
         <Warning
@@ -128,5 +128,3 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// export default App;

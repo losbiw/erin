@@ -1,13 +1,15 @@
 import React, { FC } from 'react';
-import Warning from '@interfaces/Warning.d';
+import store from '@app/store';
 import { General, Crosses } from '@icons/UI';
+import { addWarning } from '@slices/warningSlice';
+
 import './Update.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-interface Props {
-  rejectUpdate: () => void,
-  setWarning: (warning: string | Warning) => void
+interface InnerProps {
+  buttons: Button[],
+  handleClick: (shouldUpdate: boolean) => void
 }
 
 interface Button {
@@ -16,22 +18,45 @@ interface Button {
   value: boolean
 }
 
-const Update: FC<Props> = (props: Props) => {
-  const handleIPCevent = (shouldUpdate: boolean): void => {
-    const { rejectUpdate, setWarning } = props;
+const handleIPCevent = (shouldUpdate: boolean): void => {
+  if (shouldUpdate) {
+    ipcRenderer.send('should-update');
 
-    if (shouldUpdate) {
-      ipcRenderer.send('should-update');
+    store.dispatch(addWarning({
+      message: 'The app will restart once the update is downloaded',
+      Icon: General.Download,
+    }));
+  }
 
-      setWarning({
-        message: 'The app will restart once the update is downloaded',
-        Icon: General.Download,
-      });
-    }
+  rejectUpdate();
+};
 
-    rejectUpdate();
-  };
+const InnerUpdate: FC<InnerProps> = ({ buttons, handleClick }: InnerProps) => (
+  <div className="update container">
+    <div className="content container">
+      <div className="text container">
+        <h1 className="title">Update available</h1>
+        <p className="description">Do you want to download and install it?</p>
+      </div>
+      <div className="buttons container">
+        {
+            buttons.map(({ action, value, Icon }) => (
+              <button
+                type="button"
+                className="action"
+                onClick={() => handleIPCevent(value)}
+                key={action}
+              >
+                <Icon />
+              </button>
+            ))
+          }
+      </div>
+    </div>
+  </div>
+);
 
+const Update: FC = () => {
   const buttons: Button[] = [
     {
       action: 'accept',
@@ -45,34 +70,7 @@ const Update: FC<Props> = (props: Props) => {
     },
   ];
 
-  return (
-    <div className="update container">
-      <div className="content container">
-        <div className="text container">
-          <h1 className="title">Update available</h1>
-          <p className="description">Do you want to download and install it?</p>
-        </div>
-        <div className="buttons container">
-          {
-            buttons.map((button) => {
-              const { action, value, Icon } = button;
-
-              return (
-                <button
-                  type="button"
-                  className="action"
-                  onClick={() => handleIPCevent(value)}
-                  key={action}
-                >
-                  <Icon />
-                </button>
-              );
-            })
-          }
-        </div>
-      </div>
-    </div>
-  );
+  return <InnerUpdate buttons={buttons} handleClick={handleIPCevent} />;
 };
 
 export default Update;
