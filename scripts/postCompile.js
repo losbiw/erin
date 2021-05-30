@@ -9,7 +9,7 @@ const copyEnv = async (os) => {
   const src = join(__dirname, '../electron/.env');
   const dest = join(__dirname, '../build/.env');
 
-  if (os === 'darwin' || os === 'linux') {
+  if (os === 'darwin') {
     await exec(`chflags nohidden ${src}`);
   }
 
