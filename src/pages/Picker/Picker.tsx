@@ -11,7 +11,6 @@ import './Picker.scss';
 interface SharedProps {
   pictureIndex: number,
   isLocked: boolean,
-  progress: number,
   switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
 }
 
@@ -52,7 +51,7 @@ ArrowWrapper.defaultProps = {
 };
 
 const InnerPicker: FC<InnerProps> = ({
-  collection, progress, isLocked, pictureIndex,
+  collection, isLocked, pictureIndex,
   handleForwardClick, handleBackClick, switchWallpaper,
 }: InnerProps) => (
   <div className="picker page">
@@ -76,7 +75,7 @@ const InnerPicker: FC<InnerProps> = ({
     </div>
 
     <ArrowWrapper handleClick={handleForwardClick}>
-      {isLocked && <ProgressBar width={progress} />}
+      {isLocked && <ProgressBar />}
     </ArrowWrapper>
   </div>
 );
@@ -86,7 +85,7 @@ const Picker: FC<Props> = memo((props: Props) => {
   const [stateCollection, setCollection] = useState<PickerPicture[]>([]);
 
   const {
-    progress, isLocked, switchWallpaper, pictureIndex, collection,
+    isLocked, switchWallpaper, pictureIndex, collection,
   } = props;
 
   const findClosestDividible = (number: number, divider: number): number => {
@@ -136,7 +135,6 @@ const Picker: FC<Props> = memo((props: Props) => {
   return (
     <InnerPicker
       collection={stateCollection}
-      progress={progress}
       isLocked={isLocked}
       pictureIndex={pictureIndex}
       switchWallpaper={switchWallpaper}

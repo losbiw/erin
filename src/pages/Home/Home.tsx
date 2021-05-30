@@ -8,7 +8,6 @@ import './Home.scss';
 
 interface Props {
   picture: Picture,
-  progress: number,
   isLocked: boolean,
   pictureIndex: number,
   switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
@@ -16,7 +15,6 @@ interface Props {
 
 interface InnerProps {
   src: string,
-  progress: number,
   isLocked: boolean,
   href: string,
   Content: () => JSX.Element,
@@ -25,7 +23,7 @@ interface InnerProps {
 }
 
 const InnerHome: FC<InnerProps> = ({
-  src, progress, handleNextWallpaper, handlePrevWallpaper, isLocked, href, Content,
+  src, handleNextWallpaper, handlePrevWallpaper, isLocked, href, Content,
 }: InnerProps) => (
   <div className="page home">
     <Arrows
@@ -35,7 +33,7 @@ const InnerHome: FC<InnerProps> = ({
     <AspectRatio src={src} />
 
     <div className="wrapper">
-      {isLocked && <ProgressBar width={progress} />}
+      {isLocked && <ProgressBar />}
       <Link href={href} Content={Content} />
     </div>
   </div>
@@ -55,7 +53,7 @@ const Author = (photographer: string) => (
 );
 
 const Home: FC<Props> = ({
-  picture, progress, isLocked, switchWallpaper, pictureIndex,
+  picture, isLocked, switchWallpaper, pictureIndex,
 }: Props) => {
   const { photographer, srcMain, photographerUrl } = picture;
 
@@ -72,7 +70,6 @@ const Home: FC<Props> = ({
   return (
     <InnerHome
       src={srcMain}
-      progress={progress}
       isLocked={isLocked}
       href={photographerUrl}
       Content={() => Author(photographer)}

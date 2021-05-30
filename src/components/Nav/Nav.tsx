@@ -5,14 +5,9 @@ import { buttons, NavButton as NavButtonInterface } from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import './Nav.scss';
 
-interface Shared {
+interface Props {
   changePage: (name: Pages) => void,
   current: Pages,
-}
-
-interface Props extends Shared {
-  theme: Theme,
-  switchTheme: () => void
 }
 
 interface ButtonProps {
@@ -22,7 +17,7 @@ interface ButtonProps {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
-interface GroupProps extends Shared {
+interface GroupProps extends Props {
   children: React.ReactNode,
   group: NavButtonInterface[]
 }
@@ -66,7 +61,7 @@ const NavGroup: FC<GroupProps> = ({
 );
 
 const Nav: FC<Props> = memo(({
-  theme, switchTheme, current, changePage,
+  current, changePage,
 }: Props) => (
   <nav className="nav">
     { buttons.map((group, index) => (
@@ -76,12 +71,7 @@ const Nav: FC<Props> = memo(({
         changePage={changePage}
         key={group[0].target + group[1].target}
       >
-        { index === 0 && (
-        <ThemeToggle
-          theme={theme}
-          switchTheme={switchTheme}
-        />
-        ) }
+        { index === 0 && <ThemeToggle /> }
       </NavGroup>
     )) }
   </nav>

@@ -19,10 +19,8 @@ const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 interface Props {
-  theme: Theme,
   setWarning: (warning: string | Warning) => void,
   setIsComplete: (isComplete: boolean) => void
-  switchTheme: () => void
 }
 
 interface Timers {
@@ -180,7 +178,7 @@ export default class User extends Component<Props, State> {
     }
 
     const {
-      savePath, switchWallpaper, setTimer, setError, updateProgress,
+      savePath, switchWallpaper, setTimer, setError,
     } = this;
     const url = collection[index].srcMain;
     const { setWarning } = this.props;
@@ -190,7 +188,6 @@ export default class User extends Component<Props, State> {
       handleLargeFiles: switchWallpaper,
       setTimer,
       setError,
-      updateProgress,
     });
   }
 
@@ -282,8 +279,6 @@ export default class User extends Component<Props, State> {
         <Nav
           current={current}
           changePage={changePage}
-          theme={props.theme}
-          switchTheme={props.switchTheme}
         />
 
         { error && (current === Pages.Home || current === Pages.Picker)

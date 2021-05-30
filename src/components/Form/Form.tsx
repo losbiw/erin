@@ -5,6 +5,8 @@ import warning from '@modules/warning';
 import {
   Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,
 } from '@interfaces/Config';
+import { connect } from 'react-redux';
+import { RootState } from '@app/store';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Icons from '@icons/Settings';
@@ -130,8 +132,8 @@ const Form: FC<Props> = (props: Props) => {
   return (
     <form className="settings">
       {
-        items.map((setting, index) => {
-          const { title, description, name: key } = setting;
+        items.map((item, index) => {
+          const { title, description, name: key } = item;
           const isActive = index === activeIndex;
           const capitalized = capitalizeFirstLetter(key);
           const Icon = Icons[capitalized];
@@ -141,7 +143,7 @@ const Form: FC<Props> = (props: Props) => {
           return (
             <div
               className={`item ${isActive && 'active-item'}`}
-              style={theme && { backgroundImage: setting[theme] ? `url(${setting[theme]})` : 'none' }}
+              style={theme && { backgroundImage: item[theme] ? `url(${item[theme]})` : 'none' }}
               key={key}
             >
               <div className="container">
@@ -156,7 +158,7 @@ const Form: FC<Props> = (props: Props) => {
                 </div>
               </div>
 
-              { setting !== lastElement && !isSetup && <hr className="separator" /> }
+              { item !== lastElement && !isSetup && <hr className="separator" /> }
             </div>
           );
         })
@@ -169,4 +171,6 @@ Form.defaultProps = {
   activeIndex: 0,
 } as Props;
 
-export default Form;
+const mapStateToProps = (state: RootState) => ({ theme: state.theme.value });
+
+export default connect(mapStateToProps)(Form);

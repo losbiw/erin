@@ -1,6 +1,8 @@
 import { LinuxCommands, Distros } from '@interfaces/Linux.d';
 import * as https from 'https';
 import { IncomingMessage } from 'http';
+import store from '@app/store';
+import { resetProgress, setProgress } from '@slices/userSlice';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
@@ -21,7 +23,6 @@ interface Handlers {
   setTimer: () => void,
   setWarning: (warning: string) => void,
   setError: (error: number) => void,
-  updateProgress: (progress: number) => void
 }
 
 const getFallbackPath = (initialPath: string): string => {
@@ -64,7 +65,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
   const os = OS.define();
 
   const {
-    handleLargeFiles, setTimer, setWarning, setError, updateProgress,
+    handleLargeFiles, setTimer, setWarning, setError,
   } = handlers;
 
   if (isBlacklisted(url, os)) {
@@ -74,6 +75,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
   }
 
   const callback = (res: IncomingMessage) => {
+    const { dispatch } = store;
     const size = parseInt(res.headers['content-length'] as string, 10);
 
     if (os === 'win32' && (size / 1024 / 1024) >= 27) {
@@ -85,7 +87,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
       let downloaded = 0;
 
       const progressInterval = setInterval(() => {
-        updateProgress(downloaded / contentLength);
+        dispatch(setProgress(downloaded / contentLength));
       }, 100);
 
       res.on('data', (chunk: any) => { // change
@@ -103,7 +105,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         await set(initialPath, fallbackPath);
         setTimer();
 
-        updateProgress(0);
+        dispatch(resetProgress());
       });
     }
   };

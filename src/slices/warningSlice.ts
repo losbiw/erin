@@ -6,7 +6,7 @@ interface State {
 }
 
 const initialState: State = {
-  value: 'hello',
+  value: '',
 };
 
 const warningSlice = createSlice({

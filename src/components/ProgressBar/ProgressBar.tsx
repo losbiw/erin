@@ -1,4 +1,6 @@
+import { RootState } from '@app/store';
 import React, { FC } from 'react';
+import { connect } from 'react-redux';
 import './ProgressBar.scss';
 
 interface Props {
@@ -11,4 +13,6 @@ const ProgressBar: FC<Props> = ({ width }: Props) => (
   </div>
 );
 
-export default ProgressBar;
+const mapStateToProps = (state: RootState) => ({ width: state.user.progress });
+
+export default connect(mapStateToProps)(ProgressBar);

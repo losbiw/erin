@@ -7,9 +7,13 @@ import './Update.scss';
 
 const { ipcRenderer } = window.require('electron');
 
+interface Props {
+  closeUpdatePrompt: () => void
+}
+
 interface InnerProps {
   buttons: Button[],
-  handleClick: (shouldUpdate: boolean) => void
+  handleClick: (shouldUpdate: boolean) => void,
 }
 
 interface Button {
@@ -18,7 +22,7 @@ interface Button {
   value: boolean
 }
 
-const handleIPCevent = (shouldUpdate: boolean): void => {
+const handleIPCevent = (shouldUpdate: boolean, closeUpdatePrompt: () => void): void => {
   if (shouldUpdate) {
     ipcRenderer.send('should-update');
 
@@ -28,7 +32,7 @@ const handleIPCevent = (shouldUpdate: boolean): void => {
     }));
   }
 
-  rejectUpdate();
+  closeUpdatePrompt();
 };
 
 const InnerUpdate: FC<InnerProps> = ({ buttons, handleClick }: InnerProps) => (
@@ -40,23 +44,23 @@ const InnerUpdate: FC<InnerProps> = ({ buttons, handleClick }: InnerProps) => (
       </div>
       <div className="buttons container">
         {
-            buttons.map(({ action, value, Icon }) => (
-              <button
-                type="button"
-                className="action"
-                onClick={() => handleIPCevent(value)}
-                key={action}
-              >
-                <Icon />
-              </button>
-            ))
-          }
+          buttons.map(({ action, value, Icon }) => (
+            <button
+              type="button"
+              className="action"
+              onClick={() => handleClick(value)}
+              key={action}
+            >
+              <Icon />
+            </button>
+          ))
+        }
       </div>
     </div>
   </div>
 );
 
-const Update: FC = () => {
+const Update: FC<Props> = ({ closeUpdatePrompt }: Props) => {
   const buttons: Button[] = [
     {
       action: 'accept',
@@ -70,7 +74,12 @@ const Update: FC = () => {
     },
   ];
 
-  return <InnerUpdate buttons={buttons} handleClick={handleIPCevent} />;
+  return (
+    <InnerUpdate
+      buttons={buttons}
+      handleClick={(shouldUpdate) => handleIPCevent(shouldUpdate, closeUpdatePrompt)}
+    />
+  );
 };
 
 export default Update;

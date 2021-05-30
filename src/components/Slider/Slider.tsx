@@ -15,11 +15,10 @@ interface Props {
   setIsRequiredFilled: (isFilled: boolean) => void,
   activeIndex: number,
   isComplete: boolean,
-  theme: Theme
 }
 
 const Slider: FC<Props> = ({
-  isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex, theme,
+  isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex,
 }: Props) => {
   const [stateConfig, updateConfig] = useState(config.get());
 
@@ -71,7 +70,6 @@ const Slider: FC<Props> = ({
             setWarning={setWarning}
             setIsComplete={setIsComplete}
             updateSettingsState={updateSlideState}
-            theme={theme}
           />
         </div>
       </div>

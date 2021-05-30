@@ -70,18 +70,6 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     });
   }, []);
 
-  const switchTheme = () => {
-    const value = theme === Theme.Dark ? Theme.Light : Theme.Dark;
-
-    config.set({
-      theme: value,
-    });
-
-    setTheme(value);
-  };
-
-  const rejectUpdate = () => setUpdate(false);
-
   return (
     <div className={`theme ${theme}`}>
       <Controls />
@@ -89,23 +77,19 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
       { isComplete && isRequiredFilled
         ? (
           <User
-            theme={theme}
-            setWarning={setWarning}
-            switchTheme={switchTheme}
+            setWarning={() => {}} // TODO
             setIsComplete={setIsComplete}
           />
         )
         : (
           <Setup
-            theme={theme}
             isComplete={isComplete}
-            switchTheme={switchTheme}
             setIsComplete={setIsComplete}
             setIsRequiredFilled={setIsRequiredFilled}
           />
         )}
 
-      { isUpdateAvailable && <Update /> }
+      { isUpdateAvailable && <Update closeUpdatePrompt={() => setUpdate(false)} />}
 
       {warning && (
         <Warning

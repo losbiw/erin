@@ -25,7 +25,6 @@ const Router: FC<Props> = (props: Props) => {
       <Home
         picture={collection[pictureIndex]}
         isLocked={isLocked}
-        progress={progress}
         pictureIndex={pictureIndex}
         switchWallpaper={switchWallpaper}
       />
@@ -37,7 +36,6 @@ const Router: FC<Props> = (props: Props) => {
         pictureIndex={pictureIndex}
         collection={collection}
         isLocked={isLocked}
-        progress={progress}
         switchWallpaper={switchWallpaper}
       />
     );

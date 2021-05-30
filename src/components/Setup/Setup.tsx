@@ -11,9 +11,7 @@ import './Setup.scss';
 import '@pages/Settings/Settings.scss';
 
 interface Props {
-  theme: Theme,
   isComplete: boolean,
-  switchTheme: () => void,
   setIsComplete: (isComplete: boolean) => void,
   setIsRequiredFilled: (isFilled: boolean) => void,
 }
@@ -40,15 +38,12 @@ const Setup: FC<Props> = (props: Props) => {
   const handleNextSlide = () => handleScroll(true);
 
   const {
-    isComplete, switchTheme, theme, setIsComplete, setIsRequiredFilled,
+    isComplete, setIsComplete, setIsRequiredFilled,
   } = props;
 
   return (
     <div className="setup">
-      <ThemeToggle
-        switchTheme={switchTheme}
-        theme={theme}
-      />
+      <ThemeToggle />
 
       <Arrows
         handleBackClick={handlePrevSlide}
@@ -57,9 +52,9 @@ const Setup: FC<Props> = (props: Props) => {
 
       <Slider
         changeSlide={changeSlideByName}
+        setWarning={() => {}} // TODO
         activeIndex={slideIndex}
         isComplete={isComplete}
-        theme={theme}
         setIsComplete={setIsComplete}
         setIsRequiredFilled={setIsRequiredFilled}
       />
