@@ -13,7 +13,7 @@ import User from '@/User/User';
 import Setup from '@/Setup/Setup';
 import Update from '@/Update/Update';
 import { connect } from 'react-redux';
-import { closeWarning as closeWarningAction } from '@slices/warningSlice';
+import { closeWarning as closeWarningAction } from '@/Warning/warningSlice';
 import { AppDispatch, RootState } from './store';
 
 import './App.scss';
@@ -77,7 +77,7 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
       { isComplete && isRequiredFilled
         ? (
           <User
-            setWarning={() => {}} // TODO
+            setWarning={() => { }} // TODO
             setIsComplete={setIsComplete}
           />
         )
@@ -104,7 +104,7 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
 
 const mapStateToProps = (state: RootState) => ({
   warning: state.warning.value,
-  theme: state.theme.value,
+  theme: state.theme,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

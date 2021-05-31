@@ -1,7 +1,6 @@
 import React from 'react';
-import Warning from '@interfaces/Warning';
-import { addWarning } from '@slices/warningSlice';
-import { General } from '@icons/UI';
+import { addWarning } from '@/Warning/warningSlice';
+import { Keys as WarningIconKeys } from '@/Warning/Icons';
 import Info from '@icons/Info';
 import store from '@app/store';
 
@@ -29,7 +28,7 @@ const getCards = (): CardInterface[] => {
 
         store.dispatch(addWarning({
           message: 'The wallet is copied to the clipboard',
-          Icon: General.Clipboard,
+          Icon: WarningIconKeys.Clipboard,
         }));
       },
       Icon: Donation,

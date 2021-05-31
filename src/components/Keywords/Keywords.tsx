@@ -4,6 +4,9 @@ import React, {
 import './Keywords.scss';
 import Warning from '@interfaces/Warning';
 import { Crosses } from '@icons/UI';
+import { connect } from 'react-redux';
+import { AppDispatch } from '@app/store';
+import { addWarning } from '@/Warning/warningSlice';
 
 interface Props {
   keywords: string[],
@@ -53,7 +56,7 @@ const KeywordsInput: FC<InputProps> = (props: InputProps) => {
 
 const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
   <div className="keyword" key={keyword}>
-    <p>{ keyword }</p>
+    <p>{keyword}</p>
 
     <button
       className="delete"
@@ -78,18 +81,18 @@ const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
         <div className="transparent" />
       </div>
       {
-      keywords.map((keyword) => {
-        const handleKeywordClick = () => handleDelete(keyword);
+        keywords.map((keyword) => {
+          const handleKeywordClick = () => handleDelete(keyword);
 
-        return (
-          <Keyword
-            keyword={keyword}
-            handleClick={handleKeywordClick}
-            key={keyword}
-          />
-        );
-      })
-    }
+          return (
+            <Keyword
+              keyword={keyword}
+              handleClick={handleKeywordClick}
+              key={keyword}
+            />
+          );
+        })
+      }
     </div>
   );
 };
@@ -176,4 +179,8 @@ const Keywords: FC<Props> = memo((props: Props) => {
   );
 });
 
-export default Keywords;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  addWarning: () => dispatch(addWarning),
+});
+
+export default connect(null, mapDispatchToProps)(Keywords);
