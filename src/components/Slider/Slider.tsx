@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
 import './Slider.scss';
-import { Config, ConfigUpdate, Theme } from '@interfaces/Config';
+import { Config, ConfigUpdate } from '@interfaces/Config';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Form from '../Form/Form';
@@ -46,7 +46,7 @@ const Slider: FC<Props> = ({
     updateConfig(cfg);
   };
 
-  const calcSlidePosition = (amount: number, index: number) => {
+  const calcSlideOffset = (amount: number, index: number) => {
     const middle = Math.round((amount - 1) / 2);
     const equalizer = amount % 2 === 0 ? 40 : 0;
     const multiplier = index === middle ? 0 : middle - index;
@@ -56,7 +56,7 @@ const Slider: FC<Props> = ({
 
   const keys = Object.keys(items);
 
-  const transform = calcSlidePosition(keys.length, activeIndex);
+  const transform = calcSlideOffset(keys.length, activeIndex);
 
   if (Object.keys(stateConfig).length) {
     return (

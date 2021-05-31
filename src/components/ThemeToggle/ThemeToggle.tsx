@@ -4,7 +4,7 @@ import Themes from '@icons/Themes';
 import './ThemeToggle.scss';
 import { AppDispatch, RootState } from '@app/store';
 import { connect } from 'react-redux';
-import { setOpposite } from '@slices/themeSlice';
+import { setOpposite } from './themeSlice';
 
 interface Props {
   theme: Theme,
@@ -26,7 +26,7 @@ const ThemeToggle: FC<Props> = ({ theme, switchTheme }: Props) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({ theme: state.theme.value });
+const mapStateToProps = (state: RootState) => ({ theme: state.theme });
 const mapDispatchToProps = (dispatch: AppDispatch) => (
   { switchTheme: () => dispatch(setOpposite()) });
 

@@ -148,17 +148,17 @@ const Form: FC<Props> = (props: Props) => {
             >
               <div className="container">
                 <div className={isSetup ? 'setup-title' : 'title'}>
-                  { Icon && <Icon /> }
-                  <h1 className="setting-title">{ title || capitalized }</h1>
-                  <p className="setting-desc">{ description || undefined }</p>
+                  {Icon && <Icon />}
+                  <h1 className="setting-title">{title || capitalized}</h1>
+                  <p className="setting-desc">{description || undefined}</p>
                 </div>
 
                 <div className={`setting ${key}`}>
-                  { renderSettingsItem(key, isActive) }
+                  {renderSettingsItem(key, isActive)}
                 </div>
               </div>
 
-              { item !== lastElement && !isSetup && <hr className="separator" /> }
+              { item !== lastElement && !isSetup && <hr className="separator" />}
             </div>
           );
         })
@@ -171,6 +171,6 @@ Form.defaultProps = {
   activeIndex: 0,
 } as Props;
 
-const mapStateToProps = (state: RootState) => ({ theme: state.theme.value });
+const mapStateToProps = (state: RootState) => ({ theme: state.theme });
 
 export default connect(mapStateToProps)(Form);
