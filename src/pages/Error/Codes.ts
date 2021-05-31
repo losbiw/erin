@@ -4,7 +4,7 @@ interface ErrorInterface {
 }
 
 interface Codes {
-  [name: string]: ErrorInterface
+  [code: number]: ErrorInterface
 }
 
 const codes: Codes = {

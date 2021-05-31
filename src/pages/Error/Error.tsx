@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import ErrorCodes from './ErrorCodes';
+import ErrorCodes from './Codes';
 import './Error.scss';
 
 interface Props {
@@ -14,12 +14,12 @@ const Error: FC<Props> = (props: Props) => {
   return (
     <div className="error page">
       <div className="err-code">
-        { codeSpread.map((char) => <h1 className="code-key" key={`char${char}`}>{ char }</h1>) }
+        {codeSpread.map((char) => <h1 className="code-key" key={`char${char}`}>{char}</h1>)}
       </div>
 
-      <h2 className="fix">{ ErrorCodes[code]?.fix }</h2>
+      <h2 className="fix">{ErrorCodes[code]?.fix}</h2>
       <p className="description">
-        { `Oopsie Woopsie! ${ErrorCodes[code]?.description}. 
+        {`Oopsie Woopsie! ${ErrorCodes[code]?.description}. 
                   The code monkeys at our office are sorry.` }
       </p>
     </div>
