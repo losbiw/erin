@@ -7,11 +7,14 @@ import ProgressBar from '@/ProgressBar/ProgressBar';
 import { Arrows } from '@icons/UI';
 import { Arrow } from '@/Arrows/Arrows';
 import './Picker.scss';
+import { connect } from 'react-redux';
+import { AppDispatch, RootState } from '@app/store';
+import { setIndexByNumber } from '@/User/slices/wallpaperSlice';
 
 interface SharedProps {
   pictureIndex: number,
-  isLocked: boolean,
-  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
+  isDownloadAllowed: boolean,
+  setWallpaperByIndex: (index: number) => void
 }
 
 interface Props extends SharedProps {
@@ -51,8 +54,8 @@ ArrowWrapper.defaultProps = {
 };
 
 const InnerPicker: FC<InnerProps> = ({
-  collection, isLocked, pictureIndex,
-  handleForwardClick, handleBackClick, switchWallpaper,
+  collection, isDownloadAllowed, pictureIndex,
+  handleForwardClick, handleBackClick, setWallpaperByIndex,
 }: InnerProps) => (
   <div className="picker page">
     <ArrowWrapper handleClick={handleBackClick} />
@@ -61,7 +64,7 @@ const InnerPicker: FC<InnerProps> = ({
       {collection
         && collection.map(({ src, key, index }) => {
           const isActive = pictureIndex === index;
-          const handleAspectClick = isActive ? undefined : () => switchWallpaper(index, false);
+          const handleAspectClick = isActive ? undefined : () => setWallpaperByIndex(index);
 
           return (
             <AspectRatio
@@ -75,7 +78,7 @@ const InnerPicker: FC<InnerProps> = ({
     </div>
 
     <ArrowWrapper handleClick={handleForwardClick}>
-      {isLocked && <ProgressBar />}
+      {!isDownloadAllowed && <ProgressBar />}
     </ArrowWrapper>
   </div>
 );
@@ -85,7 +88,7 @@ const Picker: FC<Props> = memo((props: Props) => {
   const [stateCollection, setCollection] = useState<PickerPicture[]>([]);
 
   const {
-    isLocked, switchWallpaper, pictureIndex, collection,
+    isDownloadAllowed, setWallpaperByIndex, pictureIndex, collection,
   } = props;
 
   const findClosestDividible = (number: number, divider: number): number => {
@@ -135,13 +138,23 @@ const Picker: FC<Props> = memo((props: Props) => {
   return (
     <InnerPicker
       collection={stateCollection}
-      isLocked={isLocked}
+      isDownloadAllowed={isDownloadAllowed}
       pictureIndex={pictureIndex}
-      switchWallpaper={switchWallpaper}
+      setWallpaperByIndex={setWallpaperByIndex}
       handleBackClick={setPrevBlock}
       handleForwardClick={setNextBlock}
     />
   );
 });
 
-export default Picker;
+const mapStateToProps = ({ wallpaper, general }: RootState) => ({
+  collection: wallpaper.collection,
+  pictureIndex: wallpaper.pictureIndex,
+  isDownloadAllowed: general.isDownloadAllowed,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setWallpaperByIndex: (index: number) => dispatch(setIndexByNumber(index)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Picker);

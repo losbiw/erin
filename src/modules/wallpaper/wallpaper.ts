@@ -2,7 +2,11 @@ import { LinuxCommands, Distros } from '@interfaces/Linux.d';
 import * as https from 'https';
 import { IncomingMessage } from 'http';
 import store from '@app/store';
-import { resetProgress, setProgress } from '@slices/userSlice';
+import { setProgress } from '@/ProgressBar/progressSlice';
+import { incrementIndex } from '@/User/slices/wallpaperSlice';
+import { addWarning } from '@/Warning/warningSlice';
+import Warning from '@interfaces/Warning';
+import resetProgressAndAllowDownload from '@/User/redux-helpers/resetProgressAndAllowDownload';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
@@ -19,9 +23,7 @@ const exec = promisify(_exec);
 const execFile = promisify(_execFile);
 
 interface Handlers {
-  handleLargeFiles: (index: number | boolean, shouldForceSwitch: boolean) => void,
   setTimer: () => void,
-  setWarning: (warning: string) => void,
   setError: (error: number) => void,
 }
 
@@ -61,16 +63,19 @@ const set = async (img: string, macPath: string) => {
   }
 };
 
+const setWarning = (warning: string | Warning) => store.dispatch(addWarning(warning));
+const skipLargeFile = () => store.dispatch(incrementIndex());
+
 const download = (url: string, initialPath: string, handlers: Handlers): void => {
   const os = OS.define();
 
   const {
-    handleLargeFiles, setTimer, setWarning, setError,
+    setTimer, setError,
   } = handlers;
 
   if (isBlacklisted(url, os)) {
     setWarning("The image might crash your desktop. It's been switched to the next one automatically");
-    handleLargeFiles(true, true);
+    skipLargeFile();
     return;
   }
 
@@ -80,7 +85,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 
     if (os === 'win32' && (size / 1024 / 1024) >= 27) {
       setWarning("The file is too big. It's been switched to the next one automatically");
-      handleLargeFiles(true, true);
+      skipLargeFile();
     } else {
       const data = new Stream();
       const contentLength = Math.floor(size / 100);
@@ -105,7 +110,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         await set(initialPath, fallbackPath);
         setTimer();
 
-        dispatch(resetProgress());
+        resetProgressAndAllowDownload();
       });
     }
   };

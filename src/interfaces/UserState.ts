@@ -1,17 +1,23 @@
 import { Config } from '@interfaces/Config';
 import Weather from '@interfaces/Weather';
+import ErrorCodes from '@pages/Error/Codes';
 
-export interface SharedState {
+export interface WallpaperState {
   collection: Picture[],
   pictureIndex: number,
+}
+
+export interface ReduxState {
+  isDownloadAllowed: boolean,
   config: Config,
-  isLocked: boolean,
-  progress: number,
+}
+
+export interface SharedState extends ReduxState {
   current: Pages,
 }
 
 export interface State extends SharedState {
-  error: number | null,
+  error: keyof typeof ErrorCodes | null,
   weather: Weather | undefined,
   isRequiredFilled: boolean
 }

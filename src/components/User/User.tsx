@@ -7,20 +7,20 @@ import { fetchPexels, fetchWeather } from '@modules/APIs';
 import areEqual from '@helpers/areEqual';
 import './User.scss';
 import {
-  Config, Mode, Quality, Theme,
+  Config, Mode, Quality,
 } from '@interfaces/Config';
 import { State, Picture, Pages } from '@interfaces/UserState';
-import Warning from '@interfaces/Warning';
 import Error from '@pages/Error/Error';
 import Router from '@pages/Router/Router';
 import Nav from '@/Nav/Nav';
+import switchWallpaper from './redux-helpers/switchWallpaper';
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
 interface Props {
-  setWarning: (warning: string | Warning) => void,
-  setIsComplete: (isComplete: boolean) => void
+  setIsComplete: (isComplete: boolean) => void,
+
 }
 
 interface Timers {
@@ -28,7 +28,7 @@ interface Timers {
   weatherUpdate: NodeJS.Timeout | undefined
 }
 
-export default class User extends Component<Props, State> {
+class User extends Component<Props, State> {
   private savePath: string;
 
   private timers: Timers = {
@@ -43,11 +43,7 @@ export default class User extends Component<Props, State> {
     this.savePath = join(appPath, 'wallpaper.jpg');
 
     this.state = {
-      collection: [],
-      pictureIndex: 0,
       config: config.get(),
-      isLocked: true,
-      progress: 0,
       error: null,
       current: Pages.Home,
       weather: undefined,
@@ -56,10 +52,13 @@ export default class User extends Component<Props, State> {
   }
 
   async componentDidMount() {
-    const { handleReloadAfterSleep, switchWallpaper, getWallpaperCollection } = this;
+    const { handleReloadAfterSleep, getWallpaperCollection } = this;
     getWallpaperCollection();
 
-    ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => switchWallpaper(args, false));
+    ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => {
+      // switchWallpaper(args, false);
+      switchWallpaper(args);
+    });
 
     ipcRenderer.on('unlock-screen', () => {
       if (window.navigator.onLine) {
@@ -71,16 +70,16 @@ export default class User extends Component<Props, State> {
 
   componentDidUpdate(_prevProps: Props, prevState: State) {
     const {
-      config: cfg, pictureIndex, collection, isRequiredFilled,
+      config: stateConfig, pictureIndex, collection, isRequiredFilled,
     } = this.state;
 
-    if (cfg !== prevState.config && isRequiredFilled) {
-      this.getWallpaperCollection();
-    } else if (cfg !== prevState.config) {
+    if (stateConfig !== prevState.config && !isRequiredFilled) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         current: Pages.Settings,
       });
+    } else if (stateConfig !== prevState.config) {
+      this.getWallpaperCollection();
     } else if (pictureIndex !== prevState.pictureIndex) {
       this.setWallpaper(collection, pictureIndex);
     }
@@ -146,11 +145,10 @@ export default class User extends Component<Props, State> {
     const req = await fetchWeather(setError);
 
     this.timers.weatherUpdate = global.setInterval(async () => {
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const req = await fetchWeather(setError);
+      const timerReq = await fetchWeather(setError);
       const { weather } = state;
 
-      if (!areEqual.objects(req, weather)) {
+      if (!areEqual.objects(timerReq, weather)) {
         getWallpaperCollection();
       }
     }, 1000 * 3600);
@@ -178,14 +176,11 @@ export default class User extends Component<Props, State> {
     }
 
     const {
-      savePath, switchWallpaper, setTimer, setError,
+      savePath, setTimer, setError,
     } = this;
     const url = collection[index].srcMain;
-    const { setWarning } = this.props;
 
     wallpaper.download(url, savePath, {
-      setWarning,
-      handleLargeFiles: switchWallpaper,
       setTimer,
       setError,
     });
@@ -196,29 +191,9 @@ export default class User extends Component<Props, State> {
     const { timer } = cfg;
 
     if (timer) {
-      this.timers.wallpaper = global.setTimeout(() => this.switchWallpaper(true, false), timer);
-    }
-  }
-
-  switchWallpaper = (index: number | boolean, shouldForceSwitch: boolean): void => {
-    const { collection, isLocked, pictureIndex } = this.state;
-    const { setWarning } = this.props;
-
-    if (isLocked && !shouldForceSwitch) {
-      setWarning('Please wait until the previous picture is downloaded');
-    } else {
-      let validated = pictureIndex;
-
-      if (typeof index === 'number') validated = index;
-      else if (typeof index === 'boolean') validated = index ? pictureIndex + 1 : pictureIndex - 1;
-
-      if (validated >= collection.length) validated = 0;
-      else if (validated < 0) validated = collection.length - 1;
-
-      this.setState({
-        pictureIndex: validated,
-        isLocked: true,
-      });
+      this.timers.wallpaper = global.setTimeout(
+        () => switchWallpaper(true), timer,
+      );
     }
   }
 
@@ -235,27 +210,20 @@ export default class User extends Component<Props, State> {
     return result;
   });
 
-  changePage = (name: Pages): void => {
-    this.setState({
-      current: name,
-    });
-  }
-
-  updateProgress = (progress: number): void => {
-    const { isLocked } = this.state;
-
-    this.setState({
-      progress,
-      isLocked: progress === 0 ? false : isLocked,
-    });
-  }
-
   updateConfig = (cfg: Config, isFilled?: boolean): void => {
     const { isRequiredFilled } = this.state;
 
     this.setState({
       config: cfg,
       isRequiredFilled: isFilled || isRequiredFilled,
+    });
+  }
+
+  // default state managers
+
+  changePage = (name: Pages): void => {
+    this.setState({
+      current: name,
     });
   }
 
@@ -267,11 +235,11 @@ export default class User extends Component<Props, State> {
 
   render() {
     const {
-      changePage, switchWallpaper, updateConfig, state, props,
+      changePage, updateConfig, state, props,
     } = this;
-    const { setWarning, setIsComplete } = props;
+    const { setIsComplete } = props;
     const {
-      error, current, collection, pictureIndex, isLocked, progress, config: cfg,
+      error, current, collection, pictureIndex, isLocked, config: stateConfig,
     } = state;
 
     return (
@@ -285,19 +253,15 @@ export default class User extends Component<Props, State> {
           ? <Error code={error} />
           : (
             <Router
-              setWarning={setWarning}
               setIsComplete={setIsComplete}
-              switchWallpaper={switchWallpaper}
               updateConfig={updateConfig}
               current={current}
-              collection={collection}
-              pictureIndex={pictureIndex}
-              isLocked={isLocked}
-              progress={progress}
-              config={cfg}
+              config={stateConfig}
             />
           )}
       </div>
     );
   }
 }
+
+export default User;

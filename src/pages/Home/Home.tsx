@@ -1,39 +1,43 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { Picture } from '@interfaces/UserState';
 import AspectRatio from '@/AspectRatio/AspectRatio';
 import ProgressBar from '@/ProgressBar/ProgressBar';
 import { Arrows } from '@/Arrows/Arrows';
 import { Link } from '@/Links/Links';
 import './Home.scss';
+import { AppDispatch, RootState } from '@app/store';
+import { decrementIndex, incrementIndex } from '@/User/slices/wallpaperSlice';
+import { connect } from 'react-redux';
 
-interface Props {
-  picture: Picture,
-  isLocked: boolean,
-  pictureIndex: number,
-  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void
+interface Handlers {
+  setNextWallpaper: () => void,
+  setPrevWallpaper: () => void
 }
 
-interface InnerProps {
+interface Props extends Handlers {
+  picture: Picture | undefined,
+  isDownloadAllowed: boolean,
+}
+
+interface InnerProps extends Handlers {
   src: string,
-  isLocked: boolean,
+  isDownloadAllowed: boolean,
   href: string,
   Content: () => JSX.Element,
-  handleNextWallpaper: () => void,
-  handlePrevWallpaper: () => void
 }
 
 const InnerHome: FC<InnerProps> = ({
-  src, handleNextWallpaper, handlePrevWallpaper, isLocked, href, Content,
+  src, setNextWallpaper, setPrevWallpaper, isDownloadAllowed, href, Content,
 }: InnerProps) => (
   <div className="page home">
     <Arrows
-      handleForwardClick={handleNextWallpaper}
-      handleBackClick={handlePrevWallpaper}
+      handleForwardClick={setNextWallpaper}
+      handleBackClick={setPrevWallpaper}
     />
     <AspectRatio src={src} />
 
     <div className="wrapper">
-      {isLocked && <ProgressBar />}
+      {!isDownloadAllowed && <ProgressBar />}
       <Link href={href} Content={Content} />
     </div>
   </div>
@@ -53,30 +57,34 @@ const Author = (photographer: string) => (
 );
 
 const Home: FC<Props> = ({
-  picture, isLocked, switchWallpaper, pictureIndex,
+  picture, isDownloadAllowed, setNextWallpaper, setPrevWallpaper,
 }: Props) => {
-  const { photographer, srcMain, photographerUrl } = picture;
+  if (picture) {
+    const { photographer, srcMain, photographerUrl } = picture;
 
-  const handleNextWallpaper = useCallback(
-    () => switchWallpaper(pictureIndex + 1, false),
-    [pictureIndex],
-  );
+    return (
+      <InnerHome
+        src={srcMain}
+        isDownloadAllowed={isDownloadAllowed}
+        href={photographerUrl}
+        Content={() => Author(photographer)}
+        setNextWallpaper={setNextWallpaper}
+        setPrevWallpaper={setPrevWallpaper}
+      />
+    );
+  }
 
-  const handlePrevWallpaper = useCallback(
-    () => switchWallpaper(pictureIndex - 1, false),
-    [pictureIndex],
-  );
-
-  return (
-    <InnerHome
-      src={srcMain}
-      isLocked={isLocked}
-      href={photographerUrl}
-      Content={() => Author(photographer)}
-      handleNextWallpaper={handleNextWallpaper}
-      handlePrevWallpaper={handlePrevWallpaper}
-    />
-  );
+  return <></>;
 };
 
-export default Home;
+const mapStateToProps = ({ wallpaper, general }: RootState) => ({
+  picture: wallpaper.collection[wallpaper.pictureIndex] || undefined,
+  isDownloadAllowed: general.isDownloadAllowed,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setNextWallpaper: () => dispatch(incrementIndex()),
+  setPrevWallpaper: () => dispatch(decrementIndex()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

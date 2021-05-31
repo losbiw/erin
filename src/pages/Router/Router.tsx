@@ -9,7 +9,6 @@ import Info from '../Info/Info';
 import './Router.scss';
 
 interface Props extends SharedState {
-  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
   setWarning: (warning: string | Warning) => void,
   setIsComplete: (isComplete: boolean) => void,
   updateConfig: (config: Config, isRequiredFilled?: boolean) => void
@@ -17,29 +16,11 @@ interface Props extends SharedState {
 
 const Router: FC<Props> = (props: Props) => {
   const {
-    switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config,
+    setIsComplete, current, config,
   } = props;
 
-  if (current === Pages.Home && collection.length > 0) {
-    return (
-      <Home
-        picture={collection[pictureIndex]}
-        isLocked={isLocked}
-        pictureIndex={pictureIndex}
-        switchWallpaper={switchWallpaper}
-      />
-    );
-  }
-  if (current === Pages.Picker) {
-    return (
-      <Picker
-        pictureIndex={pictureIndex}
-        collection={collection}
-        isLocked={isLocked}
-        switchWallpaper={switchWallpaper}
-      />
-    );
-  }
+  if (current === Pages.Home) return <Home />;
+  if (current === Pages.Picker) return <Picker />;
   if (current === Pages.Settings) {
     const { setWarning, updateConfig } = props;
 
