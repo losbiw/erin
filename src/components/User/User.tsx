@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import config from '@modules/config';
+import cfg from '@modules/config';
 import wallpaper from '@modules/wallpaper/wallpaper';
 import time from '@modules/time';
 import weatherCodes from '@modules/weather';
@@ -9,18 +9,27 @@ import './User.scss';
 import {
   Config, Mode, Quality,
 } from '@interfaces/Config';
-import { State, Picture, Pages } from '@interfaces/UserState';
+import {
+  State, Picture, Pages, WallpaperState,
+} from '@interfaces/UserState';
 import Error from '@pages/Error/Error';
 import Router from '@pages/Router/Router';
 import Nav from '@/Nav/Nav';
+import { connect } from 'react-redux';
+import { AppDispatch, RootState } from '@app/store';
+import { ErrorCodes } from '@pages/Error/Codes';
 import switchWallpaper from './redux-helpers/switchWallpaper';
+import { setIndexByNumber } from './slices/wallpaperSlice';
+import resetErrorAndSetIndex from './redux-helpers/resetErrorAndSetIndex';
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
 
-interface Props {
+interface Props extends WallpaperState {
+  config: Config,
+  error: ErrorCodes | null,
   setIsComplete: (isComplete: boolean) => void,
-
+  setIndex: (index: number) => void,
 }
 
 interface Timers {
@@ -39,12 +48,10 @@ class User extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const appPath = config.getAppPath();
+    const appPath = cfg.getAppPath();
     this.savePath = join(appPath, 'wallpaper.jpg');
 
     this.state = {
-      config: config.get(),
-      error: null,
       current: Pages.Home,
       weather: undefined,
       isRequiredFilled: true,
@@ -56,7 +63,6 @@ class User extends Component<Props, State> {
     getWallpaperCollection();
 
     ipcRenderer.on('switch-wallpaper', (_e: Electron.IpcRendererEvent, args: boolean) => {
-      // switchWallpaper(args, false);
       switchWallpaper(args);
     });
 
@@ -68,19 +74,20 @@ class User extends Component<Props, State> {
     window.addEventListener('online', handleReloadAfterSleep);
   }
 
-  componentDidUpdate(_prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const {
-      config: stateConfig, pictureIndex, collection, isRequiredFilled,
+      isRequiredFilled,
     } = this.state;
+    const { pictureIndex, collection, config } = this.props;
 
-    if (stateConfig !== prevState.config && !isRequiredFilled) {
+    if (config !== prevProps.config && !isRequiredFilled) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         current: Pages.Settings,
       });
-    } else if (stateConfig !== prevState.config) {
+    } else if (config !== prevProps.config) {
       this.getWallpaperCollection();
-    } else if (pictureIndex !== prevState.pictureIndex) {
+    } else if (pictureIndex !== prevProps.pictureIndex) {
       this.setWallpaper(collection, pictureIndex);
     }
   }
@@ -91,49 +98,23 @@ class User extends Component<Props, State> {
   }
 
   handleReloadAfterSleep = () => {
-    const { collection } = this.state;
+    const { collection } = this.props;
     const randomIndex = Math.round(Math.random() * (collection.length - 1));
 
-    this.setState({
-      error: null,
-      pictureIndex: randomIndex,
-    });
+    resetErrorAndSetIndex(randomIndex);
   }
 
   getWallpaperCollection = async (): Promise<void> => {
-    const {
-      sortPictures, getSearchQuery, setError, timers,
-    } = this;
-    const { config: cfg } = this.state;
-    const { keywords, quality, mode } = cfg;
+    const { getSearchQuery, timers } = this;
+    const { config } = this.props;
+    const { keywords, quality, mode } = config;
 
     if (timers.weatherUpdate) {
       clearInterval(timers.weatherUpdate);
     }
 
-    const query = await getSearchQuery(mode, keywords);
-    const fetchRes = await fetchPexels(query, setError);
-
-    if (!fetchRes) return;
-
-    if (fetchRes.length === 0) {
-      this.setState({
-        error: 404,
-        isLocked: false,
-      });
-
-      return;
-    }
-
-    const sorted = sortPictures(fetchRes, quality);
-    const randomIndex = Math.round(Math.random() * (sorted.length - 1));
-
-    this.setState({
-      collection: sorted,
-      pictureIndex: randomIndex,
-      error: null,
-      isLocked: true,
-    });
+    const queries = await getSearchQuery(mode, keywords);
+    fetchPexels(queries, quality);
   }
 
   getSearchQuery = async (mode: Mode, keywords: string[]): Promise<string[]> => {
@@ -141,11 +122,11 @@ class User extends Component<Props, State> {
       return keywords;
     }
 
-    const { getWallpaperCollection, setError, state } = this;
-    const req = await fetchWeather(setError);
+    const { getWallpaperCollection, state } = this;
+    const req = await fetchWeather();
 
     this.timers.weatherUpdate = global.setInterval(async () => {
-      const timerReq = await fetchWeather(setError);
+      const timerReq = await fetchWeather();
       const { weather } = state;
 
       if (!areEqual.objects(timerReq, weather)) {
@@ -175,20 +156,17 @@ class User extends Component<Props, State> {
       clearTimeout(this.timers.wallpaper);
     }
 
-    const {
-      savePath, setTimer, setError,
-    } = this;
+    const { savePath, setTimer } = this;
     const url = collection[index].srcMain;
 
     wallpaper.download(url, savePath, {
       setTimer,
-      setError,
     });
   }
 
   setTimer = (): void => {
-    const { config: cfg } = this.state;
-    const { timer } = cfg;
+    const { config } = this.props;
+    const { timer } = config;
 
     if (timer) {
       this.timers.wallpaper = global.setTimeout(
@@ -197,29 +175,14 @@ class User extends Component<Props, State> {
     }
   }
 
-  sortPictures = (pictures: any[], quality: Quality): Picture[] => pictures.map((picture) => {
-    const { src, photographer, photographer_url: photographerUrl } = picture;
-
-    const result: Picture = {
-      srcMain: src[quality],
-      srcPicker: src.large,
-      photographer,
-      photographerUrl,
-    };
-
-    return result;
-  });
-
-  updateConfig = (cfg: Config, isFilled?: boolean): void => {
+  updateConfig = (config: Config, isFilled?: boolean): void => {
     const { isRequiredFilled } = this.state;
 
     this.setState({
-      config: cfg,
+      config,
       isRequiredFilled: isFilled || isRequiredFilled,
     });
   }
-
-  // default state managers
 
   changePage = (name: Pages): void => {
     this.setState({
@@ -227,20 +190,12 @@ class User extends Component<Props, State> {
     });
   }
 
-  setError = (error: number): void => {
-    this.setState({
-      error,
-    });
-  }
-
   render() {
     const {
       changePage, updateConfig, state, props,
     } = this;
-    const { setIsComplete } = props;
-    const {
-      error, current, collection, pictureIndex, isLocked, config: stateConfig,
-    } = state;
+    const { setIsComplete, error } = props;
+    const { current } = state;
 
     return (
       <div className="user">
@@ -256,7 +211,6 @@ class User extends Component<Props, State> {
               setIsComplete={setIsComplete}
               updateConfig={updateConfig}
               current={current}
-              config={stateConfig}
             />
           )}
       </div>
@@ -264,4 +218,15 @@ class User extends Component<Props, State> {
   }
 }
 
-export default User;
+const mapStateToProps = ({ general, wallpaper }: RootState) => ({
+  config: general.config,
+  error: general.error,
+  collection: wallpaper.collection,
+  pictureIndex: wallpaper.pictureIndex,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setIndex: (index: number) => dispatch(setIndexByNumber(index)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

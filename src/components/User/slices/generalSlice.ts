@@ -1,9 +1,11 @@
 import config from '@modules/config';
-import { createSlice } from '@reduxjs/toolkit';
+import { ErrorCodes } from '@pages/Error/Codes';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReduxState as State } from '@interfaces/UserState';
 
 const initialState: State = {
   isDownloadAllowed: false,
+  error: null,
   config: config.get(),
 };
 
@@ -17,9 +19,17 @@ const generalSlice = createSlice({
     disallowDownload: (state: State) => {
       state.isDownloadAllowed = false;
     },
+    handleError: (state: State, action: PayloadAction<ErrorCodes | null>) => {
+      state.error = action.payload;
+    },
+    resetError: (state: State) => {
+      state.error = null;
+    },
   },
 });
 
-export const { allowDownload, disallowDownload } = generalSlice.actions;
+export const {
+  allowDownload, disallowDownload, handleError, resetError,
+} = generalSlice.actions;
 
 export default generalSlice.reducer;

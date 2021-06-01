@@ -26,4 +26,6 @@ const codes: Codes = {
   },
 };
 
+export type ErrorCodes = keyof typeof codes;
+
 export default codes;

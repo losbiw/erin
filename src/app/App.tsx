@@ -38,7 +38,7 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     const { isFirstTime } = cfg;
 
     if (isFirstTime || typeof isFirstTime === 'undefined') {
-      const location = await fetchGeocoding(() => { });
+      const location = await fetchGeocoding();
 
       await fetch('https://erin-downloads.herokuapp.com/api/increase', {
         method: 'POST',
@@ -75,12 +75,7 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
       <Controls />
 
       { isComplete && isRequiredFilled
-        ? (
-          <User
-            setWarning={() => { }} // TODO
-            setIsComplete={setIsComplete}
-          />
-        )
+        ? <User setIsComplete={setIsComplete} />
         : (
           <Setup
             isComplete={isComplete}

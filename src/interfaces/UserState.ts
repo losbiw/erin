@@ -1,6 +1,6 @@
 import { Config } from '@interfaces/Config';
 import Weather from '@interfaces/Weather';
-import ErrorCodes from '@pages/Error/Codes';
+import { ErrorCodes } from '@pages/Error/Codes';
 
 export interface WallpaperState {
   collection: Picture[],
@@ -8,21 +8,20 @@ export interface WallpaperState {
 }
 
 export interface ReduxState {
+  error: ErrorCodes | null,
   isDownloadAllowed: boolean,
   config: Config,
 }
 
-export interface SharedState extends ReduxState {
+export interface SharedState {
   current: Pages,
 }
 
 export interface State extends SharedState {
-  error: keyof typeof ErrorCodes | null,
   weather: Weather | undefined,
   isRequiredFilled: boolean
 }
 
-// eslint-disable-next-line no-shadow
 export enum Pages {
   Home = 'home',
   Picker = 'picker',

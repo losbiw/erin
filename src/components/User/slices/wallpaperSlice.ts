@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WallpaperState as State } from '@interfaces/UserState';
+import { Picture, WallpaperState as State } from '@interfaces/UserState';
 
 const initialState: State = {
   pictureIndex: 0,
@@ -27,9 +27,14 @@ const wallpaperSlice = createSlice({
     setIndexByNumber: (state: State, action: PayloadAction<number>) => {
       state.pictureIndex = action.payload;
     },
+    pushToCollection: (state: State, action: PayloadAction<Picture[]>) => {
+      state.collection.push(...action.payload);
+    },
   },
 });
 
-export const { incrementIndex, decrementIndex, setIndexByNumber } = wallpaperSlice.actions;
+export const {
+  incrementIndex, decrementIndex, setIndexByNumber, pushToCollection,
+} = wallpaperSlice.actions;
 
 export default wallpaperSlice.reducer;

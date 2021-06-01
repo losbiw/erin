@@ -7,6 +7,7 @@ import { incrementIndex } from '@/User/slices/wallpaperSlice';
 import { addWarning } from '@/Warning/warningSlice';
 import Warning from '@interfaces/Warning';
 import resetProgressAndAllowDownload from '@/User/redux-helpers/resetProgressAndAllowDownload';
+import handleError from '@redux/handleError';
 import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
@@ -24,7 +25,6 @@ const execFile = promisify(_execFile);
 
 interface Handlers {
   setTimer: () => void,
-  setError: (error: number) => void,
 }
 
 const getFallbackPath = (initialPath: string): string => {
@@ -37,8 +37,6 @@ const getFallbackPath = (initialPath: string): string => {
 
 const set = async (img: string, macPath: string) => {
   const imgPath = path.resolve(img);
-
-  if (typeof imgPath !== 'string') throw new TypeError('Expected a string');
   const os = OS.define();
 
   if (os === 'win32') {
@@ -69,9 +67,7 @@ const skipLargeFile = () => store.dispatch(incrementIndex());
 const download = (url: string, initialPath: string, handlers: Handlers): void => {
   const os = OS.define();
 
-  const {
-    setTimer, setError,
-  } = handlers;
+  const { setTimer } = handlers;
 
   if (isBlacklisted(url, os)) {
     setWarning("The image might crash your desktop. It's been switched to the next one automatically");
@@ -117,7 +113,7 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
 
   https.get(url, callback)
     .on('error', () => {
-      setError(502);
+      handleError(502);
     });
 };
 
