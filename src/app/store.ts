@@ -4,6 +4,7 @@ import themeSlice from '@/ThemeToggle/themeSlice';
 import wallpaperSlice from '@/User/slices/wallpaperSlice';
 import progressSlice from '@/ProgressBar/progressSlice';
 import generalSlice from '@/User/slices/generalSlice';
+import settingsSlice from '@/Form/settingsSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     progress: progressSlice,
     wallpaper: wallpaperSlice,
     general: generalSlice,
+    settings: settingsSlice,
   },
 });
 

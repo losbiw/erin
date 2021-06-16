@@ -18,9 +18,9 @@ import Nav from '@/Nav/Nav';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
 import { ErrorCodes } from '@pages/Error/Codes';
-import switchWallpaper from './redux-helpers/switchWallpaper';
+import switchWallpaper from '@redux/helpers/switchWallpaper';
+import resetErrorAndSetIndex from '@redux/helpers/resetErrorAndSetIndex';
 import { setIndexByNumber } from './slices/wallpaperSlice';
-import resetErrorAndSetIndex from './redux-helpers/resetErrorAndSetIndex';
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -74,7 +74,7 @@ class User extends Component<Props, State> {
     window.addEventListener('online', handleReloadAfterSleep);
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: Props) {
     const {
       isRequiredFilled,
     } = this.state;
@@ -175,14 +175,14 @@ class User extends Component<Props, State> {
     }
   }
 
-  updateConfig = (config: Config, isFilled?: boolean): void => {
-    const { isRequiredFilled } = this.state;
+  // updateConfig = (config: Config, isFilled?: boolean): void => {
+  //   const { isRequiredFilled } = this.state;
 
-    this.setState({
-      config,
-      isRequiredFilled: isFilled || isRequiredFilled,
-    });
-  }
+  //   this.setState({
+  //     config,
+  //     isRequiredFilled: isFilled || isRequiredFilled,
+  //   });
+  // }
 
   changePage = (name: Pages): void => {
     this.setState({
@@ -192,7 +192,7 @@ class User extends Component<Props, State> {
 
   render() {
     const {
-      changePage, updateConfig, state, props,
+      changePage, state, props,
     } = this;
     const { setIsComplete, error } = props;
     const { current } = state;
@@ -204,7 +204,7 @@ class User extends Component<Props, State> {
           changePage={changePage}
         />
 
-        { error && (current === Pages.Home || current === Pages.Picker)
+        {/* { error && (current === Pages.Home || current === Pages.Picker)
           ? <Error code={error} />
           : (
             <Router
@@ -212,17 +212,17 @@ class User extends Component<Props, State> {
               updateConfig={updateConfig}
               current={current}
             />
-          )}
+          )} */}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ general, wallpaper }: RootState) => ({
+const mapStateToProps = ({ general, wallpaper: wallpaperState }: RootState) => ({
   config: general.config,
   error: general.error,
-  collection: wallpaper.collection,
-  pictureIndex: wallpaper.pictureIndex,
+  collection: wallpaperState.collection,
+  pictureIndex: wallpaperState.pictureIndex,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

@@ -1,6 +1,6 @@
 import store from '@app/store';
-import { resetError } from '../slices/generalSlice';
-import { setIndexByNumber } from '../slices/wallpaperSlice';
+import { resetError } from '@/User/slices/generalSlice';
+import { setIndexByNumber } from '@/User/slices/wallpaperSlice';
 
 const resetErrorAndSetIndex = (index: number) => {
   const { dispatch } = store;

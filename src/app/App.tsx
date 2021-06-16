@@ -10,7 +10,7 @@ import logo from '@logo/erin.png';
 import Controls from '@/Controls/Controls';
 import Warning from '@/Warning/Warning';
 import User from '@/User/User';
-import Setup from '@/Setup/Setup';
+import Setup from '@pages/Setup/Setup';
 import Update from '@/Update/Update';
 import { connect } from 'react-redux';
 import { closeWarning as closeWarningAction } from '@/Warning/warningSlice';
@@ -31,8 +31,8 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
   const cfg = config.get();
 
   const [isUpdateAvailable, setUpdate] = useState(false);
-  const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
-  const [isComplete, setIsComplete] = useState(cfg.isComplete);
+  // const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
+  const [isSetupComplete, completeSetup] = useState(cfg.isSetupComplete);
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
@@ -74,7 +74,7 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     <div className={`theme ${theme}`}>
       <Controls />
 
-      { isComplete && isRequiredFilled
+      {/* { isComplete && isRequiredFilled
         ? <User setIsComplete={setIsComplete} />
         : (
           <Setup
@@ -82,17 +82,13 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
             setIsComplete={setIsComplete}
             setIsRequiredFilled={setIsRequiredFilled}
           />
-        )}
+        )} */}
+
+      <Setup />
 
       { isUpdateAvailable && <Update closeUpdatePrompt={() => setUpdate(false)} />}
 
-      {warning && (
-        <Warning
-          message={typeof warning === 'string' ? warning : warning.message}
-          Icon={typeof warning !== 'string' ? warning.Icon : undefined}
-          closeWarning={closeWarning}
-        />
-      )}
+      { warning && <Warning warning={warning} closeWarning={closeWarning} /> }
     </div>
   );
 };

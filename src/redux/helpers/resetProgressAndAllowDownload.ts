@@ -1,6 +1,6 @@
 import { resetProgress } from '@/ProgressBar/progressSlice';
 import store from '@app/store';
-import { allowDownload } from '../slices/generalSlice';
+import { allowDownload } from '@/User/slices/generalSlice';
 
 const resetProgressAndAllowDownload = () => {
   const { dispatch } = store;

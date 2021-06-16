@@ -1,6 +1,6 @@
 import { addWarning } from '@/Warning/warningSlice';
 import store from '@app/store';
-import { decrementIndex, incrementIndex } from '../slices/wallpaperSlice';
+import { decrementIndex, incrementIndex } from '@/User/slices/wallpaperSlice';
 
 const switchWallpaper = (shouldIncrement: boolean) => {
   const { getState, dispatch } = store;

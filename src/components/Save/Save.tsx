@@ -28,7 +28,7 @@ const Save: FC<Props> = (props: Props) => {
   const handleClick = () => {
     const { configData, setIsComplete } = props;
 
-    configData.isComplete = true;
+    configData.isSetupComplete = true;
     config.set(configData);
 
     setIsComplete(true);

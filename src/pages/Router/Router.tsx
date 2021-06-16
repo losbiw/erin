@@ -10,7 +10,7 @@ import './Router.scss';
 
 interface Props extends SharedState {
   setIsComplete: (isComplete: boolean) => void,
-  updateConfig: (config: Config, isRequiredFilled?: boolean) => void
+  // updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
 const Router: FC<Props> = (props: Props) => {
@@ -20,16 +20,16 @@ const Router: FC<Props> = (props: Props) => {
 
   if (current === Pages.Home) return <Home />;
   if (current === Pages.Picker) return <Picker />;
-  if (current === Pages.Settings) {
-    const { updateConfig } = props;
+  // if (current === Pages.Settings) {
+  //   const { updateConfig } = props;
 
-    return (
-      <Settings
-        setIsComplete={setIsComplete}
-        updateConfig={updateConfig}
-      />
-    );
-  }
+  //   return (
+  //     <Settings
+  //       setIsComplete={setIsComplete}
+  //       updateConfig={updateConfig}
+  //     />
+  //   );
+  // }
   if (current === Pages.Info) return <Info />;
 
   return <></>;

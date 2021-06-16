@@ -10,7 +10,7 @@ describe('Warning component', () => {
 
     const { getByTestId } = render(
       <Warning
-        message="Test warning"
+        warning="Test warning"
         closeWarning={handleClose}
       />,
     );

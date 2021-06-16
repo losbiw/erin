@@ -5,17 +5,18 @@ import Icons from './Icons';
 
 import './Warning.scss';
 
-interface Props extends Partial<WarningInterface> {
-  message: string,
+interface Props {
+  warning: WarningInterface | string,
   closeWarning: () => void
 }
 
-const Warning: FC<Props> = ({ message, Icon, closeWarning }: Props) => {
-  const IconFC = Icon ? Icons[Icon] : General.Warning;
+const Warning: FC<Props> = ({ warning, closeWarning }: Props) => {
+  const IconFC = typeof warning !== 'string' ? Icons[warning.Icon] : General.Warning;
+
   return (
     <div className="warning">
       <IconFC />
-      <p className="message">{message}</p>
+      <p className="message">{typeof warning === 'string' ? warning : warning.message}</p>
 
       <button
         type="button"

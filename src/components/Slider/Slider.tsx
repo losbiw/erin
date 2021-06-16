@@ -1,24 +1,28 @@
 import React, { FC, useEffect, useState } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
-import './Slider.scss';
+import { AppDispatch } from '@app/store';
+import { addWarning as addWarningAction } from '@/Warning/warningSlice';
+import { connect } from 'react-redux';
 import { Config, ConfigUpdate } from '@interfaces/Config';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Form from '../Form/Form';
 import { items } from './items';
 
+import './Slider.scss';
+
 interface Props {
   changeSlide: (name: Settings) => void,
-  setWarning: (warningMsg: string | Warning) => void,
-  setIsComplete: (isComplete: boolean) => void,
-  setIsRequiredFilled: (isFilled: boolean) => void,
+  addWarning: (warningMsg: string | Warning) => void,
+  // setIsComplete: (isComplete: boolean) => void,
+  // setIsRequiredFilled: (isFilled: boolean) => void,
   activeIndex: number,
-  isComplete: boolean,
+  // isComplete: boolean,
 }
 
 const Slider: FC<Props> = ({
-  isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex,
+  isComplete, addWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex,
 }: Props) => {
   const [stateConfig, updateConfig] = useState(config.get());
 
@@ -28,12 +32,12 @@ const Slider: FC<Props> = ({
 
       if (settingsWarning?.value) {
         const { value, name } = settingsWarning;
-        config.set({ isComplete: false });
+        config.set({ isSetupComplete: false });
 
         changeSlide(name as Settings);
 
         setIsComplete(false);
-        setWarning(value);
+        addWarning(value);
       } else {
         setIsRequiredFilled(true);
         setIsComplete(true);
@@ -67,7 +71,7 @@ const Slider: FC<Props> = ({
             items={items}
             isSetup
             activeIndex={activeIndex}
-            setWarning={setWarning}
+            setWarning={addWarning}
             setIsComplete={setIsComplete}
             updateSettingsState={updateSlideState}
           />
@@ -79,4 +83,8 @@ const Slider: FC<Props> = ({
   return <form className="settings" />;
 };
 
-export default Slider;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  addWarning: (warningValue: string | Warning) => dispatch(addWarningAction(warningValue)),
+});
+
+export default connect(null, mapDispatchToProps)(Slider);

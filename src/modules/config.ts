@@ -14,11 +14,11 @@ const getDefaultOptions = (): Config => ({
   keywords: ['mountains'],
   timer: 60000,
   quality: Quality.High,
-  startup: true,
+  shouldStartup: true,
   theme: isDarkMode() ? Theme.Dark : Theme.Light,
   privacy: false,
   isFirstTime: true,
-  isComplete: false,
+  isSetupComplete: false,
 });
 
 const getAppPath = (): string => ipcRenderer.sendSync('get-app-path') as string;
@@ -63,7 +63,7 @@ const set = (options: ConfigUpdate) => {
   const updated = { ...cfg, ...options };
 
   const json = JSON.stringify(updated);
-  startup.set(options.startup as boolean);
+  startup.set(options.shouldStartup as boolean);
 
   writeFileSync(cfgPath, json, 'utf8');
 };

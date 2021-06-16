@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import capitalizeFirstLetter from '@helpers/convert';
 import warning from '@modules/warning';
 import {
   Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,
 } from '@interfaces/Config';
 import { connect } from 'react-redux';
-import { RootState } from '@app/store';
+import { AppDispatch, RootState } from '@app/store';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Icons from '@icons/Settings';
@@ -39,37 +39,22 @@ interface Props {
 
 const Form: FC<Props> = (props: Props) => {
   const {
-    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete, updateSettingsState,
+    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete,
   } = props;
   const {
-    privacy, mode, timer, keywords, startup, quality,
+    privacy, mode, timer, keywords, shouldStartup: startup, quality,
   } = config;
 
-  const updateState = (update: ConfigUpdate) => {
-    const clone = { ...update };
-
+  useEffect(() => {
     if (!update.mode) clone.mode = config.mode;
     const settingsWarning = warning.match(clone, false);
 
     setWarning(settingsWarning?.value || '');
-    updateSettingsState(update);
-  };
-
-  const privacyHandler = () => updateState({ privacy: !privacy });
-  const modeHandler = (mode: ModeEnum) => updateState({ mode });
-  const keywordsHandler = (keywords: string[]) => updateState({ keywords });
-  const timerHandler = (timer: number) => updateState({ timer });
-  const startupHandler = () => updateState({ startup: !startup });
-  const qualityHandler = (quality: QualityInterface) => updateState({ quality });
+  });
 
   const renderSettingsItem = (name: Settings, isActive: boolean) => {
     if (name === Settings.Privacy) {
-      return (
-        <Privacy
-          isAccepted={privacy}
-          acceptPolicy={privacyHandler}
-        />
-      );
+      return <Privacy isAccepted={privacy} />;
     }
     if (name === Settings.Mode) {
       return (
@@ -83,10 +68,7 @@ const Form: FC<Props> = (props: Props) => {
       return (
         <Keywords
           keywords={[...keywords]}
-          isActive={isActive}
-          isSetup={isSetup}
-          changeKeywords={keywordsHandler}
-          setWarning={setWarning}
+          isFocused={isActive}
         />
       );
     }
@@ -171,6 +153,13 @@ Form.defaultProps = {
   activeIndex: 0,
 } as Props;
 
-const mapStateToProps = (state: RootState) => ({ theme: state.theme });
+const mapStateToProps = (state: RootState) => ({
+  theme: state.theme,
+  config: state.settings.tempConfig,
+});
 
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

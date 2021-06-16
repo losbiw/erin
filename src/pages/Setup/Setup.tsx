@@ -1,22 +1,15 @@
 import React, { FC, useState } from 'react';
-import { Theme } from '@interfaces/Config';
 import Settings from '@interfaces/Settings';
-import Slider from '../Slider/Slider';
-import Carousel from '../Carousel/Carousel';
-import { Arrows } from '../Arrows/Arrows';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import { items } from '../Slider/items';
+import Slider from '@/Slider/Slider';
+import Carousel from '@/Carousel/Carousel';
+import { Arrows } from '@/Arrows/Arrows';
+import ThemeToggle from '@/ThemeToggle/ThemeToggle';
+import { items } from '@/Slider/items';
 
 import './Setup.scss';
-import '@pages/Settings/Settings.scss';
+import '../Settings/Settings.scss';
 
-interface Props {
-  isComplete: boolean,
-  setIsComplete: (isComplete: boolean) => void,
-  setIsRequiredFilled: (isFilled: boolean) => void,
-}
-
-const Setup: FC<Props> = (props: Props) => {
+const Setup: FC = () => {
   const [slideIndex, changeSlide] = useState(0);
   const { length } = items;
 
@@ -37,10 +30,6 @@ const Setup: FC<Props> = (props: Props) => {
   const handlePrevSlide = () => handleScroll(false);
   const handleNextSlide = () => handleScroll(true);
 
-  const {
-    isComplete, setIsComplete, setIsRequiredFilled,
-  } = props;
-
   return (
     <div className="setup">
       <ThemeToggle />
@@ -52,11 +41,10 @@ const Setup: FC<Props> = (props: Props) => {
 
       <Slider
         changeSlide={changeSlideByName}
-        setWarning={() => {}} // TODO
         activeIndex={slideIndex}
-        isComplete={isComplete}
-        setIsComplete={setIsComplete}
-        setIsRequiredFilled={setIsRequiredFilled}
+        // isComplete={isComplete}
+        // setIsComplete={setIsComplete}
+        // setIsRequiredFilled={setIsRequiredFilled}
       />
 
       <Carousel
