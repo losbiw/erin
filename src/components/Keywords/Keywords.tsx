@@ -37,23 +37,19 @@ interface InnerProps extends InputProps, ContainerProps {
   isInput: boolean
 }
 
-const KeywordsInput: FC<InputProps> = (props: InputProps) => {
-  const { isFocused, handleKeyDown } = props;
-
-  return (
-    <input
-      type="text"
-      className="keyword-input"
-      name="keywords"
-      ref={(ref) => {
-        if (isFocused) ref?.focus({ preventScroll: true });
-      }}
-      placeholder="Type something and press enter"
-      maxLength={15}
-      onKeyDown={handleKeyDown}
-    />
-  );
-};
+const KeywordsInput: FC<InputProps> = ({ isFocused, handleKeyDown }: InputProps) => (
+  <input
+    type="text"
+    className="keyword-input"
+    name="keywords"
+    ref={(ref) => {
+      if (isFocused) ref?.focus({ preventScroll: true });
+    }}
+    placeholder="Type something and press enter"
+    maxLength={15}
+    onKeyDown={handleKeyDown}
+  />
+);
 
 const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
   <div className="keyword" key={keyword}>
@@ -69,19 +65,18 @@ const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
   </div>
 );
 
-const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
-  const { keywords, handleClick, deleteKeyword } = props;
-
-  return (
-    <div className="keywords-container">
-      <div
-        className="click background"
-        role="presentation"
-        onClick={handleClick}
-      >
-        <div className="transparent" />
-      </div>
-      {
+const KeywordsContainer: FC<ContainerProps> = ({
+  keywords, handleClick, deleteKeyword,
+}: ContainerProps) => (
+  <div className="keywords-container">
+    <div
+      className="click background"
+      role="presentation"
+      onClick={handleClick}
+    >
+      <div className="transparent" />
+    </div>
+    {
         keywords.map((keyword) => {
           const handleKeywordClick = () => deleteKeyword(keyword);
 
@@ -94,34 +89,27 @@ const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
           );
         })
       }
-    </div>
-  );
-};
+  </div>
+);
 
-const InnerKeywords: FC<InnerProps> = (props: InnerProps) => {
-  const {
-    isInput, isFocused, deleteKeyword, handleKeyDown, handleClick, keywords,
-  } = props;
+const InnerKeywords: FC<InnerProps> = ({
+  isInput, isFocused, deleteKeyword, handleKeyDown, handleClick, keywords,
+}: InnerProps) => (isInput ? (
+  <KeywordsInput
+    isFocused={isFocused}
+    handleKeyDown={handleKeyDown}
+  />
+) : (
+  <KeywordsContainer
+    handleClick={handleClick}
+    deleteKeyword={deleteKeyword}
+    keywords={keywords}
+  />
+));
 
-  return isInput ? (
-    <KeywordsInput
-      isFocused={isFocused}
-      handleKeyDown={handleKeyDown}
-    />
-  ) : (
-    <KeywordsContainer
-      handleClick={handleClick}
-      deleteKeyword={deleteKeyword}
-      keywords={keywords}
-    />
-  );
-};
-
-const Keywords: FC<Props> = memo((props: Props) => {
-  const {
-    keywords, addKeyword, deleteKeyword, addWarning, isFocused,
-  } = props;
-
+const Keywords: FC<Props> = memo(({
+  keywords, addKeyword, deleteKeyword, addWarning, isFocused,
+}: Props) => {
   const [isInput, setInput] = useState(keywords.length === 0);
 
   useEffect(() => {

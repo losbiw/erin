@@ -6,9 +6,7 @@ interface Props {
   code: number
 }
 
-const Error: FC<Props> = (props: Props) => {
-  const { code } = props;
-
+const Error: FC<Props> = ({ code }: Props) => {
   const codeSpread = [...code.toString(10)];
 
   return (

@@ -17,10 +17,9 @@ interface Props {
   setWarning: (warningMsg: string | Warning) => void
 }
 
-const Settings: FC<Props> = memo((props: Props) => {
-  const {
-    updateConfig, config: propsConfig, setWarning, setIsComplete,
-  } = props;
+const Settings: FC<Props> = memo(({
+  updateConfig, config: propsConfig, setWarning, setIsComplete,
+}: Props) => {
   const [stateConfig, updateStateConfig] = useState(propsConfig);
   const configRef = useRef<Config>(propsConfig);
 

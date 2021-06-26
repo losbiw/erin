@@ -24,10 +24,10 @@ const SaveButton: FC<ButtonProps> = ({ handleClick }: ButtonProps) => (
   </div>
 );
 
-const Save: FC<Props> = (props: Props) => {
+const Save: FC<Props> = ({
+  configData, setIsComplete,
+}: Props) => {
   const handleClick = () => {
-    const { configData, setIsComplete } = props;
-
     configData.isSetupComplete = true;
     config.set(configData);
 

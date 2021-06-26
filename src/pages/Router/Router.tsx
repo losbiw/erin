@@ -13,11 +13,7 @@ interface Props extends SharedState {
   // updateConfig: (config: Config, isRequiredFilled?: boolean) => void
 }
 
-const Router: FC<Props> = (props: Props) => {
-  const {
-    setIsComplete, current,
-  } = props;
-
+const Router: FC<Props> = ({ setIsComplete, current }: Props) => {
   if (current === Pages.Home) return <Home />;
   if (current === Pages.Picker) return <Picker />;
   // if (current === Pages.Settings) {

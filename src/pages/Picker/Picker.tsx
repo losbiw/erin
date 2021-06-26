@@ -83,13 +83,11 @@ const InnerPicker: FC<InnerProps> = ({
   </div>
 );
 
-const Picker: FC<Props> = memo((props: Props) => {
+const Picker: FC<Props> = memo(({
+  isDownloadAllowed, setWallpaperByIndex, pictureIndex, collection,
+}: Props) => {
   const [startIndex, setStartIndex] = useState(0);
   const [stateCollection, setCollection] = useState<PickerPicture[]>([]);
-
-  const {
-    isDownloadAllowed, setWallpaperByIndex, pictureIndex, collection,
-  } = props;
 
   const findClosestDividible = (number: number, divider: number): number => {
     if (number) return number - (number % divider);
