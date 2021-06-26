@@ -3,16 +3,20 @@ import Warning from '@interfaces/Warning';
 import capitalizeFirstLetter from '@helpers/convert';
 import * as milliseconds from '@modules/milliseconds';
 import './Timer.scss';
+import { AppDispatch } from '@app/store';
+import { connect } from 'react-redux';
+import { addWarning as addWarningAction } from '@/Warning/warningSlice';
+import { setTimeoutDelay as setTimeoutDelayAction } from '@/Form/settingsSlice';
 
 interface Props {
   timeInMs: number,
   isActive: boolean,
-  updateTimeout: (time: number) => void,
-  setWarning: (warningMsg: string | Warning) => void,
+  setTimeoutDelay: (time: number) => void,
+  addWarning: (warningMsg: string | Warning) => void,
 }
 
 const Timer: FC<Props> = ({
-  timeInMs, updateTimeout, isActive, setWarning,
+  timeInMs, setTimeoutDelay, isActive, addWarning,
 }: Props) => {
   const [focusIndex, setFocus] = useState(0);
 
@@ -22,7 +26,7 @@ const Timer: FC<Props> = ({
   const updateCfgTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    if (!/^\d+$/.test(value)) setWarning('Only numbers are allowed');
+    if (!/^\d+$/.test(value)) addWarning('Only numbers are allowed');
 
     if (value.length < 3) {
       const numberValue = parseInt(value, 10);
@@ -30,7 +34,7 @@ const Timer: FC<Props> = ({
       time[name as keyof milliseconds.Time] = numberValue || 0;
       const ms = milliseconds.to(time);
 
-      updateTimeout(ms);
+      setTimeoutDelay(ms);
     } else {
       e.target.value = value.slice(0, 2);
     }
@@ -72,4 +76,9 @@ const Timer: FC<Props> = ({
   );
 };
 
-export default Timer;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setTimeoutDelay: (delay: number) => dispatch(setTimeoutDelayAction(delay)),
+  addWarning: (warning: string | Warning) => dispatch(addWarningAction(warning)),
+});
+
+export default connect(null, mapDispatchToProps)(Timer);

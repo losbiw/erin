@@ -6,10 +6,13 @@ import { getEnumKeyByValue } from '@helpers/enum';
 import './Quality.scss';
 import { Quality as QualityInterface } from '@interfaces/Config';
 import { Arrows } from '@icons/UI';
+import { connect } from 'react-redux';
+import { AppDispatch } from '@app/store';
+import { setDownloadQuality as setDownloadQualityAction } from '@/Form/settingsSlice';
 import options from './options';
 
 interface Props {
-  changeQuality: (quality: QualityInterface) => void,
+  setDownloadQuality: (quality: QualityInterface) => void,
   initialQuality: QualityInterface
 }
 
@@ -43,34 +46,29 @@ const renderOptions = (handleClick: (quality: QualityInterface) => void) => {
   return elements;
 };
 
-const InnerQuality: FC<InnerProps> = (props: InnerProps) => {
-  const {
-    initValue, activeClass, isExpanded, handlePreviewClick, handleOptionClick,
-  } = props;
-
-  return (
-    <div className="dropdown">
-      <div
-        className="preview"
-        role="presentation"
-        onClick={handlePreviewClick}
-      >
-        <p className="preview-text">{initValue}</p>
-        <Arrows.Forward />
-      </div>
-      <div className={`background transparent preview-background ${activeClass}`} />
-      { isExpanded && (
+const InnerQuality: FC<InnerProps> = ({
+  initValue, activeClass, isExpanded, handlePreviewClick, handleOptionClick,
+}: InnerProps) => (
+  <div className="dropdown">
+    <div
+      className="preview"
+      role="presentation"
+      onClick={handlePreviewClick}
+    >
+      <p className="preview-text">{initValue}</p>
+      <Arrows.Forward />
+    </div>
+    <div className={`background transparent preview-background ${activeClass}`} />
+    { isExpanded && (
       <div className="options-container">
         { renderOptions(handleOptionClick) }
       </div>
-      ) }
-    </div>
-  );
-};
+    ) }
+  </div>
+);
 
-const Quality: FC<Props> = (props: Props) => {
+const Quality: FC<Props> = ({ initialQuality, setDownloadQuality }: Props) => {
   const [isExpanded, setExpansion] = useState(false);
-  const { changeQuality, initialQuality } = props;
 
   const handleClickOutside = useCallback((event) => {
     const { className } = event.srcElement;
@@ -89,7 +87,7 @@ const Quality: FC<Props> = (props: Props) => {
 
   const handleOptionClick = (value: QualityInterface) => {
     setExpansion(false);
-    changeQuality(value);
+    setDownloadQuality(value);
   };
 
   const initValue = getEnumKeyByValue(QualityInterface, initialQuality);
@@ -105,4 +103,8 @@ const Quality: FC<Props> = (props: Props) => {
   );
 };
 
-export default Quality;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setDownloadQuality: (quality: QualityInterface) => dispatch(setDownloadQualityAction(quality)),
+});
+
+export default connect(null, mapDispatchToProps)(Quality);

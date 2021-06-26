@@ -3,10 +3,13 @@ import capitalizeFirstLetter from '@helpers/convert';
 import { Mode as ModeEnum } from '@interfaces/Config';
 import { enumKeys } from '@helpers/enum';
 import './Mode.scss';
+import { connect } from 'react-redux';
+import { AppDispatch } from '@app/store';
+import { setSearchMode as setSearchModeAction } from '@/Form/settingsSlice';
 
 interface Props {
   current: ModeEnum,
-  changeMode: (mode: ModeEnum) => void
+  setSearchMode: (mode: ModeEnum) => void
 }
 
 interface ButtonProps {
@@ -34,12 +37,12 @@ const ModeButton: FC<ButtonProps> = ({
   </div>
 );
 
-const Mode: FC<Props> = ({ current, changeMode }: Props) => (
+const Mode: FC<Props> = ({ current, setSearchMode }: Props) => (
   <div className="mode-container">
     {
       enumKeys(ModeEnum).map((label) => {
         const modeName = ModeEnum[label];
-        const handleChange = () => changeMode(modeName);
+        const handleChange = () => setSearchMode(modeName);
 
         return (
           <ModeButton
@@ -55,4 +58,8 @@ const Mode: FC<Props> = ({ current, changeMode }: Props) => (
   </div>
 );
 
-export default Mode;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setSearchMode: (mode: ModeEnum) => dispatch(setSearchModeAction(mode)),
+});
+
+export default connect(null, mapDispatchToProps)(Mode);
