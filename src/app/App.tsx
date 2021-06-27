@@ -75,11 +75,8 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     <div className={`theme ${theme}`}>
       <Controls />
 
-      {/* { isSetupComplete
-        ? <User />
-        : <Setup completeSetup={completeSetup} /> } */}
       { isSetupComplete
-        ? <div />
+        ? <User />
         : <Setup completeSetup={completeSetup} /> }
 
       { isUpdateAvailable && <Update closeUpdatePrompt={() => setUpdate(false)} />}
