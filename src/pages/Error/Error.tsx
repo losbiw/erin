@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { FC } from 'react';
 import ErrorCodes from './Codes';
 import './Error.scss';
@@ -12,7 +13,7 @@ const Error: FC<Props> = ({ code }: Props) => {
   return (
     <div className="error page">
       <div className="err-code">
-        {codeSpread.map((char) => <h1 className="code-key" key={`char${char}`}>{char}</h1>)}
+        {codeSpread.map((char, i) => <h1 className="code-key" key={`char${char}${i}`}>{char}</h1>)}
       </div>
 
       <h2 className="fix">{ErrorCodes[code]?.fix}</h2>
