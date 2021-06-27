@@ -6,9 +6,7 @@ import weatherCodes from '@modules/weather';
 import { fetchPexels, fetchWeather } from '@modules/APIs';
 import areEqual from '@helpers/areEqual';
 import './User.scss';
-import {
-  Config, Mode, Quality,
-} from '@interfaces/Config';
+import { Config, Mode } from '@interfaces/Config';
 import {
   State, Picture, Pages, WallpaperState,
 } from '@interfaces/UserState';
@@ -28,7 +26,6 @@ const { ipcRenderer } = window.require('electron');
 interface Props extends WallpaperState {
   config: Config,
   error: ErrorCodes | null,
-  setIsComplete: (isComplete: boolean) => void,
   setIndex: (index: number) => void,
 }
 
@@ -194,7 +191,7 @@ class User extends Component<Props, State> {
     const {
       changePage, state, props,
     } = this;
-    const { setIsComplete, error } = props;
+    const { error } = props;
     const { current } = state;
 
     return (
@@ -204,22 +201,16 @@ class User extends Component<Props, State> {
           changePage={changePage}
         />
 
-        {/* { error && (current === Pages.Home || current === Pages.Picker)
+        { error && (current === Pages.Home || current === Pages.Picker)
           ? <Error code={error} />
-          : (
-            <Router
-              setIsComplete={setIsComplete}
-              updateConfig={updateConfig}
-              current={current}
-            />
-          )} */}
+          : <Router current={current} /> }
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ general, wallpaper: wallpaperState }: RootState) => ({
-  config: general.config,
+const mapStateToProps = ({ general, wallpaper: wallpaperState, settings }: RootState) => ({
+  config: settings.config,
   error: general.error,
   collection: wallpaperState.collection,
   pictureIndex: wallpaperState.pictureIndex,

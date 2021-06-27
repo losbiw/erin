@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import capitalizeFirstLetter from '@helpers/convert';
 import warning from '@modules/warning';
-import {
-  Config, ConfigUpdate, Mode as ModeEnum, Quality as QualityInterface, Theme,
-} from '@interfaces/Config';
+import { Config, Theme } from '@interfaces/Config';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import Icons from '@icons/Settings';
+import areEqual from '@helpers/areEqual';
+import { addWarning } from '@/Warning/warningSlice';
 import Privacy from '../Privacy/Privacy';
 import Mode from '../Mode/Mode';
 import Keywords from '../Keywords/Keywords';
 import Timer from '../Timer/Timer';
-import Startup from '../Switch/Switch';
+import Startup from '../Startup/Startup';
 import Quality from '../Quality/Quality';
 import Save from '../Save/Save';
 
@@ -26,10 +26,12 @@ interface Item {
   light?: string
 }
 
-interface Props {
-  setWarning: (warningMsg: string | Warning) => void,
-  updateSettingsState: (update: ConfigUpdate) => void,
-  setIsComplete: (isComplete: boolean) => void,
+interface DispatchProps {
+  addWarning: (warningMsg: string | Warning) => void,
+}
+
+interface Props extends DispatchProps {
+  saveConfig?: () => void,
   items: Item[],
   config: Config,
   isSetup: boolean,
@@ -37,32 +39,38 @@ interface Props {
   theme?: Theme
 }
 
-const Form: FC<Props> = (props: Props) => {
-  const {
-    config, items, setWarning, theme, isSetup, activeIndex, setIsComplete,
-  } = props;
+const Form: FC<Props> = ({
+  config, items, addWarning, theme, isSetup, activeIndex, saveConfig,
+}: Props) => {
   const {
     privacy, mode, timer, keywords, shouldStartup: startup, quality,
   } = config;
 
-  useEffect(() => {
-    if (!update.mode) clone.mode = config.mode;
-    const settingsWarning = warning.match(clone, false);
+  const prevPropsConfig = useRef<Config>();
 
-    setWarning(settingsWarning?.value || '');
-  });
+  useEffect(() => {
+    if (prevPropsConfig.current) {
+      const difference = areEqual.objects(config, prevPropsConfig.current) as keyof Config;
+
+      const comparisonConfig = {
+        [difference]: config[difference],
+        mode: config.mode,
+      };
+
+      const settingsWarning = warning.match(comparisonConfig, false);
+
+      addWarning(settingsWarning?.value || '');
+    }
+
+    prevPropsConfig.current = config;
+  }, [config]);
 
   const renderSettingsItem = (name: Settings, isActive: boolean) => {
     if (name === Settings.Privacy) {
       return <Privacy isAccepted={privacy} />;
     }
     if (name === Settings.Mode) {
-      return (
-        <Mode
-          current={mode}
-          changeMode={modeHandler}
-        />
-      );
+      return <Mode current={mode} />;
     }
     if (name === Settings.Keywords) {
       return (
@@ -77,35 +85,17 @@ const Form: FC<Props> = (props: Props) => {
         <Timer
           isActive={isActive}
           timeInMs={timer}
-          setWarning={setWarning}
-          updateTimeout={timerHandler}
         />
       );
     }
     if (name === Settings.Startup) {
-      return (
-        <Startup
-          id="startup"
-          isChecked={startup}
-          handleSwitch={startupHandler}
-        />
-      );
+      return <Startup shouldStartup={startup} />;
     }
     if (name === Settings.Quality) {
-      return (
-        <Quality
-          initialQuality={quality}
-          changeQuality={qualityHandler}
-        />
-      );
+      return <Quality initialQuality={quality} />;
     }
     if (name === Settings.Save) {
-      return (
-        <Save
-          configData={config}
-          setIsComplete={setIsComplete}
-        />
-      );
+      return <Save saveConfig={saveConfig} />;
     }
 
     return <div />;
@@ -159,7 +149,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  
+  addWarning: (warning: string | Warning) => dispatch(addWarning(warning)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

@@ -1,79 +1,61 @@
-import React, {
-  FC, useEffect, useState, useRef, memo,
-} from 'react';
+import React, { FC, useEffect } from 'react';
 import config from '@modules/config';
 import areEqual from '@helpers/areEqual';
 import warning from '@modules/warning';
 import './Settings.scss';
-import { Config, ConfigUpdate } from '@interfaces/Config';
+import { Config } from '@interfaces/Config';
 import Warning from '@interfaces/Warning';
 import Form from '@/Form/Form';
+import { connect } from 'react-redux';
+import { AppDispatch, RootState } from '@app/store';
+import { saveTempConfig as saveTempConfigAction } from '@/Form/settingsSlice';
+import { addWarning as addWarningAction } from '@/Warning/warningSlice';
 import items from './items';
 
-interface Props {
-  config: Config,
-  updateConfig: (cfg: Config, isRequiredFilled: boolean) => void,
-  setIsComplete: (isComplete: boolean) => void,
-  setWarning: (warningMsg: string | Warning) => void
+interface DispatchProps {
+  saveTempConfig: () => void,
+  addWarning: (warningMsg: string | Warning) => void
 }
 
-const Settings: FC<Props> = memo(({
-  updateConfig, config: propsConfig, setWarning, setIsComplete,
+interface Props extends DispatchProps {
+  tempConfig: Config,
+  initConfig: Config
+}
+
+const Settings: FC<Props> = ({
+  saveTempConfig, tempConfig, initConfig, addWarning,
 }: Props) => {
-  const [stateConfig, updateStateConfig] = useState(propsConfig);
-  const configRef = useRef<Config>(propsConfig);
+  useEffect(() => () => {
+    const settingsWarning = warning.match(tempConfig, true);
+    const areConfigsEqual = areEqual.objects(tempConfig, initConfig);
 
-  useEffect(() => {
-    configRef.current = stateConfig;
-  }, [stateConfig]);
-
-  useEffect(() => {
-    const keys = Object.keys(stateConfig);
-
-    if (keys.length === 0) {
-      const initConfig = config.get();
-      updateStateConfig(initConfig);
+    if (settingsWarning) {
+      // set page to settings here
+      addWarning(settingsWarning.value);
+    } else if (!areConfigsEqual) {
+      addWarning('');
+      saveTempConfig();
     }
-
-    return () => {
-      const { current } = configRef;
-      const settingsWarning = warning.match(current, true);
-      const areConfigsEqual = areEqual.objects(current, propsConfig);
-
-      setWarning('');
-
-      if ((!areConfigsEqual && !!settingsWarning) || !!settingsWarning) {
-        updateConfig(current, false);
-        setWarning(settingsWarning.value);
-      } else if (!areConfigsEqual) {
-        updateConfig(current, true);
-      }
-
-      config.set(current);
-    };
   }, []);
 
-  const handleStateChange = (update: ConfigUpdate) => {
-    const updatedConfig: Config = { ...stateConfig, ...update };
-    updateStateConfig(updatedConfig);
-  };
+  return (
+    <div className="page">
+      <Form
+        items={items}
+        isSetup={false}
+      />
+    </div>
+  );
+};
 
-  if (stateConfig) {
-    return (
-      <div className="page">
-        <Form
-          items={items}
-          config={stateConfig}
-          isSetup={false}
-          setIsComplete={setIsComplete}
-          setWarning={setWarning}
-          updateSettingsState={handleStateChange}
-        />
-      </div>
-    );
-  }
-
-  return <form className="settings" />;
+const mapStateToProps = (state: RootState) => ({
+  tempConfig: state.settings.tempConfig,
+  initConfig: state.settings.config,
 });
 
-export default Settings;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  addWarning: (_warning: string | Warning) => dispatch(addWarningAction(_warning)),
+  saveTempConfig: () => dispatch(saveTempConfigAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -1,12 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
-import { AppDispatch } from '@app/store';
+import { AppDispatch, RootState } from '@app/store';
 import { addWarning as addWarningAction } from '@/Warning/warningSlice';
 import { connect } from 'react-redux';
-import { Config, ConfigUpdate } from '@interfaces/Config';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
+import { Config } from '@interfaces/Config';
+import { saveTempConfig as saveTempConfigAction } from '@/Form/settingsSlice';
 import Form from '../Form/Form';
 import { items } from './items';
 
@@ -15,39 +16,29 @@ import './Slider.scss';
 interface Props {
   changeSlide: (name: Settings) => void,
   addWarning: (warningMsg: string | Warning) => void,
-  // setIsComplete: (isComplete: boolean) => void,
-  // setIsRequiredFilled: (isFilled: boolean) => void,
+  completeSetup: () => void,
+  saveTempConfig: () => void,
+  tempConfig: Config,
   activeIndex: number,
-  // isComplete: boolean,
 }
 
 const Slider: FC<Props> = ({
-  isComplete, addWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex,
+  addWarning, completeSetup, changeSlide, activeIndex, tempConfig, saveTempConfig,
 }: Props) => {
-  const [stateConfig, updateConfig] = useState(config.get());
+  const saveConfig = () => {
+    const settingsWarning = warning.match(tempConfig, true);
 
-  useEffect(() => {
-    if (isComplete) {
-      const settingsWarning = warning.match(stateConfig, true);
+    if (settingsWarning) {
+      const { value, name } = settingsWarning;
+      config.set({ isSetupComplete: false });
 
-      if (settingsWarning?.value) {
-        const { value, name } = settingsWarning;
-        config.set({ isSetupComplete: false });
-
-        changeSlide(name as Settings);
-
-        setIsComplete(false);
-        addWarning(value);
-      } else {
-        setIsRequiredFilled(true);
-        setIsComplete(true);
-      }
+      changeSlide(name as Settings);
+      addWarning(value);
+    } else {
+      addWarning('');
+      saveTempConfig();
+      completeSetup();
     }
-  });
-
-  const updateSlideState = (update: ConfigUpdate) => {
-    const cfg: Config = { ...stateConfig, ...update };
-    updateConfig(cfg);
   };
 
   const calcSlideOffset = (amount: number, index: number) => {
@@ -62,29 +53,27 @@ const Slider: FC<Props> = ({
 
   const transform = calcSlideOffset(keys.length, activeIndex);
 
-  if (Object.keys(stateConfig).length) {
-    return (
-      <div className="slider-container">
-        <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
-          <Form
-            config={stateConfig}
-            items={items}
-            isSetup
-            activeIndex={activeIndex}
-            setWarning={addWarning}
-            setIsComplete={setIsComplete}
-            updateSettingsState={updateSlideState}
-          />
-        </div>
+  return (
+    <div className="slider-container">
+      <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
+        <Form
+          items={items}
+          isSetup
+          activeIndex={activeIndex}
+          saveConfig={saveConfig}
+        />
       </div>
-    );
-  }
-
-  return <form className="settings" />;
+    </div>
+  );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  tempConfig: state.settings.tempConfig,
+});
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   addWarning: (warningValue: string | Warning) => dispatch(addWarningAction(warningValue)),
+  saveTempConfig: () => dispatch(saveTempConfigAction()),
 });
 
-export default connect(null, mapDispatchToProps)(Slider);
+export default connect(mapStateToProps, mapDispatchToProps)(Slider);

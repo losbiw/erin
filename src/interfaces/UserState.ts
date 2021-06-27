@@ -1,4 +1,3 @@
-import { Config } from '@interfaces/Config';
 import Weather from '@interfaces/Weather';
 import { ErrorCodes } from '@pages/Error/Codes';
 
@@ -10,7 +9,6 @@ export interface WallpaperState {
 export interface ReduxState {
   error: ErrorCodes | null,
   isDownloadAllowed: boolean,
-  config: Config,
 }
 
 export interface SharedState {

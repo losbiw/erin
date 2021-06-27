@@ -31,8 +31,9 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
   const cfg = config.get();
 
   const [isUpdateAvailable, setUpdate] = useState(false);
-  // const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
-  const [isSetupComplete, completeSetup] = useState(cfg.isSetupComplete);
+  const [isSetupComplete, changeSetupCompleteness] = useState(cfg.isSetupComplete);
+
+  const completeSetup = () => changeSetupCompleteness(true);
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
@@ -74,17 +75,12 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     <div className={`theme ${theme}`}>
       <Controls />
 
-      {/* { isComplete && isRequiredFilled
-        ? <User setIsComplete={setIsComplete} />
-        : (
-          <Setup
-            isComplete={isComplete}
-            setIsComplete={setIsComplete}
-            setIsRequiredFilled={setIsRequiredFilled}
-          />
-        )} */}
-
-      <Setup />
+      {/* { isSetupComplete
+        ? <User />
+        : <Setup completeSetup={completeSetup} /> } */}
+      { isSetupComplete
+        ? <div />
+        : <Setup completeSetup={completeSetup} /> }
 
       { isUpdateAvailable && <Update closeUpdatePrompt={() => setUpdate(false)} />}
 

@@ -46,14 +46,17 @@ const settingsSlice = createSlice({
     setDownloadQuality: (state: State, action: PayloadAction<Quality>) => {
       state.tempConfig.quality = action.payload;
     },
-    mergeTempConfig: (state: State) => {
+    saveTempConfig: (state: State) => {
+      config.set(Object.assign(state.tempConfig, { isSetupComplete: true }));
+
+      state.tempConfig.isSetupComplete = true;
       state.config = state.tempConfig;
     },
   },
 });
 
 export const {
-  mergeTempConfig, setSearchMode, addKeyword, deleteKeyword, changePrivacyAcceptance,
+  saveTempConfig, setSearchMode, addKeyword, deleteKeyword, changePrivacyAcceptance,
   changeStartupPreference, setTimeoutDelay, setDownloadQuality,
 } = settingsSlice.actions;
 

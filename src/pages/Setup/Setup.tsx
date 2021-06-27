@@ -9,7 +9,11 @@ import { items } from '@/Slider/items';
 import './Setup.scss';
 import '../Settings/Settings.scss';
 
-const Setup: FC = () => {
+interface Props {
+  completeSetup: () => void
+}
+
+const Setup: FC<Props> = ({ completeSetup }: Props) => {
   const [slideIndex, changeSlide] = useState(0);
   const { length } = items;
 
@@ -41,10 +45,8 @@ const Setup: FC = () => {
 
       <Slider
         changeSlide={changeSlideByName}
+        completeSetup={completeSetup}
         activeIndex={slideIndex}
-        // isComplete={isComplete}
-        // setIsComplete={setIsComplete}
-        // setIsRequiredFilled={setIsRequiredFilled}
       />
 
       <Carousel

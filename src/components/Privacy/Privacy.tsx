@@ -32,7 +32,7 @@ const Privacy: FC<Props> = ({
 );
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  changePrivacyAcceptance: () => dispatch(changePrivacyAction),
+  changePrivacyAcceptance: () => dispatch(changePrivacyAction()),
 });
 
 export default connect(null, mapDispatchToProps)(Privacy);

@@ -1,4 +1,3 @@
-import config from '@modules/config';
 import { ErrorCodes } from '@pages/Error/Codes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReduxState as State } from '@interfaces/UserState';
@@ -6,7 +5,6 @@ import { ReduxState as State } from '@interfaces/UserState';
 const initialState: State = {
   isDownloadAllowed: false,
   error: null,
-  config: config.get(),
 };
 
 const generalSlice = createSlice({
