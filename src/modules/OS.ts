@@ -7,7 +7,7 @@ const exec = promisify(_exec);
 const define = (): NodeJS.Platform => window.process.platform;
 
 const convertEnvName = (name: string): keyof Distros => {
-  const regex = /cinnamon|gnome|unity|xfce|kde/gi;
+  const regex = /cinnamon|gnome|unity|xfce|KDE/gi;
   const match = name.match(regex);
 
   if (match) {
@@ -22,8 +22,10 @@ const convertEnvName = (name: string): keyof Distros => {
 
 const defineDesktopEnvironment = async (OS: NodeJS.Platform): Promise<string | keyof Distros> => {
   if (OS === 'linux') {
-    const environment: string = await exec('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
-    return convertEnvName(environment);
+    const execRes = await exec('echo $XDG_CURRENT_DESKTOP', { encoding: 'utf8' });
+    const env = execRes.stdout;
+
+    return convertEnvName(env);
   }
 
   return '';
