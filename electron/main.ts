@@ -10,6 +10,10 @@ import initIPCEvents from './ipcEvents';
 import initPowerEvents from './powerEvents';
 import initUpdateEvents from './updateEvents';
 
+const debug = require('electron-debug');
+
+debug();
+
 enum Theme{
   Dark = 'dark',
   Light = 'light'
