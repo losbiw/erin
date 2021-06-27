@@ -123,10 +123,11 @@ const sortPictures = (pictures: any[], quality: Quality): Picture[] => pictures.
   return result;
 });
 
-const fetchPexels = (keywords: string[], quality: Quality) => {
+const fetchPexels = async (keywords: string[], quality: Quality) => {
   const collectionCopy: Picture[] = [];
 
-  keywords.forEach(async (keyword) => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const keyword of keywords) {
     const collection = await fetchPexelsCollection(keyword);
 
     if (collection) {
@@ -135,7 +136,7 @@ const fetchPexels = (keywords: string[], quality: Quality) => {
       collectionCopy.push(...sorted);
       store.dispatch(pushToCollection(sorted));
     }
-  });
+  }
 
   if (collectionCopy.length === 0) {
     setErrorAndAllowDownload(404);
