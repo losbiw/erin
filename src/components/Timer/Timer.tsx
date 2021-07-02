@@ -6,7 +6,7 @@ import './Timer.scss';
 import { AppDispatch } from '@app/store';
 import { connect } from 'react-redux';
 import { addWarning as addWarningAction } from '@/Warning/warningSlice';
-import { setTimeoutDelay as setTimeoutDelayAction } from '@/Form/settingsSlice';
+import { setTimeoutDelay as setTimeoutDelayAction } from '@/Configuration/settingsSlice';
 
 interface Props {
   timeInMs: number,

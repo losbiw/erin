@@ -8,7 +8,7 @@ import { Quality as QualityInterface } from '@interfaces/Config';
 import { Arrows } from '@icons/UI';
 import { connect } from 'react-redux';
 import { AppDispatch } from '@app/store';
-import { setDownloadQuality as setDownloadQualityAction } from '@/Form/settingsSlice';
+import { setDownloadQuality as setDownloadQualityAction } from '@/Configuration/settingsSlice';
 import options from './options';
 
 interface Props {

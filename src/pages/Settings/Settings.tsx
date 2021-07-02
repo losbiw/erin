@@ -1,14 +1,13 @@
 import React, { FC, useEffect } from 'react';
-import config from '@modules/config';
 import areEqual from '@helpers/areEqual';
 import warning from '@modules/warning';
 import './Settings.scss';
 import { Config } from '@interfaces/Config';
 import Warning from '@interfaces/Warning';
-import Form from '@/Form/Form';
+import Configuration from '@/Configuration/Configuration';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
-import { saveTempConfig as saveTempConfigAction } from '@/Form/settingsSlice';
+import { saveTempConfig as saveTempConfigAction } from '@/Configuration/settingsSlice';
 import { addWarning as addWarningAction } from '@/Warning/warningSlice';
 import items from './items';
 
@@ -40,7 +39,7 @@ const Settings: FC<Props> = ({
 
   return (
     <div className="page">
-      <Form
+      <Configuration
         items={items}
         isSetup={false}
       />

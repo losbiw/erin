@@ -7,7 +7,7 @@ import { Crosses } from '@icons/UI';
 import { connect } from 'react-redux';
 import { AppDispatch } from '@app/store';
 import { addWarning as addWarningAction } from '@/Warning/warningSlice';
-import { addKeyword as addKeywordAction, deleteKeyword as deleteKeywordAction } from '@/Form/settingsSlice';
+import { addKeyword as addKeywordAction, deleteKeyword as deleteKeywordAction } from '@/Configuration/settingsSlice';
 
 interface Props {
   keywords: string[],

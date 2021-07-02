@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import Switch from '@/Switch/Switch';
 import { AppDispatch } from '@app/store';
 import { connect } from 'react-redux';
-import { changeStartupPreference as changeStartupPreferenceAction } from '@/Form/settingsSlice';
+import { changeStartupPreference as changeStartupPreferenceAction } from '@/Configuration/settingsSlice';
 
 interface Props {
   shouldStartup: boolean,

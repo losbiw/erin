@@ -5,7 +5,7 @@ import { enumKeys } from '@helpers/enum';
 import './Mode.scss';
 import { connect } from 'react-redux';
 import { AppDispatch } from '@app/store';
-import { setSearchMode as setSearchModeAction } from '@/Form/settingsSlice';
+import { setSearchMode as setSearchModeAction } from '@/Configuration/settingsSlice';
 
 interface Props {
   current: ModeEnum,

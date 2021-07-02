@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
 import { Config } from '@interfaces/Config';
-import { saveTempConfig as saveTempConfigAction } from '@/Form/settingsSlice';
-import Form from '../Form/Form';
+import { saveTempConfig as saveTempConfigAction } from '@/Configuration/settingsSlice';
+import Configuration from '@/Configuration/Configuration';
 import { items } from './items';
 
 import './Slider.scss';
@@ -56,7 +56,7 @@ const Slider: FC<Props> = ({
   return (
     <div className="slider-container">
       <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
-        <Form
+        <Configuration
           items={items}
           isSetup
           activeIndex={activeIndex}

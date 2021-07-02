@@ -1,4 +1,4 @@
-import { changePrivacyAcceptance as changePrivacyAction } from '@/Form/settingsSlice';
+import { changePrivacyAcceptance as changePrivacyAction } from '@/Configuration/settingsSlice';
 import { AppDispatch } from '@app/store';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
