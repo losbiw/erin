@@ -12,7 +12,7 @@ import OS from '../OS';
 import isBlacklisted from './blacklist';
 import * as scripts from './scripts';
 
-const { writeFile, unlink } = window.require('fs').promises;
+const { writeFile, unlink, readdir } = window.require('fs').promises;
 
 const path = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -35,6 +35,23 @@ const getFallbackPath = (initialPath: string): string => {
   return result;
 };
 
+const cleanupImages = async (initPath: string) => {
+  const dirName = path.dirname(initPath);
+
+  const filesList = await readdir(dirName);
+  const images = filesList.filter((file: string) => /.jpg|.jpeg/.test(file));
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const image of images) {
+    const imgPath = path.join(dirName, image);
+
+    if (imgPath !== initPath) {
+    // eslint-disable-next-line no-await-in-loop
+      await unlink(imgPath);
+    }
+  }
+};
+
 const set = async (imgPath: string) => {
   const resolvedImgPath = path.resolve(imgPath);
   const os = OS.define();
@@ -47,7 +64,7 @@ const set = async (imgPath: string) => {
 
     await execFile(execPath, [resolvedImgPath]);
   } else if (os === 'linux') {
-    // await cleanupImages(resolvedImgPath);
+    await cleanupImages(resolvedImgPath);
 
     const desktopEnv = await OS.defineDesktopEnvironment(os);
     const options = scripts.linux(resolvedImgPath);
@@ -56,8 +73,6 @@ const set = async (imgPath: string) => {
     Object.keys(commands).forEach(async (command) => {
       await exec(commands[command as keyof LinuxCommands]);
     });
-
-    // await unlink(resolvedImgPath);
   } else if (os === 'darwin') {
     const macScript = scripts.macos(resolvedImgPath);
     await exec(macScript);
@@ -122,9 +137,5 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
       handleError(502);
     });
 };
-
-// const cleanupImages = (initPath: string) => {
-//   const dirName = path.dirname(initPath);
-// };
 
 export default { download, set };
