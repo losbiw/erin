@@ -16,7 +16,7 @@ import Nav from '@/Nav/Nav';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
 import { ErrorCodes } from '@pages/Error/Codes';
-import switchWallpaper from '@redux/helpers/switchWallpaper';
+import switchWallpaper, { setNextWallpaper } from '@redux/helpers/switchWallpaper';
 import resetErrorAndSetIndex from '@redux/helpers/resetErrorAndSetIndex';
 import { setIndexByNumber } from './slices/wallpaperSlice';
 
@@ -167,19 +167,10 @@ class User extends Component<Props, State> {
 
     if (timer) {
       this.timers.wallpaper = global.setTimeout(
-        () => switchWallpaper(true), timer,
+        () => setNextWallpaper(), timer,
       );
     }
   }
-
-  // updateConfig = (config: Config, isFilled?: boolean): void => {
-  //   const { isRequiredFilled } = this.state;
-
-  //   this.setState({
-  //     config,
-  //     isRequiredFilled: isFilled || isRequiredFilled,
-  //   });
-  // }
 
   changePage = (name: Pages): void => {
     this.setState({

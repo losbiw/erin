@@ -8,13 +8,12 @@ import { Arrows } from '@icons/UI';
 import { Arrow } from '@/Arrows/Arrows';
 import './Picker.scss';
 import { connect } from 'react-redux';
-import { AppDispatch, RootState } from '@app/store';
-import { setIndexByNumber } from '@/User/slices/wallpaperSlice';
+import { RootState } from '@app/store';
+import switchWallpaper from '@redux/helpers/switchWallpaper';
 
 interface SharedProps {
   pictureIndex: number,
   isDownloadAllowed: boolean,
-  setWallpaperByIndex: (index: number) => void
 }
 
 interface Props extends SharedProps {
@@ -31,6 +30,7 @@ interface InnerProps extends SharedProps {
   collection: PickerPicture[],
   handleForwardClick: () => void,
   handleBackClick: () => void,
+  setWallpaperByIndex: (index: number) => void
 }
 
 interface ArrowProps {
@@ -84,7 +84,7 @@ const InnerPicker: FC<InnerProps> = ({
 );
 
 const Picker: FC<Props> = memo(({
-  isDownloadAllowed, setWallpaperByIndex, pictureIndex, collection,
+  isDownloadAllowed, pictureIndex, collection,
 }: Props) => {
   const [startIndex, setStartIndex] = useState(0);
   const [stateCollection, setCollection] = useState<PickerPicture[]>([]);
@@ -138,7 +138,7 @@ const Picker: FC<Props> = memo(({
       collection={stateCollection}
       isDownloadAllowed={isDownloadAllowed}
       pictureIndex={pictureIndex}
-      setWallpaperByIndex={setWallpaperByIndex}
+      setWallpaperByIndex={switchWallpaper}
       handleBackClick={setPrevBlock}
       handleForwardClick={setNextBlock}
     />
@@ -151,8 +151,4 @@ const mapStateToProps = ({ wallpaper, general }: RootState) => ({
   isDownloadAllowed: general.isDownloadAllowed,
 });
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setWallpaperByIndex: (index: number) => dispatch(setIndexByNumber(index)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Picker);
+export default connect(mapStateToProps)(Picker);

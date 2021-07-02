@@ -5,18 +5,18 @@ import ProgressBar from '@/ProgressBar/ProgressBar';
 import { Arrows } from '@/Arrows/Arrows';
 import { Link } from '@/Links/Links';
 import './Home.scss';
-import { AppDispatch, RootState } from '@app/store';
-import { decrementIndex, incrementIndex } from '@/User/slices/wallpaperSlice';
+import { RootState } from '@app/store';
+import { setNextWallpaper as _setNextWallpaper, setPrevWallpaper as _setPrevWallpaper } from '@redux/helpers/switchWallpaper';
 import { connect } from 'react-redux';
+
+interface Props {
+  picture: Picture | undefined,
+  isDownloadAllowed: boolean,
+}
 
 interface Handlers {
   setNextWallpaper: () => void,
   setPrevWallpaper: () => void
-}
-
-interface Props extends Handlers {
-  picture: Picture | undefined,
-  isDownloadAllowed: boolean,
 }
 
 interface InnerProps extends Handlers {
@@ -27,7 +27,7 @@ interface InnerProps extends Handlers {
 }
 
 const InnerHome: FC<InnerProps> = ({
-  src, setNextWallpaper, setPrevWallpaper, isDownloadAllowed, href, Content,
+  src, isDownloadAllowed, href, Content, setNextWallpaper, setPrevWallpaper,
 }: InnerProps) => (
   <div className="page home">
     <Arrows
@@ -56,9 +56,7 @@ const Author = (photographer: string) => (
   </div>
 );
 
-const Home: FC<Props> = ({
-  picture, isDownloadAllowed, setNextWallpaper, setPrevWallpaper,
-}: Props) => {
+const Home: FC<Props> = ({ picture, isDownloadAllowed }: Props) => {
   if (picture) {
     const { photographer, srcMain, photographerUrl } = picture;
 
@@ -68,8 +66,8 @@ const Home: FC<Props> = ({
         isDownloadAllowed={isDownloadAllowed}
         href={photographerUrl}
         Content={() => Author(photographer)}
-        setNextWallpaper={setNextWallpaper}
-        setPrevWallpaper={setPrevWallpaper}
+        setNextWallpaper={_setNextWallpaper}
+        setPrevWallpaper={_setPrevWallpaper}
       />
     );
   }
@@ -82,9 +80,4 @@ const mapStateToProps = ({ wallpaper, general }: RootState) => ({
   isDownloadAllowed: general.isDownloadAllowed,
 });
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setNextWallpaper: () => dispatch(incrementIndex()),
-  setPrevWallpaper: () => dispatch(decrementIndex()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
