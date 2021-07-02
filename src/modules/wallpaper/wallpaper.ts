@@ -35,8 +35,8 @@ const getFallbackPath = (initialPath: string): string => {
   return result;
 };
 
-const set = async (img: string, macPath: string) => {
-  const imgPath = path.resolve(img);
+const set = async (imgPath: string) => {
+  const resolvedImgPath = path.resolve(imgPath);
   const os = OS.define();
 
   if (os === 'win32') {
@@ -45,19 +45,23 @@ const set = async (img: string, macPath: string) => {
     const resourcePath = isPackaged ? path.join(window.process.resourcesPath, 'build') : path.join(__dirname, '../../../electron');
     const execPath = path.join(resourcePath, 'Wallpaper/Wallpaper.exe');
 
-    await execFile(execPath, [imgPath]);
+    await execFile(execPath, [resolvedImgPath]);
   } else if (os === 'linux') {
+    // await cleanupImages(resolvedImgPath);
+
     const desktopEnv = await OS.defineDesktopEnvironment(os);
-    const options = scripts.linux(imgPath);
+    const options = scripts.linux(resolvedImgPath);
     const commands = options[desktopEnv as keyof Distros] || options.other;
 
     Object.keys(commands).forEach(async (command) => {
       await exec(commands[command as keyof LinuxCommands]);
     });
+
+    // await unlink(resolvedImgPath);
   } else if (os === 'darwin') {
-    const macos = scripts.macos(macPath);
-    await exec(macos);
-    await unlink(macPath);
+    const macScript = scripts.macos(resolvedImgPath);
+    await exec(macScript);
+    await unlink(resolvedImgPath);
   }
 };
 
@@ -101,9 +105,11 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
         const pic = data.read();
         const fallbackPath = getFallbackPath(initialPath);
 
-        await writeFile(os === 'darwin' ? fallbackPath : initialPath, pic);
+        const imgPath = os === 'darwin' || os === 'linux' ? fallbackPath : initialPath;
 
-        await set(initialPath, fallbackPath);
+        await writeFile(imgPath, pic);
+        await set(imgPath);
+
         setTimer();
 
         resetProgressAndAllowDownload();
@@ -116,5 +122,9 @@ const download = (url: string, initialPath: string, handlers: Handlers): void =>
       handleError(502);
     });
 };
+
+// const cleanupImages = (initPath: string) => {
+//   const dirName = path.dirname(initPath);
+// };
 
 export default { download, set };
