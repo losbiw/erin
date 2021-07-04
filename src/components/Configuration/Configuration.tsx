@@ -39,13 +39,51 @@ interface Props extends DispatchProps {
   theme?: Theme
 }
 
-const Form: FC<Props> = ({
-  config, items, addWarning, theme, isSetup, activeIndex, saveConfig,
-}: Props) => {
+const renderSettingsItem = (
+  name: Settings, isActive: boolean, config: Config, saveConfig: (() => void) | undefined,
+) => {
   const {
     privacy, mode, timer, keywords, shouldStartup: startup, quality,
   } = config;
 
+  if (name === Settings.Privacy) {
+    return <Privacy isAccepted={privacy} />;
+  }
+  if (name === Settings.Mode) {
+    return <Mode current={mode} />;
+  }
+  if (name === Settings.Keywords) {
+    return (
+      <Keywords
+        keywords={[...keywords]}
+        isFocused={isActive}
+      />
+    );
+  }
+  if (name === Settings.Timer) {
+    return (
+      <Timer
+        isActive={isActive}
+        timeInMs={timer}
+      />
+    );
+  }
+  if (name === Settings.Startup) {
+    return <Startup shouldStartup={startup} />;
+  }
+  if (name === Settings.Quality) {
+    return <Quality initialQuality={quality} />;
+  }
+  if (name === Settings.Save) {
+    return <Save saveConfig={saveConfig} />;
+  }
+
+  return <div />;
+};
+
+const Form: FC<Props> = ({
+  config, items, addWarning, theme, isSetup, activeIndex, saveConfig,
+}: Props) => {
   const prevPropsConfig = useRef<Config>();
 
   useEffect(() => {
@@ -64,42 +102,6 @@ const Form: FC<Props> = ({
 
     prevPropsConfig.current = config;
   }, [config]);
-
-  const renderSettingsItem = (name: Settings, isActive: boolean) => {
-    if (name === Settings.Privacy) {
-      return <Privacy isAccepted={privacy} />;
-    }
-    if (name === Settings.Mode) {
-      return <Mode current={mode} />;
-    }
-    if (name === Settings.Keywords) {
-      return (
-        <Keywords
-          keywords={[...keywords]}
-          isFocused={isActive}
-        />
-      );
-    }
-    if (name === Settings.Timer) {
-      return (
-        <Timer
-          isActive={isActive}
-          timeInMs={timer}
-        />
-      );
-    }
-    if (name === Settings.Startup) {
-      return <Startup shouldStartup={startup} />;
-    }
-    if (name === Settings.Quality) {
-      return <Quality initialQuality={quality} />;
-    }
-    if (name === Settings.Save) {
-      return <Save saveConfig={saveConfig} />;
-    }
-
-    return <div />;
-  };
 
   return (
     <form className="settings">
@@ -126,7 +128,7 @@ const Form: FC<Props> = ({
                 </div>
 
                 <div className={`setting ${key}`}>
-                  {renderSettingsItem(key, isActive)}
+                  {renderSettingsItem(key, isActive, config, saveConfig)}
                 </div>
               </div>
 

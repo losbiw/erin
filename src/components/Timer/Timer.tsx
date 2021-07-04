@@ -15,6 +15,72 @@ interface Props {
   addWarning: (warningMsg: string | Warning) => void,
 }
 
+interface ContainerProps {
+  units: string[],
+  time: milliseconds.Time,
+  isActive: boolean,
+  focusIndex: number,
+  updateCfgTime: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  setFocus: React.Dispatch<React.SetStateAction<number>>
+}
+
+interface InputProps {
+  unit: string,
+  defaultValue: number,
+  refCondition: boolean,
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  onFocus: () => void
+}
+
+const TimeInput: FC<InputProps> = ({
+  unit, defaultValue, refCondition, onChange, onFocus,
+}: InputProps) => (
+  <div className="time" key={unit}>
+    <div className="wrapper">
+      <input
+        type="number"
+        defaultValue={defaultValue}
+        id={unit}
+        data-testid={unit}
+        className="time-input"
+        ref={(ref) => {
+          if (ref && refCondition) {
+            ref.focus({ preventScroll: true });
+          }
+        }}
+        onChange={onChange}
+        onFocus={onFocus}
+        name={unit}
+        key={unit}
+      />
+      {
+        unit !== 'seconds'
+        && <span className="colon">:</span>
+      }
+    </div>
+
+    <label className="time-label" htmlFor={unit}>{ capitalizeFirstLetter(unit) }</label>
+  </div>
+);
+
+const TimeContainer: FC<ContainerProps> = ({
+  units, time, isActive, focusIndex, updateCfgTime, setFocus,
+}: ContainerProps) => (
+  <div className="time-container">
+    {
+      units.map((unit, index) => (
+        <TimeInput
+          unit={unit}
+          defaultValue={time[unit as keyof milliseconds.Time]}
+          refCondition={isActive && index === focusIndex}
+          onChange={updateCfgTime}
+          onFocus={() => setFocus(index)}
+        />
+      ))
+    }
+  </div>
+);
+
 const Timer: FC<Props> = ({
   timeInMs, setTimeoutDelay, isActive, addWarning,
 }: Props) => {
@@ -41,38 +107,14 @@ const Timer: FC<Props> = ({
   };
 
   return (
-    <div className="time-container">
-      {
-        keys.map((unit, index) => (
-          <div className="time" key={unit}>
-            <div className="wrapper">
-              <input
-                type="number"
-                defaultValue={time[unit as keyof milliseconds.Time]}
-                id={unit}
-                data-testid={unit}
-                className="time-input"
-                ref={(ref) => {
-                  if (ref && isActive && index === focusIndex) {
-                    ref.focus({ preventScroll: true });
-                  }
-                }}
-                onChange={updateCfgTime}
-                onFocus={() => setFocus(index)}
-                name={unit}
-                key={unit}
-              />
-              {
-                unit !== 'seconds'
-                && <span className="colon">:</span>
-              }
-            </div>
-
-            <label className="time-label" htmlFor={unit}>{ capitalizeFirstLetter(unit) }</label>
-          </div>
-        ))
-      }
-    </div>
+    <TimeContainer
+      units={keys}
+      time={time}
+      isActive={isActive}
+      focusIndex={focusIndex}
+      updateCfgTime={updateCfgTime}
+      setFocus={setFocus}
+    />
   );
 };
 
