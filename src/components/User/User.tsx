@@ -26,7 +26,6 @@ const { ipcRenderer } = window.require('electron');
 interface Props extends WallpaperState {
   config: Config,
   error: ErrorCodes | null,
-  page: Pages,
   setIndex: (index: number) => void,
   resetCollection: () => void
 }
@@ -52,6 +51,7 @@ class User extends Component<Props, State> {
 
     this.state = {
       weather: undefined,
+      page: Pages.Home,
     };
   }
 
@@ -167,12 +167,19 @@ class User extends Component<Props, State> {
     }
   }
 
+  changePage = (page: Pages) => {
+    this.setState({
+      page,
+    });
+  }
+
   render() {
-    const { error, page } = this.props;
+    const { page } = this.state;
+    const { error } = this.props;
 
     return (
       <div className="user">
-        <Nav page={page} />
+        <Nav page={page} changePage={this.changePage} />
 
         { error && (page === Pages.Home || page === Pages.Picker)
           ? <Error code={error} />
@@ -187,7 +194,6 @@ const mapStateToProps = ({ general, wallpaper: wallpaperState, settings }: RootS
   error: general.error,
   collection: wallpaperState.collection,
   pictureIndex: wallpaperState.pictureIndex,
-  page: general.page,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

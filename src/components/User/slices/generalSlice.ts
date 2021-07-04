@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReduxState as State, Pages } from '@interfaces/UserState';
 
 const initialState: State = {
-  page: Pages.Home,
   isDownloadAllowed: false,
+  isNavbarLocked: false,
   error: null,
 };
 
@@ -24,14 +24,14 @@ const generalSlice = createSlice({
     resetError: (state: State) => {
       state.error = null;
     },
-    changePage: (state: State, action: PayloadAction<Pages>) => {
-      state.page = action.payload;
+    changeNavbarLock: (state: State, action: PayloadAction<boolean>) => {
+      state.isNavbarLocked = action.payload;
     },
   },
 });
 
 export const {
-  allowDownload, disallowDownload, handleError, resetError, changePage,
+  allowDownload, disallowDownload, handleError, resetError, changeNavbarLock,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

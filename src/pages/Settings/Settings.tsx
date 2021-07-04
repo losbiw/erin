@@ -9,11 +9,13 @@ import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
 import { saveTempConfig as saveTempConfigAction } from '@/Configuration/settingsSlice';
 import { addWarning as addWarningAction } from '@/Warning/warningSlice';
+import { changeNavbarLock as changeNavbarLockAction } from '@/User/slices/generalSlice';
 import items from './items';
 
 interface DispatchProps {
   saveTempConfig: () => void,
-  addWarning: (warningMsg: string | Warning) => void
+  addWarning: (warningMsg: string | Warning) => void,
+  changeNavbarLock: (isLocked: boolean) => void
 }
 
 interface Props extends DispatchProps {
@@ -22,19 +24,20 @@ interface Props extends DispatchProps {
 }
 
 const Settings: FC<Props> = ({
-  saveTempConfig, tempConfig, initConfig, addWarning,
+  saveTempConfig, tempConfig, initConfig, addWarning, changeNavbarLock,
 }: Props) => {
-  useEffect(() => () => {
+  useEffect(() => {
     const settingsWarning = warning.match(tempConfig, true);
-    const areConfigsEqual = areEqual.objects(tempConfig, initConfig, true);
+    changeNavbarLock(!!settingsWarning);
 
-    if (settingsWarning) {
-      // set page to settings here
-      addWarning(settingsWarning.value);
-    } else if (!areConfigsEqual) {
-      addWarning('');
-      saveTempConfig();
-    }
+    return () => {
+      const areConfigsEqual = areEqual.objects(tempConfig, initConfig, true);
+
+      if (!areConfigsEqual) {
+        addWarning('');
+        saveTempConfig();
+      }
+    };
   }, [tempConfig]);
 
   return (
@@ -54,6 +57,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   addWarning: (_warning: string | Warning) => dispatch(addWarningAction(_warning)),
+  changeNavbarLock: (isLocked: boolean) => dispatch(changeNavbarLockAction(isLocked)),
   saveTempConfig: () => dispatch(saveTempConfigAction()),
 });
 

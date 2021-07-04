@@ -7,13 +7,14 @@ export interface WallpaperState {
 }
 
 export interface ReduxState {
-  page: Pages,
   error: ErrorCodes | null,
   isDownloadAllowed: boolean,
+  isNavbarLocked: boolean
 }
 
 export interface State {
-  weather: Weather | undefined
+  weather: Weather | undefined,
+  page: Pages
 }
 
 export enum Pages {

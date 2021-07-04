@@ -1,7 +1,6 @@
 import React, { FC, memo } from 'react';
 import { Pages } from '@interfaces/UserState';
-import { AppDispatch } from '@app/store';
-import { changePage as changePageAction } from '@/User/slices/generalSlice';
+import { RootState } from '@app/store';
 import { connect } from 'react-redux';
 import { buttons, NavButton as NavButtonInterface } from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
@@ -9,14 +8,8 @@ import './Nav.scss';
 
 interface Props {
   changePage: (name: Pages) => void,
+  isNavbarLocked: boolean,
   page: Pages,
-}
-
-interface ButtonProps {
-  active: false | 'active',
-  target: Pages,
-  handleClick: () => void,
-  Icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 interface GroupProps extends Props {
@@ -24,11 +17,19 @@ interface GroupProps extends Props {
   group: NavButtonInterface[]
 }
 
+interface ButtonProps {
+  isNavbarLocked: boolean,
+  active: false | 'active',
+  target: Pages,
+  handleClick: () => void,
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>
+}
+
 const NavButton: FC<ButtonProps> = ({
-  active, target, handleClick, Icon,
+  active, target, handleClick, Icon, isNavbarLocked,
 }: ButtonProps) => (
   <button
-    className={`nav-btn ${active}`}
+    className={`nav-btn ${active} ${isNavbarLocked ? 'locked' : ''}`}
     type="button"
     name={target}
     key={target}
@@ -39,7 +40,7 @@ const NavButton: FC<ButtonProps> = ({
 );
 
 const NavGroup: FC<GroupProps> = ({
-  children, group, page, changePage,
+  children, group, page, changePage, isNavbarLocked,
 }: GroupProps) => (
   <div className="btns" key={group[0].target}>
     {
@@ -50,7 +51,8 @@ const NavGroup: FC<GroupProps> = ({
         return (
           <NavButton
             active={active}
-            handleClick={handleClick}
+            handleClick={isNavbarLocked ? () => {} : handleClick}
+            isNavbarLocked={isNavbarLocked}
             target={target}
             Icon={Icon}
             key={target}
@@ -63,11 +65,12 @@ const NavGroup: FC<GroupProps> = ({
 );
 
 const Nav: FC<Props> = memo(({
-  page, changePage,
+  page, changePage, isNavbarLocked,
 }: Props) => (
   <nav className="nav">
     { buttons.map((group, index) => (
       <NavGroup
+        isNavbarLocked={isNavbarLocked}
         group={group}
         page={page}
         changePage={changePage}
@@ -79,8 +82,8 @@ const Nav: FC<Props> = memo(({
   </nav>
 ));
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  changePage: (page: Pages) => dispatch(changePageAction(page)),
+const mapStateToProps = (state: RootState) => ({
+  isNavbarLocked: state.general.isNavbarLocked,
 });
 
-export default connect(null, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps)(Nav);
