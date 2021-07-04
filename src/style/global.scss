@@ -3,7 +3,9 @@
 button {
     &:hover {
         cursor: pointer;
+    }
 
+    &:hover:not(.locked) {
         .gradient {
             opacity: 1;
         }
@@ -62,7 +64,7 @@ select {
         transform: scale(1.09);
     }
 
-    &.active {
+    &.active:not(.locked) {
         transform: scale(1.09);
 
         &::after,
