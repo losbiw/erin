@@ -1,22 +1,22 @@
-import { Config } from '@interfaces/Config';
 import Weather from '@interfaces/Weather';
+import { ErrorCodes } from '@pages/Error/Codes';
 
-export interface SharedState {
+export interface WallpaperState {
   collection: Picture[],
   pictureIndex: number,
-  config: Config,
-  isLocked: boolean,
-  progress: number,
-  current: Pages,
 }
 
-export interface State extends SharedState {
-  error: number | null,
+export interface ReduxState {
+  error: ErrorCodes | null,
+  isDownloadAllowed: boolean,
+  isNavbarLocked: boolean
+}
+
+export interface State {
   weather: Weather | undefined,
-  isRequiredFilled: boolean
+  page: Pages
 }
 
-// eslint-disable-next-line no-shadow
 export enum Pages {
   Home = 'home',
   Picker = 'picker',

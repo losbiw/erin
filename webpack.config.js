@@ -106,6 +106,7 @@ module.exports = {
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@slices': path.resolve(__dirname, 'src/slices'),
       '@app': path.resolve(__dirname, 'src/app'),
+      '@redux': path.resolve(__dirname, 'src/redux'),
     },
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },

@@ -2,21 +2,17 @@ import { Theme } from '@interfaces/Config';
 import config from '@modules/config';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface State {
-  value: Theme,
-}
-
-const initialState: State = {
-  value: config.get().theme,
-};
-
 const themeSlice = createSlice({
   name: 'theme',
-  initialState,
+  initialState: config.get().theme,
   reducers: {
-    setOpposite: (state: State) => {
+    setOpposite: (state: Theme) => {
       const { Dark, Light } = Theme;
-      state.value = state.value === Dark ? Light : Dark;
+
+      const newTheme = state === Dark ? Light : Dark;
+      config.set({ theme: newTheme });
+
+      return newTheme;
     },
   },
 });

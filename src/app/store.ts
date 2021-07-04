@@ -1,13 +1,19 @@
-import warningSlice from '@slices/warningSlice';
+import warningSlice from '@/Warning/warningSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import themeSlice from '@slices/themeSlice';
-import userSlice from '@slices/userSlice';
+import themeSlice from '@/ThemeToggle/themeSlice';
+import wallpaperSlice from '@/User/slices/wallpaperSlice';
+import progressSlice from '@/ProgressBar/progressSlice';
+import generalSlice from '@/User/slices/generalSlice';
+import settingsSlice from '@/Configuration/settingsSlice';
 
 const store = configureStore({
   reducer: {
     warning: warningSlice,
     theme: themeSlice,
-    user: userSlice,
+    progress: progressSlice,
+    wallpaper: wallpaperSlice,
+    general: generalSlice,
+    settings: settingsSlice,
   },
 });
 

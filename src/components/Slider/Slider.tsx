@@ -1,52 +1,47 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import config from '@modules/config';
 import warning from '@modules/warning';
-import './Slider.scss';
-import { Config, ConfigUpdate, Theme } from '@interfaces/Config';
+import { AppDispatch, RootState } from '@app/store';
+import { addWarning as addWarningAction } from '@/Warning/warningSlice';
+import { connect } from 'react-redux';
 import Warning from '@interfaces/Warning';
 import Settings from '@interfaces/Settings';
-import Form from '../Form/Form';
+import { Config } from '@interfaces/Config';
+import { saveTempConfig as saveTempConfigAction } from '@/Configuration/settingsSlice';
+import Configuration from '@/Configuration/Configuration';
 import { items } from './items';
+
+import './Slider.scss';
 
 interface Props {
   changeSlide: (name: Settings) => void,
-  setWarning: (warningMsg: string | Warning) => void,
-  setIsComplete: (isComplete: boolean) => void,
-  setIsRequiredFilled: (isFilled: boolean) => void,
+  addWarning: (warningMsg: string | Warning) => void,
+  completeSetup: () => void,
+  saveTempConfig: () => void,
+  tempConfig: Config,
   activeIndex: number,
-  isComplete: boolean,
 }
 
 const Slider: FC<Props> = ({
-  isComplete, setWarning, setIsComplete, setIsRequiredFilled, changeSlide, activeIndex,
+  addWarning, completeSetup, changeSlide, activeIndex, tempConfig, saveTempConfig,
 }: Props) => {
-  const [stateConfig, updateConfig] = useState(config.get());
+  const saveConfig = () => {
+    const settingsWarning = warning.match(tempConfig, true);
 
-  useEffect(() => {
-    if (isComplete) {
-      const settingsWarning = warning.match(stateConfig, true);
+    if (settingsWarning) {
+      const { value, name } = settingsWarning;
+      config.set({ isSetupComplete: false });
 
-      if (settingsWarning?.value) {
-        const { value, name } = settingsWarning;
-        config.set({ isComplete: false });
-
-        changeSlide(name as Settings);
-
-        setIsComplete(false);
-        setWarning(value);
-      } else {
-        setIsRequiredFilled(true);
-        setIsComplete(true);
-      }
+      changeSlide(name as Settings);
+      addWarning(value);
+    } else {
+      addWarning('');
+      saveTempConfig();
+      completeSetup();
     }
-  });
-
-  const updateSlideState = (update: ConfigUpdate) => {
-    const cfg: Config = { ...stateConfig, ...update };
-    updateConfig(cfg);
   };
 
-  const calcSlidePosition = (amount: number, index: number) => {
+  const calcSlideOffset = (amount: number, index: number) => {
     const middle = Math.round((amount - 1) / 2);
     const equalizer = amount % 2 === 0 ? 40 : 0;
     const multiplier = index === middle ? 0 : middle - index;
@@ -56,27 +51,29 @@ const Slider: FC<Props> = ({
 
   const keys = Object.keys(items);
 
-  const transform = calcSlidePosition(keys.length, activeIndex);
+  const transform = calcSlideOffset(keys.length, activeIndex);
 
-  if (Object.keys(stateConfig).length) {
-    return (
-      <div className="slider-container">
-        <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
-          <Form
-            config={stateConfig}
-            items={items}
-            isSetup
-            activeIndex={activeIndex}
-            setWarning={setWarning}
-            setIsComplete={setIsComplete}
-            updateSettingsState={updateSlideState}
-          />
-        </div>
+  return (
+    <div className="slider-container">
+      <div className="translate" style={{ transform: `translateX(${transform}vw)` }}>
+        <Configuration
+          items={items}
+          isSetup
+          activeIndex={activeIndex}
+          saveConfig={saveConfig}
+        />
       </div>
-    );
-  }
-
-  return <form className="settings" />;
+    </div>
+  );
 };
 
-export default Slider;
+const mapStateToProps = (state: RootState) => ({
+  tempConfig: state.settings.tempConfig,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  addWarning: (warningValue: string | Warning) => dispatch(addWarningAction(warningValue)),
+  saveTempConfig: () => dispatch(saveTempConfigAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Slider);

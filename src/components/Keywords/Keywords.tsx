@@ -4,13 +4,17 @@ import React, {
 import './Keywords.scss';
 import Warning from '@interfaces/Warning';
 import { Crosses } from '@icons/UI';
+import { connect } from 'react-redux';
+import { AppDispatch } from '@app/store';
+import { addWarning as addWarningAction } from '@/Warning/warningSlice';
+import { addKeyword as addKeywordAction, deleteKeyword as deleteKeywordAction } from '@/Configuration/settingsSlice';
 
 interface Props {
   keywords: string[],
-  isActive: boolean,
-  isSetup: boolean,
-  changeKeywords: (keywords: string[]) => void,
-  setWarning: (warning: Warning | string) => void
+  isFocused: boolean,
+  addKeyword: (keyword: string) => void,
+  deleteKeyword: (keyword: string) => void,
+  addWarning: (warning: Warning | string) => void
 }
 
 interface InputProps {
@@ -20,7 +24,7 @@ interface InputProps {
 
 interface ContainerProps {
   handleClick: () => void,
-  handleDelete: (keyword: string) => void,
+  deleteKeyword: (keyword: string) => void,
   keywords: string[],
 }
 
@@ -33,27 +37,23 @@ interface InnerProps extends InputProps, ContainerProps {
   isInput: boolean
 }
 
-const KeywordsInput: FC<InputProps> = (props: InputProps) => {
-  const { isFocused, handleKeyDown } = props;
-
-  return (
-    <input
-      type="text"
-      className="keyword-input"
-      name="keywords"
-      ref={(ref) => {
-        if (isFocused) ref?.focus({ preventScroll: true });
-      }}
-      placeholder="Type something and press enter"
-      maxLength={15}
-      onKeyDown={handleKeyDown}
-    />
-  );
-};
+const KeywordsInput: FC<InputProps> = ({ isFocused, handleKeyDown }: InputProps) => (
+  <input
+    type="text"
+    className="keyword-input"
+    name="keywords"
+    ref={(ref) => {
+      if (isFocused) ref?.focus({ preventScroll: true });
+    }}
+    placeholder="Type something and press enter"
+    maxLength={15}
+    onKeyDown={handleKeyDown}
+  />
+);
 
 const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
   <div className="keyword" key={keyword}>
-    <p>{ keyword }</p>
+    <p>{keyword}</p>
 
     <button
       className="delete"
@@ -65,101 +65,80 @@ const Keyword: FC<KeywordProps> = ({ keyword, handleClick }: KeywordProps) => (
   </div>
 );
 
-const KeywordsContainer: FC<ContainerProps> = (props: ContainerProps) => {
-  const { keywords, handleClick, handleDelete } = props;
-
-  return (
-    <div className="keywords-container">
-      <div
-        className="click background"
-        role="presentation"
-        onClick={handleClick}
-      >
-        <div className="transparent" />
-      </div>
-      {
-      keywords.map((keyword) => {
-        const handleKeywordClick = () => handleDelete(keyword);
-
-        return (
-          <Keyword
-            keyword={keyword}
-            handleClick={handleKeywordClick}
-            key={keyword}
-          />
-        );
-      })
-    }
+const KeywordsContainer: FC<ContainerProps> = ({
+  keywords, handleClick, deleteKeyword,
+}: ContainerProps) => (
+  <div className="keywords-container">
+    <div
+      className="click background"
+      role="presentation"
+      onClick={handleClick}
+    >
+      <div className="transparent" />
     </div>
-  );
-};
+    {
+        keywords.map((keyword) => {
+          const handleKeywordClick = () => deleteKeyword(keyword);
 
-const InnerKeywords: FC<InnerProps> = (props: InnerProps) => {
-  const {
-    isInput, isFocused, handleDelete, handleKeyDown, handleClick, keywords,
-  } = props;
+          return (
+            <Keyword
+              keyword={keyword}
+              handleClick={handleKeywordClick}
+              key={keyword}
+            />
+          );
+        })
+      }
+  </div>
+);
 
-  return isInput ? (
-    <KeywordsInput
-      isFocused={isFocused}
-      handleKeyDown={handleKeyDown}
-    />
-  ) : (
-    <KeywordsContainer
-      handleClick={handleClick}
-      handleDelete={handleDelete}
-      keywords={keywords}
-    />
-  );
-};
+const InnerKeywords: FC<InnerProps> = ({
+  isInput, isFocused, deleteKeyword, handleKeyDown, handleClick, keywords,
+}: InnerProps) => (isInput ? (
+  <KeywordsInput
+    isFocused={isFocused}
+    handleKeyDown={handleKeyDown}
+  />
+) : (
+  <KeywordsContainer
+    handleClick={handleClick}
+    deleteKeyword={deleteKeyword}
+    keywords={keywords}
+  />
+));
 
-const Keywords: FC<Props> = memo((props: Props) => {
-  const {
-    keywords, changeKeywords, setWarning, isActive, isSetup,
-  } = props;
-
+const Keywords: FC<Props> = ({
+  keywords, addKeyword, deleteKeyword, addWarning, isFocused,
+}: Props) => {
   const [isInput, setInput] = useState(keywords.length === 0);
 
   useEffect(() => {
     if (keywords.length === 0 && !isInput) {
       setInput(true);
     }
-  });
-
-  const handleDelete = (keyword: string) => {
-    const index = keywords.indexOf(keyword);
-
-    if (index > -1) {
-      const dataKeywords = [...keywords];
-      dataKeywords.splice(index, 1);
-      changeKeywords(dataKeywords);
-    }
-  };
+  }, [keywords]);
 
   const handleClick = () => {
     setInput(true);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const dataKeywords = [...keywords];
-
     if (e.key === 'Enter' && keywords.length < 10) {
       const { value } = e.target as HTMLInputElement;
-      const converted = value.toLowerCase();
-      const isRepeating = keywords.indexOf(converted) !== -1;
+      const validated = value.toLowerCase();
+      const isRepeating = keywords.indexOf(validated) !== -1;
 
-      changeKeywords(dataKeywords);
       setInput(false);
 
-      if (converted && !isRepeating) {
-        dataKeywords.push(converted);
-      } else if (!converted) {
-        setWarning("Keyword's value should not be empty");
+      if (validated && !isRepeating) {
+        addKeyword(validated);
+      } else if (validated === '') {
+        addWarning("Keyword's value should not be empty");
       } else if (isRepeating) {
-        setWarning('Keywords should not repeat');
+        addWarning('Keywords should not repeat');
       }
     } else if (e.key === 'Enter') {
-      setWarning("You can't enter more than 10 keywords");
+      addWarning("You can't enter more than 10 keywords");
       setInput(false);
     }
   };
@@ -168,12 +147,18 @@ const Keywords: FC<Props> = memo((props: Props) => {
     <InnerKeywords
       keywords={keywords}
       isInput={isInput}
-      isFocused={(!isSetup || isActive)}
+      isFocused={isFocused}
       handleClick={handleClick}
-      handleDelete={handleDelete}
+      deleteKeyword={deleteKeyword}
       handleKeyDown={handleKeyDown}
     />
   );
+};
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  addWarning: (warning: string | Warning) => dispatch(addWarningAction(warning)),
+  addKeyword: (keyword: string) => dispatch(addKeywordAction(keyword)),
+  deleteKeyword: (keyword: string) => dispatch(deleteKeywordAction(keyword)),
 });
 
-export default Keywords;
+export default connect(null, mapDispatchToProps)(Keywords);

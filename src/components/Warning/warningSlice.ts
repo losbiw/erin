@@ -2,7 +2,7 @@ import Warning from '@interfaces/Warning';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface State {
-  value: string | Warning
+  value: string | Warning;
 }
 
 const initialState: State = {
@@ -13,7 +13,7 @@ const warningSlice = createSlice({
   name: 'warning',
   initialState,
   reducers: {
-    addWarning: (state: State, action: PayloadAction<string | Warning>) => {
+    addWarning: (state: State, action: PayloadAction<Warning | string>) => {
       state.value = action.payload;
     },
     closeWarning: (state: State) => {

@@ -3,11 +3,11 @@ export interface Config {
   keywords: string[],
   timer: number,
   quality: Quality,
-  startup: boolean,
   theme: Theme,
   privacy: boolean,
+  shouldStartup: boolean,
   isFirstTime: boolean,
-  isComplete: boolean
+  isSetupComplete: boolean
 }
 
 export interface ConfigUpdate extends Partial<Config> {}

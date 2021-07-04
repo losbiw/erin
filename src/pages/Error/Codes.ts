@@ -4,7 +4,7 @@ interface ErrorInterface {
 }
 
 interface Codes {
-  [name: string]: ErrorInterface
+  [code: number]: ErrorInterface
 }
 
 const codes: Codes = {
@@ -25,5 +25,7 @@ const codes: Codes = {
     description: "We couldn't connect to our services",
   },
 };
+
+export type ErrorCodes = keyof typeof codes;
 
 export default codes;

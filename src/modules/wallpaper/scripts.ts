@@ -20,13 +20,12 @@ const linux = (imgPath: string): Distros => ({
   kde: {
     set: `dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript 'string:
           var Desktops = desktops();                                                                                                                       
-          for (i=0;i<Desktops.length;i++) {
+          for (i = 0; i < Desktops.length; i++) {
             d = Desktops[i];
             d.wallpaperPlugin = "org.kde.image";
-            d.currentConfigGroup = Array("Wallpaper",
-                                        "org.kde.image",
-                                        "General");
+            d.currentConfigGroup = Array("Wallpaper", "org.kde.image", "General");
             d.writeConfig("Image", "file://${imgPath}");
+            d.writeConfig("FillMode", "2");
           }'`,
   },
 });

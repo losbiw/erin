@@ -10,10 +10,10 @@ import logo from '@logo/erin.png';
 import Controls from '@/Controls/Controls';
 import Warning from '@/Warning/Warning';
 import User from '@/User/User';
-import Setup from '@/Setup/Setup';
+import Setup from '@pages/Setup/Setup';
 import Update from '@/Update/Update';
 import { connect } from 'react-redux';
-import { closeWarning as closeWarningAction } from '@slices/warningSlice';
+import { closeWarning as closeWarningAction } from '@/Warning/warningSlice';
 import { AppDispatch, RootState } from './store';
 
 import './App.scss';
@@ -31,14 +31,15 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
   const cfg = config.get();
 
   const [isUpdateAvailable, setUpdate] = useState(false);
-  const [isRequiredFilled, setIsRequiredFilled] = useState(cfg.isComplete);
-  const [isComplete, setIsComplete] = useState(cfg.isComplete);
+  const [isSetupComplete, changeSetupCompleteness] = useState(cfg.isSetupComplete);
+
+  const completeSetup = () => changeSetupCompleteness(true);
 
   const defineLocation = async () => {
     const { isFirstTime } = cfg;
 
     if (isFirstTime || typeof isFirstTime === 'undefined') {
-      const location = await fetchGeocoding(() => { });
+      const location = await fetchGeocoding();
 
       await fetch('https://erin-downloads.herokuapp.com/api/increase', {
         method: 'POST',
@@ -74,37 +75,20 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     <div className={`theme ${theme}`}>
       <Controls />
 
-      { isComplete && isRequiredFilled
-        ? (
-          <User
-            setWarning={() => {}} // TODO
-            setIsComplete={setIsComplete}
-          />
-        )
-        : (
-          <Setup
-            isComplete={isComplete}
-            setIsComplete={setIsComplete}
-            setIsRequiredFilled={setIsRequiredFilled}
-          />
-        )}
+      { isSetupComplete
+        ? <User />
+        : <Setup completeSetup={completeSetup} /> }
 
       { isUpdateAvailable && <Update closeUpdatePrompt={() => setUpdate(false)} />}
 
-      {warning && (
-        <Warning
-          message={typeof warning === 'string' ? warning : warning.message}
-          Icon={typeof warning !== 'string' ? warning.Icon : undefined}
-          closeWarning={closeWarning}
-        />
-      )}
+      { warning && <Warning warning={warning} closeWarning={closeWarning} /> }
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => ({
   warning: state.warning.value,
-  theme: state.theme.value,
+  theme: state.theme,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

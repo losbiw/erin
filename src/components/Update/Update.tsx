@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import store from '@app/store';
 import { General, Crosses } from '@icons/UI';
-import { addWarning } from '@slices/warningSlice';
+import { addWarning } from '@/Warning/warningSlice';
+import { Keys as WarningIconsKeys } from '@/Warning/Icons';
 
 import './Update.scss';
 
@@ -28,7 +29,7 @@ const handleIPCevent = (shouldUpdate: boolean, closeUpdatePrompt: () => void): v
 
     store.dispatch(addWarning({
       message: 'The app will restart once the update is downloaded',
-      Icon: General.Download,
+      Icon: WarningIconsKeys.Download,
     }));
   }
 

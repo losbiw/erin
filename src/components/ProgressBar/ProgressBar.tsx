@@ -13,6 +13,6 @@ const ProgressBar: FC<Props> = ({ width }: Props) => (
   </div>
 );
 
-const mapStateToProps = (state: RootState) => ({ width: state.user.progress });
+const mapStateToProps = (state: RootState) => ({ width: state.progress });
 
 export default connect(mapStateToProps)(ProgressBar);

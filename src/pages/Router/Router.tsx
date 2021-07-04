@@ -1,60 +1,20 @@
 import React, { FC } from 'react';
-import { Pages, SharedState } from '@interfaces/UserState';
-import Warning from '@interfaces/Warning';
-import { Config } from '@interfaces/Config';
+import { Pages } from '@interfaces/UserState';
 import Home from '../Home/Home';
 import Picker from '../Picker/Picker';
 import Settings from '../Settings/Settings';
 import Info from '../Info/Info';
 import './Router.scss';
 
-interface Props extends SharedState {
-  switchWallpaper: (index: number | boolean, shouldForceSwitch: boolean) => void,
-  setWarning: (warning: string | Warning) => void,
-  setIsComplete: (isComplete: boolean) => void,
-  updateConfig: (config: Config, isRequiredFilled?: boolean) => void
+interface Props {
+  page: Pages
 }
 
-const Router: FC<Props> = (props: Props) => {
-  const {
-    switchWallpaper, setIsComplete, current, collection, pictureIndex, isLocked, progress, config,
-  } = props;
-
-  if (current === Pages.Home && collection.length > 0) {
-    return (
-      <Home
-        picture={collection[pictureIndex]}
-        isLocked={isLocked}
-        pictureIndex={pictureIndex}
-        switchWallpaper={switchWallpaper}
-      />
-    );
-  }
-  if (current === Pages.Picker) {
-    return (
-      <Picker
-        pictureIndex={pictureIndex}
-        collection={collection}
-        isLocked={isLocked}
-        switchWallpaper={switchWallpaper}
-      />
-    );
-  }
-  if (current === Pages.Settings) {
-    const { setWarning, updateConfig } = props;
-
-    return (
-      <Settings
-        config={config}
-        setWarning={setWarning}
-        setIsComplete={setIsComplete}
-        updateConfig={updateConfig}
-      />
-    );
-  }
-  if (current === Pages.Info) {
-    return <Info />;
-  }
+const Router: FC<Props> = ({ page }: Props) => {
+  if (page === Pages.Home) return <Home />;
+  if (page === Pages.Picker) return <Picker />;
+  if (page === Pages.Settings) return <Settings />;
+  if (page === Pages.Info) return <Info />;
 
   return <></>;
 };

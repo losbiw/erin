@@ -23,8 +23,9 @@ const CarouselButton: FC<ButtonProps> = ({ activeClass, handleClick }: ButtonPro
   </button>
 );
 
-const Carousel: FC<Props> = (props: Props) => {
-  const { changeSlide, activeIndex, amount } = props;
+const Carousel: FC<Props> = ({
+  changeSlide, activeIndex, amount,
+}: Props) => {
   const items: JSX.Element[] = [];
 
   const renderButtons = () => {
