@@ -107,7 +107,7 @@ const InnerKeywords: FC<InnerProps> = ({
   />
 ));
 
-const Keywords: FC<Props> = memo(({
+const Keywords: FC<Props> = ({
   keywords, addKeyword, deleteKeyword, addWarning, isFocused,
 }: Props) => {
   const [isInput, setInput] = useState(keywords.length === 0);
@@ -116,7 +116,7 @@ const Keywords: FC<Props> = memo(({
     if (keywords.length === 0 && !isInput) {
       setInput(true);
     }
-  });
+  }, [keywords]);
 
   const handleClick = () => {
     setInput(true);
@@ -153,7 +153,7 @@ const Keywords: FC<Props> = memo(({
       handleKeyDown={handleKeyDown}
     />
   );
-});
+};
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   addWarning: (warning: string | Warning) => dispatch(addWarningAction(warning)),
