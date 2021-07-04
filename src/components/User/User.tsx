@@ -18,7 +18,7 @@ import { AppDispatch, RootState } from '@app/store';
 import { ErrorCodes } from '@pages/Error/Codes';
 import switchWallpaper, { setNextWallpaper } from '@redux/helpers/switchWallpaper';
 import resetErrorAndSetIndex from '@redux/helpers/resetErrorAndSetIndex';
-import { setIndexByNumber } from './slices/wallpaperSlice';
+import { setIndexByNumber, resetCollection as resetCollectionAction } from './slices/wallpaperSlice';
 
 const { join } = window.require('path');
 const { ipcRenderer } = window.require('electron');
@@ -27,6 +27,7 @@ interface Props extends WallpaperState {
   config: Config,
   error: ErrorCodes | null,
   setIndex: (index: number) => void,
+  resetCollection: () => void
 }
 
 interface Timers {
@@ -72,10 +73,10 @@ class User extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
+    const { isRequiredFilled } = this.state;
     const {
-      isRequiredFilled,
-    } = this.state;
-    const { pictureIndex, collection, config } = this.props;
+      pictureIndex, collection, config, resetCollection,
+    } = this.props;
 
     if (config !== prevProps.config && !isRequiredFilled) {
       // eslint-disable-next-line react/no-did-update-set-state
@@ -83,6 +84,7 @@ class User extends Component<Props, State> {
         current: Pages.Settings,
       });
     } else if (config !== prevProps.config) {
+      resetCollection();
       this.getWallpaperCollection();
     } else if (pictureIndex !== prevProps.pictureIndex) {
       this.setWallpaper(collection, pictureIndex);
@@ -111,7 +113,7 @@ class User extends Component<Props, State> {
     }
 
     const queries = await getSearchQuery(mode, keywords);
-    fetchPexels(queries, quality);
+    await fetchPexels(queries, quality);
   }
 
   getSearchQuery = async (mode: Mode, keywords: string[]): Promise<string[]> => {
@@ -126,7 +128,7 @@ class User extends Component<Props, State> {
       const timerReq = await fetchWeather();
       const { weather } = state;
 
-      if (!areEqual.objects(timerReq, weather)) {
+      if (!areEqual.objects(timerReq, weather, true)) {
         getWallpaperCollection();
       }
     }, 1000 * 3600);
@@ -208,6 +210,7 @@ const mapStateToProps = ({ general, wallpaper: wallpaperState, settings }: RootS
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  resetCollection: () => dispatch(resetCollectionAction()),
   setIndex: (index: number) => dispatch(setIndexByNumber(index)),
 });
 

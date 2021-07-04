@@ -30,11 +30,14 @@ const wallpaperSlice = createSlice({
     pushToCollection: (state: State, action: PayloadAction<Picture[]>) => {
       state.collection.push(...action.payload);
     },
+    resetCollection: (state: State) => {
+      state.collection = [];
+    },
   },
 });
 
 export const {
-  incrementIndex, decrementIndex, setIndexByNumber, pushToCollection,
+  incrementIndex, decrementIndex, setIndexByNumber, pushToCollection, resetCollection,
 } = wallpaperSlice.actions;
 
 export default wallpaperSlice.reducer;
