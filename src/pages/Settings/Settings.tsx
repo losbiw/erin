@@ -26,7 +26,7 @@ const Settings: FC<Props> = ({
 }: Props) => {
   useEffect(() => () => {
     const settingsWarning = warning.match(tempConfig, true);
-    const areConfigsEqual = areEqual.objects(tempConfig, initConfig);
+    const areConfigsEqual = areEqual.objects(tempConfig, initConfig, true);
 
     if (settingsWarning) {
       // set page to settings here
@@ -35,7 +35,7 @@ const Settings: FC<Props> = ({
       addWarning('');
       saveTempConfig();
     }
-  }, []);
+  }, [tempConfig]);
 
   return (
     <div className="page">
