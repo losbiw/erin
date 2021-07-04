@@ -124,24 +124,24 @@ const sortPictures = (pictures: any[], quality: Quality): Picture[] => pictures.
 });
 
 const fetchPexels = async (keywords: string[], quality: Quality) => {
-  const collectionCopy: Picture[] = [];
+  const collection: Picture[] = [];
 
   // eslint-disable-next-line no-restricted-syntax
   for (const keyword of keywords) {
-    const collection = await fetchPexelsCollection(keyword);
+    const currentCollection = await fetchPexelsCollection(keyword);
 
-    if (collection) {
-      const sorted = sortPictures(collection, quality);
+    if (currentCollection) {
+      const sorted = sortPictures(currentCollection, quality);
 
-      collectionCopy.push(...sorted);
+      collection.push(...sorted);
       store.dispatch(pushToCollection(sorted));
     }
   }
 
-  if (collectionCopy.length === 0) {
+  if (collection.length === 0) {
     setErrorAndAllowDownload(404);
   } else {
-    const randomIndex = Math.round(Math.random() * (collectionCopy.length - 1));
+    const randomIndex = Math.round(Math.random() * (collection.length - 1));
     setIndexAfterPushingCollection(randomIndex);
   }
 };
