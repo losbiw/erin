@@ -7,17 +7,13 @@ export interface WallpaperState {
 }
 
 export interface ReduxState {
+  page: Pages,
   error: ErrorCodes | null,
   isDownloadAllowed: boolean,
 }
 
-export interface SharedState {
-  current: Pages,
-}
-
-export interface State extends SharedState {
-  weather: Weather | undefined,
-  isRequiredFilled: boolean
+export interface State {
+  weather: Weather | undefined
 }
 
 export enum Pages {

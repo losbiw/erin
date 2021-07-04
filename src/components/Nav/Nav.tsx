@@ -1,13 +1,15 @@
 import React, { FC, memo } from 'react';
-import { Theme } from '@interfaces/Config';
 import { Pages } from '@interfaces/UserState';
+import { AppDispatch } from '@app/store';
+import { changePage as changePageAction } from '@/User/slices/generalSlice';
+import { connect } from 'react-redux';
 import { buttons, NavButton as NavButtonInterface } from './items';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import './Nav.scss';
 
 interface Props {
   changePage: (name: Pages) => void,
-  current: Pages,
+  page: Pages,
 }
 
 interface ButtonProps {
@@ -37,12 +39,12 @@ const NavButton: FC<ButtonProps> = ({
 );
 
 const NavGroup: FC<GroupProps> = ({
-  children, group, current, changePage,
+  children, group, page, changePage,
 }: GroupProps) => (
   <div className="btns" key={group[0].target}>
     {
       group.map(({ Icon, target }) => {
-        const active = current === target && 'active';
+        const active = page === target && 'active';
         const handleClick = () => changePage(target);
 
         return (
@@ -61,13 +63,13 @@ const NavGroup: FC<GroupProps> = ({
 );
 
 const Nav: FC<Props> = memo(({
-  current, changePage,
+  page, changePage,
 }: Props) => (
   <nav className="nav">
     { buttons.map((group, index) => (
       <NavGroup
         group={group}
-        current={current}
+        page={page}
         changePage={changePage}
         key={group[0].target + group[1].target}
       >
@@ -77,4 +79,8 @@ const Nav: FC<Props> = memo(({
   </nav>
 ));
 
-export default Nav;
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  changePage: (page: Pages) => dispatch(changePageAction(page)),
+});
+
+export default connect(null, mapDispatchToProps)(Nav);

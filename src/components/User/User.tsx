@@ -26,6 +26,7 @@ const { ipcRenderer } = window.require('electron');
 interface Props extends WallpaperState {
   config: Config,
   error: ErrorCodes | null,
+  page: Pages,
   setIndex: (index: number) => void,
   resetCollection: () => void
 }
@@ -50,9 +51,7 @@ class User extends Component<Props, State> {
     this.savePath = join(appPath, 'wallpaper.jpg');
 
     this.state = {
-      current: Pages.Home,
       weather: undefined,
-      isRequiredFilled: true,
     };
   }
 
@@ -73,17 +72,11 @@ class User extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const { isRequiredFilled } = this.state;
     const {
       pictureIndex, collection, config, resetCollection,
     } = this.props;
 
-    if (config !== prevProps.config && !isRequiredFilled) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        current: Pages.Settings,
-      });
-    } else if (config !== prevProps.config) {
+    if (config !== prevProps.config) {
       resetCollection();
       this.getWallpaperCollection();
     } else if (pictureIndex !== prevProps.pictureIndex) {
@@ -174,29 +167,16 @@ class User extends Component<Props, State> {
     }
   }
 
-  changePage = (name: Pages): void => {
-    this.setState({
-      current: name,
-    });
-  }
-
   render() {
-    const {
-      changePage, state, props,
-    } = this;
-    const { error } = props;
-    const { current } = state;
+    const { error, page } = this.props;
 
     return (
       <div className="user">
-        <Nav
-          current={current}
-          changePage={changePage}
-        />
+        <Nav page={page} />
 
-        { error && (current === Pages.Home || current === Pages.Picker)
+        { error && (page === Pages.Home || page === Pages.Picker)
           ? <Error code={error} />
-          : <Router current={current} /> }
+          : <Router page={page} /> }
       </div>
     );
   }
@@ -207,6 +187,7 @@ const mapStateToProps = ({ general, wallpaper: wallpaperState, settings }: RootS
   error: general.error,
   collection: wallpaperState.collection,
   pictureIndex: wallpaperState.pictureIndex,
+  page: general.page,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({

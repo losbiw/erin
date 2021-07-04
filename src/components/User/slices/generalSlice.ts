@@ -1,8 +1,9 @@
 import { ErrorCodes } from '@pages/Error/Codes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ReduxState as State } from '@interfaces/UserState';
+import { ReduxState as State, Pages } from '@interfaces/UserState';
 
 const initialState: State = {
+  page: Pages.Home,
   isDownloadAllowed: false,
   error: null,
 };
@@ -23,11 +24,14 @@ const generalSlice = createSlice({
     resetError: (state: State) => {
       state.error = null;
     },
+    changePage: (state: State, action: PayloadAction<Pages>) => {
+      state.page = action.payload;
+    },
   },
 });
 
 export const {
-  allowDownload, disallowDownload, handleError, resetError,
+  allowDownload, disallowDownload, handleError, resetError, changePage,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
