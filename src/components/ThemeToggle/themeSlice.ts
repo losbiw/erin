@@ -8,7 +8,11 @@ const themeSlice = createSlice({
   reducers: {
     setOpposite: (state: Theme) => {
       const { Dark, Light } = Theme;
-      return state === Dark ? Light : Dark;
+
+      const newTheme = state === Dark ? Light : Dark;
+      config.set({ theme: newTheme });
+
+      return newTheme;
     },
   },
 });
