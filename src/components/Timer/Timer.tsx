@@ -75,6 +75,7 @@ const TimeContainer: FC<ContainerProps> = ({
           refCondition={isActive && index === focusIndex}
           onChange={updateCfgTime}
           onFocus={() => setFocus(index)}
+          key={unit}
         />
       ))
     }
