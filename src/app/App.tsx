@@ -7,12 +7,12 @@ import { fetchGeocoding } from '@modules/APIs';
 import { Theme } from '@interfaces/Config';
 import WarningInterface from '@interfaces/Warning.d';
 import logo from '@logo/erin.png';
+import Setup from '@pages/Setup/Setup';
+import { connect } from 'react-redux';
 import Controls from '@/Controls/Controls';
 import Warning from '@/Warning/Warning';
 import User from '@/User/User';
-import Setup from '@pages/Setup/Setup';
 import Update from '@/Update/Update';
-import { connect } from 'react-redux';
 import { closeWarning as closeWarningAction } from '@/Warning/warningSlice';
 import { AppDispatch, RootState } from './store';
 
