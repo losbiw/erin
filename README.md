@@ -4,9 +4,10 @@
   <p>A cross-platform app for changing wallpaper</p>
 </div>
 
-The app was created to automatize the process of choosing and changing wallpaper
+## Goal
+The app was created to simplify the process of choosing and changing wallpaper
 
-# Screenshots
+## Screenshots
 | ![Dark Main Screen](screenshots/main_dark.png)             | ![Light Main Screen](screenshots/main_light.png)
 |------------------------------------------------------------|--------------------------------------------------------|
 | ![Dark Picker Screen](screenshots/picker_dark.png)         | ![Light Picker Screen](screenshots/picker_light.png)
@@ -16,6 +17,7 @@ The app was created to automatize the process of choosing and changing wallpaper
 ## Installation
 
 Download an installation file corresponding to your OS from [GitHub releases](https://github.com/losbiw/erin/releases/latest)
+
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/erin)
 
 ## Stack
@@ -26,11 +28,11 @@ Main technologies used in the project:
 - Electron
 - Redux toolkit
 
-## Local deployment/build
+## Local setup
 
 **Setup**
 
-Copy the repository with the following command:
+Copy the repository using the following command:
 ```
 git clone https://github.com/losbiw/erin
 ```
@@ -43,25 +45,15 @@ Include your own .env file (or use [the existing one](https://github.com/losbiw/
 * GOOGLE_API_KEY
 * GH_TOKEN(optional, but auto-updater won't work without it)
 
-**Deploy locally**
+**Steps to run locally**
 
-Installing dependencies:
-```
-yarn install
-```
-Running react app:
-```
-yarn react-start
-```
-Running electron: 
-```
-yarn electron-start
-```
+- Install dependencies: ```yarn install```
+- Run react app:```yarn react-start```
+- Run electron app: ```yarn electron-start```
 
-**Build**
+**Commands to build the app on each platform**
 
-Building electron app for:
-* Windows: ```yarn build-win```
-* Linux: ```yarn build-linux```
-* MacOS: ```yarn build-mac```
-* All three of them: ```yarn build-mwl``` -->
+- Windows: ```yarn build-win```
+- Linux: ```yarn build-linux```
+- MacOS: ```yarn build-mac```
+- All three of them: ```yarn build-mwl```
