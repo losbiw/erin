@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Picture } from '@interfaces/UserState';
-import AspectRatio from '@/AspectRatio/AspectRatio';
-import ProgressBar from '@/ProgressBar/ProgressBar';
-import { Arrows } from '@/Arrows/Arrows';
-import { Link } from '@/Links/Links';
 import './Home.scss';
 import { RootState } from '@app/store';
 import { setNextWallpaper as _setNextWallpaper, setPrevWallpaper as _setPrevWallpaper } from '@redux/helpers/switchWallpaper';
 import { connect } from 'react-redux';
+import { Arrows } from '@/Arrows/Arrows';
+import { Link } from '@/Links/Links';
+import ProgressBar from '@/ProgressBar/ProgressBar';
+import AspectRatio from '@/AspectRatio/AspectRatio';
 
 interface Props {
   picture: Picture | undefined,

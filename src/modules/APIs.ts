@@ -1,12 +1,12 @@
 /* eslint-disable no-await-in-loop */
 import setErrorAndAllowDownload from '@redux/helpers/resetErrorAndAllowDownload';
 import setIndexAfterPushingCollection from '@redux/helpers/setIndexAfterPushingCollection';
-import { pushToCollection } from '@/User/slices/wallpaperSlice';
 import store from '@app/store';
 import { Quality } from '@interfaces/Config';
 import { Picture } from '@interfaces/UserState';
 import Weather from '@interfaces/Weather';
 import handleError from '@redux/helpers/handleError';
+import { pushToCollection } from '@/User/slices/wallpaperSlice';
 
 const fetchAPI = async (url: string, headers?: HeadersInit) => {
   try {

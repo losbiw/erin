@@ -12,12 +12,12 @@ import {
 } from '@interfaces/UserState';
 import Error from '@pages/Error/Error';
 import Router from '@pages/Router/Router';
-import Nav from '@/Nav/Nav';
 import { connect } from 'react-redux';
 import { AppDispatch, RootState } from '@app/store';
 import { ErrorCodes } from '@pages/Error/Codes';
 import switchWallpaper, { setNextWallpaper } from '@redux/helpers/switchWallpaper';
 import resetErrorAndSetIndex from '@redux/helpers/resetErrorAndSetIndex';
+import Nav from '@/Nav/Nav';
 import { setIndexByNumber, resetCollection as resetCollectionAction } from './slices/wallpaperSlice';
 
 const { join } = window.require('path');
