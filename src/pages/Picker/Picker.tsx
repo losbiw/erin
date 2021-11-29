@@ -2,14 +2,14 @@ import React, {
   FC, useState, useEffect, memo,
 } from 'react';
 import { Picture } from '@interfaces/UserState';
-import AspectRatio from '@/AspectRatio/AspectRatio';
-import ProgressBar from '@/ProgressBar/ProgressBar';
+import switchWallpaper from '@redux/helpers/switchWallpaper';
 import { Arrows } from '@icons/UI';
-import { Arrow } from '@/Arrows/Arrows';
-import './Picker.scss';
 import { connect } from 'react-redux';
 import { RootState } from '@app/store';
-import switchWallpaper from '@redux/helpers/switchWallpaper';
+import AspectRatio from '@/AspectRatio/AspectRatio';
+import ProgressBar from '@/ProgressBar/ProgressBar';
+import { Arrow } from '@/Arrows/Arrows';
+import './Picker.scss';
 
 interface SharedProps {
   pictureIndex: number,

@@ -1,5 +1,5 @@
-import warningSlice from '@/Warning/warningSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import warningSlice from '@/Warning/warningSlice';
 import themeSlice from '@/ThemeToggle/themeSlice';
 import wallpaperSlice from '@/User/slices/wallpaperSlice';
 import progressSlice from '@/ProgressBar/progressSlice';

@@ -1,8 +1,8 @@
 import React from 'react';
+import store from '@app/store';
+import Info from '@icons/Info';
 import { addWarning } from '@/Warning/warningSlice';
 import { Keys as WarningIconKeys } from '@/Warning/Icons';
-import Info from '@icons/Info';
-import store from '@app/store';
 
 const { clipboard } = window.require('electron');
 

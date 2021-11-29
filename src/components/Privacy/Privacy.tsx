@@ -1,7 +1,7 @@
-import { changePrivacyAcceptance as changePrivacyAction } from '@/Configuration/settingsSlice';
 import { AppDispatch } from '@app/store';
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
+import { changePrivacyAcceptance as changePrivacyAction } from '@/Configuration/settingsSlice';
 import { Link } from '../Links/Links';
 import Switch from '../Switch/Switch';
 import './Privacy.scss';

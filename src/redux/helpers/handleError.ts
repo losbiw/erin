@@ -1,6 +1,6 @@
-import { handleError as handleErrorAction } from '@/User/slices/generalSlice';
-import { ErrorCodes } from '@pages/Error/Codes';
 import store from '@app/store';
+import { ErrorCodes } from '@pages/Error/Codes';
+import { handleError as handleErrorAction } from '@/User/slices/generalSlice';
 
 const handleError = (error: ErrorCodes) => store.dispatch(handleErrorAction(error));
 

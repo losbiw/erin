@@ -1,6 +1,6 @@
 import { ErrorCodes } from '@pages/Error/Codes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ReduxState as State, Pages } from '@interfaces/UserState';
+import { ReduxState as State } from '@interfaces/UserState';
 
 const initialState: State = {
   isDownloadAllowed: false,

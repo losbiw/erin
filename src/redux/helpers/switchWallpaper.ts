@@ -1,5 +1,5 @@
-import { addWarning } from '@/Warning/warningSlice';
 import store from '@app/store';
+import { addWarning } from '@/Warning/warningSlice';
 import { disallowDownload } from '@/User/slices/generalSlice';
 import { decrementIndex, incrementIndex, setIndexByNumber } from '@/User/slices/wallpaperSlice';
 
