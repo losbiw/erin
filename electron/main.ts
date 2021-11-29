@@ -78,6 +78,7 @@ const loadFile = async () => {
     height: height * 0.8,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
     frame: false,
     icon: nativeImage.createFromPath(findIconPath(1024)),
