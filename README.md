@@ -38,17 +38,18 @@ git clone https://github.com/losbiw/erin
 ```
 Include your own .env file (or use [the existing one](https://github.com/losbiw/erin/blob/master/electron/.env.example)) in the [electron directory](https://github.com/losbiw/erin/blob/master/electron) which has to contain the following variables:
 * PEXELS_API_KEY
-* WEATHER_API_KEY( OpenWeatherMap API is supported by default, in case of using another API you have to: 
+* WEATHER_API_KEY (OpenWeatherMap API is supported by default, in case of using another API you have to: 
   * Change hard-coded values in [weather.ts](https://github.com/losbiw/erin/blob/master/src/modules/weather.ts)
   * Change [req.main](https://github.com/losbiw/erin/blob/master/src/Components/User/User.tsx#L151) and [req.time](https://github.com/losbiw/erin/blob/master/src/Components/User/User.tsx#L155) to whatever your API returns instead
 )
 * GOOGLE_API_KEY
-* GH_TOKEN(optional, but auto-updater won't work without it)
+* GH_TOKEN (optional, but auto-updater won't work without it)
 
 **Steps to run locally**
 
 - Install dependencies: ```yarn install```
-- Run react app:```yarn react-start```
+- Run react app: ```yarn react-start```
+- Transpile electron code: ```yarn electron-compile```
 - Run electron app: ```yarn electron-start```
 
 **Commands to build the app on each platform**
@@ -56,4 +57,4 @@ Include your own .env file (or use [the existing one](https://github.com/losbiw/
 - Windows: ```yarn build-win```
 - Linux: ```yarn build-linux```
 - MacOS: ```yarn build-mac```
-- All three of them: ```yarn build-mwl```
+- All three: ```yarn build-mwl```
