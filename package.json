@@ -83,8 +83,8 @@
     "extends": null,
     "extraResources": [
       {
-        "from": "./electron/Wallpaper",
-        "to": "./build/Wallpaper"
+        "from": "./electron/Wallpaper.exe",
+        "to": "./build/Wallpaper.exe"
       },
       "**/assets/**"
     ],
