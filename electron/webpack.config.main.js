@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
@@ -22,11 +22,13 @@ module.exports = {
     ],
   },
   optimization: {
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
           compress: {
-            dead_code: false,
+            dead_code: true,
             drop_console: true,
             unused: false,
           },
