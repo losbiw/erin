@@ -60,7 +60,7 @@ const set = async (imgPath: string) => {
     const isPackaged = await ipcRenderer.invoke('is-app-packaged');
 
     const resourcePath = isPackaged ? path.join(window.process.resourcesPath, 'build') : path.join(__dirname, '../../../electron');
-    const execPath = path.join(resourcePath, 'Wallpaper/Wallpaper.exe');
+    const execPath = path.join(resourcePath, 'Wallpaper.exe');
 
     await execFile(execPath, [resolvedImgPath]);
   } else if (os === 'linux') {
