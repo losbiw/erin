@@ -1,10 +1,30 @@
-# Erin
+<div align="center">
+  <img src="assets/icons/512x512.png" height="200" />
+  <h1>Erin</h1>
+  <p>A cross-platform app for changing wallpaper</p>
+</div>
 
-A simple app to change wallpaper automatically
+The app was created to automatize the process of choosing and changing wallpaper
+
+# Screenshots
+| ![Dark Main Screen](screenshots/main_dark.png)             | ![Light Main Screen](screenshots/main_light.png)
+|------------------------------------------------------------|--------------------------------------------------------|
+| ![Dark Picker Screen](screenshots/picker_dark.png)         | ![Light Picker Screen](screenshots/picker_light.png)
+| ![Dark Settings Screen](screenshots/settings_dark.png)     | ![Light Settings Screen](screenshots/settings_light.png)
+| ![Dark Info Screen](screenshots/info_dark.png)             | ![Light Info Screen](screenshots/info_light.png)
 
 ## Installation
 
 Download an installation file corresponding to your OS from [GitHub releases](https://github.com/losbiw/erin/releases/latest)
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/erin)
+
+## Stack
+
+Main technologies used in the project:
+- Typescript
+- React
+- Electron
+- Redux toolkit
 
 ## Local deployment/build
 
@@ -44,4 +64,4 @@ Building electron app for:
 * Windows: ```yarn build-win```
 * Linux: ```yarn build-linux```
 * MacOS: ```yarn build-mac```
-* All three of them: ```yarn build-mwl```
+* All three of them: ```yarn build-mwl``` -->
