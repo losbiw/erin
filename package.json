@@ -108,8 +108,7 @@
         "StartupWMClass": "erin"
       },
       "target": [
-        "deb",
-        "rpm",
+        "AppImage",
         "snap"
       ],
       "category": "Utility"
