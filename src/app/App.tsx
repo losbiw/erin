@@ -62,8 +62,9 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     ipcRenderer.send('component-did-mount');
 
     ipcRenderer.on('update-is-available', () => {
-      const notification = new Notification('Update available', {
-        body: 'Click here for more details',
+      // eslint-disable-next-line no-new
+      new Notification('Update available', {
+        body: 'Click for more details',
         icon: logo,
       });
 
