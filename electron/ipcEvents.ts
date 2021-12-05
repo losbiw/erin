@@ -5,6 +5,8 @@ import {
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 
+type WindowAction = 'close' | 'minimize' | 'maximize';
+
 const setListeners = (win: BrowserWindow) => {
   autoUpdater.on('update-available', () => {
     win.webContents.send('update-is-available');
@@ -28,23 +30,25 @@ const setListeners = (win: BrowserWindow) => {
 
   ipcMain.handle('is-app-packaged', () => app.isPackaged);
 
-  ipcMain.handle('close-window', () => {
-    win.hide();
-    return 'hidden';
-  });
+  ipcMain.handle('window-action', (_event, ...args) => {
+    const action: WindowAction = args[0];
 
-  ipcMain.handle('minimize-window', () => {
-    win.minimize();
-    return 'minimized';
-  });
+    if (action === 'close') {
+      win.hide();
+      return 'hidden';
+    } if (action === 'minimize') {
+      win.minimize();
+      return 'minimized';
+    } if (action === 'maximize') {
+      const isMaximized = win.isMaximized();
 
-  ipcMain.handle('maximize-window', () => {
-    const isMaximized = win.isMaximized();
+      if (isMaximized) win.unmaximize();
+      else win.maximize();
 
-    if (isMaximized) win.unmaximize();
-    else win.maximize();
+      return !isMaximized;
+    }
 
-    return !isMaximized;
+    return 'unknown event';
   });
 };
 
