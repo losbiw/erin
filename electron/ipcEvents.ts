@@ -6,15 +6,27 @@ import {
 import { autoUpdater } from 'electron-updater';
 
 const setListeners = (win: BrowserWindow) => {
+  autoUpdater.on('update-available', () => {
+    win.webContents.send('update-is-available');
+  });
+
   ipcMain.on('get-app-path', (event) => {
     event.returnValue = app.getPath('userData');
   });
 
-  ipcMain.handle('is-app-packaged', () => app.isPackaged);
-
   ipcMain.on('should-use-dark-mode', (event) => {
     event.returnValue = nativeTheme.shouldUseDarkColors;
   });
+
+  ipcMain.on('set-autolaunch', (_event, ...args) => {
+    app.setLoginItemSettings({
+      openAtLogin: args[0],
+      openAsHidden: true,
+      name: 'Erin',
+    });
+  });
+
+  ipcMain.handle('is-app-packaged', () => app.isPackaged);
 
   ipcMain.handle('close-window', () => {
     win.hide();
@@ -33,10 +45,6 @@ const setListeners = (win: BrowserWindow) => {
     else win.maximize();
 
     return !isMaximized;
-  });
-
-  autoUpdater.on('update-available', () => {
-    win.webContents.send('update-is-available');
   });
 };
 
