@@ -71,7 +71,7 @@
     "build": "yarn react-build && yarn electron-compile",
     "release": "yarn build && electron-builder -mw -p always",
     "release-linux": "yarn build && electron-builder -l -p always",
-    "build-current-platform": "electron-builder",
+    "build-current-platform": "yarn build && electron-builder",
     "build-mwl": "yarn build && electron-builder -mwl",
     "test": "jest --watchAll"
   },
