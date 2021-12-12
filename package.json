@@ -109,7 +109,10 @@
       },
       "target": [
         "AppImage",
-        "snap"
+        "snap",
+        "deb",
+        "rpm",
+        "pacman"
       ],
       "category": "Utility"
     }
