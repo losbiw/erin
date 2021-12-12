@@ -2,7 +2,7 @@
   "name": "erin",
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "license": "(MIT OR Apache-2.0)",
   "devDependencies": {
     "@babel/core": "^7.13.16",
@@ -69,8 +69,7 @@
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && node ./scripts/postCompile",
     "build": "yarn react-build && yarn electron-compile",
-    "release": "yarn build && electron-builder -mw -p always",
-    "release-linux": "yarn build && electron-builder -l -p always",
+    "release": "yarn build && electron-builder -mw -p always && rm -rf ./dist && electron-builder -l -p always",
     "build-current-platform": "yarn build && electron-builder",
     "build-mwl": "yarn build && electron-builder -mwl",
     "test": "jest --watchAll"
