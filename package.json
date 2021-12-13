@@ -2,7 +2,7 @@
   "name": "erin",
   "description": "A simple way to automatically change wallpaper",
   "author": "Skorinov Vladislav <skorinov41@gmail.com>",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "license": "(MIT OR Apache-2.0)",
   "devDependencies": {
     "@babel/core": "^7.13.16",
