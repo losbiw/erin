@@ -64,14 +64,15 @@
   "main": "./build/main.js",
   "scripts": {
     "react-start": "webpack serve",
-    "electron-start": "electron .",
     "react-build": "webpack --env NODE_ENV=production",
+    "electron-start": "electron .",
     "electron-tsc": "cd ./electron/ && tsc && echo typescript is transpiled successfully",
     "electron-compile": "yarn electron-tsc && webpack --config ./electron/webpack.config.main.js && node ./scripts/postCompile",
     "build": "yarn react-build && yarn electron-compile",
-    "release": "yarn build && electron-builder -mw -p always && rm -rf ./dist && electron-builder -l -p always",
-    "build-current-platform": "yarn build && electron-builder",
+    "build-current": "yarn build && electron-builder",
     "build-mwl": "yarn build && electron-builder -mwl",
+    "release": "yarn build && electron-builder -mw -p always && rm -rf ./dist && yarn release-linux",
+    "release-linux": "electron-builder -l -p always",
     "test": "jest --watchAll"
   },
   "build": {
