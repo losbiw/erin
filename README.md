@@ -5,7 +5,7 @@
 </div>
 
 ## Goal
-The app was created to simplify the process of choosing and changing wallpaper
+Erin has been created as an attempt to solve just one seemingly easy and, as I figured out later on, fairly common problem: getting used to your desktop wallpaper way too quickly while downloading them manually being too big of a hassle. If one's a software engineer, it's their moral duty to spend 100+ hours trying to automate a task that would take 10 minutes to complete manually in the worst of conditions, so that's exactly how Erin was born.
 
 ## Screenshots
 | ![Dark Main Screen](screenshots/main_dark.png)             | ![Light Main Screen](screenshots/main_light.png)
