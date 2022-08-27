@@ -45,7 +45,7 @@
     "webpack": "^5.27.1",
     "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^4.6.0"
+    "webpack-dev-server": "^4.10.0"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
