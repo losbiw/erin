@@ -71,8 +71,9 @@
     "build": "yarn react-build && yarn electron-compile",
     "build-current": "yarn build && electron-builder",
     "build-mwl": "yarn build && electron-builder -mwl",
-    "release": "yarn build && electron-builder -mw -p always && rm -rf ./dist && yarn release-linux",
+    "release": "yarn build && electron-builder -w -p always && rm -rf ./dist && yarn release-linux && rm -rf ./dist && yarn release-mac",
     "release-linux": "electron-builder -l -p always",
+    "release-mac": "electron-builder -m --x64 --arm64 -p always",
     "test": "jest --watchAll"
   },
   "build": {
@@ -101,13 +102,7 @@
     },
     "mac": {
       "icon": "assets/icon.icns",
-      "target": {
-        "target": "default",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      }
+      "target": "dmg"
     },
     "linux": {
       "desktop": {
@@ -116,6 +111,7 @@
       "target": [
         "AppImage",
         "deb",
+        "snap",
         "rpm",
         "pacman"
       ],
