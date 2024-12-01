@@ -101,7 +101,13 @@
     },
     "mac": {
       "icon": "assets/icon.icns",
-      "target": "dmg"
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     },
     "linux": {
       "desktop": {
@@ -109,7 +115,6 @@
       },
       "target": [
         "AppImage",
-        "snap",
         "deb",
         "rpm",
         "pacman"
