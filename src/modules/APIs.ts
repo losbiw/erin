@@ -23,7 +23,10 @@ const fetchAPI = async (url: string, headers?: HeadersInit) => {
 };
 
 const fetchGeolocation = (callback: Function): Promise<any> => new Promise((res) => {
-  navigator.geolocation.getCurrentPosition((position) => callback(res, position));
+  navigator.geolocation.getCurrentPosition(
+    (position) => callback(res, position),
+    () => handleError(403)
+  );
 });
 
 const fetchWeather = (): Promise<Weather | undefined> => {

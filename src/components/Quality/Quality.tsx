@@ -70,7 +70,7 @@ const InnerQuality: FC<InnerProps> = ({
 const Quality: FC<Props> = ({ initialQuality, setDownloadQuality }: Props) => {
   const [isExpanded, setExpansion] = useState(false);
 
-  const handleClickOutside = useCallback((event) => {
+  const handleClickOutside = useCallback((event: any) => {
     const { className } = event.srcElement;
 
     if (className !== 'option' && className !== 'preview' && className !== 'options-container') {

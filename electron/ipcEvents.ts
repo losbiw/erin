@@ -28,6 +28,12 @@ const setListeners = (win: BrowserWindow) => {
     });
   });
 
+  win.webContents.on('will-navigate', (event) => {
+    event.preventDefault();
+  });
+
+  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+
   ipcMain.handle('is-app-packaged', () => app.isPackaged);
 
   ipcMain.handle('window-action', (_event, ...args) => {

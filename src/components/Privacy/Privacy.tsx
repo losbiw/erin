@@ -18,7 +18,7 @@ const Privacy: FC<Props> = ({
     <p className="agreement">I agree to the </p>
 
     <Link
-      href="https://erin-web.herokuapp.com/privacy"
+      href="https://erin-website.onrender.com/privacy"
       title="privacy policy"
     />
 

@@ -41,16 +41,18 @@ const App: FC<Props> = ({ warning, theme, closeWarning }: Props) => {
     if (isFirstTime || typeof isFirstTime === 'undefined') {
       const location = await fetchGeocoding();
 
-      await fetch('https://erin-downloads.herokuapp.com/api/increase', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: OS.define(),
-          location: location.toLowerCase(),
-        }),
-      });
+      // temporarily disable stats collection
+
+      // await fetch('https://erin-downloads.herokuapp.com/api/increase', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     name: OS.define(),
+      //     location: location.toLowerCase(),
+      //   }),
+      // });
 
       config.set({ isFirstTime: false });
     }
