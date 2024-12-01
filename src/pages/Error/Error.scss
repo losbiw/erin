@@ -12,6 +12,7 @@ $shadow-dark: 0px 0px 38px rgba(0, 0, 0, 1);
 
     .code-key,
     .fix {
+        text-align: center;
         transition-property: color, text-shadow;
         transition-timing-function: $transition-function;
         transition-duration: $transition-duration;

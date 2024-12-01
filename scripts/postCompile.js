@@ -1,5 +1,5 @@
 const { promisify } = require('util');
-const { copyFile, rmdir } = require('fs/promises');
+const { copyFile, rm } = require('fs/promises');
 const { join } = require('path');
 const { exec: _exec } = require('child_process');
 
@@ -18,7 +18,7 @@ const copyEnv = async (os) => {
 
 const removeTemp = async () => {
   const temp = join(__dirname, '../ts-temp');
-  rmdir(temp, { recursive: true });
+  rm(temp, { recursive: true });
 };
 
 const runPostCompilation = async () => {

@@ -76,7 +76,9 @@ const set = async (imgPath: string) => {
   } else if (os === 'darwin') {
     const macScript = scripts.macos(resolvedImgPath);
     await exec(macScript);
-    await unlink(resolvedImgPath);
+
+    // Arbitrary timeout value as it appears impossible to fully await MacOS setting the wallpaper which results in premature deletion
+    setTimeout(() => unlink(resolvedImgPath), 5000);
   }
 };
 

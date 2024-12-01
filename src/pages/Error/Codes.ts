@@ -24,6 +24,10 @@ const codes: Codes = {
     fix: 'Check on your internet connection',
     description: "We couldn't connect to our services",
   },
+  403: {
+    fix: 'Enable permission to access your geolocation',
+    description: "We couldn't access your location"
+  }
 };
 
 export type ErrorCodes = keyof typeof codes;
