@@ -1,7 +1,7 @@
 <div align="center">
   <img src="assets/icons/512x512.png" height="200" />
   <h1>Erin</h1>
-  <p>A cross-platform app for changing wallpaper</p>
+  <p>Cross-platform wallpaper manager that never gets old. Extensive support for MacOS, Windows, and most Linux distribution.</p>
 </div>
 
 ## Goal
