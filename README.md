@@ -58,3 +58,22 @@ Include your own .env file (or use [the existing one](https://github.com/losbiw/
 - Linux: ```yarn build-linux```
 - MacOS: ```yarn build-mac```
 - All three: ```yarn build-mwl```
+
+## Known Issues
+
+### Linux Automatic Startup
+
+Unfortunately, it is known a limitation of electron.js that the `.setLogginItemSettings()` method used to enable/disable automatic startup is only supported on windows and mac.
+
+You can, however, enable it yourself which is fairly straightfoward on most linux distributions. *This may not work for more sophisticated setups.*
+
+1. Navigate to `~/.config/autostart`
+2. Create a file called `erin.desktop`
+3. Paste this as the file contents (with appropriate modifications):
+```
+[Desktop Entry]
+Name=Erin
+Exec=path to the erin executable
+Terminal=false
+Type=Application
+```
